@@ -9,9 +9,8 @@
   <meta name="description" content="Merasa bisnis Anda bisa berjalan lebih ringan? Ixiera membangun sistem digital yang bekerja cerdas, jadi Anda bisa kembali fokus pada hal yang paling penting.">
   <meta name="keywords" content="sistem digital, otomatisasi bisnis, solusi digital, agensi digital, website modern, IXIERA">
 
-  <!-- [PERUBAHAN] Favicon dari ImageKit dengan path /ixiera/pages/ -->
-  <link href=https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png?tr=w-32,h-32" rel="icon">
-  <link href=https://ik.imagekit.io/solviXone/ixiera/img/pages/apple-touch-icon.png?tr=w-180,h-180" rel="apple-touch-icon">
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -69,8 +68,7 @@
             </button>
           </li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i	      </nav>
     </div>
   </header>
 
@@ -78,8 +76,7 @@
 
     <section id="hero" class="hero section dark-background">
 
-      <!-- [PERUBAHAN] Path gambar background hero diupdate ke /ixiera/pages/ -->
-      <img src="https://ik.imagekit.io/solviXone/ixiera/img/pages/hero-bg.jpg?tr=q-85,f-webp" alt="Latar belakang abstrak digital" data-aos="fade-in">
+      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
 
       <div class="container">
         <div class="row">
@@ -103,8 +100,7 @@
         <div class="row g-0">
 
           <div class="col-xl-5 img-bg" data-aos="fade-up" data-aos-delay="100">
-            <!-- [PERUBAHAN] Path gambar Why Us diupdate ke /ixiera/pages/ -->
-            <img src=https://ik.imagekit.io/solviXone/ixiera/img/pages/why-us-bg.webp?tr=w-600,q-85" alt="Tim sedang berdiskusi strategi">
+            <img src="assets/img/why-us-bg.webp" alt="">
           </div>
 
           <div class="col-xl-7 slides position-relative" data-aos="fade-up" data-aos-delay="200">
@@ -226,8 +222,7 @@
 
     </section><section id="call-to-action" class="call-to-action section dark-background">
 
-      <!-- [PERUBAHAN] Path gambar background CTA diupdate ke /ixiera/pages/ -->
-      <img src=https://ik.imagekit.io/solviXone/ixiera/img/pages/cta-bg.jpg?tr=q-80,f-webp" alt="Latar belakang ajakan bertindak">
+      <img src="assets/img/cta-bg.jpg" alt="">
 
       <div class="container">
         <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
@@ -284,8 +279,7 @@
           </div>
           <div class="col-lg-5 position-relative" data-aos="zoom-out" data-aos-delay="200">
             <div class="phone-wrap">
-              <!-- [PERUBAHAN] Path gambar insight diupdate ke /ixiera/pages/ -->
-              <img src=https://ik.imagekit.io/solviXone/ixiera/img/pages/insight.png?tr=f-webp,q-90" alt="Tampilan analitik di ponsel" class="img-fluid">
+              <img src="assets/img/insight.png" alt="Image" class="img-fluid">
             </div>
           </div>
         </div>
@@ -421,4 +415,3 @@
 </body>
 
 </html>
-
