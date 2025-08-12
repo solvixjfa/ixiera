@@ -90,49 +90,18 @@
           <section id="blog-posts" class="blog-posts section">
 
             <div class="container">
-              <div class="row gy-5">
+              <!-- [PERUBAHAN] Konten di dalam div ini akan diisi secara dinamis oleh JavaScript. -->
+              <!-- Semua artikel statis dihapus dan div ini diberi ID unik. -->
+              <div id="posts-container" class="row gy-5">
+                
+                <!-- Artikel dari Supabase akan dimuat di sini... -->
 
-                <div class="col-lg-6">
-                  <article>
-                    <div class="post-img">
-                      <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-1.jpg" alt="Laptop menampilkan website UMKM" class="img-fluid">
-                    </div>
-                    <p class="post-category">Digital Presence</p>
-                    <h2 class="title">
-                      <a href="blog-details.html">Bukan Cuma Medsos: Kenapa Bisnis Perlu 'Rumah' Sendiri</a>
-                    </h2>
-                    <div class="d-flex align-items-center">
-                      <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
-                      <div class="post-meta">
-                        <p class="post-author">Andini Putri</p>
-                        <p class="post-date">
-                          <time datetime="2025-07-22">Jul 22, 2025</time>
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </div><div class="col-lg-6">
-                  <article>
-                    <div class="post-img">
-                      <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-2.jpg" alt="Tampilan media sosial di smartphone" class="img-fluid">
-                    </div>
-                    <p class="post-category">Social Ecosystem</p>
-                    <h2 class="title">
-                      <a href="blog-details.html">Lebih dari Sekadar 'Likes': Membangun Komunitas Pelanggan yang Loyal</a>
-                    </h2>
-                    <div class="d-flex align-items-center">
-                      <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog-author-2.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
-                      <div class="post-meta">
-                        <p class="post-author">Budi Santoso</p>
-                        <p class="post-date">
-                          <time datetime="2025-07-15">Jul 15, 2025</time>
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </div></div>
+              </div>
             </div>
-          </section><section id="blog-pagination" class="blog-pagination section">
+          </section>
+
+          <!-- [CATATAN] Bagian Pagination ini bisa kita buat dinamis di tahap selanjutnya -->
+          <section id="blog-pagination" class="blog-pagination section">
             <div class="container">
               <div class="d-flex justify-content-center">
                 <ul>
@@ -144,7 +113,8 @@
                 </ul>
               </div>
             </div>
-          </section></div>
+          </section>
+        </div>
 
         <div class="col-lg-4 sidebar">
 
@@ -284,9 +254,15 @@
 
   <script src="assets/js/main.js"></script>
   <script src="assets/js/custom.js"></script>
-<script type="module" src="assets/js/supabase.js"></script>
   
-  
-  </body>
-  
+<!-- Panggil script newsletter jika ada form newsletter di halaman ini -->
+<script type="module" src="assets/js/supabase.js"></script> 
+<!-- Panggil script blog untuk menampilkan artikel -->
+<script type="module" src="assets/js/blog.js"></script>
+
+
+</body>
 </html>
+
+
+

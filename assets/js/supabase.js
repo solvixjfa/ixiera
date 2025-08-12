@@ -1,9 +1,7 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+// [PERUBAHAN] Impor koneksi Supabase dari file pusat
+import { supabase } from './supabase-client.js';
 
-const supabase = createClient(
-  'https://xtarsaurwclktwhhryas.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI'
-)
+// [TETAP SAMA] Semua logika newsletter Anda di bawah ini tidak diubah sama sekali.
 
 async function subscribeToNewsletter(email, source = 'website') {
   return await supabase
@@ -30,6 +28,8 @@ function initNewsletterForm() {
         return
       }
 
+      status.textContent = 'Mengirim...';
+
       const { error } = await subscribeToNewsletter(email, source)
 
       if (error) {
@@ -48,3 +48,4 @@ function initNewsletterForm() {
 
 // ✅ Auto-panggil fungsinya langsung kalau dipanggil dari <script src="...">
 initNewsletterForm()
+
