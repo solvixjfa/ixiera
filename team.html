@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>AI Assistant - Konsultasi Bisnis Digital Anda | Ixiera</title>
+  <meta name="description" content="Ngobrol dengan Asisten Digital Ixiera. Dapatkan analisis awal dan rekomendasi solusi untuk tantangan bisnis Anda, ditenagai oleh teknologi AI Gemini.">
+  <meta name="keywords" content="ai assistant, chatbot bisnis, konsultasi digital, strategi bisnis, ixiera, gemini">
+
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4MK0Q0R584');
+    </script>
+    <style>
+      .chat-container { max-width: 800px; margin: 0 auto; background: var(--background-color, #fff); border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); display: flex; flex-direction: column; height: 70vh; border: 1px solid var(--border-color, #e9ecef); } .chat-history { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; } .chat-message { padding: 12px 18px; border-radius: 18px; margin-bottom: 12px; max-width: 80%; line-height: 1.5; } .user-message { background-color: var(--accent-color, #0d6efd); color: white; align-self: flex-end; border-bottom-right-radius: 4px; } .ai-message { background-color: var(--contrast-background-color, #f1f3f5); color: var(--default-color, #212529); align-self: flex-start; border-bottom-left-radius: 4px; } .chat-input-area { display: flex; padding: 15px; border-top: 1px solid var(--border-color, #e9ecef); } .chat-input-area input { flex-grow: 1; border-radius: 20px; border: 1px solid var(--border-color, #ced4da); padding: 10px 15px; margin-right: 10px; background-color: var(--background-color, #fff); color: var(--default-color, #212529); } .chat-input-area input:focus { outline: none; border-color: var(--accent-color, #0d6efd); box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25); } .chat-input-area button { border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: var(--accent-color, #0d6efd); color: white; border: none; transition: background-color 0.3s; } .chat-input-area button:hover { background-color: #0b5ed7; } .loading-indicator { display: flex; align-items: center; align-self: flex-start; } .dot { width: 8px; height: 8px; margin: 0 3px; background-color: #aaa; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; } .dot:nth-child(1) { animation-delay: -0.32s; } .dot:nth-child(2) { animation-delay: -0.16s; } @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+    </style>
+</head>
+
+<body class="team-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename">Ixiera</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Showcase</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#" class="active"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="ai-assistant.html">AI Assistant</a></li>
+              <li><a href="services-details.html">Service Details</a></li>
+              <li><a href="portfolio-details.html">Showcase Details</a></li>
+              <li><a href="blog-details.html">Blog Details</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+           <li class="nav-item ms-2 d-flex align-items-center">
+            <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
+              <i class="bi bi-moon-stars-fill"></i>
+              <i class="bi bi-sun-fill"></i>
+            </button>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+</header>
+
+  <main class="main">
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url(assets/img/team-page-title-bg.jpg);">
+      <div class="container">
+        <h1>Asisten Digital Ixiera</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">AI Assistant</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <section id="ai-assistant" class="ai-assistant section">
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Konsultasi Awal dengan AI</h2>
+        <p>Ceritakan tantangan bisnis Anda. Asisten digital kami akan membantu menganalisis dan memberikan rekomendasi awal solusi yang mungkin cocok untuk Anda.</p>
+      </div>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="chat-container">
+          <div class="chat-history" id="chat-history">
+            <div class="chat-message ai-message">
+              Halo! Saya Asisten Digital Ixiera. Apa tantangan terbesar yang sedang dihadapi bisnis Anda saat ini? Ceritakan saja dengan santai.
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <input type="text" id="user-input" placeholder="Ketik masalah Anda di sini..." autocomplete="off">
+            <button id="send-btn" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer id="footer" class="footer light-background">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Ixiera</span>
+            </a>
+            <p>Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
+            <div class="social-links d-flex mt-4">
+              <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
+              <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.threads.net/@4majority" target="_blank"><i class="bi bi-threads"></i></a>
+              <a href="https://wa.me/6285736048626" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a href="services.html">Websites & Systems</a></li>
+              <li><a href="services.html">Business Automation</a></li>
+              <li><a href="services.html">Branding & Design</a></li>
+              <li><a href="services.html">Growth Marketing</a></li>
+              <li><a href="services.html">Growth Partnership</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Contact</h4>
+            <p>Jl. Raya Surabaya - Malang No.1<br>
+            Pandaan, Pasuruan, Jawa Timur 67156<br>
+            Indonesia</p>
+            <p class="mt-4">
+              <strong>WhatsApp:</strong>
+              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;">+62 857 3604 8626</a>
+            </p>
+            <p>
+              <strong>Email:</strong>
+              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;">solvixone@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright text-center">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
+    </div>
+  </footer>
+  
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/custom.js"></script>
+  
+  <script>
+    // --- AI Assistant Logic (Secure Version) ---
+    const chatHistory = document.getElementById('chat-history');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+    let isLoading = false;
+
+    const addMessage = (message, sender) => {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('chat-message', `${sender}-message`);
+        message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        message = message.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+        messageElement.innerHTML = message;
+        chatHistory.appendChild(messageElement);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    };
+
+    const toggleLoading = (show) => {
+        let indicator = document.getElementById('loading-indicator');
+        if (show) {
+            if (!indicator) {
+                const loadingElement = document.createElement('div');
+                loadingElement.id = 'loading-indicator';
+                loadingElement.classList.add('loading-indicator');
+                loadingElement.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+                chatHistory.appendChild(loadingElement);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+            isLoading = true;
+        } else {
+            if (indicator) {
+                indicator.remove();
+            }
+            isLoading = false;
+        }
+    };
+
+    const sendMessage = async () => {
+        const message = userInput.value.trim();
+        if (message === '' || isLoading) return;
+
+        addMessage(message, 'user');
+        userInput.value = '';
+        toggleLoading(true);
+
+        try {
+            const prompt = `Anda adalah Asisten Digital Ixiera, seorang konsultan bisnis yang ramah, solutif, dan bisa dipercaya. Gaya bicara Anda natural seperti teman ahli. 
+            Tugas Anda adalah:
+            1.  Analisis masalah bisnis yang diceritakan pengguna.
+            2.  Berikan tanggapan yang empatik dan tunjukkan Anda mengerti masalahnya.
+            3.  Berikan rekomendasi solusi yang relevan dari layanan Ixiera (seperti Website & Sistem Terintegrasi, Otomatisasi Bisnis, Desain Brand, Iklan Digital, SEO, Manajemen Medsos, atau Konsultasi Strategis) dengan cara yang halus, BUKAN jualan secara terang-terangan.
+            4.  Gunakan format **tebal** untuk menyorot nama layanan.
+            5.  Jaga jawaban agar singkat, padat, dan mudah dipahami.
+            6.  Akhiri dengan pertanyaan terbuka untuk melanjutkan percakapan atau ajakan untuk diskusi lebih lanjut di halaman kontak.
+
+            Masalah pengguna: "${message}"`;
+
+            // Panggil "perantara" kita di Vercel, bukan Google langsung
+            const response = await fetch('/api/ask-gemini', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: prompt })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Request to proxy failed with status ${response.status}`);
+            }
+
+            const result = await response.json();
+            let aiResponse = "Maaf, sepertinya saya sedang mengalami sedikit kendala. Bisa coba ceritakan lagi masalah Anda?";
+
+            if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
+              aiResponse = result.candidates[0].content.parts[0].text;
+            }
+            
+            toggleLoading(false);
+            addMessage(aiResponse, 'ai');
+
+        } catch (error) {
+            console.error("Error communicating with the server:", error);
+            toggleLoading(false);
+            addMessage("Maaf, terjadi kesalahan. Silakan coba lagi nanti atau hubungi kami langsung melalui halaman kontak.", 'ai');
+        }
+    };
+
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+  </script>
+
+</body>
+
+</html>
