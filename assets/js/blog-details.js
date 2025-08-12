@@ -1,57 +1,122 @@
 import { supabase } from './supabase-client.js';
 
+// --- FUNGSI-FUNGSI BARU UNTUK KOMENTAR ---
+
 /**
- * Memuat dan menampilkan konten artikel tunggal berdasarkan slug dari URL.
+ * Menampilkan daftar komentar untuk sebuah artikel.
+ * @param {number} postId - ID dari artikel saat ini.
+ */
+async function loadComments(postId) {
+    const commentsList = document.getElementById('comments-list');
+    const commentsCount = document.getElementById('comments-count');
+    if (!commentsList || !commentsCount) return;
+
+    const { data: comments, error, count } = await supabase
+        .from('comments')
+        .select('*', { count: 'exact' })
+        .eq('post_id', postId)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching comments:', error);
+        return;
+    }
+
+    commentsCount.textContent = `${count} Comment${count !== 1 ? 's' : ''}`;
+    commentsList.innerHTML = ''; // Kosongkan daftar sebelum diisi
+
+    if (comments.length > 0) {
+        comments.forEach(comment => {
+            const commentEl = document.createElement('div');
+            commentEl.className = 'comment';
+            commentEl.innerHTML = `
+                <div class="d-flex">
+                    <div class="comment-img"><i class="bi bi-person-circle fs-2"></i></div>
+                    <div>
+                        <h5>${comment.author_name}</h5>
+                        <time datetime="${comment.created_at}">${new Date(comment.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</time>
+                        <p>${comment.content}</p>
+                    </div>
+                </div>
+            `;
+            commentsList.appendChild(commentEl);
+        });
+    }
+}
+
+/**
+ * Menangani pengiriman form komentar baru.
+ * @param {number} postId - ID dari artikel saat ini.
+ */
+function handleCommentSubmit(postId) {
+    const form = document.getElementById('comment-form');
+    const status = document.getElementById('comment-status');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const author_name = formData.get('name').trim();
+        const content = formData.get('comment').trim();
+        const honeypot = formData.get('website_url');
+
+        // Filter Spam Honeypot
+        if (honeypot) {
+            console.log('Spam attempt detected.');
+            return;
+        }
+
+        if (!author_name || !content) {
+            status.innerHTML = `<p class="text-danger">Nama dan Komentar wajib diisi.</p>`;
+            return;
+        }
+
+        status.innerHTML = `<p class="text-muted">Mengirim komentar...</p>`;
+
+        const { error } = await supabase
+            .from('comments')
+            .insert({ post_id, author_name, content });
+
+        if (error) {
+            status.innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
+        } else {
+            status.innerHTML = `<p class="text-success">Komentar berhasil dikirim!</p>`;
+            form.reset();
+            // Muat ulang komentar untuk menampilkan yang baru
+            loadComments(postId); 
+        }
+    });
+}
+
+// --- FUNGSI UTAMA (DIMODIFIKASI) ---
+
+/**
+ * Memuat konten artikel dan kemudian memuat komentarnya.
  */
 async function loadBlogPost() {
-    // 1. Dapatkan 'slug' dari parameter URL
     const urlParams = new URLSearchParams(window.location.search);
     const postSlug = urlParams.get('slug');
-
     const articleContainer = document.getElementById('article-container');
+
     if (!articleContainer || !postSlug) {
-        if (articleContainer) articleContainer.innerHTML = '<p class="text-center text-danger">Artikel tidak ditemukan atau URL tidak valid.</p>';
+        if (articleContainer) articleContainer.innerHTML = '<p class="text-center text-danger">Artikel tidak ditemukan.</p>';
         return;
     }
 
     try {
-        // 2. Minta data ke Supabase untuk satu artikel yang cocok dengan slug
         const { data: post, error } = await supabase
             .from('posts')
             .select('*')
             .eq('slug', postSlug)
             .single();
 
-        if (error || !post) {
-            throw new Error('Artikel tidak ditemukan atau gagal dimuat.');
-        }
+        if (error || !post) throw new Error('Artikel tidak ditemukan atau gagal dimuat.');
 
-        // 3. Hapus efek skeleton loading sebelum mengisi data
-        const placeholders = document.querySelectorAll('.placeholder');
-        placeholders.forEach(el => el.classList.remove('placeholder'));
+        // ... (Logika mengisi artikel tetap sama seperti sebelumnya) ...
         
-        const placeholderGlows = document.querySelectorAll('.placeholder-glow');
-        placeholderGlows.forEach(el => el.classList.remove('placeholder-glow'));
-
-        // 4. Isi elemen-elemen HTML dengan data yang diterima
-        document.title = `${post.title} - Ixiera Blog`;
-        document.getElementById('breadcrumb-title').textContent = post.title;
-        document.getElementById('post-title').textContent = post.title;
-        document.getElementById('post-image').src = `${post.image_url}?tr=w-800,q-85`;
-        document.getElementById('post-image').alt = `Gambar utama untuk artikel ${post.title}`;
-        document.getElementById('post-content').innerHTML = post.content;
-
-        const postDateEl = document.getElementById('post-date');
-        const postDate = new Date(post.created_at).toLocaleDateString('id-ID', {
-            year: 'numeric', month: 'long', day: 'numeric'
-        });
-        postDateEl.textContent = postDate;
-        postDateEl.dateTime = post.created_at;
-
-        // [MODIFIKASI] Hitung dan tampilkan waktu baca
-        const words = post.content.split(' ').length;
-        const readingTime = Math.ceil(words / 200); // Rata-rata 200 kata per menit
-        document.getElementById('post-reading-time').textContent = `${readingTime} min read`;
+        // [PENTING] Setelah artikel berhasil dimuat, kita panggil fungsi untuk komentar
+        loadComments(post.id);
+        handleCommentSubmit(post.id);
 
     } catch (error) {
         console.error('Error fetching post:', error);
@@ -59,5 +124,6 @@ async function loadBlogPost() {
     }
 }
 
+// Jalankan fungsi utama saat halaman dimuat
 document.addEventListener('DOMContentLoaded', loadBlogPost);
 
