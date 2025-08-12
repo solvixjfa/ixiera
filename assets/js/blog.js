@@ -1,4 +1,4 @@
-// [PERUBAHAN] Impor koneksi Supabase dari file pusat
+// Impor koneksi Supabase dari file pusat
 import { supabase } from './supabase-client.js';
 
 // Fungsi utama untuk memuat dan menampilkan artikel blog
@@ -25,7 +25,7 @@ async function loadBlogPosts() {
 
         posts.forEach(post => {
             const postElement = document.createElement('div');
-            postElement.className = 'col-lg-6';
+            postElement.className = 'col-lg-6'; 
             postElement.innerHTML = `
                 <article class="d-flex flex-column h-100">
                     <div class="post-img">
@@ -37,7 +37,8 @@ async function loadBlogPosts() {
                         <a href="blog-details.html?slug=${post.slug}">${post.title}</a>
                     </h2>
                     <div class="d-flex align-items-center mt-auto">
-                        <img src="https://ik.imagekit.io/solviXone/ixiera/img/team/team-01.png?tr=w-40,h-40,q-90" alt="Foto Jeffry" class="img-fluid post-author-img flex-shrink-0">
+                        <!-- [PERBAIKAN] Menggunakan URL foto penulis yang benar dari Anda -->
+                        <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-40,h-40,q-90" alt="Foto Jeffry, penulis artikel" class="img-fluid post-author-img flex-shrink-0">
                         <div class="post-meta">
                             <p class="post-author mb-0">Jeffry</p>
                             <p class="post-date mb-0">
