@@ -2,7 +2,7 @@
 import { supabase } from './supabase-client.js';
 
 // --- PENGATURAN ---
-const POSTS_PER_PAGE = 6; // Atur jumlah artikel per halaman
+const POSTS_PER_PAGE = 6;
 
 // --- ELEMEN DOM ---
 const postsContainer = document.getElementById('posts-container');
@@ -11,31 +11,16 @@ const recentPostsContainer = document.getElementById('recent-posts-container');
 
 // --- FUNGSI-FUNGSI ---
 
-/**
- * Membuat tombol-tombol halaman paginasi secara dinamis.
- * @param {number} currentPage - Halaman yang sedang aktif.
- * @param {number} totalPages - Jumlah total halaman yang tersedia.
- */
 function renderPagination(currentPage, totalPages) {
-    if (!paginationContainer || totalPages <= 1) return; // Jangan tampilkan jika hanya 1 halaman
-
+    if (!paginationContainer || totalPages <= 1) return;
     let paginationHTML = '<ul>';
-    if (currentPage > 1) {
-        paginationHTML += `<li><a href="?page=${currentPage - 1}" title="Previous"><i class="bi bi-chevron-left"></i></a></li>`;
-    }
-    for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `<li class="${i === currentPage ? 'active' : ''}"><a href="?page=${i}">${i}</a></li>`;
-    }
-    if (currentPage < totalPages) {
-        paginationHTML += `<li><a href="?page=${currentPage + 1}" title="Next"><i class="bi bi-chevron-right"></i></a></li>`;
-    }
+    if (currentPage > 1) paginationHTML += `<li><a href="?page=${currentPage - 1}" title="Previous"><i class="bi bi-chevron-left"></i></a></li>`;
+    for (let i = 1; i <= totalPages; i++) paginationHTML += `<li class="${i === currentPage ? 'active' : ''}"><a href="?page=${i}">${i}</a></li>`;
+    if (currentPage < totalPages) paginationHTML += `<li><a href="?page=${currentPage + 1}" title="Next"><i class="bi bi-chevron-right"></i></a></li>`;
     paginationHTML += '</ul>';
     paginationContainer.innerHTML = paginationHTML;
 }
 
-/**
- * Memuat dan menampilkan daftar artikel utama sesuai halaman saat ini.
- */
 async function loadBlogPosts() {
     if (!postsContainer) return;
 
@@ -46,17 +31,22 @@ async function loadBlogPosts() {
     if (paginationContainer) paginationContainer.innerHTML = '';
 
     try {
+        // [PERUBAHAN] Kita tetap hitung total post dengan cara lama karena efisien
         const { count: totalPosts, error: countError } = await supabase.from('posts').select('*', { count: 'exact', head: true });
         if (countError) throw countError;
 
         const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
         const from = (currentPage - 1) * POSTS_PER_PAGE;
-        const to = from + POSTS_PER_PAGE - 1;
 
-        const { data: posts, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false }).range(from, to);
+        // [PERUBAHAN UTAMA] Panggil fungsi RPC yang sudah kita buat di Supabase
+        const { data: posts, error } = await supabase.rpc('get_posts_with_comment_count', {
+            page_size: POSTS_PER_PAGE,
+            page_offset: from
+        });
+
         if (error) throw error;
 
-        postsContainer.innerHTML = ''; // Kosongkan container sebelum diisi
+        postsContainer.innerHTML = '';
         if (posts.length === 0) {
             postsContainer.innerHTML = '<p class="text-center">Belum ada artikel yang dipublikasikan.</p>';
             return;
@@ -71,7 +61,14 @@ async function loadBlogPosts() {
                     <h2 class="title"><a href="blog-details.html?slug=${post.slug}">${post.title}</a></h2>
                     <div class="d-flex align-items-center mt-auto">
                         <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-40,h-40,q-90" alt="Foto Jeffry" class="img-fluid post-author-img flex-shrink-0">
-                        <div class="post-meta"><p class="post-author mb-0">Jeffry</p><p class="post-date mb-0"><time datetime="${post.created_at}">${new Date(post.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</time></p></div>
+                        <div class="post-meta">
+                            <p class="post-author mb-0">Jeffry</p>
+                            <p class="post-date mb-0 d-flex align-items-center">
+                                <time datetime="${post.created_at}">${new Date(post.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+                                <!-- [FITUR BARU] Menampilkan jumlah komentar -->
+                                <span class="ms-3 d-flex align-items-center"><i class="bi bi-chat-dots me-1"></i> ${post.comment_count}</span>
+                            </p>
+                        </div>
                     </div>
                 </article>
             `;
@@ -85,17 +82,12 @@ async function loadBlogPosts() {
     }
 }
 
-/**
- * Memuat 3 artikel terbaru untuk ditampilkan di sidebar.
- */
 async function loadRecentPosts() {
     if (!recentPostsContainer) return;
-
     try {
         const { data: recentPosts, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false }).limit(3);
         if (error) throw error;
-
-        recentPostsContainer.innerHTML = ''; // Kosongkan container
+        recentPostsContainer.innerHTML = '';
         recentPosts.forEach(post => {
             const postItem = document.createElement('div');
             postItem.className = 'post-item';
@@ -113,8 +105,6 @@ async function loadRecentPosts() {
     }
 }
 
-// --- INISIALISASI ---
-// Menjalankan semua fungsi saat halaman selesai dimuat.
 document.addEventListener('DOMContentLoaded', () => {
     loadBlogPosts();
     loadRecentPosts();

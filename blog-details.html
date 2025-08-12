@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <!-- [DINAMIS] Judul akan diisi oleh JavaScript -->
   <title>Memuat Artikel... - Ixiera Blog</title>
   <meta name="description" content="Mengandalkan media sosial saja tidak cukup. Pahami kenapa memiliki website sendiri adalah langkah krusial untuk membangun kepercayaan dan mesin pertumbuhan bisnis Anda.">
   <meta name="keywords" content="strategi digital, pertumbuhan bisnis, blog teknologi, pentingnya website, aset digital, Ixiera">
@@ -40,8 +41,39 @@
 <body class="blog-details-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
-    <!-- ... (Header Anda tetap sama) ... -->
-  </header>
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename">Ixiera</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Showcase</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="team.html">AI Assistant</a></li>
+              <li><a href="services-details.html">Service Details</a></li>
+              <li><a href="portfolio-details.html">Showcase Details</a></li>
+              <li><a href="blog-details.html">Blog Details</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+                    <!-- MODE GELAP -->
+          <li class="nav-item ms-2 d-flex align-items-center">
+            <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
+              <i class="bi bi-moon-stars-fill"></i>
+              <i class="bi bi-sun-fill"></i>
+            </button>
+          </li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+</header>
 
   <main class="main">
 
@@ -65,54 +97,91 @@
 
           <section id="blog-details" class="blog-details section">
             <div class="container">
+
               <article class="article" id="article-container">
-                <!-- ... (Kerangka artikel Anda tetap sama seperti sebelumnya) ... -->
+
+                <div class="post-img">
+                  <img src="https://ik.imagekit.io/solviXone/tr:bl-10,q-20/ixiera/img/placeholder.png" alt="Memuat gambar artikel..." class="img-fluid" id="post-image">
+                </div>
+
+                <h2 class="title placeholder-glow">
+                  <span class="placeholder col-12" id="post-title"></span>
+                </h2>
+
+                <div class="meta-top">
+                  <ul>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <span id="post-author-name">Jeffry</span></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <time datetime="" id="post-date" class="placeholder-glow"><span class="placeholder col-4"></span></time></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-book"></i> <span id="post-reading-time" class="placeholder-glow"><span class="placeholder col-3"></span></span></li>
+                  </ul>
+                </div>
+
+                <div class="content placeholder-glow" id="post-content">
+                  <span class="placeholder col-12"></span><span class="placeholder col-11"></span>
+                  <span class="placeholder col-12"></span><span class="placeholder col-10"></span>
+                </div>
+
+                <div class="meta-bottom">
+                  <i class="bi bi-folder"></i>
+                  <ul class="cats" id="post-categories"><li><a href="#">...</a></li></ul>
+                  <i class="bi bi-tags"></i>
+                  <ul class="tags" id="post-tags"><li><a href="#">...</a></li></ul>
+                </div>
+
               </article>
+
             </div>
           </section>
 
           <section id="blog-author" class="blog-author section">
-            <!-- ... (Bagian Author Anda tetap sama) ... -->
-          </section>
-
-          <!-- [PERUBAHAN] Bagian Komentar sekarang dinamis -->
-          <section id="blog-comments" class="blog-comments section">
             <div class="container">
-              <h4 class="comments-count" id="comments-count">0 Comments</h4>
-              <div id="comments-list">
-                <!-- Komentar akan dimuat di sini oleh JavaScript -->
-              </div>
-
-              <!-- [BARU] Form untuk mengirim komentar -->
-              <div class="reply-form">
-                <h4>Leave a Reply</h4>
-                <p>Your email address will not be published. Required fields are marked *</p>
-                <form id="comment-form">
-                  <div class="row">
-                    <div class="col-md-6 form-group">
-                      <input name="name" type="text" class="form-control" placeholder="Your Name*" required>
-                    </div>
+              <div class="author-container d-flex align-items-center">
+                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-120,h-120,q-90" class="rounded-circle flex-shrink-0" alt="Foto Jeffry">
+                <div>
+                  <h4>Jeffry</h4>
+                  <div class="social-links">
+                    <a href="https://x.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
+                    <a href="https://instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
                   </div>
-                  <div class="row">
-                    <div class="col form-group">
-                      <textarea name="comment" class="form-control" placeholder="Your Comment*" required></textarea>
-                    </div>
-                  </div>
-
-                  <!-- [PENTING] Honeypot field untuk filter spam. Ini harus kosong. -->
-                  <div class="form-group" aria-hidden="true" style="position: absolute; left: -5000px;">
-                      <input type="text" name="website_url" tabindex="-1" autocomplete="off">
-                  </div>
-
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Post Comment</button>
-                  </div>
-                  <div id="comment-status" class="mt-3"></div>
-                </form>
+                  <p>
+                    Digital Strategist di Ixiera yang senang membantu bisnis menemukan solusi lewat teknologi. Saya percaya, teknologi yang tepat bisa membuat pekerjaan jadi lebih ringan, bukan lebih rumit.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
 
+          <section id="blog-comments" class="blog-comments section">
+            <div class="container">
+              <h4 class="comments-count" id="comments-count">0 Comments</h4>
+              <div id="comments-list">
+                <!-- Komentar akan dimuat di sini -->
+              </div>
+              <div class="reply-form mt-5">
+                <h4>Tinggalkan Komentar</h4>
+                <p>Komentar Anda sangat berharga untuk diskusi.</p>
+                <form id="comment-form">
+                  <div class="row">
+                    <div class="col-md-6 form-group mb-3">
+                      <input name="name" type="text" class="form-control" placeholder="Nama Anda*" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col form-group mb-3">
+                      <textarea name="comment" class="form-control" placeholder="Tulis komentar Anda di sini*" rows="5" required></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group" aria-hidden="true" style="position: absolute; left: -5000px;">
+                      <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Kirim Komentar</button>
+                  <div id="comment-status" class="mt-2 small"></div>
+                </form>
+              </div>
+            </div>
+          </section>
+       
         </div>
 
         <div class="col-lg-4 sidebar">
@@ -130,8 +199,16 @@
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
 
-  <!-- JS Files -->
-  <!-- ... (Vendor & Main JS Anda tetap sama) ... -->
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/custom.js"></script>
+  
   <script type="module" src="assets/js/supabase.js"></script>
   <script type="module" src="assets/js/blog-details.js"></script>
 
