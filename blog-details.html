@@ -4,11 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Kenapa Bisnis Anda Perlu Website Sendiri - Ixiera Blog</title>
+  <!-- [DINAMIS] Judul akan diisi oleh JavaScript -->
+  <title>Memuat Artikel... - Ixiera Blog</title>
   <meta name="description" content="Mengandalkan media sosial saja tidak cukup. Pahami kenapa memiliki website sendiri adalah langkah krusial untuk membangun kepercayaan dan mesin pertumbuhan bisnis Anda.">
   <meta name="keywords" content="strategi digital, pertumbuhan bisnis, blog teknologi, pentingnya website, aset digital, Ixiera">
 
-  <!-- [PERUBAHAN] Favicons dari ImageKit -->
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png?tr=w-32,h-32" rel="icon">
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/apple-touch-icon.png?tr=w-180,h-180" rel="apple-touch-icon">
 
@@ -41,422 +41,115 @@
 <body class="blog-details-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1 class="sitename">Ixiera</h1>
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="portfolio.html">Showcase</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="blog.html" class="active">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="team.html">AI Assistant</a></li>
-              <li><a href="services-details.html">Service Details</a></li>
-              <li><a href="portfolio-details.html">Showcase Details</a></li>
-              <li><a href="blog-details.html">Blog Details</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-                    <!-- MODE GELAP -->
-          <li class="nav-item ms-2 d-flex align-items-center">
-            <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-              <i class="bi bi-moon-stars-fill"></i>
-              <i class="bi bi-sun-fill"></i>
-            </button>
-          </li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-    </div>
-</header>
+    <!-- ... (Header Anda tetap sama) ... -->
+  </header>
 
   <main class="main">
 
-    <!-- Page Title -->
-    <!-- [PERUBAHAN] Background image dari ImageKit -->
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/blog-page-title-bg.jpg?tr=q-80,f-webp);">
       <div class="container">
         <h1>Blog Detail</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">Blog Detail</li>
+            <li><a href="blog.html">Blog</a></li>
+            <li class="current" id="breadcrumb-title">...</li>
           </ol>
         </nav>
       </div>
-    </div><!-- End Page Title -->
+    </div>
 
     <div class="container">
       <div class="row">
 
         <div class="col-lg-8">
 
-          <!-- blog Details Section -->
           <section id="blog-details" class="blog-details section">
             <div class="container">
-
-              <article class="article">
+              
+              <!-- [PERUBAHAN] Container utama artikel diberi ID -->
+              <article class="article" id="article-container">
 
                 <div class="post-img">
-                  <!-- [PERUBAHAN] Gambar utama artikel dari ImageKit -->
-                  <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-1.jpg?tr=w-800,q-85" alt="Laptop dengan tampilan website toko online" class="img-fluid">
+                  <!-- [PERUBAHAN] diberi ID dan placeholder -->
+                  <img src="https://ik.imagekit.io/solviXone/tr:bl-10,q-20/ixiera/img/placeholder.png" alt="Memuat gambar artikel..." class="img-fluid" id="post-image">
                 </div>
 
-                <h2 class="title">Bukan Cuma Medsos: Kenapa Bisnis Anda Perlu 'Rumah' Sendiri di Dunia Digital</h2>
+                <!-- [PERUBAHAN] diberi ID dan placeholder skeleton -->
+                <h2 class="title placeholder-glow">
+                  <span class="placeholder col-12" id="post-title"></span>
+                </h2>
 
                 <div class="meta-top">
                   <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">Andini Putri</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-details.html"><time datetime="2024-12-12">Dec 12, 2024</time></a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">8 Comments</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <span id="post-author-name">Jeffry</span></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <time datetime="" id="post-date" class="placeholder-glow"><span class="placeholder col-4"></span></time></li>
+                    <!-- [MODIFIKASI] Menambahkan perkiraan waktu baca -->
+                    <li class="d-flex align-items-center"><i class="bi bi-book"></i> <span id="post-reading-time" class="placeholder-glow"><span class="placeholder col-3"></span></span></li>
                   </ul>
-                </div><!-- End meta top -->
+                </div>
 
-                <div class="content">
-                  <p>
-                    Kalau bisnis Anda hanya ada di media sosial atau marketplace, rasanya seperti numpang di ruko orang lain. Ramai, tapi kita tidak punya kendali penuh. Aturan bisa berubah, algoritma tidak bisa ditebak, dan pada akhirnya, kita hanya 'menyewa' tempat. Memiliki website sendiri itu artinya membangun 'rumah' milik Anda; sebuah pusat komando di mana Andalah yang menentukan aturannya.
-                  </p>
-
-                  <p>
-                    Website adalah fondasi kepercayaan. Saat calon pelanggan menemukan rumah digital Anda yang profesional dan informatif, keraguan mereka berkurang. Mereka jadi lebih yakin untuk menghubungi Anda, bertanya, bahkan langsung membeli.
-                  </p>
-
-                  <blockquote>
-                    <p>
-                      "Website adalah satu-satunya 'karyawan' digital Anda yang bekerja 24/7, tanpa pernah lelah, dan tanpa terpengaruh perubahan algoritma platform lain."
-                    </p>
-                  </blockquote>
-
-                  <p>
-                    Di 'rumah' sendiri, Anda bebas bercerita. Anda bisa mendesain setiap sudutnya sesuai kepribadian brand, menjelaskan kenapa produk Anda istimewa, dan menampilkan testimoni pelanggan dengan bangga. Ini adalah cara terbaik untuk membangun hubungan jangka panjang, sesuatu yang sulit didapat di tengah riuhnya platform lain.
-                  </p>
-
-                  <h3>1. Membangun Fondasi Kepercayaan yang Kokoh</h3>
-                  <p>
-                    Sederhananya, website menunjukkan bahwa Anda serius berbisnis. Ini adalah sinyal kuat bagi pelanggan bahwa brand Anda stabil, profesional, dan bisa diandalkan. Mereka tahu Anda tidak akan menghilang besok, dan ini membuat mereka lebih nyaman untuk mengeluarkan uang.
-                  </p>
-                  <!-- [PERUBAHAN] Gambar di dalam artikel dari ImageKit -->
-                  <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-inside-post.jpg?tr=w-750,q-85" class="img-fluid" alt="Grafik peningkatan kepercayaan pelanggan">
-
-                  <h3>2. Menjangkau Pelanggan, Bukan Cuma Followers</h3>
-                  <p>
-                    Dengan website, Anda bisa ditemukan oleh orang-orang yang benar-benar sedang mencari solusi Anda di Google. Dengan strategi SEO (Search Engine Optimization) yang tepat, Anda membuka pintu bagi ribuan calon pelanggan baru yang aktif mencari, bukan hanya sekadar lewat di timeline.
-                  </p>
-                  <p>
-                    Bayangkan dampaknya. Dari yang tadinya hanya melayani pasar lokal, kini produk atau jasa Anda bisa menjangkau pelanggan di seluruh Indonesia, bahkan dunia. Inilah kekuatan sejati dari memiliki aset digital sendiri.
-                  </p>
-
-                </div><!-- End post content -->
+                <!-- [PERUBAHAN] diberi ID dan placeholder skeleton -->
+                <div class="content placeholder-glow" id="post-content">
+                  <span class="placeholder col-12"></span>
+                  <span class="placeholder col-11"></span>
+                  <span class="placeholder col-12"></span>
+                  <span class="placeholder col-10"></span>
+                </div>
 
                 <div class="meta-bottom">
+                  <!-- [CATATAN] Kategori dan Tag akan kita buat dinamis di fase berikutnya -->
                   <i class="bi bi-folder"></i>
-                  <ul class="cats">
-                    <li><a href="#">Growth Strategy</a></li>
-                  </ul>
-
+                  <ul class="cats" id="post-categories"><li><a href="#">...</a></li></ul>
                   <i class="bi bi-tags"></i>
-                  <ul class="tags">
-                    <li><a href="#">Digital Asset</a></li>
-                    <li><a href="#">Branding</a></li>
-                    <li><a href="#">Business Growth</a></li>
-                  </ul>
-                </div><!-- End meta bottom -->
+                  <ul class="tags" id="post-tags"><li><a href="#">...</a></li></ul>
+                </div>
 
               </article>
 
             </div>
-          </section><!-- /blog Details Section -->
+          </section>
 
-          <!-- blog Author Section -->
           <section id="blog-author" class="blog-author section">
+            <!-- ... (Bagian Author Anda tetap sama, karena penulisnya selalu Anda) ... -->
+          </section>
 
-            <div class="container">
-              <div class="author-container d-flex align-items-center">
-                <!-- [PERUBAHAN] Gambar penulis dari ImageKit -->
-                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-120,h-120,q-90" class="rounded-circle flex-shrink-0" alt="Foto profil Andini Putri">
-                <div>
-                  <h4>Andini Putri</h4>
-                  <div class="social-links">
-                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
-                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
-                    <a href="https://instagram.com/#"><i class="bi bi-instagram"></i></a>
-                  </div>
-                  <p>
-                    Digital Strategist di Ixiera yang senang membantu bisnis menemukan solusi lewat teknologi. Saya percaya, teknologi yang tepat bisa membuat pekerjaan jadi lebih ringan, bukan lebih rumit.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </section><!-- /blog Author Section -->
-
-          <!-- blog Comments Section -->
           <section id="blog-comments" class="blog-comments section">
-
-            <div class="container">
-
-              <h4 class="comments-count">8 Comments</h4>
-
-              <div id="comment-1" class="comment">
-                <div class="d-flex">
-                  <!-- [PERUBAHAN] Gambar komentar dari ImageKit -->
-                  <div class="comment-img"><img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/comments-1.jpg?tr=w-80,h-80,q-90" alt=""></div>
-                  <div>
-                    <h5><a href="">Ellie</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                    <time datetime="2024-12-12">Dec 12, 2024</time>
-                    <p>
-                      Analisis yang tajam. Saya semakin yakin untuk membangun 'rumah digital' untuk bisnis katering saya. Terima kasih atas perspektif barunya!
-                    </p>
-                  </div>
-                </div>
-              </div><!-- End comment #1 -->
-
-              <div id="comment-2" class="comment">
-                <div class="d-flex">
-                  <!-- [PERUBAHAN] Gambar komentar dari ImageKit -->
-                  <div class="comment-img"><img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/comments-2.jpg?tr=w-80,h-80,q-90" alt=""></div>
-                  <div>
-                    <h5><a href="">daniel</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                    <time datetime="2024-12-13">Dec 13, 2024</time>
-                    <p>
-                      Untuk bisnis yang baru mulai, apakah sistem di belakangnya (Back Stage) ini kompleks untuk dikelola? Dan bagaimana dengan investasinya?
-                    </p>
-                  </div>
-                </div>
-
-                <div id="comment-reply-1" class="comment comment-reply">
-                  <div class="d-flex">
-                    <!-- [PERUBAHAN] Gambar komentar dari ImageKit -->
-                    <div class="comment-img"><img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/comments-3.jpg?tr=w-80,h-80,q-90" alt=""></div>
-                    <div>
-                      <h5><a href="">Andini Putri</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                      <time datetime="2024-12-13">Dec 13, 2024</time>
-                      <p>
-                        Halo Pak Daniel, pertanyaan bagus sekali. Justru filosofi kami adalah membuat sistem yang canggih tapi tidak rumit. Semuanya dirancang agar mudah Anda kelola sendiri. Soal investasi, kami fleksibel. Kalau berkenan, kita bisa ngobrol santai di sesi diskusi gratis, tanpa komitmen apa pun. Silakan hubungi kami lewat halaman Kontak ya.
-                      </p>
-                    </div>
-                  </div>
-
-                </div><!-- End comment reply #1-->
-
-              </div><!-- End comment #2-->
-
-              <div id="comment-3" class="comment">
-                <div class="d-flex">
-                  <!-- [PERUBAHAN] Gambar komentar dari ImageKit -->
-                  <div class="comment-img"><img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/comments-5.jpg?tr=w-80,h-80,q-90" alt=""></div>
-                  <div>
-                    <h5><a href="">Agus Purnomo</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
-                    <time datetime="2024-12-14">Dec 14, 2024</time>
-                    <p>
-                      Sangat setuju. Sejak memiliki website yang proper, pesanan dari luar kota meningkat signifikan. Ini bukan biaya, tapi investasi yang ROI-nya jelas.
-                    </p>
-                  </div>
-                </div>
-
-              </div><!-- End comment #3 -->
-
-            </div>
-
-          </section><!-- /blog Comments Section -->
-
+            <!-- ... (Bagian Komentar tetap statis untuk saat ini) ... -->
+          </section>
        
         </div>
 
         <div class="col-lg-4 sidebar">
-
-          <div class="widgets-container">
-
-            <!-- Search Widget -->
-            <div class="search-widget widget-item">
-
-              <h3 class="widget-title">Search</h3>
-              <form action="">
-                <input type="text" placeholder="Search articles...">
-                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-              </form>
-
-            </div><!--/Search Widget -->
-
-<!-- Categories Widget -->
-<div class="categories-widget widget-item">
-
-  <h3 class="widget-title">Categories</h3>
-  <ul class="mt-3">
-    <li><a href="#">Growth Strategy</a></li>
-    <li><a href="#">Social Ecosystem</a></li>
-    <li><a href="#">Digital Presence</a></li>
-    <li><a href="#">Brand & Design</a></li>
-    <li><a href="#">Showcase</a></li>
-    <li><a href="#">Growth Marketing</a></li>
-  </ul>
-
-</div><!--/Categories Widget -->
-
-            <!-- Recent Posts Widget -->
-            <div class="recent-posts-widget widget-item">
-
-              <h3 class="widget-title">Recent Posts</h3>
-
-              <div class="post-item">
-                <!-- [PERUBAHAN] Gambar recent post dari ImageKit -->
-                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-recent-1.jpg?tr=w-100,q-85" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.html">Keyword Research for High-Intent Audiences</a></h4>
-                  <time datetime="2024-12-10">Dec 10, 2024</time>
-                </div>
-              </div><!-- End recent post item-->
-
-              <div class="post-item">
-                <!-- [PERUBAHAN] Gambar recent post dari ImageKit -->
-                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-recent-2.jpg?tr=w-100,q-85" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.html">3 Fatal Mistakes in Social Media Ad Campaigns</a></h4>
-                  <time datetime="2024-12-08">Dec 08, 2024</time>
-                </div>
-              </div><!-- End recent post item-->
-
-              <div class="post-item">
-                <!-- [PERUBAHAN] Gambar recent post dari ImageKit -->
-                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-recent-3.jpg?tr=w-100,q-85" alt="" class="flex-shrink-0">
-                <div>
-                  <h4><a href="blog-details.html">The ROI of a Professional Brand Identity</a></h4>
-                  <time datetime="2024-12-05">Dec 05, 2024</time>
-                </div>
-              </div><!-- End recent post item-->
-
-            </div><!--/Recent Posts Widget -->
-
-            <!-- Tags Widget -->
-            <div class="tags-widget widget-item">
-
-              <h3 class="widget-title">Popular Tags</h3>
-              <ul>
-                <li><a href="#">Business Growth</a></li>
-                <li><a href="#">Strategy</a></li>
-                <li><a href="#">Online Business</a></li>
-                <li><a href="#">Marketing</a></li>
-                <li><a href="#">Design</a></li>
-                <li><a href="#">Social Media</a></li>
-                <li><a href="#">SEO</a></li>
-                <li><a href="#">Branding</a></li>
-              </ul>
-
-            </div><!--/Tags Widget -->
-
-          </div>
-
+          <!-- ... (Sidebar Anda tetap sama, akan kita buat dinamis nanti) ... -->
         </div>
 
       </div>
     </div>
 
   </main>
-<section id="newsletter" class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-4 col-md-12 bg-body-tertiary text-body p-4 rounded-4">
-      <h4 class="mb-2">Dapatkan Insight, Bukan Spam.</h4>
-      <p class="mb-3">Sesekali, kami akan kirim email berisi ide dan strategi praktis untuk bisnis Anda.</p>
-      <form id="newsletter-form">
-        <div class="input-group">
-          <input type="email" id="email" class="form-control" placeholder="Your email" required>
-          <button class="btn btn-primary" type="submit">Subscribe</button>
-        </div>
-        <div id="form-status" class="mt-2 small"></div>
-      </form>
-    </div>
-  </div>
-</section>
 
-     <footer id="footer" class="footer light-background">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Ixiera</span>
-            </a>
-            <p>Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
-            <div class="social-links d-flex mt-4">
-              <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
-              <a href="https://www.instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
-              <a href="https://www.threads.net/@4majority" target="_blank"><i class="bi bi-threads"></i></a>
-              <a href="https://wa.me/6285736048626" target="_blank"><i class="bi bi-whatsapp"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><a href="services.html">Websites & Systems</a></li>
-              <li><a href="services.html">Business Automation</a></li>
-              <li><a href="services.html">Branding & Design</a></li>
-              <li><a href="services.html">Growth Marketing</a></li>
-              <li><a href="services.html">Growth Partnership</a></li>
-            </ul>
-          </div>
-
-         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Contact</h4>
-            <p>Jl. Raya Surabaya - Malang No.1<br>
-            Pandaan, Pasuruan, Jawa Timur 67156<br>
-            Indonesia</p>
-            <p class="mt-4">
-              <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;">+62 857 3604 8626</a>
-            </p>
-            <p>
-              <strong>Email:</strong>
-              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;">solvixone@gmail.com</a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container copyright text-center">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
-    </div>
-
+  <footer id="footer" class="footer light-background">
+    <!-- ... (Footer Anda tetap sama) ... -->
   </footer>
-  <!-- Scroll Top -->
+  
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/custom.js"></script>
+  
+  <!-- [PERUBAHAN] Memanggil script newsletter dan script detail blog -->
   <script type="module" src="assets/js/supabase.js"></script>
-</body>
+  <script type="module" src="assets/js/blog-details.js"></script>
 
+</body>
 </html>
 
