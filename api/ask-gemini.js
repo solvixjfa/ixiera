@@ -1,5 +1,4 @@
 // File: /api/ask-gemini.js
-// Ini adalah "perantara" yang akan berjalan aman di server Vercel.
 
 export default async function handler(request, response) {
   // Hanya izinkan metode POST
@@ -15,8 +14,14 @@ export default async function handler(request, response) {
     }
 
     // Ambil API key secara rahasia dari Vercel Environment Variable
+    // PASTIKAN ANDA SUDAH MENGATUR INI DI PENGATURAN PROYEK VERCEL ANDA
     const apiKey = process.env.GEMINI_API_KEY;
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not set on the server.");
+    }
+    
+    // Gunakan model Flash terbaru untuk kecepatan dan efisiensi
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
     const payload = {
       contents: [{
@@ -44,8 +49,7 @@ export default async function handler(request, response) {
     return response.status(200).json(result);
 
   } catch (error) {
-    console.error("Serverless function error:", error);
+    console.error("Serverless function error:", error.message);
     return response.status(500).json({ message: 'An internal server error occurred.' });
   }
 }
-
