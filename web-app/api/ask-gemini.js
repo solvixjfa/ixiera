@@ -1,4 +1,5 @@
-lexport default async function handler(req, res) {
+// Menggunakan module.exports untuk kompatibilitas maksimum di Vercel
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -9,9 +10,10 @@ lexport default async function handler(req, res) {
   }
 
   try {
-    const { systemPrompt, history, currentMessage, questionCount } = req.body;
+    // HANYA menerima history, pesan, dan hitungan. Prompt tidak lagi diterima.
+    const { history, currentMessage, questionCount } = req.body;
 
-    if (!systemPrompt || !Array.isArray(history) || !currentMessage) {
+    if (!Array.isArray(history) || !currentMessage) {
       return res.status(400).json({ error: 'Request body tidak lengkap.' });
     }
 
@@ -19,11 +21,23 @@ lexport default async function handler(req, res) {
       return res.status(200).json({
         candidates: [{
           content: {
-            parts: [{ text: "Batas pertanyaan gratis Anda telah tercapai. Silakan lanjutkan interaksi di ixiera-dashboard.vercel.app untuk fitur penuh." }]
+            parts: [{ text: "You have reached your free question limit. Please continue the interaction at ixiera-dashboard.vercel.app for full features." }]
           }
         }]
       });
     }
+    
+    // --- PROMPT DITANAMKAN LANGSUNG DI SINI ---
+    const systemPrompt = `
+      Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect. Nada bicara Anda profesional, percaya diri, dan berwawasan luas, layaknya seorang CEO.
+      
+      Konteks: IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. CEO & Founder-nya adalah Jeffry.
+      
+      Aturan Utama:
+      1.  Ringkas & Solutif: Berikan jawaban yang langsung ke intinya, jelas, dan menawarkan solusi atau langkah selanjutnya. Gunakan bahasa bilingual (Indonesia-Inggris) yang natural.
+      2.  Arahkan ke Dashboard: Jika pertanyaan menyangkut detail proyek, portal klien, atau fitur lanjutan, selalu arahkan pengguna ke dashboard dengan menyertakan link: \`ixiera-dashboard.vercel.app\`.
+      3.  Jaga Persona: Jawab semua pertanyaan, bahkan yang umum sekalipun, dengan sudut pandang seorang ahli strategi digital.
+    `;
 
     const contents = [
       ...history,
@@ -44,7 +58,6 @@ lexport default async function handler(req, res) {
       },
     };
 
-    // --- LOGIKA RETRY BARU ---
     let geminiResponse;
     const maxRetries = 3;
     for (let i = 0; i < maxRetries; i++) {
@@ -55,35 +68,21 @@ lexport default async function handler(req, res) {
           body: JSON.stringify(requestBody),
         });
 
-        // Jika response OK (2xx), keluar dari loop
-        if (geminiResponse.ok) {
-          break;
-        }
-
-        // Jika response adalah 503 (Service Unavailable), coba lagi
+        if (geminiResponse.ok) break;
         if (geminiResponse.status === 503) {
           console.warn(`Attempt ${i + 1}: Gemini API returned 503. Retrying...`);
-          // Tunggu sejenak sebelum mencoba lagi (1 detik, 2 detik, 4 detik)
           await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
-          continue; // Lanjutkan ke iterasi berikutnya
+          continue;
         }
-
-        // Jika error lain, langsung lempar error
         throw new Error(`Gemini API request failed with status ${geminiResponse.status}`);
-
       } catch (fetchError) {
-        // Jika ini adalah percobaan terakhir, lempar error
-        if (i === maxRetries - 1) {
-          throw fetchError;
-        }
+        if (i === maxRetries - 1) throw fetchError;
       }
     }
-    // --- AKHIR LOGIKA RETRY ---
 
     if (!geminiResponse.ok) {
       const errorBody = await geminiResponse.text();
-      console.error('Gemini API Error after retries:', errorBody);
-      throw new Error(`Gemini API request failed with status ${geminiResponse.status}`);
+      throw new Error(`Gemini API request failed after retries with status ${geminiResponse.status}: ${errorBody}`);
     }
 
     const data = await geminiResponse.json();
@@ -93,5 +92,5 @@ lexport default async function handler(req, res) {
     console.error('Internal Server Error:', error.message);
     res.status(500).json({ error: 'Terjadi kesalahan di server saat menghubungi Gemini API.' });
   }
-}
+};
 

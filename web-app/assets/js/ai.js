@@ -12,11 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('sidebar-toggle-btn');
     const overlay = document.getElementById('chat-overlay');
 
-    // --- Cek Elemen ---
-    if (!wrapper || !toggleBtn || !overlay) {
-        console.error("Elemen UI utama (wrapper, toggle, overlay) tidak ditemukan.");
-        return;
-    }
+    if (!wrapper || !toggleBtn || !overlay) return;
 
     // --- Konfigurasi Supabase ---
     const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
@@ -36,11 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Fungsi UI & Render ---
     const toggleSidebar = (forceClose = false) => {
-        if (forceClose) {
-            wrapper.classList.remove('sidebar-visible');
-        } else {
-            wrapper.classList.toggle('sidebar-visible');
-        }
+        wrapper.classList.toggle('sidebar-visible', !forceClose && !wrapper.classList.contains('sidebar-visible'));
     };
 
     const renderMessages = (messages) => {
@@ -52,8 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', `${sender}-message`);
         
-        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        formattedText = formattedText.replace(/\n/g, '<br>');
+        let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
         messageElement.innerHTML = formattedText;
 
         if (sender === 'ai') {
@@ -73,19 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHistoryListEl.innerHTML = '';
         chatSessions.forEach(session => {
             const li = document.createElement('li');
-            li.className = 'chat-history-item';
+            li.className = `chat-history-item ${session.id === currentSessionId ? 'active' : ''}`;
             li.dataset.sessionId = session.id;
-            if (session.id === currentSessionId) {
-                li.classList.add('active');
-            }
             
             const title = session.title || 'Percakapan Baru';
-            li.innerHTML = `
-                <span>${title}</span>
-                <button class="delete-chat-btn" data-session-id="${session.id}" aria-label="Hapus percakapan">
-                    <i class="bi bi-trash3"></i>
-                </button>
-            `;
+            li.innerHTML = `<span>${title}</span><button class="delete-chat-btn" data-session-id="${session.id}" aria-label="Hapus percakapan"><i class="bi bi-trash3"></i></button>`;
             chatHistoryListEl.appendChild(li);
         });
     };
@@ -115,30 +98,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showWelcomeMessage = () => {
         chatHistoryEl.innerHTML = '';
-        const welcomeMsg = "Halo! Saya Asisten Digital Ixiera. Apa tantangan terbesar yang sedang dihadapi bisnis Anda saat ini? Ceritakan saja dengan santai.";
-        addMessageToUI('ai', welcomeMsg);
+        addMessageToUI('ai', "Halo! Saya Asisten Digital Ixiera. Apa tantangan terbesar yang sedang dihadapi bisnis Anda saat ini? Ceritakan saja dengan santai.");
     };
 
     // --- Fungsi Interaksi dengan Supabase ---
     const createNewSessionInDb = async (firstMessage) => {
         const title = firstMessage.substring(0, 40) + (firstMessage.length > 40 ? '...' : '');
-        const { data, error } = await supabase
-            .from('chat_sessions')
-            .insert({ user_id: userId, title: title })
-            .select()
-            .single();
-        
-        if (error) {
-            console.error('Error creating new session:', error);
-            return null;
-        }
+        const { data, error } = await supabase.from('chat_sessions').insert({ user_id: userId, title: title }).select().single();
+        if (error) console.error('Error creating new session:', error);
         return data;
     };
 
     const saveMessageToDb = async (sessionId, role, content) => {
-        const { error } = await supabase
-            .from('chat_messages')
-            .insert({ session_id: sessionId, role, content });
+        const { error } = await supabase.from('chat_messages').insert({ session_id: sessionId, role, content });
         if (error) console.error('Error saving message:', error);
     };
 
@@ -165,52 +137,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
         addMessageToUI('user', message);
         await saveMessageToDb(sessionToUse, 'user', message);
-        
         toggleLoadingIndicator(true);
 
         try {
-            const { data: history, error: historyError } = await supabase
-                .from('chat_messages')
-                .select('role, content')
-                .eq('session_id', sessionToUse)
-                .order('created_at', { ascending: true });
-
+            const { data: history, error: historyError } = await supabase.from('chat_messages').select('role, content').eq('session_id', sessionToUse).order('created_at', { ascending: true });
             if(historyError) throw historyError;
             
             const questionCount = history.filter(m => m.role === 'user').length;
-
             const formattedHistory = history.slice(0, -1).map(m => ({
                 role: m.role === 'ai' ? 'model' : 'user',
                 parts: [{ text: m.content }]
             }));
-
-            const prompt = `
-              **Persona:** Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect. Nada bicara Anda profesional, percaya diri, dan berwawasan luas, layaknya seorang CEO.
-              **Konteks:** IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. CEO & Founder-nya adalah Jeffry.
-              **Aturan Utama:**
-              1.  **Ringkas & Solutif:** Berikan jawaban yang langsung ke intinya, jelas, dan menawarkan solusi atau langkah selanjutnya. Gunakan bahasa bilingual (Indonesia-Inggris) yang natural.
-              2.  **Arahkan ke Dashboard:** Jika pertanyaan menyangkut detail proyek, portal klien, atau fitur lanjutan, selalu arahkan pengguna ke dashboard dengan menyertakan link: \`ixiera-dashboard.vercel.app\`.
-              3.  **Jaga Persona:** Jawab semua pertanyaan, bahkan yang umum sekalipun, dengan sudut pandang seorang ahli strategi digital.
-            `;
             
+            // --- PANGGILAN API YANG SUDAH DISIMPLIFIKASI ---
             const response = await fetch('/api/ask-gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    systemPrompt: prompt,
                     history: formattedHistory,
                     currentMessage: message,
                     questionCount: questionCount
                 })
             });
 
-            if (!response.ok) {
-                const error = new Error(`Server response was not ok: ${response.status}`);
-                throw error;
-            }
+            if (!response.ok) throw new Error(`Server response was not ok: ${response.status}`);
             
             const result = await response.json();
-            let aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
+            const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
             toggleLoadingIndicator(false);
             addMessageToUI('ai', aiResponse);
@@ -219,10 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Internal or network error:", error);
             toggleLoadingIndicator(false);
-            
-            // [PERUBAHAN DI SINI] Pesan error yang profesional untuk pengguna
-            const professionalErrorMsg = "Maaf, terjadi kendala teknis saat menghubungi asisten. Tim kami sudah diberitahu. Silakan coba lagi dalam beberapa saat.";
-            addMessageToUI('ai', professionalErrorMsg);
+            addMessageToUI('ai', "Maaf, terjadi kendala teknis saat menghubungi asisten. Tim kami sudah diberitahu. Silakan coba lagi dalam beberapa saat.");
         }
     };
 
@@ -239,14 +189,8 @@ document.addEventListener('DOMContentLoaded', () => {
         renderChatSessions();
         toggleSidebar(true);
         
-        const { data, error } = await supabase
-            .from('chat_messages')
-            .select('role, content')
-            .eq('session_id', sessionId)
-            .order('created_at', { ascending: true });
-
+        const { data, error } = await supabase.from('chat_messages').select('role, content').eq('session_id', sessionId).order('created_at', { ascending: true });
         if (error) {
-            console.error('Error fetching messages:', error);
             addMessageToUI('ai', 'Gagal memuat percakapan.');
             return;
         }
@@ -254,46 +198,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const handleDeleteChat = async (sessionId) => {
-        // Menggunakan modal custom, bukan confirm()
-        // Anda perlu membuat fungsi untuk menampilkan modal ini
-        // showCustomConfirm('Apakah Anda yakin?', () => { ... });
-        // Untuk sementara, kita anggap selalu 'yes'
-        
-        const { error } = await supabase
-            .from('chat_sessions')
-            .delete()
-            .eq('id', sessionId);
-
-        if (error) {
-            console.error('Error deleting session:', error);
-            // Tampilkan notifikasi custom, bukan alert()
-            return;
-        }
+        const { error } = await supabase.from('chat_sessions').delete().eq('id', sessionId);
+        if (error) return;
 
         chatSessions = chatSessions.filter(s => s.id !== sessionId);
         renderChatSessions();
-
-        if (currentSessionId === sessionId) {
-            handleNewChat();
-        }
+        if (currentSessionId === sessionId) handleNewChat();
     };
 
-    // --- Inisialisasi Aplikasi ---
     const initializeApp = async () => {
-        const { data, error } = await supabase
-            .from('chat_sessions')
-            .select('*')
-            .eq('user_id', userId)
-            .order('created_at', { ascending: false });
-
-        if (error) {
-            console.error('Error fetching chat sessions:', error);
-            return;
-        }
+        const { data, error } = await supabase.from('chat_sessions').select('*').eq('user_id', userId).order('created_at', { ascending: false });
+        if (error) return;
 
         chatSessions = data;
         renderChatSessions();
-
         if (chatSessions.length > 0) {
             handleSelectChat(chatSessions[0].id);
         } else {
@@ -302,36 +220,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Event Listeners ---
-    sendBtn.addEventListener('click', () => {
-      sendMessage(userInputEl.value);
-      userInputEl.value = '';
-    });
-
-    userInputEl.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            sendMessage(userInputEl.value);
-            userInputEl.value = '';
-        }
-    });
-
+    sendBtn.addEventListener('click', () => { sendMessage(userInputEl.value); userInputEl.value = ''; });
+    userInputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); sendMessage(userInputEl.value); userInputEl.value = ''; } });
     newChatBtn.addEventListener('click', handleNewChat);
-
     toggleBtn.addEventListener('click', () => toggleSidebar());
     overlay.addEventListener('click', () => toggleSidebar(true));
-
-    chatHistoryListEl.addEventListener('click', (event) => {
-        const sessionItem = event.target.closest('.chat-history-item');
-        const deleteBtn = event.target.closest('.delete-chat-btn');
-
-        if (deleteBtn) {
-            event.stopPropagation();
-            const sessionId = deleteBtn.dataset.sessionId;
-            handleDeleteChat(sessionId);
-        } else if (sessionItem) {
-            const sessionId = sessionItem.dataset.sessionId;
-            handleSelectChat(sessionId);
-        }
+    chatHistoryListEl.addEventListener('click', (e) => {
+        const sessionItem = e.target.closest('.chat-history-item');
+        const deleteBtn = e.target.closest('.delete-chat-btn');
+        if (deleteBtn) { e.stopPropagation(); handleDeleteChat(deleteBtn.dataset.sessionId); } 
+        else if (sessionItem) { handleSelectChat(sessionItem.dataset.sessionId); }
     });
 
     initializeApp();
