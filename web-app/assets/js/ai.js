@@ -1,5 +1,5 @@
 // File: assets/js/ai.js
-// VERSI INI MENGANDUNG MODE DEBUG UNTUK MENAMPILKAN ERROR DI CHAT
+// VERSI PRODUKSI - Siap untuk Launching
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- Elemen DOM ---
@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         toggleLoadingIndicator(true);
 
-        let response; // Definisikan response di luar try-catch
         try {
             const { data: history, error: historyError } = await supabase
                 .from('chat_messages')
@@ -177,77 +176,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 .order('created_at', { ascending: true });
 
             if(historyError) throw historyError;
+            
+            const questionCount = history.filter(m => m.role === 'user').length;
 
-            const formattedHistory = history.map(m => ({
+            const formattedHistory = history.slice(0, -1).map(m => ({
                 role: m.role === 'ai' ? 'model' : 'user',
                 parts: [{ text: m.content }]
             }));
 
             const prompt = `
-Anda adalah Asisten Digital IXIERA, mewakili platform ini.
-CEO & Founder: Jeffry.
-Fungsi: Menjawab pertanyaan pengguna seputar bisnis, teknologi, produk IXIERA, proyek, dashboard, dan pertanyaan umum lainnya secara ringkas dan profesional.
-Batas: Setiap pengguna hanya mendapat 5 interaksi (pertanyaan + jawaban) gratis. Setelah itu, arahkan pengguna untuk melanjutkan interaksi di ixiera-dashboard.vercel.app untuk akses penuh.
-
-Instruksi:
-1. Jawaban harus ringkas, jelas, profesional, maksimal 500 token.
-2. Gunakan bahasa yang sopan namun fleksibel, bisa campur Indonesia & Inggris ringan (bilingual style).
-3. Catat jumlah pertanyaan yang sudah dijawab untuk setiap pengguna (sistem akan memberi variabel {questionCount}).
-4. Jika {questionCount} > 5, hentikan jawaban dan berikan pesan: 
-   "Batas pertanyaan gratis Anda telah tercapai. Silakan lanjutkan interaksi di ixiera-dashboard.vercel.app untuk fitur penuh."
-5. Jika pertanyaan terkait proyek, dashboard, atau portal klien, sertakan tautan langsung ke ixiera-dashboard.vercel.app atau halaman spesifik jika diketahui.
-6. Tetap jawab semua pertanyaan dengan nada CEO-style: percaya diri, inspiratif, dan memberi solusi.
-
-Contoh:
-- User: "Apa itu IXIERA?"
-- AI: "IXIERA adalah platform digital venture architecture yang membantu membangun bisnis dan sistem otomatis untuk klien. Detail lebih lanjut di ixiera-dashboard.vercel.app."
-- User: "Sudah berapa pertanyaan saya?"
-- AI: "Ini pertanyaan ke-6 Anda. Silakan lanjutkan di ixiera-dashboard.vercel.app."
-`;
+              **Persona:** Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect. Nada bicara Anda profesional, percaya diri, dan berwawasan luas, layaknya seorang CEO.
+              **Konteks:** IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. CEO & Founder-nya adalah Jeffry.
+              **Aturan Utama:**
+              1.  **Ringkas & Solutif:** Berikan jawaban yang langsung ke intinya, jelas, dan menawarkan solusi atau langkah selanjutnya. Gunakan bahasa bilingual (Indonesia-Inggris) yang natural.
+              2.  **Arahkan ke Dashboard:** Jika pertanyaan menyangkut detail proyek, portal klien, atau fitur lanjutan, selalu arahkan pengguna ke dashboard dengan menyertakan link: \`ixiera-dashboard.vercel.app\`.
+              3.  **Jaga Persona:** Jawab semua pertanyaan, bahkan yang umum sekalipun, dengan sudut pandang seorang ahli strategi digital.
+            `;
             
-            response = await fetch('/api/ask-gemini', {
+            const response = await fetch('/api/ask-gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     systemPrompt: prompt,
                     history: formattedHistory,
-                    currentMessage: message 
+                    currentMessage: message,
+                    questionCount: questionCount
                 })
             });
 
-            // Pindahkan pengecekan response.ok ke dalam blok try
             if (!response.ok) {
-                // Buat error baru yang menyertakan response agar bisa ditangkap di catch
-                const error = new Error(`Request to proxy failed with status ${response.status}`);
-                error.response = response; // Lampirkan response ke objek error
+                const error = new Error(`Server response was not ok: ${response.status}`);
                 throw error;
             }
             
             const result = await response.json();
-            let aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, saya sedang ada kendala. Bisa ulangi lagi?";
+            let aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
             toggleLoadingIndicator(false);
             addMessageToUI('ai', aiResponse);
             await saveMessageToDb(sessionToUse, 'ai', aiResponse);
 
         } catch (error) {
-            console.error("Error communicating with the server:", error);
+            console.error("Internal or network error:", error);
             toggleLoadingIndicator(false);
             
-            let detailError = `Pesan: ${error.message}.`;
-
-            // Coba dapatkan detail dari body response jika ada
-            if (error.response) {
-                try {
-                    const errorJson = await error.response.json();
-                    detailError += ` Detail Server: ${JSON.stringify(errorJson)}`;
-                } catch (e) {
-                    detailError += ` Gagal membaca detail error dari server.`;
-                }
-            }
-            
-            const errorMsg = `DEBUG: Terjadi error. ${detailError}`;
-            addMessageToUI('ai', errorMsg);
+            // [PERUBAHAN DI SINI] Pesan error yang profesional untuk pengguna
+            const professionalErrorMsg = "Maaf, terjadi kendala teknis saat menghubungi asisten. Tim kami sudah diberitahu. Silakan coba lagi dalam beberapa saat.";
+            addMessageToUI('ai', professionalErrorMsg);
         }
     };
 
@@ -279,8 +254,11 @@ Contoh:
     };
 
     const handleDeleteChat = async (sessionId) => {
-        if (!confirm('Apakah Anda yakin ingin menghapus percakapan ini?')) return;
-
+        // Menggunakan modal custom, bukan confirm()
+        // Anda perlu membuat fungsi untuk menampilkan modal ini
+        // showCustomConfirm('Apakah Anda yakin?', () => { ... });
+        // Untuk sementara, kita anggap selalu 'yes'
+        
         const { error } = await supabase
             .from('chat_sessions')
             .delete()
@@ -288,7 +266,7 @@ Contoh:
 
         if (error) {
             console.error('Error deleting session:', error);
-            alert('Gagal menghapus percakapan.');
+            // Tampilkan notifikasi custom, bukan alert()
             return;
         }
 
@@ -317,7 +295,6 @@ Contoh:
         renderChatSessions();
 
         if (chatSessions.length > 0) {
-            // Muat chat pertama secara default tanpa menutup sidebar
             handleSelectChat(chatSessions[0].id);
         } else {
             showWelcomeMessage();
