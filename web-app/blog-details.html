@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
+<!DOCTYPE html><html lang="id"><head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <!-- [DINAMIS] Judul akan diisi oleh JavaScript -->
@@ -14,8 +11,8 @@
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +25,7 @@
   <link href="assets/css/main.css" rel="stylesheet">
     <link href="assets/css/custom.css" rel="stylesheet">
       <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -42,8 +39,8 @@
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1 class="sitename">Ixiera</h1>
+      <a href="index.html" class="logo d-flex align-items-center" data-translate="blog-details_a_1">
+        <h1 class="sitename" data-translate="blog-details_h1_1">Ixiera</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -63,15 +60,30 @@
           </li>
           <li><a href="contact.html">Contact</a></li>
                     <!-- MODE GELAP -->
-          <li class="nav-item ms-2 d-flex align-items-center">
-            <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-              <i class="bi bi-moon-stars-fill"></i>
-              <i class="bi bi-sun-fill"></i>
-            </button>
-          </li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+<li class="nav-item d-flex align-items-center mt-2 me-2">
+  <a href="https://ixiera-dashboard.vercel.app" class="btn btn-primary btn-sm rounded-pill px-3" style="background-color: #4db8ff; border: none;">
+    Go to Dashboard
+  </a>
+</li>
+<li class="nav-item d-flex align-items-center mt-2">
+  <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
+    <i class="bi bi-moon-stars-fill"></i>
+    <i class="bi bi-sun-fill"></i>
+    <span class="ms-3">Mode</span>
+  </button>
+</li>
+<li class="nav-item d-flex align-items-center mt-2 me-2">
+  <button 
+    id="lang-toggle-btn" 
+    onclick="toggleLanguage()" 
+    class="btn btn-primary btn-sm rounded-pill px-3" 
+    style="background-color: #4db8ff; border: none;">
+  EN/ID
+  </button>
+</li>
+</ul>
+<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav>
     </div>
 </header>
 
@@ -79,12 +91,12 @@
 
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/blog-page-title-bg.jpg?tr=q-80,f-webp);">
       <div class="container">
-        <h1>Blog Detail</h1>
+        <h1 data-translate="blog-details_h1_2">Blog Detail</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="blog.html">Blog</a></li>
-            <li class="current" id="breadcrumb-title">...</li>
+            <li data-translate="blog-details_li_1"><a href="index.html" data-translate="blog-details_a_2">Home</a></li>
+            <li data-translate="blog-details_li_2"><a href="blog.html" data-translate="blog-details_a_3">Blog</a></li>
+            <li class="current" id="breadcrumb-title" data-translate="blog-details_li_3">...</li>
           </ol>
         </nav>
       </div>
@@ -110,7 +122,7 @@
 
                 <div class="meta-top">
                   <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <span id="post-author-name">Jeffry</span></li>
+                    <li class="d-flex align-items-center" data-translate="blog-details_li_4"><i class="bi bi-person"></i> <span id="post-author-name" data-translate="blog-details_span_1">Jeffry</span></li>
                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <time datetime="" id="post-date" class="placeholder-glow"><span class="placeholder col-4"></span></time></li>
                     <li class="d-flex align-items-center"><i class="bi bi-book"></i> <span id="post-reading-time" class="placeholder-glow"><span class="placeholder col-3"></span></span></li>
                   </ul>
@@ -123,9 +135,9 @@
 
                 <div class="meta-bottom">
                   <i class="bi bi-folder"></i>
-                  <ul class="cats" id="post-categories"><li><a href="#">...</a></li></ul>
+                  <ul class="cats" id="post-categories"><li data-translate="blog-details_li_5"><a href="#" data-translate="blog-details_a_4">...</a></li></ul>
                   <i class="bi bi-tags"></i>
-                  <ul class="tags" id="post-tags"><li><a href="#">...</a></li></ul>
+                  <ul class="tags" id="post-tags"><li data-translate="blog-details_li_6"><a href="#" data-translate="blog-details_a_5">...</a></li></ul>
                 </div>
 
               </article>
@@ -138,13 +150,13 @@
               <div class="author-container d-flex align-items-center">
                 <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-120,h-120,q-90" class="rounded-circle flex-shrink-0" alt="Foto Jeffry">
                 <div>
-                  <h4>Jeffry</h4>
+                  <h4 data-translate="blog-details_h4_1">Jeffry</h4>
                   <div class="social-links">
                     <a href="https://x.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
                     <a href="https://facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
                     <a href="https://instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
                   </div>
-                  <p>
+                  <p data-translate="blog-details_p_1">
                     Digital Strategist di Ixiera yang senang membantu bisnis menemukan solusi lewat teknologi. Saya percaya, teknologi yang tepat bisa membuat pekerjaan jadi lebih ringan, bukan lebih rumit.
                   </p>
                 </div>
@@ -154,28 +166,28 @@
 
           <section id="blog-comments" class="blog-comments section">
             <div class="container">
-              <h4 class="comments-count" id="comments-count">0 Comments</h4>
+              <h4 class="comments-count" id="comments-count" data-translate="blog-details_h4_2">0 Comments</h4>
               <div id="comments-list">
                 <!-- Komentar akan dimuat di sini -->
               </div>
               <div class="reply-form mt-5">
-                <h4>Tinggalkan Komentar</h4>
-                <p>Komentar Anda sangat berharga untuk diskusi.</p>
+                <h4 data-translate="blog-details_h4_3">Tinggalkan Komentar</h4>
+                <p data-translate="blog-details_p_2">Komentar Anda sangat berharga untuk diskusi.</p>
                 <form id="comment-form">
                   <div class="row">
                     <div class="col-md-6 form-group mb-3">
-                      <input name="name" type="text" class="form-control" placeholder="Nama Anda*" required>
+                      <input name="name" type="text" class="form-control" placeholder="Nama Anda*" required="">
                     </div>
                   </div>
                   <div class="row">
                     <div class="col form-group mb-3">
-                      <textarea name="comment" class="form-control" placeholder="Tulis komentar Anda di sini*" rows="5" required></textarea>
+                      <textarea name="comment" class="form-control" placeholder="Tulis komentar Anda di sini*" rows="5" required=""></textarea>
                     </div>
                   </div>
                   <div class="form-group" aria-hidden="true" style="position: absolute; left: -5000px;">
                       <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
                   </div>
-                  <button type="submit" class="btn btn-primary">Kirim Komentar</button>
+                  <button type="submit" class="btn btn-primary" data-translate="blog-details_button_1">Kirim Komentar</button>
                   <div id="comment-status" class="mt-2 small"></div>
                 </form>
               </div>
@@ -211,7 +223,7 @@
   
   <script type="module" src="assets/js/supabase.js"></script>
   <script type="module" src="assets/js/blog-details.js"></script>
+   <script src="assets/js/translator.js" defer></script>
 
 </body>
 </html>
-

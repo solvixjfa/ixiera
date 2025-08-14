@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
+<!DOCTYPE html><html lang="id"><head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Ixiera Blog | Ide & Strategi Praktis untuk Bisnis Anda</title>
+  <title>Ixiera Blog | Ide &amp; Strategi Praktis untuk Bisnis Anda</title>
   <meta name="description" content="Temukan ide-ide praktis seputar strategi digital, otomatisasi, dan branding. Kami menulis dengan bahasa yang mudah dipahami, untuk membantu bisnis Anda bertumbuh.">
   <meta name="keywords" content="blog strategi digital, wawasan bisnis, growth marketing, otomatisasi, Ixiera">
 
@@ -12,8 +9,8 @@
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/apple-touch-icon.png" rel="apple-touch-icon">
 
   <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
 
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -24,7 +21,7 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -37,8 +34,8 @@
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1 class="sitename">Ixiera</h1>
+      <a href="index.html" class="logo d-flex align-items-center" data-translate="blog_a_1">
+        <h1 class="sitename" data-translate="blog_h1_1">Ixiera</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -57,15 +54,30 @@
             </ul>
           </li>
           <li><a href="contact.html">Contact</a></li>
-          <li class="nav-item ms-2 d-flex align-items-center">
-            <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-              <i class="bi bi-moon-stars-fill"></i>
-              <i class="bi bi-sun-fill"></i>
-            </button>
-          </li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+        <li class="nav-item d-flex align-items-center mt-2 me-2">
+  <a href="https://ixiera-dashboard.vercel.app" class="btn btn-primary btn-sm rounded-pill px-3" style="background-color: #4db8ff; border: none;">
+    Go to Dashboard
+  </a>
+</li>
+<li class="nav-item d-flex align-items-center mt-2">
+  <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
+    <i class="bi bi-moon-stars-fill"></i>
+    <i class="bi bi-sun-fill"></i>
+    <span class="ms-3">Mode</span>
+  </button>
+</li>
+<li class="nav-item d-flex align-items-center mt-2 me-2">
+  <button 
+    id="lang-toggle-btn" 
+    onclick="toggleLanguage()" 
+    class="btn btn-primary btn-sm rounded-pill px-3" 
+    style="background-color: #4db8ff; border: none;">
+  EN/ID
+  </button>
+</li>
+</ul>
+<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav>
     </div>
   </header>
 
@@ -73,11 +85,11 @@
 
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/blog-page-title-bg.jpg);">
       <div class="container">
-        <h1>Ide & Wawasan untuk Bisnis Anda</h1>
+        <h1 data-translate="blog_h1_2">Ide &amp; Wawasan untuk Bisnis Anda</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Blog</li>
+            <li data-translate="blog_li_1"><a href="index.html" data-translate="blog_a_2">Home</a></li>
+            <li class="current" data-translate="blog_li_2">Blog</li>
           </ol>
         </nav>
       </div>
@@ -109,38 +121,38 @@
           <div class="widgets-container">
 
             <div class="search-widget widget-item">
-              <h3 class="widget-title">Search Articles</h3>
+              <h3 class="widget-title" data-translate="blog_h3_1">Search Articles</h3>
               <form action="">
                 <input type="text" placeholder="Search for ideas...">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
               </form>
             </div><div class="cta-widget widget-item">
-              <h3 class="widget-title">Punya Tantangan Spesifik?</h3>
-              <p class="mb-3">Tidak menemukan jawaban yang Anda cari? Mari diskusikan tantangan bisnis Anda dalam sesi konsultasi gratis.</p>
-              <a href="contact.html" class="btn btn-primary w-100">Schedule a Free Call</a>
+              <h3 class="widget-title" data-translate="blog_h3_2">Punya Tantangan Spesifik?</h3>
+              <p class="mb-3" data-translate="blog_p_1">Tidak menemukan jawaban yang Anda cari? Mari diskusikan tantangan bisnis Anda dalam sesi konsultasi gratis.</p>
+              <a href="contact.html" class="btn btn-primary w-100" data-translate="blog_a_3">Schedule a Free Call</a>
             </div>
             <div class="categories-widget widget-item">
-              <h3 class="widget-title">Browse by Topic</h3>
+              <h3 class="widget-title" data-translate="blog_h3_3">Browse by Topic</h3>
               <ul class="mt-3">
-                <li><a href="#">Growth Strategy <span>(25)</span></a></li>
-                <li><a href="#">Social Ecosystem <span>(12)</span></a></li>
-                <li><a href="#">Digital Presence <span>(8)</span></a></li>
-                <li><a href="#">Brand & Design <span>(5)</span></a></li>
-                <li><a href="#">Showcase <span>(9)</span></a></li>
-                <li><a href="#">Automation <span>(14)</span></a></li>
+                <li data-translate="blog_li_3"><a href="#" data-translate="blog_a_4">Growth Strategy <span data-translate="blog_span_1">(25)</span></a></li>
+                <li data-translate="blog_li_4"><a href="#" data-translate="blog_a_5">Social Ecosystem <span data-translate="blog_span_2">(12)</span></a></li>
+                <li data-translate="blog_li_5"><a href="#" data-translate="blog_a_6">Digital Presence <span data-translate="blog_span_3">(8)</span></a></li>
+                <li data-translate="blog_li_6"><a href="#" data-translate="blog_a_7">Brand &amp; Design <span data-translate="blog_span_4">(5)</span></a></li>
+                <li data-translate="blog_li_7"><a href="#" data-translate="blog_a_8">Showcase <span data-translate="blog_span_5">(9)</span></a></li>
+                <li data-translate="blog_li_8"><a href="#" data-translate="blog_a_9">Automation <span data-translate="blog_span_6">(14)</span></a></li>
               </ul>
             </div>
             
             <!-- [PERUBAHAN] Widget ini sekarang akan diisi oleh blog.js -->
             <div class="recent-posts-widget widget-item">
-              <h3 class="widget-title">Recent Articles</h3>
+              <h3 class="widget-title" data-translate="blog_h3_4">Recent Articles</h3>
               <div id="recent-posts-container">
                 <!-- Artikel terbaru akan dimuat di sini... -->
               </div>
             </div>
             
             <div class="tags-widget widget-item">
-              <h3 class="widget-title">Popular Tags</h3>
+              <h3 class="widget-title" data-translate="blog_h3_5">Popular Tags</h3>
             </div>
           </div>
 
@@ -153,12 +165,12 @@
   <section id="newsletter" class="container my-5">
   <div class="row justify-content-center">
     <div class="col-lg-4 col-md-12 bg-body-tertiary text-body p-4 rounded-4">
-      <h4 class="mb-2">Dapatkan Insight, Bukan Spam.</h4>
-      <p class="mb-3">Sesekali, kami akan kirim email berisi ide dan strategi praktis untuk bisnis Anda.</p>
+      <h4 class="mb-2" data-translate="blog_h4_1">Dapatkan Insight, Bukan Spam.</h4>
+      <p class="mb-3" data-translate="blog_p_2">Sesekali, kami akan kirim email berisi ide dan strategi praktis untuk bisnis Anda.</p>
       <form id="newsletter-form">
         <div class="input-group">
-          <input type="email" id="email" class="form-control" placeholder="Your email" required>
-          <button class="btn btn-primary" type="submit">Subscribe</button>
+          <input type="email" id="email" class="form-control" placeholder="Your email" required="">
+          <button class="btn btn-primary" type="submit" data-translate="blog_button_1">Subscribe</button>
         </div>
         <div id="form-status" class="mt-2 small"></div>
       </form>
@@ -172,10 +184,10 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Ixiera</span>
+            <a href="index.html" class="logo d-flex align-items-center" data-translate="blog_a_10">
+              <span class="sitename" data-translate="blog_span_7">Ixiera</span>
             </a>
-            <p>Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
+            <p data-translate="blog_p_3">Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
       <div class="social-links d-flex mt-4">
         <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
         <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
@@ -186,39 +198,39 @@
     </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4>Quick Links</h4>
+            <h4 data-translate="blog_h4_2">Quick Links</h4>
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li data-translate="blog_li_9"><a href="index.html" data-translate="blog_a_11">Home</a></li>
+              <li data-translate="blog_li_10"><a href="about.html" data-translate="blog_a_12">About</a></li>
+              <li data-translate="blog_li_11"><a href="services.html" data-translate="blog_a_13">Services</a></li>
+              <li data-translate="blog_li_12"><a href="blog.html" data-translate="blog_a_14">Blog</a></li>
+              <li data-translate="blog_li_13"><a href="contact.html" data-translate="blog_a_15">Contact</a></li>
             </ul>
           </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4>Our Services</h4>
+            <h4 data-translate="blog_h4_3">Our Services</h4>
             <ul>
-              <li><a href="services.html">Websites & Systems</a></li>
-              <li><a href="services.html">Business Automation</a></li>
-              <li><a href="services.html">Branding & Design</a></li>
-              <li><a href="services.html">Growth Marketing</a></li>
-              <li><a href="services.html">Growth Partnership</a></li>
+              <li data-translate="blog_li_14"><a href="services.html" data-translate="blog_a_16">Websites &amp; Systems</a></li>
+              <li data-translate="blog_li_15"><a href="services.html" data-translate="blog_a_17">Business Automation</a></li>
+              <li data-translate="blog_li_16"><a href="services.html" data-translate="blog_a_18">Branding &amp; Design</a></li>
+              <li data-translate="blog_li_17"><a href="services.html" data-translate="blog_a_19">Growth Marketing</a></li>
+              <li data-translate="blog_li_18"><a href="services.html" data-translate="blog_a_20">Growth Partnership</a></li>
             </ul>
           </div>
 
          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Contact</h4>
-            <p>Jl. Raya Surabaya - Malang No.1<br>
+            <h4 data-translate="blog_h4_4">Contact</h4>
+            <p data-translate="blog_p_4">Jl. Raya Surabaya - Malang No.1<br>
             Pandaan, Pasuruan, Jawa Timur 67156<br>
             Indonesia</p>
-            <p class="mt-4">
+            <p class="mt-4" data-translate="blog_p_5">
               <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;">+62 857 3604 8626</a>
+              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;" data-translate="blog_a_21">+62 857 3604 8626</a>
             </p>
-            <p>
+            <p data-translate="blog_p_6">
               <strong>Email:</strong>
-              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;">solvixone@gmail.com</a>
+              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;" data-translate="blog_a_22">solvixone@gmail.com</a>
             </p>
           </div>
         </div>
@@ -226,11 +238,11 @@
     </div>
 
     <div class="container copyright text-center">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
+      <p data-translate="blog_p_7">© <span data-translate="blog_span_8">Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span data-translate="blog_span_9">All Rights Reserved</span></p>
     </div>
      
-      </div>
-    </div>
+      
+    
 
   </footer>
   
@@ -256,7 +268,7 @@
   <script type="module" src="assets/js/supabase.js"></script> 
   <!-- Panggil script blog untuk menampilkan artikel -->
   <script type="module" src="assets/js/blog.js"></script>
+ <script src="assets/js/translator.js" defer></script>
 
 </body>
 </html>
-

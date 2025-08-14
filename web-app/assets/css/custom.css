@@ -15,32 +15,32 @@ html[data-bs-theme="dark"] .btn-toggle-theme .bi-sun-fill {
     display: inline-block;
 }
 
-/* 2. Mengambil alih variabel warna template (Sudah benar) */
+/* 2. Mengambil alih variabel warna template (HANYA NILAI WARNA YANG DIUBAH) */
 html[data-bs-theme="dark"] {
-  /* Warna Global Utama */
-  --background-color: #0B0C10; /* Abu-abu gelap standar */
-  --default-color: #dee2e6;    /* Teks abu-abu terang */
-  --heading-color: #ffffff;    /* Judul putih */
-  --accent-color: #6ea8fe;     /* Link biru muda yang kontras */
-  --surface-color: #2b3035;    /* Warna kartu/kotak */
+  /* Warna Global Utama - Palet Rich Blue-Black */
+  --background-color: #0d1117; /* Biru sangat gelap, seperti GitHub */
+  --default-color: #c9d1d9;    /* Teks putih keabuan */
+  --heading-color: #f0f6fc;    /* Judul putih kebiruan */
+  --accent-color: #58a6ff;     /* Biru aksen cerah */
+  --surface-color: #161b22;    /* Warna kartu/kotak, biru tua */
   --contrast-color: #ffffff;   /* Teks di atas warna aksen */
 
   /* Warna Navigasi */
-  --nav-color: rgba(255, 255, 255, 0.8);
+  --nav-color: rgba(240, 246, 252, 0.8);
   --nav-hover-color: #ffffff;
-  --nav-mobile-background-color: #212529;
-  --nav-dropdown-background-color: #2b3035;
-  --nav-dropdown-color: #dee2e6;
-  --nav-dropdown-hover-color: #6ea8fe;
+  --nav-mobile-background-color: #161b22; /* Disesuaikan dengan surface-color */
+  --nav-dropdown-background-color: #161b22; /* Disesuaikan dengan surface-color */
+  --nav-dropdown-color: #c9d1d9;
+  --nav-dropdown-hover-color: #58a6ff;
 }
 
-/* 3. Perbaikan tambahan (Sudah benar) */
+/* 3. Perbaikan tambahan (HANYA NILAI WARNA YANG DIUBAH) */
 html[data-bs-theme="dark"].scrolled .header {
-  --background-color: rgba(28, 31, 35, 0.9);
+  --background-color: rgba(22, 27, 34, 0.85); /* Warna surface dengan transparansi */
 }
 
 html[data-bs-theme="dark"] .footer .footer-links ul a {
-  color: rgba(222, 226, 230, 0.7);
+  color: rgba(201, 209, 217, 0.7); /* Disesuaikan dengan default-color */
 }
 
 html[data-bs-theme="dark"] .footer .footer-links ul a:hover {
@@ -53,22 +53,20 @@ html[data-bs-theme="dark"] .mobile-nav-active .mobile-nav-toggle {
 
 /*
    4. KODE BARU: Perbaikan khusus untuk footer.
-   Ini akan memaksa footer untuk menggunakan warna gelap.
+   (ATURAN ASLI DIPERTAHANKAN, HANYA NILAI WARNA DIUBAH)
 */
 html[data-bs-theme="dark"] .footer.light-background {
-    --background-color: #1c1f23; /* Warna latar gelap untuk footer */
-    --default-color: #dee2e6;    /* Warna teks terang untuk footer */
-    --heading-color: #ffffff;    /* Warna judul terang untuk footer */
+    --background-color: #161b22; /* Warna latar footer disamakan dengan --surface-color */
+    --default-color: #c9d1d9;    /* Warna teks footer disamakan dengan --default-color */
+    --heading-color: #f0f6fc;    /* Warna judul footer disamakan dengan --heading-color */
 }
 /* =================================================================== */
 /* Custom FAQ Section Styling - FINAL VERSION
-/* Menggunakan variabel dari html[data-bs-theme="dark"]
+/* (Tidak ada perubahan struktur, akan mengambil variabel baru)
 /* =================================================================== */
 
 .faq .accordion-item {
-  /* Mengambil warna dari variabel 'surface' (kartu/kotak) */
   background-color: var(--surface-color, #ffffff); 
-  /* Menggunakan border-color yang akan beradaptasi */
   border: 1px solid var(--border-color, #dee2e6);
   margin-bottom: 15px;
   border-radius: 8px;
@@ -80,7 +78,6 @@ html[data-bs-theme="dark"] .footer.light-background {
   font-weight: 600;
   font-family: var(--heading-font);
   font-size: 18px;
-  /* Mengambil warna dari variabel untuk judul */
   color: var(--heading-color); 
   text-align: left;
   padding: 18px 25px;
@@ -94,21 +91,17 @@ html[data-bs-theme="dark"] .footer.light-background {
 }
 
 .faq .accordion-button:not(.collapsed) {
-  /* Mengambil warna aksen saat dibuka */
   color: var(--accent-color); 
-  /* Latar belakangnya menjadi warna utama halaman, memberi efek 'terbuka' */
   background-color: var(--background-color, #f8f9fa);
   box-shadow: none;
 }
 
 .faq .accordion-body {
   padding: 0 25px 25px 25px;
-  /* Mengambil warna teks standar */
   color: var(--default-color); 
   opacity: 0.9;
 }
 
-/* --- Mengatur Ikon Panah Dropdown --- */
 .faq .accordion-button::after {
   content: '';
   flex-shrink: 0;
@@ -127,25 +120,23 @@ html[data-bs-theme="dark"] .footer.light-background {
 
 /* Mengganti warna panah untuk mode gelap secara spesifik */
 html[data-bs-theme="dark"] .faq .accordion-button::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgba(255,255,255,0.8)'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgba(201, 209, 217, 0.8)'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
 /* =================================================================== */
 /* Custom Styling untuk solviXone - FINAL VERSION
-/* Termasuk Dark Mode untuk Pricing Cards & FAQ
+/* (ATURAN ASLI DIPERTAHANKAN, HANYA NILAI WARNA DIUBAH)
 /* =================================================================== */
 
 /* 1. Kamus Warna untuk Mode Gelap */
-/* Blok ini memberitahu semua elemen custom bagaimana harus berubah warna */
 html[data-bs-theme="dark"] {
-  --surface-color: #2b3035;    /* Warna latar kartu/kotak */
-  --border-color: rgba(255, 255, 255, 0.1); /* Warna border tipis */
-  --contrast-background-color: rgba(255, 255, 255, 0.05); /* Latar item yang aktif/di-hover */
+  --surface-color: #161b22;    /* Warna latar kartu/kotak (disesuaikan) */
+  --border-color: rgba(139, 148, 158, 0.2); /* Warna border tipis (disesuaikan) */
+  --contrast-background-color: rgba(88, 166, 255, 0.1); /* Latar item yang aktif/di-hover (disesuaikan) */
 }
 
 
 /* 2. Aturan untuk Kartu Harga (Pricing Cards) */
-/* Aturan ini sekarang akan otomatis beradaptasi dengan mode gelap */
 .pricing .pricing-item-custom {
   padding: 40px;
   background-color: var(--surface-color, #ffffff);
@@ -165,7 +156,7 @@ html[data-bs-theme="dark"] {
 }
 
 html[data-bs-theme="dark"] .pricing .pricing-item-custom:hover {
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .pricing .pricing-item-custom h3 {
@@ -226,7 +217,6 @@ html[data-bs-theme="dark"] .pricing .pricing-item-custom:hover {
   display: inline-block;
   padding: 10px 35px;
   border-radius: 8px;
-  /* Menggunakan variabel --contrast-color untuk teks tombol */
   color: var(--contrast-color, #ffffff);
   transition: all 0.3s;
   font-size: 16px;
@@ -236,7 +226,7 @@ html[data-bs-theme="dark"] .pricing .pricing-item-custom:hover {
 }
 
 .pricing .pricing-item-custom .buy-btn:hover {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .pricing .pricing-item-custom.featured {
@@ -251,7 +241,6 @@ html[data-bs-theme="dark"] .pricing .pricing-item-custom:hover {
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent-color);
-  /* Menggunakan variabel --contrast-color untuk teks badge */
   color: var(--contrast-color, #ffffff);
   padding: 4px 15px;
   border-radius: 20px;
@@ -315,11 +304,11 @@ html[data-bs-theme="dark"] .pricing .pricing-item-custom:hover {
 }
 
 html[data-bs-theme="dark"] .faq .accordion-button::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgba(255,255,255,0.8)'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgba(201, 209, 217, 0.8)'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 
 /* =================================================================== */
-/* Custom Styling untuk Halaman Tim (Filosofi)
+/* Custom Styling untuk Halaman Tim (Filosofi) */
 /* =================================================================== */
 
 .philosophy .philosophy-item {
@@ -332,16 +321,14 @@ html[data-bs-theme="dark"] .faq .accordion-button::after {
   transition: all 0.3s ease-in-out;
 }
 
-/* Efek interaktif tambahan */
 .philosophy .philosophy-item:hover {
   transform: translateY(-8px);
   border-color: var(--accent-color);
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Efek shadow untuk mode gelap */
 html[data-bs-theme="dark"] .philosophy .philosophy-item:hover {
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .philosophy .philosophy-item i {
@@ -364,12 +351,12 @@ html[data-bs-theme="dark"] .philosophy .philosophy-item:hover {
 }
 
 /* =================================================================== */
-/* Custom Styling untuk Halaman Blog (Sidebar CTA)
+/* Custom Styling untuk Halaman Blog (Sidebar CTA) */
 /* =================================================================== */
 
 .sidebar .cta-widget {
   padding: 25px;
-  background-color: var(--surface-color, #f6f6f6); /* Warna latar yang sedikit beda */
+  background-color: var(--surface-color, #f6f6f6);
   border: 1px solid var(--border-color, #eef0f2);
   border-radius: 8px;
   text-align: center;
@@ -395,18 +382,18 @@ html[data-bs-theme="dark"] .philosophy .philosophy-item:hover {
 }
 
 .sidebar .cta-widget .btn-primary:hover {
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* Default: teks hitam */
 .dark-mode-text-light {
-  color: #212529; /* Bootstrap text-dark default */
+  color: #212529;
 }
 
 /* Kalau dark mode aktif, ubah jadi terang */
 @media (prefers-color-scheme: dark) {
   .dark-mode-text-light {
-    color: #f8f9fa; /* Bootstrap text-light default */
+    color: #f8f9fa;
   }
 }
 
@@ -416,13 +403,27 @@ html[data-bs-theme="dark"] .philosophy .philosophy-item:hover {
   margin: 0 auto;
   padding: 1rem;
   border-radius: 12px;
-  background-color: #d1cfcf; /* Light mode default */
+  background-color: #d1cfcf;
 }
 
 @media (prefers-color-scheme: dark) {
   .smart-bg {
-    background-color: #1e1e1e; /* Dark mode */
+    background-color: #161b22; /* Disesuaikan dengan surface-color */
   }
 }
+/* Animasi Nav Mobile */
+.navmenu {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
 
+.navmenu.closed {
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navmenu.open {
+  transform: translateX(0);
+  opacity: 1;
+}
 

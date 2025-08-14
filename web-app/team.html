@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
+<!DOCTYPE html><html lang="id"><head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>AI Assistant - Konsultasi Bisnis Digital Anda | Ixiera</title>
@@ -14,8 +11,8 @@
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
 
   <!-- Vendor CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +26,7 @@
   <link href="assets/css/custom.css" rel="stylesheet">
   
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -100,8 +97,8 @@
 
 <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-        <h1 class="sitename">Ixiera</h1>
+      <a href="index.html" class="logo d-flex align-items-center" data-translate="team_a_1">
+        <h1 class="sitename" data-translate="team_h1_1">Ixiera</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -113,22 +110,38 @@
           <li><a href="blog.html">Blog</a></li>
           <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="team.html"class="active">AI Assistant</a></li>
+              <li><a href="team.html" class="active">AI Assistant</a></li>
               <li><a href="services-details.html">Service Details</a></li>
               <li><a href="portfolio-details.html">Showcase Details</a></li>
               <li><a href="blog-details.html">Blog Details</a></li>
             </ul>
           </li>
           <li><a href="contact.html">Contact</a></li>
-          <li class="nav-item ms-2 d-flex align-items-center">
-            <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-              <i class="bi bi-moon-stars-fill"></i>
-              <i class="bi bi-sun-fill"></i>
-            </button>
-          </li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+           <!-- MODE GELAP -->
+        <li class="nav-item d-flex align-items-center mt-2 me-2">
+  <a href="https://ixiera-dashboard.vercel.app" class="btn btn-primary btn-sm rounded-pill px-3" style="background-color: #4db8ff; border: none;">
+    Go to Dashboard
+  </a>
+</li>
+<li class="nav-item d-flex align-items-center mt-2">
+  <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
+    <i class="bi bi-moon-stars-fill"></i>
+    <i class="bi bi-sun-fill"></i>
+    <span class="ms-3">Mode</span>
+  </button>
+</li>
+<li class="nav-item d-flex align-items-center mt-2 me-2">
+  <button 
+    id="lang-toggle-btn" 
+    onclick="toggleLanguage()" 
+    class="btn btn-primary btn-sm rounded-pill px-3" 
+    style="background-color: #4db8ff; border: none;">
+  EN/ID
+  </button>
+</li>
+</ul>
+<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+</nav>
     </div>
   </header>
 
@@ -136,11 +149,11 @@
   <main class="main">
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/team-page-title-bg.jpg);">
       <div class="container">
-        <h1>Asisten Digital Ixiera</h1>
+        <h1 data-translate="team_h1_2">Asisten Digital Ixiera</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">AI Assistant</li>
+            <li data-translate="team_li_1"><a href="index.html" data-translate="team_a_2">Home</a></li>
+            <li class="current" data-translate="team_li_2">AI Assistant</li>
           </ol>
         </nav>
       </div>
@@ -154,8 +167,8 @@
             
             <!-- Sidebar Riwayat (tersembunyi) -->
             <div class="chat-sidebar" id="chat-sidebar">
-              <h3>Riwayat Percakapan</h3>
-              <button class="btn btn-primary new-chat-btn" id="new-chat-btn">
+              <h3 data-translate="team_h3_1">Riwayat Percakapan</h3>
+              <button class="btn btn-primary new-chat-btn" id="new-chat-btn" data-translate="team_button_1">
                 <i class="bi bi-plus-lg"></i> Percakapan Baru
               </button>
               <ul class="chat-history-list" id="chat-history-list">
@@ -169,7 +182,7 @@
                 <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle history">
                   <i class="bi bi-list"></i>
                 </button>
-                <h2 class="chat-header-title">Percakapan</h2>
+                <h2 class="chat-header-title" data-translate="team_h2_1">Percakapan</h2>
               </div>
               <div class="chat-history" id="chat-history">
                 <!-- Pesan dimuat oleh JS -->
@@ -193,10 +206,10 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Ixiera</span>
+            <a href="index.html" class="logo d-flex align-items-center" data-translate="team_a_3">
+              <span class="sitename" data-translate="team_span_1">Ixiera</span>
             </a>
-            <p>Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
+            <p data-translate="team_p_1">Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
             <div class="social-links d-flex mt-4">
               <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
               <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
@@ -207,39 +220,39 @@
           </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4>Quick Links</h4>
+            <h4 data-translate="team_h4_1">Quick Links</h4>
             <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li data-translate="team_li_3"><a href="index.html" data-translate="team_a_4">Home</a></li>
+              <li data-translate="team_li_4"><a href="about.html" data-translate="team_a_5">About</a></li>
+              <li data-translate="team_li_5"><a href="services.html" data-translate="team_a_6">Services</a></li>
+              <li data-translate="team_li_6"><a href="blog.html" data-translate="team_a_7">Blog</a></li>
+              <li data-translate="team_li_7"><a href="contact.html" data-translate="team_a_8">Contact</a></li>
             </ul>
           </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4>Our Services</h4>
+            <h4 data-translate="team_h4_2">Our Services</h4>
             <ul>
-              <li><a href="services.html">Websites & Systems</a></li>
-              <li><a href="services.html">Business Automation</a></li>
-              <li><a href="services.html">Branding & Design</a></li>
-              <li><a href="services.html">Growth Marketing</a></li>
-              <li><a href="services.html">Growth Partnership</a></li>
+              <li data-translate="team_li_8"><a href="services.html" data-translate="team_a_9">Websites &amp; Systems</a></li>
+              <li data-translate="team_li_9"><a href="services.html" data-translate="team_a_10">Business Automation</a></li>
+              <li data-translate="team_li_10"><a href="services.html" data-translate="team_a_11">Branding &amp; Design</a></li>
+              <li data-translate="team_li_11"><a href="services.html" data-translate="team_a_12">Growth Marketing</a></li>
+              <li data-translate="team_li_12"><a href="services.html" data-translate="team_a_13">Growth Partnership</a></li>
             </ul>
           </div>
 
          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Contact</h4>
-            <p>Jl. Raya Surabaya - Malang No.1<br>
+            <h4 data-translate="team_h4_3">Contact</h4>
+            <p data-translate="team_p_2">Jl. Raya Surabaya - Malang No.1<br>
             Pandaan, Pasuruan, Jawa Timur 67156<br>
             Indonesia</p>
-            <p class="mt-4">
+            <p class="mt-4" data-translate="team_p_3">
               <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;">+62 857 3604 8626</a>
+              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;" data-translate="team_a_14">+62 857 3604 8626</a>
             </p>
-            <p>
+            <p data-translate="team_p_4">
               <strong>Email:</strong>
-              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;">solvixone@gmail.com</a>
+              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;" data-translate="team_a_15">solvixone@gmail.com</a>
             </p>
           </div>
         </div>
@@ -247,7 +260,7 @@
     </div>
 
     <div class="container copyright text-center">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
+      <p data-translate="team_p_5">© <span data-translate="team_span_2">Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span data-translate="team_span_3">All Rights Reserved</span></p>
     </div>
 
   </footer>
@@ -268,7 +281,8 @@
   <script src="assets/js/custom.js"></script>
   
   <!-- Logika AI Assistant -->
-  <script src="assets/js/ai.js" defer></script>
+  <script src="assets/js/ai.js" defer=""></script>
+ <script src="assets/js/translator.js" defer></script>
 
 </body>
 </html>

@@ -1,8 +1,4 @@
-// File: /api/ask-gemini.js
-// Ini adalah Vercel Serverless Function.
-
 export default async function handler(req, res) {
-  // Hanya izinkan metode POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
@@ -13,21 +9,25 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Ambil data dari body request yang dikirim oleh ai.js
-    const { systemPrompt, history, currentMessage } = req.body;
+    const { systemPrompt, history, currentMessage, questionCount } = req.body;
 
-    // Validasi input dasar
     if (!systemPrompt || !Array.isArray(history) || !currentMessage) {
-        return res.status(400).json({ error: 'Request body tidak lengkap. Membutuhkan systemPrompt, history, dan currentMessage.' });
+      return res.status(400).json({ error: 'Request body tidak lengkap. Membutuhkan systemPrompt, history, dan currentMessage.' });
     }
 
-    // Gabungkan riwayat lama dengan pesan baru dari pengguna
+    // Cek batas pertanyaan
+    if (questionCount >= 5) {
+      return res.status(200).json({
+        output: "Batas pertanyaan gratis Anda telah tercapai. Silakan lanjutkan interaksi di ixiera-dashboard.vercel.app untuk fitur penuh."
+      });
+    }
+
     const contents = [
-        ...history,
-        {
-            role: 'user',
-            parts: [{ text: currentMessage }]
-        }
+      ...history,
+      {
+        role: 'user',
+        parts: [{ text: currentMessage }]
+      }
     ];
 
     const geminiApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiApiKey}`;
@@ -40,16 +40,13 @@ export default async function handler(req, res) {
       generationConfig: {
         temperature: 0.7,
         topP: 1,
-        maxOutputTokens: 2048,
+        maxOutputTokens: 500,
       },
     };
 
-    // Kirim request ke Google Gemini API
     const geminiResponse = await fetch(geminiApiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(requestBody),
     });
 
@@ -60,8 +57,6 @@ export default async function handler(req, res) {
     }
 
     const data = await geminiResponse.json();
-
-    // Kirim kembali respons dari Gemini ke browser
     res.status(200).json(data);
 
   } catch (error) {
@@ -69,4 +64,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Terjadi kesalahan di server saat menghubungi Gemini API.' });
   }
 }
-
