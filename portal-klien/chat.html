@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Chat - Portal Klien</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="assets/css/fonts.min.css" />
+    <style>
+        .chat-container { height: calc(100vh - 200px); }
+        .chat-list { border-right: 1px solid #eee; }
+        .chat-window { display: flex; flex-direction: column; height: 100%; }
+        .chat-messages { flex-grow: 1; overflow-y: auto; padding: 1rem; }
+        .message { margin-bottom: 1rem; display: flex; }
+        .message .avatar { width: 40px; height: 40px; }
+        .message .message-body { padding: 0.5rem 1rem; border-radius: 1rem; max-width: 70%; }
+        .message.sent { flex-direction: row-reverse; }
+        .message.sent .message-body { background-color: #3a7cff; color: white; }
+        .message.received .message-body { background-color: #f1f0f0; }
+        .chat-input { border-top: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar (Sama seperti di index.html, tapi item 'Chat' yang aktif) -->
+        <div class="sidebar" data-background-color="dark">
+            <div class="sidebar-logo">
+                <div class="logo-header" data-background-color="dark">
+                    <a href="index.html" class="logo"><img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/></a>
+                </div>
+            </div>
+            <div class="sidebar-wrapper scrollbar scrollbar-inner">
+                <div class="sidebar-content">
+                    <ul class="nav nav-secondary">
+                        <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><p>Dashboard</p></a></li>
+                        <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Menu Saya</h4></li>
+                        <li class="nav-item active"><a href="chat.html"><i class="fas fa-comments"></i><p>Chat</p></a></li>
+                        <li class="nav-item"><a href="profile.html"><i class="fas fa-user-cog"></i><p>Pengaturan Akun</p></a></li>
+                        <li class="nav-item"><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="main-panel">
+            <div class="main-header">
+                <!-- Navbar (Bisa disamakan dengan index.html) -->
+                <div class="main-header-logo"></div>
+                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                            <li class="nav-item topbar-user dropdown hidden-caret">
+                                <!-- Dropdown profil pengguna -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="container">
+                <div class="page-inner">
+                    <h3 class="fw-bold mb-3">Pesan</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row chat-container">
+                                <!-- Daftar Percakapan -->
+                                <div class="col-md-4 chat-list">
+                                    <div class="list-group list-group-flush" id="conversation-list">
+                                        <div class="text-center p-5"><div class="spinner-border text-primary" role="status"></div></div>
+                                        <!-- Daftar user/percakapan akan diisi oleh JavaScript -->
+                                    </div>
+                                </div>
+                                <!-- Jendela Chat -->
+                                <div class="col-md-8 chat-window">
+                                    <div class="chat-header border-bottom p-3 d-none" id="chat-header">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar me-3"><img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" id="chat-partner-avatar"></div>
+                                            <div><h5 class="mb-0" id="chat-partner-name">Nama Partner</h5></div>
+                                        </div>
+                                    </div>
+                                    <div class="chat-messages" id="chat-messages-container">
+                                        <div class="d-flex h-100 justify-content-center align-items-center">
+                                            <p class="text-muted">Pilih percakapan untuk memulai.</p>
+                                        </div>
+                                    </div>
+                                    <div class="chat-input p-3 d-none" id="chat-input-area">
+                                        <form id="message-form">
+                                            <div class="input-group">
+                                                <input type="text" id="message-input" class="form-control" placeholder="Ketik pesan..." autocomplete="off">
+                                                <button class="btn btn-primary" type="submit"><i class="fa fa-paper-plane"></i></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <!-- Footer -->
+            </footer>
+        </div>
+    </div>
+
+    <!-- Core JS Files -->
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/kaiadmin.min.js"></script>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <!-- Script custom untuk chat -->
+    <script src="assets/js/app-chat.js"></script>
+</body>
+</html>
+
