@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Client Portal - Dashboard</title>
+    <title>Client Portal - Logout</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -48,7 +48,7 @@
           <div class="sidebar-content">
             <!-- UPDATED SIDEBAR -->
             <ul class="nav nav-secondary">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a href="index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a>
               </li>
               <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Portal Menu</h4></li>
@@ -66,10 +66,10 @@
               </li>
               <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
               <li class="nav-item">
-                <a href="#"><i class="fas fa-user-cog"></i><p>Settings</p></a>
+                <a href="settings.html"><i class="fas fa-user-cog"></i><p>Settings</p></a>
               </li>
-              <li class="nav-item">
-                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a>
+              <li class="nav-item active">
+                <a href="logout.html"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a>
               </li>
             </ul>
           </div>
@@ -105,15 +105,15 @@
                           <div class="u-text">
                             <h4 id="username-dropdown">Client Name</h4>
                             <p class="text-muted" id="user-email-dropdown">client@email.com</p>
-                            <a href="#" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                            <a href="settings.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                           </div>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="settings.html">Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
+                        <a class="dropdown-item" href="logout.html" id="logoutButtonDropdown">Logout</a>
                       </li>
                     </div>
                   </ul>
@@ -125,82 +125,17 @@
 
         <div class="container">
           <div class="page-inner">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-              <div>
-                <h3 class="fw-bold mb-3">My Dashboard</h3>
-                <h6 class="op-7 mb-2">Welcome back! Here's the progress on your orders.</h6>
-              </div>
-            </div>
-            <!-- REVAMPED STATS CARDS -->
-            <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-warning bubble-shadow-small"><i class="fas fa-tasks"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Orders In Progress</p><h4 class="card-title" id="stats-in-progress">0</h4></div>
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <div class="card card-round mt-5">
+                  <div class="card-body text-center p-5">
+                    <div class="py-4">
+                      <i class="fas fa-sign-out-alt fa-4x text-primary mb-4"></i>
+                      <h2 class="fw-bold mb-3">Logging Out</h2>
+                      <p class="mb-4">You are being securely logged out of your account. Please wait...</p>
+                      <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Logging out...</span>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-success bubble-shadow-small"><i class="fas fa-check-circle"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Completed Orders</p><h4 class="card-title" id="stats-completed">0</h4></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-info bubble-shadow-small"><i class="fas fa-dollar-sign"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Total Spent</p><h4 class="card-title" id="stats-total-spent">$0.00</h4></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- NEW ORDER TRACKING TABLE -->
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row"><div class="card-title">Order Progress Tracking</div></div>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover align-middle">
-                        <thead>
-                          <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col" style="width: 40%;">Progress</th>
-                            <th scope="col" class="text-center">Downloads</th>
-                          </tr>
-                        </thead>
-                        <tbody id="orders-tracking-table">
-                          <!-- Loader Row -->
-                          <tr id="orders-loader">
-                            <td colspan="3" class="text-center p-5">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading your orders...</span>
-                                </div>
-                                <p class="mt-2">Loading your orders...</p>
-                            </td>
-                          </tr>
-                          <!-- Order rows will be injected by dashboard.js -->
-                        </tbody>
-                      </table>
                     </div>
                   </div>
                 </div>
@@ -233,7 +168,6 @@
     <!-- SUPABASE & CUSTOM JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-client.js"></script>
-    <script src="assets/js/dashboard.js"></script> <!-- Our new dashboard logic -->
+    <script src="assets/js/logout.js"></script>
   </body>
 </html>
-

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Client Portal - Dashboard</title>
+    <title>Client Portal - Settings</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -48,7 +48,7 @@
           <div class="sidebar-content">
             <!-- UPDATED SIDEBAR -->
             <ul class="nav nav-secondary">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a href="index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a>
               </li>
               <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Portal Menu</h4></li>
@@ -65,7 +65,7 @@
                 <a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a>
               </li>
               <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a href="#"><i class="fas fa-user-cog"></i><p>Settings</p></a>
               </li>
               <li class="nav-item">
@@ -127,80 +127,129 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">My Dashboard</h3>
-                <h6 class="op-7 mb-2">Welcome back! Here's the progress on your orders.</h6>
+                <h3 class="fw-bold mb-3">Account Settings</h3>
+                <h6 class="op-7 mb-2">Manage your account preferences and security settings</h6>
               </div>
             </div>
-            <!-- REVAMPED STATS CARDS -->
+            
             <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-warning bubble-shadow-small"><i class="fas fa-tasks"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Orders In Progress</p><h4 class="card-title" id="stats-in-progress">0</h4></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-success bubble-shadow-small"><i class="fas fa-check-circle"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Completed Orders</p><h4 class="card-title" id="stats-completed">0</h4></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-info bubble-shadow-small"><i class="fas fa-dollar-sign"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Total Spent</p><h4 class="card-title" id="stats-total-spent">$0.00</h4></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- NEW ORDER TRACKING TABLE -->
-            <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-8">
                 <div class="card card-round">
                   <div class="card-header">
-                    <div class="card-head-row"><div class="card-title">Order Progress Tracking</div></div>
+                    <div class="card-head-row">
+                      <div class="card-title">Profile Information</div>
+                    </div>
                   </div>
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover align-middle">
-                        <thead>
-                          <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col" style="width: 40%;">Progress</th>
-                            <th scope="col" class="text-center">Downloads</th>
-                          </tr>
-                        </thead>
-                        <tbody id="orders-tracking-table">
-                          <!-- Loader Row -->
-                          <tr id="orders-loader">
-                            <td colspan="3" class="text-center p-5">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading your orders...</span>
-                                </div>
-                                <p class="mt-2">Loading your orders...</p>
-                            </td>
-                          </tr>
-                          <!-- Order rows will be injected by dashboard.js -->
-                        </tbody>
-                      </table>
+                    <form id="profileForm">
+                      <div class="form-group row">
+                        <label for="fullName" class="col-sm-3 col-form-label">Full Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="fullName" placeholder="Your full name">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-3">
+                        <label for="email" class="col-sm-3 col-form-label">Email Address</label>
+                        <div class="col-sm-9">
+                          <input type="email" class="form-control" id="email" placeholder="Your email address">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-3">
+                        <label for="company" class="col-sm-3 col-form-label">Company</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="company" placeholder="Your company name">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-3">
+                        <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
+                        <div class="col-sm-9">
+                          <input type="tel" class="form-control" id="phone" placeholder="Your phone number">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-4">
+                        <div class="col-sm-12 text-end">
+                          <button type="submit" class="btn btn-primary">Update Profile</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                
+                <div class="card card-round mt-4">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Change Password</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <form id="passwordForm">
+                      <div class="form-group row">
+                        <label for="currentPassword" class="col-sm-3 col-form-label">Current Password</label>
+                        <div class="col-sm-9">
+                          <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-3">
+                        <label for="newPassword" class="col-sm-3 col-form-label">New Password</label>
+                        <div class="col-sm-9">
+                          <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-3">
+                        <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
+                        <div class="col-sm-9">
+                          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
+                        </div>
+                      </div>
+                      <div class="form-group row mt-4">
+                        <div class="col-sm-12 text-end">
+                          <button type="submit" class="btn btn-primary">Change Password</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="card card-round">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Profile Picture</div>
+                    </div>
+                  </div>
+                  <div class="card-body text-center">
+                    <div class="avatar-upload">
+                      <div class="avatar-edit">
+                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                        <label for="imageUpload"><i class="fas fa-pencil-alt"></i></label>
+                      </div>
+                      <div class="avatar-preview">
+                        <div id="imagePreview" style="background-image: url('assets/img/profile.jpg');"></div>
+                      </div>
+                    </div>
+                    <p class="text-muted mt-3">Allowed JPG, GIF or PNG. Max size of 2MB</p>
+                  </div>
+                </div>
+                
+                <div class="card card-round mt-4">
+                  <div class="card-header">
+                    <div class="card-head-row">
+                      <div class="card-title">Security</div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="twoFactorAuth" checked>
+                      <label class="form-check-label" for="twoFactorAuth">Two-Factor Authentication</label>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                      <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="smsNotifications">
+                      <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
                     </div>
                   </div>
                 </div>
@@ -233,7 +282,6 @@
     <!-- SUPABASE & CUSTOM JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-client.js"></script>
-    <script src="assets/js/dashboard.js"></script> <!-- Our new dashboard logic -->
+    <script src="assets/js/settings.js"></script>
   </body>
 </html>
-

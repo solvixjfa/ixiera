@@ -1,0 +1,284 @@
+/*
+================================================================================
+| PREMIUM STYLES FOR AI ASSISTANT PAGE                                         |
+| Description: Styles for the advanced chat interface.                         |
+================================================================================
+*/
+
+/* --- Header Section --- */
+.ai-header-section {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  padding: 2rem;
+  border-radius: 12px;
+  color: white;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(106, 90, 205, 0.3);
+}
+
+.ai-welcome-content {
+  display: flex;
+  align-items: center;
+}
+
+.ai-icon-wrapper {
+  position: relative;
+  margin-right: 1.5rem;
+}
+
+.ai-main-icon {
+  font-size: 3rem;
+  z-index: 2;
+  position: relative;
+}
+
+.ai-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.7; }
+  70% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+}
+
+.ai-title {
+  color: white;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ai-subtitle {
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* --- Chat Container --- */
+.ai-chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 4px 25px var(--shadow-color);
+  overflow: hidden;
+}
+
+.ai-chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: var(--sidebar-bg);
+  color: white;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ai-avatar-status {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.ai-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.status-indicator.online {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #28a745;
+  border-radius: 50%;
+  border: 2px solid var(--sidebar-bg);
+}
+
+.ai-name {
+  margin: 0;
+  font-weight: 600;
+  color: white;
+}
+.ai-status {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* --- Chat Messages Area --- */
+.ai-chat-messages {
+  flex-grow: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-message-bubble, .user-message-bubble {
+  display: flex;
+  margin-bottom: 1rem;
+  max-width: 75%;
+}
+
+.message-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: white;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.ai-message-bubble .message-avatar { background-color: var(--primary-color); }
+.user-message-bubble .message-avatar { background-color: #6c757d; }
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-text {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background-color: #f1f3f5;
+  color: var(--text-color);
+}
+.message-text p { margin-bottom: 0.5rem; }
+.message-text p:last-child { margin-bottom: 0; }
+.message-text ul { padding-left: 1.2rem; margin-bottom: 0; }
+
+.user-message-bubble {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+.user-message-bubble .message-avatar { margin-right: 0; margin-left: 1rem; }
+.user-message-bubble .message-text { background-color: var(--primary-color); color: white; }
+.user-message-bubble .message-time { align-self: flex-end; }
+
+.message-time {
+  font-size: 0.75rem;
+  color: #adb5bd;
+  margin-top: 0.25rem;
+}
+
+/* --- Quick Actions --- */
+.ai-quick-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 1.5rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.quick-action-item {
+  background-color: #f8f9fa;
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.quick-action-item:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+.quick-action-item i { margin-right: 5px; }
+
+/* --- Chat Input --- */
+.ai-chat-input {
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+}
+.input-wrapper { display: flex; align-items: flex-end; gap: 10px; }
+.input-container {
+  flex-grow: 1;
+  position: relative;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+.input-container:focus-within { border-color: var(--primary-color); box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.25); }
+
+#messageInput {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 12px 15px;
+  resize: none;
+  max-height: 120px;
+  overflow-y: auto;
+}
+#messageInput:focus { outline: none; }
+
+.btn-send {
+  height: 48px;
+  width: 48px;
+  flex-shrink: 0;
+}
+
+.input-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 5px;
+  padding: 0 5px;
+}
+
+.typing-indicator { display: none; }
+.typing-indicator.active { display: flex; }
+.typing-indicator span {
+  width: 8px; height: 8px; margin: 0 2px;
+  background-color: #6c757d; border-radius: 50%;
+  animation: typing 1.4s infinite both;
+}
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0% { transform: scale(0); }
+  40% { transform: scale(1); }
+  80% { transform: scale(0); }
+  100% { transform: scale(0); }
+}
+
+/* --- Capability Cards --- */
+.ai-capability-card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 25px var(--shadow-color);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+.ai-capability-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+.capability-icon {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
