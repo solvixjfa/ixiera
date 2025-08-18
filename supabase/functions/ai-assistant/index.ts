@@ -1,18 +1,16 @@
-// Import necessary libraries
+// File: supabase/functions/ai-assistant/index.ts
+
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
-// CORS headers are now directly inside this file for simplicity
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-// Define the monthly question limit
-const MONTHLY_LIMIT = 50; // Anda bisa ubah ini ke 50 atau 100
+const MONTHLY_LIMIT = 75;
 
 serve(async (req) => {
-  // Handle CORS preflight request
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -40,7 +38,7 @@ serve(async (req) => {
     }
 
     // 2. Check and update monthly usage
-    const currentMonth = new Date().toISOString().slice(0, 7); // Format: YYYY-MM
+    const currentMonth = new Date().toISOString().slice(0, 7);
     
     const { data: usage, error: usageError } = await supabaseAdmin
       .from('monthly_usage')
@@ -60,8 +58,10 @@ serve(async (req) => {
     }
 
     // 3. Prepare and call Gemini API
-    const systemPrompt = {
-      role: "system",
+    
+    // [PERBAIKAN] Definisikan instruksi sistem secara terpisah
+    const systemInstruction = {
+      role: "system", // Role ini hanya untuk struktur internal kita, tidak dikirim
       parts: [{
         text: `Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect. Nada bicara kamu frendly ramah, percaya diri, dan berwawasan luas, layaknya seorang CEO.
         Konteks: IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. jika ada yg menanyakan CEO & Founder ixiera adalah Jeffry.
@@ -72,8 +72,14 @@ serve(async (req) => {
       }]
     };
 
+    // [PERBAIKAN] Buat payload dengan format yang benar untuk Gemini API
     const geminiPayload = {
-      contents: [systemPrompt, ...history, { role: 'user', parts: [{ text: currentMessage }] }],
+      // Instruksi sistem diletakkan di sini
+      systemInstruction: {
+        parts: systemInstruction.parts
+      },
+      // Riwayat percakapan hanya berisi 'user' dan 'model'
+      contents: [...history, { role: 'user', parts: [{ text: currentMessage }] }],
       generationConfig: {
         maxOutputTokens: 500,
         temperature: 0.7,
