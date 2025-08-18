@@ -1,28 +1,25 @@
-/*
-================================================================================
-| JAVASCRIPT LOGIC FOR THE ORDER FORM
-| Description: Handles form submission by sending data to a Supabase Edge
-|              Function. Provides user feedback on success or failure.
-================================================================================
-*/
-import { supabase } from './supabase-client.js'; // Pastikan path-nya benar
-
+// [PRODUKSI] Impor dan panggil fungsi getSupabase dari file pusat
+import { getSupabase } from './supabase-client.js';
+const supabase = getSupabase();
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Pastikan kita berada di halaman yang memiliki form kontak
   const form = document.getElementById('order-form');
+  if (!form) return; // Jika tidak ada form, hentikan script
+
   const submitButton = document.getElementById('submit-button');
   const buttonText = submitButton.querySelector('.button-text');
   const spinner = submitButton.querySelector('.spinner-border');
   const formMessage = document.getElementById('form-message');
 
   form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Mencegah form mengirim data secara tradisional
+    event.preventDefault();
 
-    // --- UI Feedback: Loading State ---
+    // --- UI Feedback: Loading ---
     submitButton.disabled = true;
     spinner.style.display = 'inline-block';
-    buttonText.textContent = 'Sending...';
-    formMessage.innerHTML = ''; // Kosongkan pesan sebelumnya
+    buttonText.textContent = 'Mengirim...';
+    formMessage.innerHTML = ''; // Selalu bersihkan pesan sebelumnya
 
     try {
       // --- Kumpulkan Data Form ---
@@ -32,34 +29,42 @@ document.addEventListener('DOMContentLoaded', () => {
         client_phone: document.getElementById('whatsapp').value,
         service_type: document.getElementById('serviceType').value,
         project_requirements: document.getElementById('projectRequirements').value,
-        budget: document.getElementById('budget').value || null, // Kirim null jika kosong
-        deadline: document.getElementById('deadline').value || null, // Kirim null jika kosong
+        budget: document.getElementById('budget').value || null,
+        deadline: document.getElementById('deadline').value || null,
       };
 
-      // --- Panggil Supabase Edge Function ---
-      // PENTING: Ganti URL ini dengan URL Supabase Function Anda.
-      const { data, error } = await window.dbClient.functions.invoke('submit-order', {
+      // --- Panggil Edge Function ---
+      const { data, error } = await supabase.functions.invoke('submit-order', {
         body: formData,
       });
 
-      if (error) {
-        throw error; // Lemparkan error untuk ditangkap oleh blok catch
+      // Tangani semua jenis error
+      if (error || (data && data.error)) {
+        // Catat error teknis di console untuk developer
+        console.error('Submission Error:', error || data.error);
+        // Tampilkan pesan yang ramah untuk pengguna
+        throw new Error('Gagal mengirim pesan Anda. Silakan coba lagi nanti.');
       }
 
-      // --- UI Feedback: Success ---
-      formMessage.innerHTML = `<div class="alert alert-success" role="alert">Thank you! Your inquiry has been sent successfully. We will contact you shortly.</div>`;
+      // --- UI Feedback: Sukses ---
+      // Tampilkan pesan sukses yang jelas dan profesional
+      formMessage.innerHTML = `<div class="alert alert-success" role="alert">
+        <strong>Terima kasih!</strong> Pesan Anda telah berhasil terkirim. Kami akan segera menghubungi Anda.
+      </div>`;
       form.reset(); // Kosongkan form setelah berhasil
 
     } catch (error) {
-      // --- UI Feedback: Error ---
-      console.error('Error submitting form:', error);
-      const errorMessage = error.message || 'An unexpected error occurred. Please try again.';
-      formMessage.innerHTML = `<div class="alert alert-danger" role="alert">Error: ${errorMessage}</div>`;
+      // --- UI Feedback: Gagal ---
+      // Tampilkan pesan error yang ramah untuk pengguna
+      formMessage.innerHTML = `<div class="alert alert-danger" role="alert">
+        <strong>Terjadi Kesalahan:</strong> ${error.message}
+      </div>`;
     } finally {
-      // --- UI Feedback: Reset Button State ---
+      // --- UI Feedback: Reset Tombol ---
+      // Ini akan selalu dijalankan, baik berhasil maupun gagal
       submitButton.disabled = false;
       spinner.style.display = 'none';
-      buttonText.textContent = 'Send Project Inquiry';
+      buttonText.textContent = 'Kirim Permintaan Proyek';
     }
   });
 });
