@@ -7,12 +7,16 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// [FINAL] Masukkan Channel ID Slack Anda di sini
+const SLACK_CHANNEL_ID = 'C09767FCAUA'; 
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
 
   try {
+    // Ambil semua data dari form
     const formData = await req.json();
     const { 
       client_name, 
@@ -33,58 +37,66 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    // Langkah 1: Simpan data ke database (tabel project_inquiries)
+    // Langkah 1: Simpan data ke database
     const { data, error } = await supabaseClient
       .from('project_inquiries')
-      .insert({
-        client_name,
-        client_email,
-        client_phone,
-        service_type,
-        project_requirements,
-        budget, // Sekarang menyimpan string seperti "IDR 5000000"
-        deadline,
-        status: 'new'
-      })
-      .select()
+      .insert({ client_name, client_email, client_phone, service_type, project_requirements, budget, deadline, status: 'new' })
+      .select('id')
       .single();
 
     if (error) throw error;
 
-    // --- DI SINI TEMPAT OTOMATISASI ANDA ---
-    // Setelah data berhasil disimpan, picu notifikasi.
-
-    // Contoh: Kirim notifikasi ke Discord atau Slack (butuh webhook URL di secrets)
-    // const webhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
-    // if (webhookUrl) {
-    //   await fetch(webhookUrl, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ content: `New project inquiry from ${client_name} (${client_email}) for ${service_type}.` }),
-    //   });
-    // }
-
-    // Contoh: Kirim email follow-up otomatis ke klien (butuh layanan email seperti Resend)
-    // const resendApiKey = Deno.env.get('RESEND_API_KEY');
-    // if (resendApiKey) {
-    //   await fetch('https://api.resend.com/emails', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Authorization': `Bearer ${resendApiKey}`,
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //       from: 'Your Name <noreply@yourdomain.com>',
-    //       to: [client_email],
-    //       subject: 'Terima Kasih Telah Menghubungi Ixiera!',
-    //       html: `<p>Halo ${client_name}, terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
-    //     }),
-    //   });
-    // }
+    // --- OTOMATISASI DIMULAI ---
     
-    // ------------------------------------------
+    // Kirim notifikasi ke Discord
+    const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
+    if (discordWebhookUrl) {
+      fetch(discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `🔔 **Permintaan Proyek Baru!**\n**Nama:** ${client_name}\n**Email:** ${client_email}\n**Layanan:** ${service_type}`
+        }),
+      }).catch(err => console.error("Discord webhook error:", err));
+    }
 
-    return new Response(JSON.stringify({ data }), {
+    // Kirim notifikasi ke Slack menggunakan API Key
+    const slackApiKey = Deno.env.get('SLACK_API_KEY');
+    if (slackApiKey && SLACK_CHANNEL_ID) {
+        fetch('https://slack.com/api/chat.postMessage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${slackApiKey}`
+            },
+            body: JSON.stringify({
+                channel: SLACK_CHANNEL_ID,
+                text: `🔔 Permintaan Proyek Baru!\n*Nama:* ${client_name}\n*Email:* ${client_email}\n*Layanan:* ${service_type}`
+            }),
+        }).catch(err => console.error("Slack API error:", err));
+    }
+
+    // Kirim email follow-up ke klien via Resend
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (resendApiKey) {
+      fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'Ixiera <onboarding@resend.dev>',
+          to: [client_email],
+          subject: 'Terima Kasih Telah Menghubungi Ixiera!',
+          html: `<p>Halo ${client_name},<br><br>Terima kasih atas permintaan Anda untuk layanan <strong>${service_type}</strong>. Tim kami akan segera meninjaunya dan menghubungi Anda kembali dalam 1-2 hari kerja.<br><br>Salam,<br>Tim Ixiera</p>`,
+        }),
+      }).catch(err => console.error("Resend API error:", err));
+    }
+    
+    // ----------------------------
+
+    return new Response(JSON.stringify({ inquiry_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
