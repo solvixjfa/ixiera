@@ -2,7 +2,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// [PERBAIKAN] Definisikan corsHeaders langsung di sini
+// [PERBAIKAN] Definisikan corsHeaders langsung di sini, hapus import yang salah.
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
