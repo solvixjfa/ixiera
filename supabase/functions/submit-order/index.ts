@@ -2,13 +2,10 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// [PERBAIKAN] Definisikan corsHeaders langsung di sini, hapus import yang salah.
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
-
-const PRODUCT_ID_FROM_FORM = '5879000c-5608-4676-bd0e-e977b3aa737e';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -20,6 +17,7 @@ Deno.serve(async (req) => {
     const { 
       client_name, 
       client_email, 
+      client_phone,
       service_type, 
       project_requirements, 
       budget, 
@@ -35,25 +33,58 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    const { data: newLead, error: leadError } = await supabaseClient
-      .from('leads_solvixone')
+    // Langkah 1: Simpan data ke database (tabel project_inquiries)
+    const { data, error } = await supabaseClient
+      .from('project_inquiries')
       .insert({
-        contact_name: client_name,
-        contact_email: client_email,
-        notes: project_requirements,
-        service_type: service_type,
-        budget: budget,
-        deadline: deadline,
-        product_id: PRODUCT_ID_FROM_FORM,
-        status: 'new',
-        client_id: null 
+        client_name,
+        client_email,
+        client_phone,
+        service_type,
+        project_requirements,
+        budget, // Sekarang menyimpan string seperti "IDR 5000000"
+        deadline,
+        status: 'new'
       })
       .select()
       .single();
 
-    if (leadError) throw leadError;
+    if (error) throw error;
 
-    return new Response(JSON.stringify({ data: newLead }), {
+    // --- DI SINI TEMPAT OTOMATISASI ANDA ---
+    // Setelah data berhasil disimpan, picu notifikasi.
+
+    // Contoh: Kirim notifikasi ke Discord atau Slack (butuh webhook URL di secrets)
+    // const webhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
+    // if (webhookUrl) {
+    //   await fetch(webhookUrl, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ content: `New project inquiry from ${client_name} (${client_email}) for ${service_type}.` }),
+    //   });
+    // }
+
+    // Contoh: Kirim email follow-up otomatis ke klien (butuh layanan email seperti Resend)
+    // const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    // if (resendApiKey) {
+    //   await fetch('https://api.resend.com/emails', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Authorization': `Bearer ${resendApiKey}`,
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //       from: 'Your Name <noreply@yourdomain.com>',
+    //       to: [client_email],
+    //       subject: 'Terima Kasih Telah Menghubungi Ixiera!',
+    //       html: `<p>Halo ${client_name}, terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
+    //     }),
+    //   });
+    // }
+    
+    // ------------------------------------------
+
+    return new Response(JSON.stringify({ data }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });

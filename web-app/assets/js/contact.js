@@ -3,68 +3,66 @@ import { getSupabase } from './supabase-client.js';
 const supabase = getSupabase();
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Pastikan kita berada di halaman yang memiliki form kontak
   const form = document.getElementById('order-form');
-  if (!form) return; // Jika tidak ada form, hentikan script
+  if (!form) return;
 
-  const submitButton = document.getElementById('submit-button');
+  const submitButton = form.querySelector('button[type="submit"]');
   const buttonText = submitButton.querySelector('.button-text');
-  const spinner = submitButton.querySelector('.spinner-border');
   const formMessage = document.getElementById('form-message');
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    // --- UI Feedback: Loading ---
+    const originalButtonText = buttonText.textContent;
     submitButton.disabled = true;
-    spinner.style.display = 'inline-block';
     buttonText.textContent = 'Mengirim...';
-    formMessage.innerHTML = ''; // Selalu bersihkan pesan sebelumnya
+    formMessage.innerHTML = '';
 
     try {
-      // --- Kumpulkan Data Form ---
+      // [PERBAIKAN] Kumpulkan data form dengan cara yang lebih aman
+      
+      // Cari elemen opsional terlebih dahulu
+      const budgetEl = document.getElementById('budget');
+      const currencyEl = document.getElementById('currency');
+      const deadlineEl = document.getElementById('deadline');
+
+      // Ambil nilainya hanya jika elemennya ada
+      const budgetValue = budgetEl ? budgetEl.value : null;
+      const currencyValue = currencyEl ? currencyEl.value : 'IDR';
+      const fullBudget = budgetValue ? `${currencyValue} ${budgetValue}` : null;
+      const deadlineValue = deadlineEl ? deadlineEl.value || null : null;
+
       const formData = {
         client_name: document.getElementById('fullName').value,
         client_email: document.getElementById('email').value,
-        client_phone: document.getElementById('whatsapp').value,
+        client_phone: document.getElementById('phone').value,
         service_type: document.getElementById('serviceType').value,
         project_requirements: document.getElementById('projectRequirements').value,
-        budget: document.getElementById('budget').value || null,
-        deadline: document.getElementById('deadline').value || null,
+        budget: fullBudget,
+        deadline: deadlineValue,
       };
 
-      // --- Panggil Edge Function ---
       const { data, error } = await supabase.functions.invoke('submit-order', {
         body: formData,
       });
 
-      // Tangani semua jenis error
       if (error || (data && data.error)) {
-        // Catat error teknis di console untuk developer
         console.error('Submission Error:', error || data.error);
-        // Tampilkan pesan yang ramah untuk pengguna
         throw new Error('Gagal mengirim pesan Anda. Silakan coba lagi nanti.');
       }
 
-      // --- UI Feedback: Sukses ---
-      // Tampilkan pesan sukses yang jelas dan profesional
       formMessage.innerHTML = `<div class="alert alert-success" role="alert">
         <strong>Terima kasih!</strong> Pesan Anda telah berhasil terkirim. Kami akan segera menghubungi Anda.
       </div>`;
-      form.reset(); // Kosongkan form setelah berhasil
+      form.reset();
 
     } catch (error) {
-      // --- UI Feedback: Gagal ---
-      // Tampilkan pesan error yang ramah untuk pengguna
       formMessage.innerHTML = `<div class="alert alert-danger" role="alert">
         <strong>Terjadi Kesalahan:</strong> ${error.message}
       </div>`;
     } finally {
-      // --- UI Feedback: Reset Tombol ---
-      // Ini akan selalu dijalankan, baik berhasil maupun gagal
       submitButton.disabled = false;
-      spinner.style.display = 'none';
-      buttonText.textContent = 'Kirim Permintaan Proyek';
+      buttonText.textContent = originalButtonText;
     }
   });
 });

@@ -159,78 +159,81 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Project Inquiry Form</h4>
-          <p class="card-category">Tell us about your project needs.</p>
+          <h4 class="card-title">Discuss Your Project</h4>
+          <p class="card-category">Tell us a bit about your idea.</p>
         </div>
         <div class="card-body">
-          <!-- Form starts here -->
           <form id="order-form" novalidate>
-            <!-- Full Name -->
+            
+            <!-- Name -->
             <div class="mb-3">
               <label for="fullName" class="form-label">Full Name <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter your full name" required>
+              <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Nama lengkapmu" required>
             </div>
 
             <!-- Email -->
             <div class="mb-3">
-              <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+              <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Alamat emailmu" required>
             </div>
 
-            <!-- WhatsApp -->
+            <!-- WhatsApp / Phone -->
             <div class="mb-3">
-              <label for="whatsapp" class="form-label">WhatsApp / Phone <span class="text-danger">*</span></label>
-              <input type="tel" class="form-control" id="whatsapp" name="whatsapp" placeholder="081234567890" required>
+              <label for="phone" class="form-label">Phone / WhatsApp <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="+62 812 3456 7890" pattern="^\+?\d{7,15}$" required>
             </div>
 
             <!-- Service Type -->
             <div class="mb-3">
-              <label for="serviceType" class="form-label">Service <span class="text-danger">*</span></label>
+              <label for="serviceType" class="form-label">Interested In... <span class="text-danger">*</span></label>
               <select class="form-select" id="serviceType" name="serviceType" required>
-                <option value="" selected disabled>-- Choose a service --</option>
-                <option value="Website Development">Website Development</option>
-                <option value="System Automation">System Automation</option>
-                <option value="UI/UX Design">UI/UX Design</option>
+                <option value="" selected disabled>-- Choose Service --</option>
+                <option value="Websites & Systems">Website & System</option>
+                <option value="Business Automation">Business Automation</option>
+                <option value="Branding & Design">Branding & Design</option>
+                <option value="Growth Marketing">Growth Marketing</option>
+                <option value="Growth Partnership">Growth Partnership</option>
+                  <option value="Growth Partnership">Free Consultation</option>
                 <option value="Other">Other</option>
               </select>
             </div>
 
             <!-- Project Requirements -->
             <div class="mb-3">
-              <label for="projectRequirements" class="form-label">Project Requirements <span class="text-danger">*</span></label>
-              <textarea class="form-control" id="projectRequirements" name="projectRequirements" rows="4" placeholder="Describe your project in detail..." required></textarea>
+              <label for="projectRequirements" class="form-label">Project Details <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="projectRequirements" name="projectRequirements" rows="4" placeholder="Ceritakan tentang proyekmu..." required></textarea>
             </div>
 
             <!-- Budget -->
             <div class="mb-3">
               <label for="budget" class="form-label">Estimated Budget (Optional)</label>
               <div class="input-group">
-                <span class="input-group-text">IDR</span>
-                <input type="number" class="form-control" id="budget" name="budget" placeholder="5000000" min="0">
+                <select class="form-select" id="currency" name="currency">
+                  <option value="IDR" selected>IDR</option>
+                  <option value="USD">USD</option>
+                </select>
+                <input type="number" class="form-control" id="budget" name="budget" placeholder="Contoh: 5000000" min="0">
               </div>
             </div>
 
             <!-- Deadline -->
             <div class="mb-3">
-              <label for="deadline" class="form-label">Expected Deadline (Optional)</label>
+              <label for="deadline" class="form-label">Estimated Deadline (Optional)</label>
               <input type="date" class="form-control" id="deadline" name="deadline">
             </div>
 
-            <!-- Submit Button with Spinner -->
+            <!-- Submit -->
             <button type="submit" class="btn btn-primary w-100" id="submit-button">
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
-              <span class="button-text">Send Project Inquiry</span>
-            </button>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+  <span class="button-text">Send Request</span>
+</button>
 
-            <!-- Form Message Area -->
+
             <div id="form-message" class="mt-3"></div>
           </form>
-          <!-- Form ends here -->
         </div>
       </div>
     </div>
-  </div>
-</div>
   </div>
 </div>
 
