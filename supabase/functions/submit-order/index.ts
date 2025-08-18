@@ -1,26 +1,27 @@
 // File: supabase/functions/submit-order/index.ts
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { corsHeaders } from '../_shared/cors.ts'; // Pastikan file _shared/cors.ts ada
 
-// Definisikan header CORS untuk mengizinkan request dari website Anda
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*', // Mengizinkan semua domain, siap untuk produksi
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-// ID Produk statis untuk "integrasi sistem operasi otomatis"
-const PRODUCT_ID_FROM_FORM = '5879000c-5608-4676-bd0e-e977b3aa737e';
-
-// Fungsi utama yang akan dijalankan
 Deno.serve(async (req) => {
-  // Tangani preflight request dari browser
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    // 1. Ambil data JSON dari form yang dikirim oleh contact.js
-    const formData = await req.json();
+    // LANGKAH DEBUG 1: Lihat data mentah yang masuk
+    const bodyText = await req.text();
+    console.log("Menerima body mentah:", bodyText);
+
+    // Jika body kosong, langsung hentikan
+    if (!bodyText) {
+      throw new Error("Request body kosong.");
+    }
+
+    // LANGKAH DEBUG 2: Coba parse data JSON
+    const formData = JSON.parse(bodyText);
+    console.log("Berhasil mem-parse formData:", formData);
+
     const { 
       client_name, 
       client_email, 
@@ -30,55 +31,55 @@ Deno.serve(async (req) => {
       deadline 
     } = formData;
 
-    // 2. Validasi sederhana untuk memastikan data penting ada
+    // LANGKAH DEBUG 3: Lakukan validasi
     if (!client_name || !client_email) {
+      console.error("Validasi gagal: Nama atau Email kosong.", { client_name, client_email });
       throw new Error("Nama dan Email wajib diisi.");
     }
+    console.log("Validasi berhasil.");
 
-    // 3. Buat koneksi ke Supabase menggunakan kunci Service Role (aman di sisi server)
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    // 4. Masukkan data langsung ke tabel leads_solvixone
+    const PRODUCT_ID_FROM_FORM = '5879000c-5608-4676-bd0e-e977b3aa737e';
+
+    // LANGKAH DEBUG 4: Coba masukkan ke database
+    console.log("Mencoba memasukkan data ke leads_solvixone...");
     const { data: newLead, error: leadError } = await supabaseClient
       .from('leads_solvixone')
       .insert({
-        // Kolom baru untuk kontak dari website
         contact_name: client_name,
         contact_email: client_email,
-        
-        // Kolom lain dari form
         notes: project_requirements,
         service_type: service_type,
         budget: budget,
         deadline: deadline,
-        
-        // Kolom wajib lainnya
         product_id: PRODUCT_ID_FROM_FORM,
         status: 'new',
-        
-        // Biarkan client_id NULL karena ini adalah pengunjung, bukan klien terdaftar
         client_id: null 
       })
       .select()
       .single();
 
-    // Jika ada error dari Supabase, lemparkan error tersebut
-    if (leadError) throw leadError;
+    if (leadError) {
+      console.error("Error dari Supabase DB:", leadError);
+      throw leadError;
+    }
 
-    // 5. Jika berhasil, kirim respons sukses kembali ke browser
+    console.log("Berhasil memasukkan data:", newLead);
     return new Response(JSON.stringify({ data: newLead }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
 
   } catch (error) {
-    // Jika terjadi error apapun, kirim respons error
+    // LANGKAH DEBUG 5: Tangkap dan catat error apapun yang terjadi
+    console.error("Terjadi error di dalam Edge Function:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 400, // Gunakan status 400 untuk error dari klien/data
+      status: 400,
     });
   }
 });

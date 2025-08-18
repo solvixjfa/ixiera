@@ -1,12 +1,8 @@
-// [PERBAIKAN] Impor fungsi 'getSupabase', bukan 'supabase'
+// [PERBAIKAN] Impor dan panggil fungsi getSupabase
 import { getSupabase } from './supabase-client.js';
-
-// [PERBAIKAN] Panggil fungsi untuk mendapatkan koneksi Supabase.
 const supabase = getSupabase();
 
-
 // --- FUNGSI-FUNGSI UNTUK KOMENTAR ---
-// (Tidak ada perubahan di dalam fungsi-fungsi ini)
 
 async function loadComments(postId) {
     const commentsList = document.getElementById('comments-list');
