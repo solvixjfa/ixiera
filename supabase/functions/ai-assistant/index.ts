@@ -3,6 +3,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// [PERBAIKAN] Definisikan corsHeaders langsung di sini
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -16,6 +17,7 @@ serve(async (req) => {
   }
 
   try {
+    // ... sisa kode Anda tetap sama persis ...
     const { history, currentMessage } = await req.json()
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY')
 
@@ -23,7 +25,6 @@ serve(async (req) => {
       throw new Error('GEMINI_API_KEY is not set in environment variables.')
     }
 
-    // 1. Authenticate the user (Sama seperti sebelumnya)
     const authHeader = req.headers.get('Authorization')!
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -37,7 +38,6 @@ serve(async (req) => {
       })
     }
 
-    // 2. Check monthly usage (Sama seperti sebelumnya)
     const currentMonth = new Date().toISOString().slice(0, 7);
     const { data: usage, error: usageError } = await supabaseAdmin
       .from('monthly_usage')
@@ -51,28 +51,19 @@ serve(async (req) => {
       }), { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
     }
 
-    // [LOGIKA BARU] 3. Ambil data konteks klien dari database
-    let clientDataContext = "Klien ini belum memiliki pesanan aktif."; // Default context
+    let clientDataContext = "Klien ini belum memiliki pesanan aktif.";
 
     try {
-      // Ambil data pesanan (leads) klien berdasarkan ID user yang sedang login
-      // Ini mengambil nama produk dari tabel 'products' secara otomatis
       const { data: clientLeads, error: leadsError } = await supabaseAdmin
         .from('leads_solvixone')
-        .select(`
-          status,
-          notes,
-          created_at,
-          products ( name )
-        `)
-        .eq('client_id', user.id); // Kita asumsikan client_id di leads_solvixone = user.id di auth
+        .select(`status, notes, created_at, products ( name )`)
+        .eq('client_id', user.id);
 
       if (leadsError) throw leadsError;
 
-      // Jika klien memiliki pesanan, format datanya menjadi teks yang mudah dibaca AI
       if (clientLeads && clientLeads.length > 0) {
         const formattedLeads = clientLeads.map(lead => 
-          `- Pesanan untuk "${lead.products.name}" (Status: ${lead.status}). Dibuat pada: ${new Date(lead.created_at).toLocaleDateString('id-ID')}. Catatan: ${lead.notes || 'Tidak ada'}`
+          `- Pesanan untuk "${lead.products?.name || 'Layanan Tidak Ditemukan'}" (Status: ${lead.status}). Dibuat pada: ${new Date(lead.created_at).toLocaleDateString('id-ID')}. Catatan: ${lead.notes || 'Tidak ada'}`
         ).join('\n');
         
         clientDataContext = `Berikut adalah data pesanan aktif milik klien:\n${formattedLeads}`;
@@ -82,16 +73,13 @@ serve(async (req) => {
       clientDataContext = "Gagal mengambil data pesanan klien saat ini.";
     }
 
-    // 4. Siapkan prompt sistem yang cerdas dengan data konteks
     const systemInstruction = {
       parts: [{
         text: `Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect yang efisien dan solutif.
 Konteks: IXIERA membangun sistem digital untuk bisnis. CEO & Founder adalah Jeffry.
-
 --- DATA KLIEN SAAT INI ---
 ${clientDataContext}
 --- AKHIR DATA KLIEN ---
-
 Aturan Utama:
 1. Gunakan DATA KLIEN di atas untuk menjawab pertanyaan spesifik tentang pesanan mereka.
 2. Jika tidak ada data atau pertanyaan tidak terkait pesanan, jawab secara umum sebagai ahli strategi digital.
@@ -101,7 +89,6 @@ Aturan Utama:
       }]
     };
 
-    // 5. Panggil Gemini API dengan payload yang sudah diperkaya (Sama seperti sebelumnya)
     const geminiPayload = {
       systemInstruction: { parts: systemInstruction.parts },
       contents: [...history, { role: 'user', parts: [{ text: currentMessage }] }],
@@ -120,7 +107,6 @@ Aturan Utama:
 
     const geminiData = await geminiResponse.json();
 
-    // 6. Increment usage count (Sama seperti sebelumnya)
     await supabaseAdmin
       .from('monthly_usage')
       .update({ question_count: usage.question_count + 1 })
