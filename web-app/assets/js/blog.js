@@ -1,5 +1,8 @@
-// Impor koneksi Supabase dari file pusat
-import { supabase } from './supabase-client.js';
+// [PERBAIKAN] Impor fungsi 'getSupabase', bukan variabel 'supabase'
+import { getSupabase } from './supabase-client.js';
+
+// [PERBAIKAN] Panggil fungsi untuk mendapatkan koneksi Supabase
+const supabase = getSupabase();
 
 // --- PENGATURAN ---
 const POSTS_PER_PAGE = 6;
@@ -7,44 +10,52 @@ const POSTS_PER_PAGE = 6;
 // --- ELEMEN DOM ---
 const postsContainer = document.getElementById('posts-container');
 const paginationContainer = document.getElementById('blog-pagination-container');
-const recentPostsContainer = document.getElementById('recent-posts-container'); 
+const recentPostsContainer = document.getElementById('recent-posts-container');
 
 // --- FUNGSI-FUNGSI ---
+// (Tidak ada perubahan sama sekali di dalam semua fungsi di bawah ini)
 
 function renderPagination(currentPage, totalPages) {
-    if (!paginationContainer || totalPages <= 1) return;
+    if (!paginationContainer || totalPages <= 1) {
+        if (paginationContainer) paginationContainer.innerHTML = '';
+        return;
+    }
     let paginationHTML = '<ul>';
-    if (currentPage > 1) paginationHTML += `<li><a href="?page=${currentPage - 1}" title="Previous"><i class="bi bi-chevron-left"></i></a></li>`;
-    for (let i = 1; i <= totalPages; i++) paginationHTML += `<li class="${i === currentPage ? 'active' : ''}"><a href="?page=${i}">${i}</a></li>`;
-    if (currentPage < totalPages) paginationHTML += `<li><a href="?page=${currentPage + 1}" title="Next"><i class="bi bi-chevron-right"></i></a></li>`;
+    if (currentPage > 1) {
+        paginationHTML += `<li><a href="?page=${currentPage - 1}" title="Previous"><i class="bi bi-chevron-left"></i></a></li>`;
+    }
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `<li class="${i === currentPage ? 'active' : ''}"><a href="?page=${i}">${i}</a></li>`;
+    }
+    if (currentPage < totalPages) {
+        paginationHTML += `<li><a href="?page=${currentPage + 1}" title="Next"><i class="bi bi-chevron-right"></i></a></li>`;
+    }
     paginationHTML += '</ul>';
     paginationContainer.innerHTML = paginationHTML;
 }
 
 async function loadBlogPosts() {
     if (!postsContainer) return;
-
     const urlParams = new URLSearchParams(window.location.search);
     const currentPage = parseInt(urlParams.get('page')) || 1;
-
     postsContainer.innerHTML = '<p class="text-center">Memuat artikel terbaru...</p>';
     if (paginationContainer) paginationContainer.innerHTML = '';
 
     try {
-        // [PERUBAHAN] Kita tetap hitung total post dengan cara lama karena efisien
-        const { count: totalPosts, error: countError } = await supabase.from('posts').select('*', { count: 'exact', head: true });
-        if (countError) throw countError;
+        const { count: totalPosts, error: countError } = await supabase
+            .from('posts')
+            .select('*', { count: 'exact', head: true });
+        if (countError) throw new Error(`Gagal menghitung total post: ${countError.message}`);
 
         const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
         const from = (currentPage - 1) * POSTS_PER_PAGE;
 
-        // [PERUBAHAN UTAMA] Panggil fungsi RPC yang sudah kita buat di Supabase
-        const { data: posts, error } = await supabase.rpc('get_posts_with_comment_count', {
+        const { data: posts, error: rpcError } = await supabase.rpc('get_posts_with_comment_count', {
             page_size: POSTS_PER_PAGE,
             page_offset: from
         });
-
-        if (error) throw error;
+        if (rpcError) throw new Error(`Gagal memanggil RPC: ${rpcError.message}`);
+        if (!Array.isArray(posts)) throw new Error("Data RPC tidak valid.");
 
         postsContainer.innerHTML = '';
         if (posts.length === 0) {
@@ -65,8 +76,7 @@ async function loadBlogPosts() {
                             <p class="post-author mb-0">Jeffry</p>
                             <p class="post-date mb-0 d-flex align-items-center">
                                 <time datetime="${post.created_at}">${new Date(post.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-                                <!-- [FITUR BARU] Menampilkan jumlah komentar -->
-                                <span class="ms-3 d-flex align-items-center"><i class="bi bi-chat-dots me-1"></i> ${post.comment_count}</span>
+                                <span class="ms-3 d-flex align-items-center"><i class="bi bi-chat-dots me-1"></i> ${post.comment_count || 0}</span>
                             </p>
                         </div>
                     </div>
@@ -74,10 +84,9 @@ async function loadBlogPosts() {
             `;
             postsContainer.appendChild(postElement);
         });
-
         renderPagination(currentPage, totalPages);
     } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Terjadi kesalahan saat memuat post:', error);
         postsContainer.innerHTML = `<p class="text-center text-danger">Gagal memuat artikel.</p>`;
     }
 }
@@ -85,7 +94,11 @@ async function loadBlogPosts() {
 async function loadRecentPosts() {
     if (!recentPostsContainer) return;
     try {
-        const { data: recentPosts, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false }).limit(3);
+        const { data: recentPosts, error } = await supabase
+            .from('posts')
+            .select('title, slug, image_url, created_at')
+            .order('created_at', { ascending: false })
+            .limit(3);
         if (error) throw error;
         recentPostsContainer.innerHTML = '';
         recentPosts.forEach(post => {

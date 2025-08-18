@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  // Cek apakah API Key ada
   if (!process.env.GROQ_API_KEY) {
     return res.status(500).json({ error: 'GROQ_API_KEY tidak diatur di server.' });
   }
@@ -22,9 +21,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Request body tidak lengkap.' });
     }
 
-    // Batas pertanyaan gratis
     if (questionCount >= 5) {
-      // Mengembalikan format yang sama seperti API agar frontend tidak error
       return res.status(200).json({
         candidates: [{
           content: {
@@ -34,16 +31,18 @@ export default async function handler(req, res) {
       });
     }
 
+    // [PERUBAHAN] System prompt diperbarui dengan aturan bahasa dan jawaban singkat yang lebih tegas.
     const systemPrompt = `
-      Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect. Nada bicara Anda profesional, percaya diri, dan berwawasan luas, layaknya seorang CEO.
-      Konteks: IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. jika ada yg menanyakan CEO & Founder ixiera adalah Jeffry.
+      Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect. Nada bicara kamu friendly, percaya diri, dan berwawasan luas.
+      Konteks: IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. CEO & Founder ixiera adalah Jeffry.
       Aturan Utama:
-      1.  Ringkas & Solutif: Berikan jawaban yang langsung ke intinya, jelas, dan menawarkan solusi atau langkah selanjutnya. Gunakan bahasa bilingual (Indonesia-Inggris) yang natural.
-      2.  Arahkan ke Dashboard: Jika pertanyaan menyangkut detail proyek, portal klien, atau fitur lanjutan, selalu arahkan pengguna ke dashboard yaitu di menu navigasi go to dashboard
-      3.  Jaga Persona: Jawab semua pertanyaan, bahkan yang umum sekalipun, dengan sudut pandang seorang ahli strategi digital.
+      1.  ATURAN BAHASA (SANGAT PENTING): Selalu balas dalam bahasa yang SAMA dengan pertanyaan terakhir pengguna. Jika pengguna bertanya dalam Bahasa Indonesia, balas dalam Bahasa Indonesia. Jika dalam Bahasa Inggris, balas dalam Bahasa Inggris.
+      2.  JAWABAN SINGKAT & PADAT: Berikan jawaban yang langsung ke intinya, maksimal 3-4 kalimat. Hindari penjelasan yang terlalu panjang dan bertele-tele.
+      3.  Solutif: Tawarkan solusi atau langkah selanjutnya yang praktis.
+      4.  Arahkan ke Dashboard: Jika pertanyaan menyangkut detail proyek atau fitur lanjutan, selalu arahkan pengguna ke dashboard.
+      5.  Jaga Persona: Jawab semua pertanyaan dengan sudut pandang seorang ahli strategi digital.
     `;
 
-    // Gabungkan history dan pesan baru untuk dikirim ke Groq
     const messages = [
       { role: "system", content: systemPrompt },
       ...history.map(h => ({ 
@@ -55,15 +54,15 @@ export default async function handler(req, res) {
 
     const chatCompletion = await groq.chat.completions.create({
       messages: messages,
-      model: "llama3-8b-8192", // Model yang sangat cepat
+      model: "llama3-8b-8192",
       temperature: 0.7,
-      max_tokens: 500,
+      // [PERUBAHAN] max_tokens dikurangi agar jawaban tidak terlalu panjang.
+      max_tokens: 150, 
       top_p: 1,
     });
 
     const aiResponse = chatCompletion.choices[0]?.message?.content || "Maaf, terjadi kendala. Silakan coba lagi.";
 
-    // PENTING: Kembalikan data dalam format yang sama seperti Gemini agar frontend tidak perlu diubah
     res.status(200).json({
       candidates: [{
         content: {

@@ -49,7 +49,7 @@ function applyTranslations(translations, lang) {
 async function initializeTranslator() {
   try {
     // Ambil kamus dari file JSON
-    const response = await fetch('/assets/translations.json');
+    const response = await fetch('./assets/translations.json');
     if (!response.ok) throw new Error('File translations.json tidak ditemukan atau gagal dimuat.');
     
     const translations = await response.json();

@@ -6,8 +6,7 @@
 | FIX: Corrected bootstrap modal initialization to prevent timing errors.      |
 ================================================================================
 */
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('supabase-ready', async () => {
   const productGallery = document.getElementById("product-gallery");
   const galleryLoader = document.getElementById("gallery-loader");
   const leadForm = document.getElementById('lead-form');

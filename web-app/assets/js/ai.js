@@ -1,6 +1,9 @@
 // File: assets/js/ai.js
 // VERSI PRODUKSI - Siap untuk Launching
 
+// [PERBAIKAN] Impor fungsi 'getSupabase' dari file client pusat
+import { getSupabase } from './supabase-client.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- Elemen DOM ---
     const wrapper = document.getElementById('chat-interface-wrapper');
@@ -14,10 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!wrapper || !toggleBtn || !overlay) return;
 
-    // --- Konfigurasi Supabase ---
-    const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // [PERBAIKAN] Panggil fungsi untuk mendapatkan koneksi Supabase
+    const supabase = getSupabase();
 
     // --- State Aplikasi ---
     let isLoading = false;
@@ -52,7 +53,23 @@ document.addEventListener('DOMContentLoaded', () => {
             copyBtn.className = 'copy-btn';
             copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
             copyBtn.setAttribute('aria-label', 'Copy message');
-            copyBtn.onclick = () => navigator.clipboard.writeText(text);
+            copyBtn.onclick = () => {
+                // Gunakan document.execCommand untuk kompatibilitas iframe
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    copyBtn.innerHTML = '<i class="bi bi-check-lg"></i>'; // Ganti ikon menjadi centang
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>'; // Kembalikan ikon setelah 1.5 detik
+                    }, 1500);
+                } catch (err) {
+                    console.error('Gagal menyalin teks: ', err);
+                }
+                document.body.removeChild(textArea);
+            };
             messageElement.appendChild(copyBtn);
         }
         
@@ -149,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 parts: [{ text: m.content }]
             }));
             
-            // --- PANGGILAN API YANG SUDAH DISIMPLIFIKASI ---
             const response = await fetch('/api/ask-gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
