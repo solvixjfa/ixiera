@@ -15,10 +15,8 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // Ambil data mentah dari frontend
     const formData = await req.json();
 
-    // Validasi menggunakan nama field dari frontend (HTML/JS)
     if (!formData.fullName || !formData.email) {
       throw new Error("Nama dan Email wajib diisi.");
     }
@@ -28,10 +26,8 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    // Gabungkan mata uang dan budget jika ada
-    const budgetString = formData.budget ? `${formData.currency} ${formData.budget}` : null;
+    const budgetString = formData.budget ? `${formData.currency} ${formData.budget}` : 'Tidak ditentukan';
 
-    // [PERBAIKAN] Petakan data dari frontend ke kolom database dengan benar
     const inquiryData = {
       client_name: formData.fullName,
       client_email: formData.email,
@@ -43,7 +39,7 @@ Deno.serve(async (req) => {
       status: 'new'
     };
 
-    // Langkah 1: Simpan data yang sudah dipetakan ke database
+    // Langkah 1: Simpan data ke database
     const { data, error } = await supabaseClient
       .from('project_inquiries')
       .insert(inquiryData)
@@ -52,56 +48,69 @@ Deno.serve(async (req) => {
     if (error) throw error;
 
     // --- OTOMATISASI ---
-    const automationTasks = [];
-    // Gunakan data yang sudah bersih dari inquiryData untuk notifikasi
-    const { client_name, client_email, service_type } = inquiryData;
+    
+    // [PERBAIKAN] Buat pesan notifikasi yang lengkap
+    const notificationMessage = `
+🔔 **Permintaan Proyek Baru!**
+----------------------------------
+**Nama:** ${inquiryData.client_name}
+**Email:** ${inquiryData.client_email}
+**Telepon:** ${inquiryData.client_phone}
+**Layanan:** ${inquiryData.service_type}
+**Anggaran:** ${inquiryData.budget}
+**Deadline:** ${inquiryData.deadline || 'Tidak ditentukan'}
+**Kebutuhan:**
+${inquiryData.project_requirements}
+    `.trim();
 
-    // Tugas 1: Kirim notifikasi ke Discord
-    const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
-    if (discordWebhookUrl) {
-      automationTasks.push(
-        fetch(discordWebhookUrl, {
+    // [PERBAIKAN] Jalankan setiap otomatisasi secara terpisah dan aman
+    
+    // Kirim notifikasi ke Discord
+    try {
+      const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
+      if (discordWebhookUrl) {
+        await fetch(discordWebhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: `🔔 **Permintaan Proyek Baru!**\n**Nama:** ${client_name}\n**Email:** ${client_email}\n**Layanan:** ${service_type}` })
-        })
-      );
-    }
+          body: JSON.stringify({ content: notificationMessage })
+        });
+      }
+    } catch (e) { console.error("Gagal mengirim ke Discord:", e.message); }
 
-    // Tugas 2: Kirim notifikasi ke Slack
-    const slackApiKey = Deno.env.get('SLACK_API_KEY');
-    if (slackApiKey && SLACK_CHANNEL_ID) {
-      automationTasks.push(
-        fetch('https://slack.com/api/chat.postMessage', {
+    // Kirim notifikasi ke Slack
+    try {
+      const slackApiKey = Deno.env.get('SLACK_API_KEY');
+      if (slackApiKey && SLACK_CHANNEL_ID) {
+        await fetch('https://slack.com/api/chat.postMessage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${slackApiKey}`
             },
-            body: JSON.stringify({ channel: SLACK_CHANNEL_ID, text: `🔔 Permintaan Proyek Baru!\n*Nama:* ${client_name}\n*Email:* ${client_email}\n*Layanan:* ${service_type}` })
-        })
-      );
-    }
+            body: JSON.stringify({ channel: SLACK_CHANNEL_ID, text: notificationMessage.replace(/\*/g, '') }) // Hapus format bold untuk Slack
+        });
+      }
+    } catch (e) { console.error("Gagal mengirim ke Slack:", e.message); }
 
-    // Tugas 3: Kirim email follow-up ke klien
-    const resendApiKey = Deno.env.get('RESEND_API_KEY');
-    if (resendApiKey) {
-      automationTasks.push(
-        fetch('https://api.resend.com/emails', {
+    // Kirim email follow-up ke klien
+    try {
+      const resendApiKey = Deno.env.get('RESEND_API_KEY');
+      if (resendApiKey) {
+        await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${resendApiKey}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'Ixiera <onboarding@resend.dev>',
-            to: [client_email],
+            from: ' <onboarding@resend.dev>',
+            to: [inquiryData.client_email],
             subject: 'Terima Kasih Telah Menghubungi Ixiera!',
-            html: `<p>Halo ${client_name},<br><br>Terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
+            html: `<p>Halo ${inquiryData.client_name},<br><br>Terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
           })
-        })
-      );
-    }
+        });
+      }
+    } catch (e) { console.error("Gagal mengirim ke Resend:", e.message); }
     
-    await Promise.allSettled(automationTasks);
-    
+    // ----------------------------------------------------
+
     return new Response(JSON.stringify({ inquiry_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
