@@ -57,7 +57,7 @@ export default async function handler(req, res) {
       model: "llama3-8b-8192",
       temperature: 0.7,
       // [PERUBAHAN] max_tokens dikurangi agar jawaban tidak terlalu panjang.
-      max_tokens: 150, 
+      max_tokens: 100, 
       top_p: 1,
     });
 

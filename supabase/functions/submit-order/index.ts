@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
       status: 'new'
     };
 
-    // Langkah 1: Simpan data ke database (ini cepat)
+    // Langkah 1: Simpan data ke database
     const { data, error } = await supabaseClient
       .from('project_inquiries')
       .insert(inquiryData)
@@ -45,15 +45,39 @@ Deno.serve(async (req) => {
       .single();
     if (error) throw error;
 
-    // Langkah 2: Kirim notifikasi internal ke Discord (ini juga cepat)
+    // [PERBAIKAN] Langkah 2: Kirim notifikasi Discord yang lengkap
     const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
     if (discordWebhookUrl) {
-      // Kita tidak 'await' ini, biarkan berjalan di background (fire-and-forget)
+      // Buat pesan yang lebih detail
+      const notificationMessage = `
+🔔 **Permintaan Proyek Baru!**
+----------------------------------
+**Nama:** ${inquiryData.client_name}
+**Email:** ${inquiryData.client_email}
+**Telepon:** ${inquiryData.client_phone || 'Tidak ada'}
+**Layanan:** ${inquiryData.service_type}
+**Anggaran:** ${inquiryData.budget}
+**Deadline:** ${inquiryData.deadline || 'Tidak ditentukan'}
+**Kebutuhan:**
+${inquiryData.project_requirements}
+      `.trim();
+
+      // Kirim pesan ke Discord di background
       fetch(discordWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: `🔔 Permintaan Proyek Baru!\nNama: ${inquiryData.client_name}\nEmail: ${inquiryData.client_email}\nLayanan: ${inquiryData.service_type}` })
+        body: JSON.stringify({ content: notificationMessage })
       }).catch(err => console.error("Discord webhook error:", err));
+    }
+
+    // [BARU] Langkah 3: Panggil Vercel API untuk menangani sisanya
+    const vercelWebhookUrl = Deno.env.get('VERCEL_WEBHOOK_URL');
+    if (vercelWebhookUrl) {
+        fetch(vercelWebhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inquiryData) // Kirim semua data ke Vercel
+        }).catch(err => console.error("Vercel webhook error:", err));
     }
 
     // Langsung kirim balasan sukses ke pengguna
