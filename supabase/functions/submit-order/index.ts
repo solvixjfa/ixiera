@@ -9,6 +9,68 @@ const corsHeaders = {
 
 const SLACK_CHANNEL_ID = 'C09767FCAUA'; 
 
+// [PERBAIKAN] Fungsi untuk menjalankan otomatisasi di background
+const runAutomationsInBackground = async (inquiryData) => {
+  const { client_name, client_email, service_type, client_phone, budget, deadline, project_requirements } = inquiryData;
+
+  const notificationMessage = `
+🔔 **Permintaan Proyek Baru!**
+----------------------------------
+**Nama:** ${client_name}
+**Email:** ${client_email}
+**Telepon:** ${client_phone || 'Tidak ada'}
+**Layanan:** ${service_type}
+**Anggaran:** ${budget}
+**Deadline:** ${deadline || 'Tidak ditentukan'}
+**Kebutuhan:**
+${project_requirements}
+  `.trim();
+
+  // Kirim notifikasi ke Discord
+  try {
+    const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
+    if (discordWebhookUrl) {
+      await fetch(discordWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: notificationMessage })
+      });
+    }
+  } catch (e) { console.error("Gagal mengirim ke Discord:", e.message); }
+
+  // Kirim notifikasi ke Slack
+  try {
+    const slackApiKey = Deno.env.get('SLACK_API_KEY');
+    if (slackApiKey && SLACK_CHANNEL_ID) {
+      await fetch('https://slack.com/api/chat.postMessage', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${slackApiKey}`
+          },
+          body: JSON.stringify({ channel: SLACK_CHANNEL_ID, text: notificationMessage.replace(/\*/g, '') })
+      });
+    }
+  } catch (e) { console.error("Gagal mengirim ke Slack:", e.message); }
+
+  // Kirim email follow-up ke klien
+  try {
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (resendApiKey) {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${resendApiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'Ixiera <onboarding@resend.dev>',
+          to: [client_email],
+          subject: 'Terima Kasih Telah Menghubungi Ixiera!',
+          html: `<p>Halo ${client_name},<br><br>Terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
+        })
+      });
+    }
+  } catch (e) { console.error("Gagal mengirim ke Resend:", e.message); }
+};
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -39,7 +101,7 @@ Deno.serve(async (req) => {
       status: 'new'
     };
 
-    // Langkah 1: Simpan data ke database
+    // Langkah 1: Simpan data ke database (ini penting, jadi kita 'await')
     const { data, error } = await supabaseClient
       .from('project_inquiries')
       .insert(inquiryData)
@@ -47,70 +109,11 @@ Deno.serve(async (req) => {
       .single();
     if (error) throw error;
 
-    // --- OTOMATISASI ---
-    
-    // [PERBAIKAN] Buat pesan notifikasi yang lengkap
-    const notificationMessage = `
-🔔 **Permintaan Proyek Baru!**
-----------------------------------
-**Nama:** ${inquiryData.client_name}
-**Email:** ${inquiryData.client_email}
-**Telepon:** ${inquiryData.client_phone}
-**Layanan:** ${inquiryData.service_type}
-**Anggaran:** ${inquiryData.budget}
-**Deadline:** ${inquiryData.deadline || 'Tidak ditentukan'}
-**Kebutuhan:**
-${inquiryData.project_requirements}
-    `.trim();
+    // [PERBAIKAN] Jalankan otomatisasi di background (fire-and-forget)
+    // Kita panggil fungsinya tanpa 'await'
+    runAutomationsInBackground(inquiryData);
 
-    // [PERBAIKAN] Jalankan setiap otomatisasi secara terpisah dan aman
-    
-    // Kirim notifikasi ke Discord
-    try {
-      const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
-      if (discordWebhookUrl) {
-        await fetch(discordWebhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content: notificationMessage })
-        });
-      }
-    } catch (e) { console.error("Gagal mengirim ke Discord:", e.message); }
-
-    // Kirim notifikasi ke Slack
-    try {
-      const slackApiKey = Deno.env.get('SLACK_API_KEY');
-      if (slackApiKey && SLACK_CHANNEL_ID) {
-        await fetch('https://slack.com/api/chat.postMessage', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${slackApiKey}`
-            },
-            body: JSON.stringify({ channel: SLACK_CHANNEL_ID, text: notificationMessage.replace(/\*/g, '') }) // Hapus format bold untuk Slack
-        });
-      }
-    } catch (e) { console.error("Gagal mengirim ke Slack:", e.message); }
-
-    // Kirim email follow-up ke klien
-    try {
-      const resendApiKey = Deno.env.get('RESEND_API_KEY');
-      if (resendApiKey) {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${resendApiKey}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            from: ' <onboarding@resend.dev>',
-            to: [inquiryData.client_email],
-            subject: 'Terima Kasih Telah Menghubungi Ixiera!',
-            html: `<p>Halo ${inquiryData.client_name},<br><br>Terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
-          })
-        });
-      }
-    } catch (e) { console.error("Gagal mengirim ke Resend:", e.message); }
-    
-    // ----------------------------------------------------
-
+    // [PERBAIKAN] Langsung kirim balasan ke pengguna tanpa menunggu otomatisasi selesai
     return new Response(JSON.stringify({ inquiry_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
