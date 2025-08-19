@@ -7,6 +7,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Fungsi untuk mengirim email di background (fire-and-forget)
+const sendFollowUpEmail = async (inquiryData) => {
+  try {
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
+    if (resendApiKey) {
+      // Kita 'await' di sini karena ini satu-satunya tugas penting
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${resendApiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          from: 'Ixiera <onboarding@resend.dev>',
+          to: [inquiryData.client_email],
+          subject: 'Terima Kasih Telah Menghubungi Ixiera!',
+          html: `<p>Halo ${inquiryData.client_name},<br><br>Terima kasih atas permintaan Anda. Tim kami akan segera meninjaunya.</p>`,
+        })
+      });
+      console.log("Email follow-up berhasil dipicu.");
+    }
+  } catch (e) { 
+    console.error("Gagal mengirim email follow-up:", e.message); 
+  }
+};
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
@@ -45,40 +68,8 @@ Deno.serve(async (req) => {
       .single();
     if (error) throw error;
 
-    // [PERBAIKAN] Langkah 2: Kirim notifikasi Discord yang lengkap
-    const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
-    if (discordWebhookUrl) {
-      // Buat pesan yang lebih detail
-      const notificationMessage = `
-🔔 **Permintaan Proyek Baru!**
-----------------------------------
-**Nama:** ${inquiryData.client_name}
-**Email:** ${inquiryData.client_email}
-**Telepon:** ${inquiryData.client_phone || 'Tidak ada'}
-**Layanan:** ${inquiryData.service_type}
-**Anggaran:** ${inquiryData.budget}
-**Deadline:** ${inquiryData.deadline || 'Tidak ditentukan'}
-**Kebutuhan:**
-${inquiryData.project_requirements}
-      `.trim();
-
-      // Kirim pesan ke Discord di background
-      fetch(discordWebhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: notificationMessage })
-      }).catch(err => console.error("Discord webhook error:", err));
-    }
-
-    // [BARU] Langkah 3: Panggil Vercel API untuk menangani sisanya
-    const vercelWebhookUrl = Deno.env.get('VERCEL_WEBHOOK_URL');
-    if (vercelWebhookUrl) {
-        fetch(vercelWebhookUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(inquiryData) // Kirim semua data ke Vercel
-        }).catch(err => console.error("Vercel webhook error:", err));
-    }
+    // Langkah 2: Jalankan pengiriman email di background
+    sendFollowUpEmail(inquiryData);
 
     // Langsung kirim balasan sukses ke pengguna
     return new Response(JSON.stringify({ inquiry_id: data.id }), {
