@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       return res.status(200).json({
         candidates: [{
           content: {
-            parts: [{ text: "You have reached your free question limit. Please continue the interaction at ixiera dashboard for full features." }]
+            parts: [{ text: "You have reached your free question limit. Please continue the interaction at ixiera Portal for full features." }]
           }
         }]
       });
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
 
     // [PERUBAHAN] System prompt diperbarui dengan aturan bahasa dan jawaban singkat yang lebih tegas.
     const systemPrompt = `
-      Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect namamu adalah Ellie. Nada bicara kamu friendly,natural,ramah,mudah dipahami, dan berwawasan luas.
+      Persona: Anda adalah Asisten Digital IXIERA, namamu adalah Ellie. Nada bicara kamu friendly,natural,ramah,mudah dipahami, dan berwawasan luas.
       Konteks: IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. CEO & Founder ixiera adalah Jeffry.
       Aturan Utama:
       1.  ATURAN BAHASA (SANGAT PENTING): Selalu balas dalam bahasa yang SAMA dengan pertanyaan terakhir pengguna. Jika pengguna bertanya dalam Bahasa Indonesia, balas dalam Bahasa Indonesia. Jika dalam Bahasa Inggris, balas dalam Bahasa Inggris.
@@ -57,7 +57,7 @@ export default async function handler(req, res) {
       model: "llama3-8b-8192",
       temperature: 0.7,
       // [PERUBAHAN] max_tokens dikurangi agar jawaban tidak terlalu panjang.
-      max_tokens: 100, 
+      max_tokens: 150, 
       top_p: 1,
     });
 

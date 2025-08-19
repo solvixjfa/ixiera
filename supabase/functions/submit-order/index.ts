@@ -45,18 +45,18 @@ Deno.serve(async (req) => {
       .single();
     if (error) throw error;
 
-    // Langkah 2: Kirim notifikasi Discord di background (ini juga cepat)
+    // Langkah 2: Kirim notifikasi internal ke Discord (ini juga cepat)
     const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
     if (discordWebhookUrl) {
       // Kita tidak 'await' ini, biarkan berjalan di background (fire-and-forget)
       fetch(discordWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: `🔔 **Permintaan Proyek Baru!**\n**Nama:** ${inquiryData.client_name}\n**Email:** ${inquiryData.client_email}\n**Layanan:** ${inquiryData.service_type}` })
+        body: JSON.stringify({ content: `🔔 Permintaan Proyek Baru!\nNama: ${inquiryData.client_name}\nEmail: ${inquiryData.client_email}\nLayanan: ${inquiryData.service_type}` })
       }).catch(err => console.error("Discord webhook error:", err));
     }
 
-    // Langsung kirim balasan sukses ke pengguna tanpa menunggu notifikasi
+    // Langsung kirim balasan sukses ke pengguna
     return new Response(JSON.stringify({ inquiry_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
