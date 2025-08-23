@@ -25,11 +25,23 @@ jobs:
         with:
           version: latest # Selalu gunakan versi CLI terbaru
 
-      # 3. Deploy semua Edge Functions yang ada di folder 'supabase/functions'
-      - name: Deploy Edge Functions
-        run: supabase functions deploy --project-ref $SUPABASE_PROJECT_ID
+      # 3. [LANGKAH BARU & PENTING] Atur secrets untuk runtime fungsi di Supabase
+      # Langkah ini mengambil secrets dari GitHub dan menyimpannya di Supabase
+      # agar Deno.env.get() bisa membacanya.
+      - name: Set Supabase Runtime Secrets
+        run: |
+          supabase secrets set \
+            SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }} \
+            DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }} \
+            VERCEL_WEBHOOK_URL=${{ secrets.VERCEL_WEBHOOK_URL }}
         env:
-          # Gunakan "secrets" yang akan kita atur di GitHub
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+
+      # 4. Deploy semua Edge Functions yang ada di folder 'supabase/functions'
+      - name: Deploy Edge Functions
+        run: supabase functions deploy --project-ref ${{ secrets.SUPABASE_PROJECT_ID }} --no-verify-jwt
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
 
