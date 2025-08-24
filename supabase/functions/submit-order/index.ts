@@ -2,24 +2,28 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// Definisikan header CORS di satu tempat agar mudah dikelola
+// Definisikan header CORS
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// --- KUNCI ANDA DITARUH LANGSUNG DI SINI ---
+const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
+
 /**
- * Helper function untuk memanggil webhook tanpa menunggu respons (fire-and-forget).
+ * Helper function untuk memanggil webhook Discord.
  */
-const triggerWebhook = (url, payload, serviceName) => {
+const triggerDiscordWebhook = (url, payload) => {
   if (url) {
     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
-    }).catch(err => console.error(`Error saat memicu webhook ${serviceName}:`, err));
+    }).catch(err => console.error(`Error saat memicu webhook Discord:`, err));
   } else {
-    console.warn(`Webhook URL untuk ${serviceName} tidak diatur.`);
+    console.warn(`Webhook URL untuk Discord tidak diatur di environment variables.`);
   }
 };
 
@@ -31,40 +35,28 @@ Deno.serve(async (req) => {
   }
 
   try {
-    // --- LANGKAH DEBUGGING DIMULAI DI SINI ---
-    const supabaseUrl = Deno.env.get('SUPABASE_URL');
-    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
-
-    // Mencetak variabel ke log untuk verifikasi.
-    // Ini adalah langkah paling penting untuk menemukan masalahnya.
-    console.log("DEBUG: Mencoba terhubung dengan URL:", supabaseUrl ? "DITEMUKAN" : "TIDAK DITEMUKAN (undefined)");
-    console.log("DEBUG: Mencoba menggunakan Anon Key:", supabaseAnonKey ? `DITEMUKAN (dimulai dengan: ${supabaseAnonKey.substring(0, 5)}...)` : "TIDAK DITEMUKAN (undefined)");
-
-    // Validasi apakah secret ada atau tidak.
-    if (!supabaseUrl || !supabaseAnonKey) {
-      throw new Error("KRITIS: Supabase URL atau Anon Key tidak ditemukan di environment variables.");
-    }
-    // --- AKHIR LANGKAH DEBUGGING ---
+    // Langsung buat client dengan kunci yang sudah kita definisikan di atas
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     const formData = await req.json();
+
+    // Validasi input
     if (!formData.fullName || !formData.email) {
       throw new Error("Nama lengkap dan Email wajib diisi.");
     }
 
-    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-
-    const budgetString = formData.budget ? `${formData.currency} ${formData.budget}` : 'Tidak ditentukan';
     const inquiryData = {
       client_name: formData.fullName,
       client_email: formData.email,
       client_phone: formData.phone || null,
       service_type: formData.serviceType,
       project_requirements: formData.projectRequirements,
-      budget: budgetString,
+      budget: formData.budget ? `${formData.currency} ${formData.budget}` : 'Tidak ditentukan',
       deadline: formData.deadline || null,
       status: 'new'
     };
 
+    // Langkah 1: Simpan data ke database
     const { data, error } = await supabaseClient
       .from('project_inquiries')
       .insert(inquiryData)
@@ -72,20 +64,18 @@ Deno.serve(async (req) => {
       .single();
 
     if (error) {
-      // Menambahkan detail error dari Supabase ke log agar lebih jelas
-      console.error('Supabase insert error detail:', JSON.stringify(error, null, 2));
-      throw new Error('Gagal menyimpan data ke database. Cek RLS atau detail error di atas.');
+      console.error('Supabase insert error:', error);
+      throw new Error('Gagal menyimpan data ke database.');
     }
 
+    // Langkah 2: Kirim notifikasi ke Discord
     const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
     const discordPayload = {
       content: `🔔 **Permintaan Proyek Baru!**\n----------------------------------\n**Nama:** ${inquiryData.client_name}\n**Email:** ${inquiryData.client_email}\n**Telepon:** ${inquiryData.client_phone || 'Tidak ada'}\n**Layanan:** ${inquiryData.service_type}\n**Anggaran:** ${inquiryData.budget}\n**Deadline:** ${inquiryData.deadline || 'Tidak ditentukan'}\n**Kebutuhan:**\n${inquiryData.project_requirements}`
     };
-    triggerWebhook(discordWebhookUrl, discordPayload, 'Discord');
+    triggerDiscordWebhook(discordWebhookUrl, discordPayload);
 
-    const vercelWebhookUrl = Deno.env.get('VERCEL_WEBHOOK_URL');
-    triggerWebhook(vercelWebhookUrl, inquiryData, 'Vercel');
-
+    // Langkah 3: Kirim respons sukses ke klien
     return new Response(JSON.stringify({ success: true, inquiry_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
