@@ -2,18 +2,15 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// Definisikan header CORS
+// Definisikan header CORS untuk keamanan
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': '*', // Di produksi, ganti '*' dengan domain website Anda
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// --- KUNCI ANDA DITARUH LANGSUNG DI SINI ---
-const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
-
 /**
- * Helper function untuk memanggil webhook Discord.
+ * Helper function untuk memanggil webhook Discord secara aman.
+ * Proses ini berjalan di latar belakang tanpa ditunggu (fire-and-forget).
  */
 const triggerDiscordWebhook = (url, payload) => {
   if (url) {
@@ -27,24 +24,36 @@ const triggerDiscordWebhook = (url, payload) => {
   }
 };
 
-// Main server function
+// Fungsi utama Edge Function
 Deno.serve(async (req) => {
-  // Menangani request pre-flight CORS
+  // Menangani request pre-flight CORS dari browser
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    // Langsung buat client dengan kunci yang sudah kita definisikan di atas
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // --- BAGIAN PALING PENTING ---
+    // 1. Ambil secrets dari environment (yang diatur via GitHub Actions).
+    const supabaseUrl = Deno.env.get('SUPABASE_URL');
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
+    // 2. Pastikan secrets ada. Jika tidak, fungsi akan berhenti dengan error yang jelas.
+    if (!supabaseUrl || !serviceRoleKey) {
+      throw new Error('Konfigurasi Supabase (URL atau Service Role Key) tidak ditemukan.');
+    }
+
+    // 3. Buat client dengan hak akses penuh (service_role) untuk mem-bypass RLS.
+    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
+
+    // Ambil data dari form yang dikirim klien
     const formData = await req.json();
 
-    // Validasi input
+    // Validasi input sederhana
     if (!formData.fullName || !formData.email) {
       throw new Error("Nama lengkap dan Email wajib diisi.");
     }
 
+    // Siapkan data untuk dimasukkan ke database
     const inquiryData = {
       client_name: formData.fullName,
       client_email: formData.email,
@@ -57,15 +66,16 @@ Deno.serve(async (req) => {
     };
 
     // Langkah 1: Simpan data ke database
-    const { data, error } = await supabaseClient
+    const { data, error } = await supabaseAdmin
       .from('project_inquiries')
       .insert(inquiryData)
       .select('id')
       .single();
 
+    // Jika gagal menyimpan, hentikan proses dan berikan error
     if (error) {
-      console.error('Supabase insert error:', error);
-      throw new Error('Gagal menyimpan data ke database.');
+      console.error('Supabase insert error detail:', error);
+      throw new Error('Gagal menyimpan data ke database. Cek detail error di atas.');
     }
 
     // Langkah 2: Kirim notifikasi ke Discord
@@ -82,6 +92,7 @@ Deno.serve(async (req) => {
     });
 
   } catch (error) {
+    // Tangani semua jenis error yang mungkin terjadi
     console.error("Error di Edge Function:", error.message);
     return new Response(JSON.stringify({ success: false, error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
