@@ -17,21 +17,22 @@ export default async function handler(req, res) {
   try {
     const { history, currentMessage, questionCount } = req.body;
 
-    if (!Array.isArray(history) || !currentMessage) {
-      return res.status(400).json({ error: 'Request body tidak lengkap.' });
+    // Validasi dasar tetap penting
+    if (!Array.isArray(history) || typeof currentMessage !== 'string' || currentMessage.trim() === '') {
+      return res.status(400).json({ error: 'Request body tidak lengkap atau tidak valid.' });
     }
 
+    // Pengecekan limit Anda sudah benar
     if (questionCount >= 5) {
       return res.status(200).json({
         candidates: [{
           content: {
-            parts: [{ text: "You have reached your free question limit. Please continue the interaction at ixiera Portal for full features." }]
+            parts: [{ text: "Anda telah mencapai batas pertanyaan gratis. Silakan lanjutkan interaksi di Portal IXIERA untuk fitur lengkap." }]
           }
         }]
       });
     }
 
-    // [PERUBAHAN] System prompt diperbarui dengan aturan bahasa dan jawaban singkat yang lebih tegas.
     const systemPrompt = `
       Persona: Anda adalah Asisten Digital IXIERA, namamu adalah Ashley. Nada bicara kamu friendly,natural,ramah,mudah dipahami, dan berwawasan luas.
       Konteks: IXIERA adalah platform yang membangun sistem digital dan otomatisasi untuk bisnis. CEO & Founder ixiera adalah Jeffry.
@@ -42,13 +43,26 @@ export default async function handler(req, res) {
       4.  Arahkan ke navigasi Portal IXIERA: Jika pertanyaan menyangkut detail proyek atau fitur lanjutan, selalu arahkan pengguna ke navigasi Portal IXIERA.
       5.  Jaga Persona: Jawab semua pertanyaan dengan sudut pandang seorang ahli strategi digital.
     `;
+    
+    // [INI ADALAH PERBAIKAN UTAMA]
+    // Kita memproses `history` dengan aman. Alih-alih `map` yang bisa error,
+    // kita gunakan `reduce` untuk mem-filter hanya item history yang valid dan lengkap.
+    const safeHistory = history.reduce((acc, h) => {
+      // Cek dengan teliti: apakah 'h' ada, 'h.role' ada, 'h.parts' adalah array, 
+      // dan 'h.parts[0].text' adalah string?
+      if (h && h.role && Array.isArray(h.parts) && h.parts[0] && typeof h.parts[0].text === 'string') {
+        acc.push({
+          role: h.role === 'model' ? 'assistant' : 'user',
+          content: h.parts[0].text
+        });
+      }
+      // Jika ada satu item history yang cacat, item itu akan dilewati begitu saja tanpa membuat server crash.
+      return acc;
+    }, []);
 
     const messages = [
       { role: "system", content: systemPrompt },
-      ...history.map(h => ({ 
-          role: h.role === 'model' ? 'assistant' : 'user', 
-          content: h.parts[0].text 
-      })),
+      ...safeHistory, // Gunakan history yang sudah dijamin aman
       { role: "user", content: currentMessage }
     ];
 
@@ -56,7 +70,6 @@ export default async function handler(req, res) {
       messages: messages,
       model: "llama3-8b-8192",
       temperature: 0.7,
-      // [PERUBAHAN] max_tokens dikurangi agar jawaban tidak terlalu panjang.
       max_tokens: 150, 
       top_p: 1,
     });
@@ -72,8 +85,13 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('Groq API Error:', error);
-    res.status(500).json({ error: 'Terjadi kesalahan di server saat menghubungi Groq API.' });
+    // Logging yang lebih baik untuk debugging
+    console.error('API Handler Error:', {
+        message: error.message,
+        requestBody: req.body 
+    });
+    res.status(500).json({ error: 'Terjadi kesalahan di server saat memproses permintaan.' });
   }
 }
+
 
