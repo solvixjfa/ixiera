@@ -96,6 +96,48 @@
       "about_span_4": "CEO & Founder",
       "about_p_9": "\"Tujuan saya simpel: menerjemahkan masalah bisnis yang rumit menjadi solusi digital yang efektif dan mudah digunakan. Ixiera ada untuk membuktikan bahwa teknologi canggih tidak harus membuat pusing.\""
     },
+    "services": {
+      "services_title": "Layanan Kami",
+      "services_description": "Isi deskripsi halaman layanan di sini.",
+      "services_card_1_title": "Judul Layanan 1"
+    },
+    "services-details": {
+      "services_details_title": "Detail Layanan",
+      "services_details_description": "Isi deskripsi detail layanan di sini."
+    },
+    "portfolio": {
+      "portfolio_title": "Portofolio Kami",
+      "portfolio_description": "Lihat proyek yang telah kami kerjakan.",
+      "portfolio_item_1_title": "Nama Proyek 1"
+    },
+    "portfolio-details": {
+      "portfolio_details_title": "Detail Proyek",
+      "portfolio_details_description": "Isi deskripsi detail proyek di sini."
+    },
+    "pricing": {
+      "pricing_title": "Paket Harga",
+      "pricing_description": "Pilih paket yang paling sesuai untuk Anda.",
+      "pricing_plan_1_name": "Nama Paket 1"
+    },
+    "blog": {
+      "blog_title": "Blog Kami",
+      "blog_description": "Baca artikel dan wawasan terbaru dari tim kami.",
+      "blog_post_1_title": "Judul Artikel Blog 1"
+    },
+    "blog-details": {
+      "blog_details_title": "Detail Artikel",
+      "blog_details_content": "Isi konten artikel blog di sini."
+    },
+    "team": {
+      "team_title": "Tim Kami",
+      "team_description": "Kenali orang-orang di balik Ixiera.",
+      "team_member_1_name": "Nama Anggota Tim 1"
+    },
+    "contact": {
+      "contact_title": "Hubungi Kami",
+      "contact_description": "Kami siap membantu. Kirimkan pesan kepada kami.",
+      "contact_form_name": "Nama Anda"
+    },
     "nav": {
       "home": "Home",
       "about": "About",
@@ -210,6 +252,48 @@
       "about_span_4": "CEO & Founder",
       "about_p_9": "\"My goal is simple: to translate complex business problems into effective and easy-to-use digital solutions. Ixiera exists to prove that advanced technology doesn't have to be a headache.\""
     },
+    "services": {
+      "services_title": "Our Services",
+      "services_description": "Fill the services page description here.",
+      "services_card_1_title": "Service Title 1"
+    },
+    "services-details": {
+      "services_details_title": "Service Details",
+      "services_details_description": "Fill the service details description here."
+    },
+    "portfolio": {
+      "portfolio_title": "Our Portfolio",
+      "portfolio_description": "See the projects we've worked on.",
+      "portfolio_item_1_title": "Project Name 1"
+    },
+    "portfolio-details": {
+      "portfolio_details_title": "Project Details",
+      "portfolio_details_description": "Fill the project details description here."
+    },
+    "pricing": {
+      "pricing_title": "Pricing Plans",
+      "pricing_description": "Choose the best plan for you.",
+      "pricing_plan_1_name": "Plan Name 1"
+    },
+    "blog": {
+      "blog_title": "Our Blog",
+      "blog_description": "Read the latest articles and insights from our team.",
+      "blog_post_1_title": "Blog Post Title 1"
+    },
+    "blog-details": {
+      "blog_details_title": "Article Details",
+      "blog_details_content": "Fill the blog article content here."
+    },
+    "team": {
+      "team_title": "Our Team",
+      "team_description": "Meet the people behind Ixiera.",
+      "team_member_1_name": "Team Member Name 1"
+    },
+    "contact": {
+      "contact_title": "Contact Us",
+      "contact_description": "We're here to help. Send us a message.",
+      "contact_form_name": "Your Name"
+    },
     "nav": {
       "home": "Home",
       "about": "About",
@@ -228,4 +312,3 @@
     }
   }
 }
-

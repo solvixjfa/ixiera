@@ -1,0 +1,79 @@
+/* --- Bootstrap & Kaiadmin Theme Core (Disingkat) --- */
+:root{--bs-blue:#0d6efd;--bs-indigo:#6610f2;--bs-purple:#6f42c1;--bs-pink:#d63384;--bs-red:#dc3545;--bs-orange:#fd7e14;--bs-yellow:#ffc107;--bs-green:#198754;--bs-teal:#20c997;--bs-cyan:#0dcaf0;--bs-black:#000;--bs-white:#fff;--bs-gray-dark:#343a40;--bs-primary:#0d6efd;--bs-secondary:#6c757d;--bs-font-sans-serif:"Public Sans",sans-serif;}*,::after,::before{box-sizing:border-box}body{margin:0;font-family:var(--bs-font-sans-serif);font-size:14px;line-height:1.5;color:#686868;background-color:#f4f5f8;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}.wrapper{position:relative;min-height:100vh;display:flex}.sidebar{position:fixed;top:0;left:0;height:100%;width:250px;background:#1a2035;z-index:1001;transition:all .3s;box-shadow:0 0 30px 0 rgba(82,63,105,.05)}.sidebar .sidebar-logo{height:60px;display:flex;align-items:center;padding:0 25px}.sidebar .logo-header{width:100%;display:flex;align-items:center;justify-content:space-between}.btn-toggle{font-size:16px;background:0 0;border:0;padding:0;color:#5d78ff}.sidebar .sidebar-wrapper{height:100%;position:relative}.sidebar .sidebar-content{padding-top:10px}.nav{display:flex;flex-wrap:wrap;padding-left:0;margin-bottom:0;list-style:none}.sidebar .nav>.nav-item a{display:flex;align-items:center;padding:8px 25px;color:#a2a9b1;font-size:14px;text-decoration:none}.sidebar .nav>.nav-item a p{margin-bottom:0}.sidebar .nav>.nav-item.active>a{background:#1E88E5;color:#fff}.sidebar .nav>.nav-item.active>a i{color:#fff}.sidebar .nav>.nav-item a:hover{background:rgba(30,136,229,.1);color:#1E88E5}.sidebar .nav>.nav-item a i{color:#989898;width:25px;margin-right:15px;text-align:center;font-size:18px}.sidebar .nav-section{padding:10px 25px;font-size:12px;text-transform:uppercase;font-weight:700;color:#5a6580}.main-panel{position:relative;width:100%;min-height:100vh;transition:all .3s;padding-left:250px;display:flex;flex-direction:column}.main-header{background:#fff;min-height:60px;border-bottom:1px solid #ebedf2}.container-fluid{width:100%;padding-right:1rem;padding-left:1rem;margin-right:auto;margin-left:auto}.d-flex{display:flex!important}.align-items-center{align-items:center!important}.justify-content-between{justify-content:space-between!important}.btn{display:inline-block;font-weight:600;line-height:1.5;color:#fff;text-align:center;text-decoration:none;vertical-align:middle;cursor:pointer;background-color:#5865F2;border:1px solid #5865F2;padding:.75rem 1.5rem;font-size:1rem;border-radius:.5rem;transition:all .2s ease}.btn:hover{background-color:#4a54c4;border-color:#4a54c4}.btn-secondary{background-color:#6c757d;border-color:#6c757d}.btn-secondary:hover{background-color:#5a6268;border-color:#5a6268}.content-wrapper{flex-grow:1;padding:1.5rem;overflow-y:auto}.card{background-color:#fff;border-radius:.75rem;box-shadow:0 4px 16px rgba(0,0,0,.08);border:none;padding:2rem;text-align:center}body.sidebar-gone .sidebar{left:-250px}body.sidebar-gone .main-panel{padding-left:0}
+
+/* --- GAYA UNTUK MODE IMERSIF --- */
+.discord-fullscreen-container{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:2000;background-color:#36393f;display:none}.discord-fullscreen-container iframe{width:100%;height:100%;border:none}.btn-exit-fullscreen{position:fixed;bottom:20px;right:20px;z-index:2001;display:none}body.immersive-mode .sidebar,body.immersive-mode .main-panel{display:none}body.immersive-mode .discord-fullscreen-container,body.immersive-mode .btn-exit-fullscreen{display:block}
+
+/* --- STYLING FOOTER BARU --- */
+.footer {
+  background-color: #1a2035; /* Matching dark sidebar */
+  color: #a2a9b1;
+  padding: 3rem 1.5rem;
+  border-top: 3px solid #5865F2; /* Accent color */
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-section {
+  flex: 1;
+  min-width: 220px; /* Prevent sections from getting too squished */
+  margin: 1rem;
+}
+.footer-section h4 {
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.footer-section p, .footer-section a {
+  color: #a2a9b1;
+  text-decoration: none;
+}
+.quick-links {
+  list-style: none;
+  padding: 0;
+}
+.quick-links li {
+  margin-bottom: 0.75rem;
+}
+.quick-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+.social-icons a {
+  font-size: 1.5rem; /* Larger icons */
+  margin-right: 1.25rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.social-icons a:last-child {
+  margin-right: 0;
+}
+.social-icons a:hover {
+  color: #5865F2; /* Accent color on hover */
+  transform: scale(1.1);
+}
+.copyright {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive styling for the new footer & main layout */
+@media (max-width: 991.98px) {
+  .main-panel{padding-left:0!important;width:100%!important}.sidebar .nav-toggle{display:none!important}
+}
+@media (max-width: 768px) {
+  .footer-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+  }
+  .footer-section {
+    margin-bottom: 2rem;
+  }
+}
+
+

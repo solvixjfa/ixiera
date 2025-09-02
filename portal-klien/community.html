@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Community Forum - Client Portal</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <!-- CSS dan Fonts (CDN & Eksternal) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" xintegrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="assets/css/style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      
+      <!-- Placeholder untuk Sidebar (akan diisi oleh JS) -->
+      <div id="sidebar-placeholder"></div>
+
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="container-fluid d-flex justify-content-between">
+            <button class="btn btn-toggle toggle-sidebar d-block d-md-none" style="display: none;"><i class="fas fa-bars"></i></button>
+          </div>
+        </div>
+        
+        <!-- KONTEN UNIK UNTUK HALAMAN KOMUNITAS -->
+        <div class="content-wrapper">
+          <div class="card">
+            <i class="fab fa-discord fa-3x" style="color: #5865F2; margin-bottom: 1rem;"></i>
+            <h2>Masuk ke Forum Komunitas</h2>
+            <p style="color: #6c757d; max-width: 400px; margin: 0 auto 1.5rem auto;">
+              Bergabunglah dalam percakapan, ajukan pertanyaan, dan terhubung dengan anggota lainnya secara real-time.
+            </p>
+            <div>
+              <button class="btn" id="enter-forum-btn">
+                <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i> Masuk ke Forum
+              </button>
+            </div>
+            <div style="margin-top: 1.5rem;">
+                <a href="https://discord.com/login" target="_blank" style="text-decoration: none; color: #5865F2; font-weight: 600;">
+                  Atau Login dengan Akun Discord
+                </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder untuk Footer (akan diisi oleh JS) -->
+        <footer class="footer" id="footer-placeholder"></footer>
+      </div>
+    </div>
+
+    <!-- ELEMEN UNTUK MODE IMERSIF (TERSEMBUNYI) -->
+    <div class="discord-fullscreen-container" id="discord-container">
+      <iframe src="https://e.widgetbot.io/channels/1411001146788679821/1411001149376430203?theme=dark&color=%235865F2" allow="clipboard-write; fullscreen"></iframe>
+    </div>
+    <button class="btn btn-secondary btn-exit-fullscreen" id="exit-forum-btn"><i class="fas fa-arrow-left" style="margin-right: 8px;"></i> Kembali ke Portal</button>
+    
+    <!-- JavaScript Utama (wajib di akhir body) -->
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
+
+
