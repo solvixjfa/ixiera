@@ -1,6 +1,5 @@
 import Groq from 'groq-sdk';
 
-// Inisialisasi Groq di luar handler agar koneksi bisa digunakan kembali
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
@@ -17,12 +16,10 @@ export default async function handler(req, res) {
   try {
     const { history, currentMessage, questionCount } = req.body;
 
-    // Validasi dasar tetap penting
     if (!Array.isArray(history) || typeof currentMessage !== 'string' || currentMessage.trim() === '') {
       return res.status(400).json({ error: 'Request body tidak lengkap atau tidak valid.' });
     }
 
-    // Pengecekan limit Anda sudah benar
     if (questionCount >= 5) {
       return res.status(200).json({
         candidates: [{
@@ -44,31 +41,26 @@ export default async function handler(req, res) {
       5.  Jaga Persona: Jawab semua pertanyaan dengan sudut pandang seorang ahli strategi digital.
     `;
     
-    // [INI ADALAH PERBAIKAN UTAMA]
-    // Kita memproses `history` dengan aman. Alih-alih `map` yang bisa error,
-    // kita gunakan `reduce` untuk mem-filter hanya item history yang valid dan lengkap.
     const safeHistory = history.reduce((acc, h) => {
-      // Cek dengan teliti: apakah 'h' ada, 'h.role' ada, 'h.parts' adalah array, 
-      // dan 'h.parts[0].text' adalah string?
       if (h && h.role && Array.isArray(h.parts) && h.parts[0] && typeof h.parts[0].text === 'string') {
         acc.push({
           role: h.role === 'model' ? 'assistant' : 'user',
           content: h.parts[0].text
         });
       }
-      // Jika ada satu item history yang cacat, item itu akan dilewati begitu saja tanpa membuat server crash.
       return acc;
     }, []);
 
     const messages = [
       { role: "system", content: systemPrompt },
-      ...safeHistory, // Gunakan history yang sudah dijamin aman
+      ...safeHistory,
       { role: "user", content: currentMessage }
     ];
 
     const chatCompletion = await groq.chat.completions.create({
       messages: messages,
-      model: "llama3-8b-8192",
+      // [PERBAIKAN] Mengganti model yang sudah tidak didukung ke model yang aktif.
+      model: "llama3-70b-8192", 
       temperature: 0.7,
       max_tokens: 150, 
       top_p: 1,
@@ -85,7 +77,6 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    // Logging yang lebih baik untuk debugging
     console.error('API Handler Error:', {
         message: error.message,
         requestBody: req.body 
@@ -93,5 +84,3 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Terjadi kesalahan di server saat memproses permintaan.' });
   }
 }
-
-
