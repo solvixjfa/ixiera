@@ -59,8 +59,8 @@ export default async function handler(req, res) {
 
     const chatCompletion = await groq.chat.completions.create({
       messages: messages,
-      // [PERBAIKAN] Mengganti model yang sudah tidak didukung ke model yang aktif.
-      model: "llama3-70b-8192", 
+      // [PERBAIKAN DEFINITIF] Menggunakan model produksi yang aktif dari dokumentasi resmi.
+      model: "llama-3.3-70b-versatile", 
       temperature: 0.7,
       max_tokens: 150, 
       top_p: 1,
@@ -84,3 +84,7 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'Terjadi kesalahan di server saat memproses permintaan.' });
   }
 }
+
+
+
+

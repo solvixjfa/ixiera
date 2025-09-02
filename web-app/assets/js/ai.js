@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showWelcomeMessage = () => {
         chatHistoryEl.innerHTML = '';
-        addMessageToUI('ai', "Halo! Saya Lunna Asisten Digital Ixiera. Apa tantangan terbesar yang sedang dihadapi bisnis Anda saat ini? Ceritakan saja dengan santai.");
+        addMessageToUI('ai', "Halo! Saya ashley Asisten Digital Ixiera. Apa tantangan terbesar yang sedang dihadapi bisnis Anda saat ini? Ceritakan saja dengan santai.");
     };
 
     // --- Fungsi Interaksi dengan Supabase ---
