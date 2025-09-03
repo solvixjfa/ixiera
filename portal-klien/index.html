@@ -3,120 +3,37 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Client Portal - Dashboard</title>
-    <meta
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-      name="viewport"
-    />
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
-
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+    <!-- [PERBAIKAN] Semua path diawali dengan '/' agar menjadi absolut -->
+    <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
         custom: {
           families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-          urls: ["assets/css/fonts.min.css"],
+          urls: ["/assets/css/fonts.min.css"], // Path diperbaiki
         },
         active: function () { sessionStorage.fonts = true; },
       });
     </script>
-
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
   </head>
   <body>
     <div class="wrapper">
-      <div class="sidebar" data-background-color="dark">
-        <div class="sidebar-logo">
-          <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-              <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/>
-            </a>
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
-              <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
-            </div>
-            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
-          </div>
-        </div>
-        <div class="sidebar-wrapper scrollbar scrollbar-inner">
-          <div class="sidebar-content">
-            <ul class="nav nav-secondary">
-              <li class="nav-item active">
-                <a href="index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a>
-              </li>
-              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Portal Menu</h4></li>
-              <li class="nav-item">
-                <a href="products.html"><i class="fas fa-lightbulb"></i><p>New Products</p></a>
-              </li>
-              <li class="nav-item">
-                <a href="order-history.html"><i class="fas fa-history"></i><p>Order History</p></a>
-              </li>
-              <li class="nav-item">
-                <a href="community.html"><i class="fas fa-users"></i><p>Community Forum</p></a>
-              </li>
-              <li class="nav-item">
-                <a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a>
-              </li>
-              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
-              <li class="nav-item">
-                <a href="setting.html"><i class="fas fa-user-cog"></i><p>Settings</p></a>
-              </li>
-              <li class="nav-item">
-                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="main-panel">
-        <div class="main-header">
-          <div class="main-header-logo">
-            <div class="logo-header" data-background-color="dark">
-              <a href="index.html" class="logo"><img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/></a>
-              <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
-                <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
-              </div>
-              <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
-            </div>
-          </div>
-          <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
-            <div class="container-fluid">
-              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                    <div class="avatar-sm"><img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle"/></div>
-                    <span class="profile-username"><span class="op-7">Hi,</span><span class="fw-bold" id="username-display">Client</span></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user animated fadeIn">
-                    <div class="dropdown-user-scroll scrollbar-outer">
-                      <li>
-                        <div class="user-box">
-                          <div class="avatar-lg"><img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/></div>
-                          <div class="u-text">
-                            <h4 id="username-dropdown">Client Name</h4>
-                            <p class="text-muted" id="user-email-dropdown">client@email.com</p>
-                            <a href="setting.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="setting.html">Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
-                      </li>
-                    </div>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
+      
+      <!-- Placeholder: Sidebar akan dimuat di sini oleh main.js -->
+      <div id="sidebar-placeholder"></div>
 
+      <div class="main-panel">
+        
+        <!-- Placeholder: Topbar akan dimuat di sini oleh main.js -->
+        <div id="topbar-placeholder"></div>
+
+        <!-- ====== KONTEN UNIK UNTUK HALAMAN DASHBOARD ====== -->
         <div class="container">
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
@@ -126,141 +43,59 @@
               </div>
             </div>
             <div class="row">
+              <!-- Kartu Statistik -->
               <div class="col-sm-6 col-md-4">
                 <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-warning bubble-shadow-small"><i class="fas fa-tasks"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Orders In Progress</p><h4 class="card-title" id="stats-in-progress">0</h4></div>
-                      </div>
-                    </div>
-                  </div>
+                  <div class="card-body"><div class="row align-items-center"><div class="col-icon"><div class="icon-big text-center icon-warning bubble-shadow-small"><i class="fas fa-tasks"></i></div></div><div class="col col-stats ms-3 ms-sm-0"><div class="numbers"><p class="card-category">Orders In Progress</p><h4 class="card-title" id="stats-in-progress">0</h4></div></div></div></div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-4">
                 <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-success bubble-shadow-small"><i class="fas fa-check-circle"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Completed Orders</p><h4 class="card-title" id="stats-completed">0</h4></div>
-                      </div>
-                    </div>
-                  </div>
+                   <div class="card-body"><div class="row align-items-center"><div class="col-icon"><div class="icon-big text-center icon-success bubble-shadow-small"><i class="fas fa-check-circle"></i></div></div><div class="col col-stats ms-3 ms-sm-0"><div class="numbers"><p class="card-category">Completed Orders</p><h4 class="card-title" id="stats-completed">0</h4></div></div></div></div>
                 </div>
               </div>
               <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon"><div class="icon-big text-center icon-info bubble-shadow-small"><i class="fas fa-dollar-sign"></i></div></div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers"><p class="card-category">Total Spent</p><h4 class="card-title" id="stats-total-spent">$0.00</h4></div>
-                      </div>
-                    </div>
-                  </div>
+                 <div class="card card-stats card-round">
+                   <div class="card-body"><div class="row align-items-center"><div class="col-icon"><div class="icon-big text-center icon-info bubble-shadow-small"><i class="fas fa-dollar-sign"></i></div></div><div class="col col-stats ms-3 ms-sm-0"><div class="numbers"><p class="card-category">Total Spent</p><h4 class="card-title" id="stats-total-spent">$0.00</h4></div></div></div></div>
                 </div>
               </div>
             </div>
-
+            <!-- Tabel Order -->
             <div class="row">
               <div class="col-md-12">
                 <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row"><div class="card-title">Order Progress Tracking</div></div>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover align-middle">
-                        <thead>
-                          <tr>
-                            <th scope="col">Product</th>
-                            <th scope="col" style="width: 40%;">Progress</th>
-                            <th scope="col" class="text-center">Downloads</th>
-                          </tr>
-                        </thead>
-                        <tbody id="orders-tracking-table">
-                          </tbody>
-                      </table>
-                    </div>
-                    <div id="empty-orders-message" class="text-center p-5" style="display: none;">
-                      <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
-                      <h4>No Active Orders Found</h4>
-                      <p class="text-muted">You can find new products to order from the "New Products" page.</p>
-                      <a href="products.html" class="btn btn-primary mt-2">Browse Products</a>
-                    </div>
-                  </div>
+                  <div class="card-header"><div class="card-head-row"><div class="card-title">Order Progress Tracking</div></div></div>
+                  <div class="card-body"><div class="table-responsive"><table class="table table-hover align-middle"><thead><tr><th scope="col">Product</th><th scope="col" style="width: 40%;">Progress</th><th scope="col" class="text-center">Downloads</th></tr></thead><tbody id="orders-tracking-table"></tbody></table></div><div id="empty-orders-message" class="text-center p-5" style="display: none;"><i class="fas fa-box-open fa-3x text-muted mb-3"></i><h4>No Active Orders Found</h4><p class="text-muted">You can find new products to order from the "New Products" page.</p><a href="/products.html" class="btn btn-primary mt-2">Browse Products</a></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <!-- ====== AKHIR DARI KONTEN UNIK ====== -->
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <div class="copyright">2024, Client Portal by <a href="#">IXIERA</a></div>
-          </div>
-        </footer>
+        <!-- Placeholder: Footer akan dimuat di sini oleh main.js -->
+        <footer class="footer" id="footer-placeholder"></footer>
       </div>
     </div>
 
-    <template id="order-row-template">
-      <tr>
-        <td>
-          <div class="d-flex align-items-center">
-            <div>
-              <div class="fw-bold product-name">Nama Produk Digital</div>
-              <small class="text-muted order-id">Order #12345</small>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div class="d-flex align-items-center">
-            <div class="w-100 me-3">
-              <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 10px;">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" style="width: 0%;"></div>
-              </div>
-            </div>
-            <span class="fw-bold progress-text">0%</span>
-          </div>
-        </td>
-        <td class="text-center">
-          <button class="btn btn-success btn-sm download-btn" style="display: none;">
-            <i class="fas fa-download me-1"></i> Download
-          </button>
-          <span class="badge bg-warning status-text">In Progress</span>
-        </td>
-      </tr>
-    </template>
+    <!-- Elemen spesifik untuk halaman ini -->
+    <template id="order-row-template"> ... </template>
+    <div id="loadingSpinner" class="loading-spinner"> ... </div>
 
-    <div id="loadingSpinner" class="loading-spinner">
-        <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
-    </div>
-
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <script src="assets/js/kaiadmin.min.js"></script>
-
+    <!-- [PERBAIKAN] Semua path skrip diawali dengan '/' -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/js/supabase-client.js"></script>
-    <script src="assets/js/dashboard.js"></script>
-    <!-- DISCORD WIDGET SCRIPT FOR OTHER PAGES -->
-<script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
-  new Crate({
-    server: '1411001146788679821',
-    channel: '1411001149376430203',
+    <script src="/assets/js/supabase-client.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
     
-    // PERUBAHAN UTAMA DI SINI
-    bubble: true, // Ini akan membuatnya menjadi gelembung di pojok
-    
-    theme: 'dark',
-    color: '#5865F2'
-  })
-</script>
-
+    <!-- [PENTING] Panggil skrip pemuat universal di paling akhir -->
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>
+
+
