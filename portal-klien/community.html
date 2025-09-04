@@ -5,152 +5,71 @@
     <title>Community Forum - Client Portal</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     
-    <!-- [DIUBAH] Menggunakan WebFont Loader untuk memuat font secara efisien -->
+    <!-- WebFont Loader -->
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
         custom: {
           families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-          urls: ["/assets/css/fonts.min.css"], // Menggunakan path absolut
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () { sessionStorage.fonts = true; },
       });
     </script>
     
-    <!-- [BARU] Menambahkan semua CSS Inti dari Tema Kaiadmin -->
+    <!-- CSS Inti Tema Kaiadmin -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="/assets/css/custom.css" />
     <link rel="stylesheet" href="/assets/css/style.css"/>
 
-    <!-- CSS Khusus untuk Halaman Komunitas Imersif (Tetap di sini) -->
+    <!-- CSS Khusus Halaman Komunitas -->
     <style>
-        /* Mengatur dasar halaman agar siap untuk layout fullscreen */
         html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            background-color: #23272A;
+            height: 100%; margin: 0; overflow: hidden; background-color: #23272A;
         }
-        
-        /* Wrapper utama yang mengatur semua elemen secara vertikal */
         .community-fullscreen-wrapper {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            position: relative;
+            display: flex; flex-direction: column; height: 100vh; position: relative;
         }
-        
-        /* Bar navigasi cepat di bagian atas */
         .community-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #2C2F33;
-            flex-shrink: 0;
-            border-bottom: 1px solid #23272A;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 10;
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;
+            background-color: #2C2F33; flex-shrink: 0; border-bottom: 1px solid #23272A;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10;
         }
-        
         .community-header .brand {
-            display: flex;
-            align-items: center;
-            color: #fff;
-            font-weight: 600;
+            display: flex; align-items: center; color: #fff; font-weight: 600;
         }
-        
         .community-header .brand .fab {
-            margin-right: 12px;
-            color: #7289DA;
+            margin-right: 12px; color: #7289DA;
         }
-        
         .community-header .actions a {
-            color: #fff;
-            background-color: #40444B;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 14px;
-            margin-left: 10px;
-            transition: background-color 0.2s;
-            display: inline-flex;
-            align-items: center;
+            color: #fff; background-color: #40444B; padding: 8px 15px; border-radius: 5px;
+            text-decoration: none; font-size: 14px; margin-left: 10px; transition: background-color 0.2s;
+            display: inline-flex; align-items: center;
         }
-        
-        .community-header .actions a i {
-            margin-right: 8px;
-        }
-        
-        .community-header .actions a:hover {
-            background-color: #7289DA;
-        }
-        
-        /* Kontainer untuk widget agar mengisi sisa ruang */
-        .discord-widget-container {
-            flex-grow: 1;
-            overflow: hidden;
-        }
-        
-        .discord-widget-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .footer {
-            flex-shrink: 0; 
-        }
-
-        /* CSS untuk Loading Indicator */
+        .community-header .actions a i { margin-right: 8px; }
+        .community-header .actions a:hover { background-color: #7289DA; }
+        .discord-widget-container { flex-grow: 1; overflow: hidden; position: relative; } /* Tambahkan position relative */
+        .discord-widget-container iframe { width: 100%; height: 100%; border: none; }
+        .footer { flex-shrink: 0; }
         #loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #2C2F33;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            transition: opacity 0.5s ease;
-            color: #fff;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #2C2F33;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 100; transition: opacity 0.5s ease; color: #fff;
         }
-
         .spinner {
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top: 5px solid #fff;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
+            border: 5px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top: 5px solid #fff;
+            width: 50px; height: 50px; animation: spin 1s linear infinite;
         }
-
-        #loading-overlay p {
-            margin-top: 20px;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        #loading-overlay p { margin-top: 20px; font-size: 1rem; font-weight: 500; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
     <div class="community-fullscreen-wrapper">
       
-      <div id="loading-overlay">
-        <div class="spinner"></div>
-        <p>Memuat Forum Komunitas...</p>
-      </div>
-
       <div class="community-header">
         <div class="brand">
           <i class="fab fa-discord fa-lg"></i>
@@ -163,6 +82,12 @@
       </div>
       
       <div class="discord-widget-container">
+        <!-- Loader sekarang di dalam container iframe agar tidak menutupi header -->
+        <div id="loading-overlay">
+          <div class="spinner"></div>
+          <p>Memuat Forum Komunitas...</p>
+        </div>
+        <!-- [FIX] URL dikembalikan ke 'src' agar langsung dimuat -->
         <iframe src="https://e.widgetbot.io/channels/1411001146788679821/1411001149376430203?theme=dark&color=%237289DA" allow="clipboard-write; fullscreen"></iframe>
       </div>
 
@@ -170,7 +95,7 @@
 
     </div>
     
-    <!-- Core JS Files -->
+    <!-- [FIX] SEMUA atribut 'defer' DIHAPUS dari skrip di bawah ini -->
     <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="/assets/js/core/popper.min.js"></script>
     <script src="/assets/js/core/bootstrap.min.js"></script>
@@ -182,7 +107,9 @@
     <script src="/assets/js/dashboard.js"></script>
     <script src="/assets/js/main.js"></script>
 
+    <!-- Skrip Sederhana untuk Loader -->
     <script>
+      // Gunakan document.addEventListener karena lebih cepat daripada window.load
       document.addEventListener('DOMContentLoaded', function() {
         const iframe = document.querySelector('.discord-widget-container iframe');
         const loader = document.getElementById('loading-overlay');
@@ -192,7 +119,7 @@
             loader.style.opacity = '0';
             setTimeout(() => {
               loader.style.display = 'none';
-            }, 500);
+            }, 500); // Durasi transisi fade-out
           });
         }
       });

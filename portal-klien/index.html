@@ -7,7 +7,8 @@
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
     />
-    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <!-- [FIX] Menggunakan path absolut -->
+    <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
 
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script>
@@ -15,17 +16,19 @@
         google: { families: ["Public Sans:300,400,500,600,700"] },
         custom: {
           families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-          urls: ["assets/css/fonts.min.css"],
+          // [FIX] Menggunakan path absolut
+          urls: ["/assets/css/fonts.min.css"],
         },
         active: function () { sessionStorage.fonts = true; },
       });
     </script>
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="assets/css/custom.css" />
-     <link rel="stylesheet" href="/assets/css/style.css"/>
+    <!-- [FIX] Menggunakan path absolut untuk semua file CSS -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+    <link rel="stylesheet" href="/assets/css/style.css"/>
   </head>
   <body>
     <div class="wrapper">
@@ -33,7 +36,8 @@
         <div class="sidebar-logo">
           <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-              <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/>
+              <!-- [FIX] Menggunakan path absolut -->
+              <img src="/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/>
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
@@ -76,7 +80,8 @@
         <div class="main-header">
           <div class="main-header-logo">
             <div class="logo-header" data-background-color="dark">
-              <a href="index.html" class="logo"><img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/></a>
+               <!-- [FIX] Menggunakan path absolut -->
+              <a href="index.html" class="logo"><img src="/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/></a>
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
                 <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
@@ -89,14 +94,16 @@
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
                 <li class="nav-item topbar-user dropdown hidden-caret">
                   <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                    <div class="avatar-sm"><img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle"/></div>
+                    <!-- [FIX] Menggunakan path absolut -->
+                    <div class="avatar-sm"><img src="/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle"/></div>
                     <span class="profile-username"><span class="op-7">Hi,</span><span class="fw-bold" id="username-display">Client</span></span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <div class="dropdown-user-scroll scrollbar-outer">
                       <li>
                         <div class="user-box">
-                          <div class="avatar-lg"><img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/></div>
+                          <!-- [FIX] Menggunakan path absolut -->
+                          <div class="avatar-lg"><img src="/assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/></div>
                           <div class="u-text">
                             <h4 id="username-dropdown">Client Name</h4>
                             <p class="text-muted" id="user-email-dropdown">client@email.com</p>
@@ -200,33 +207,32 @@
 
         <footer class="footer">
           <div class="footer-content">
-    <div class="footer-section">
-        <h4>Portal by IXIERA</h4>
-        <p>Platform terintegrasi untuk semua kebutuhan Anda. Jelajahi produk, lacak pesanan, dan bergabunglah dengan komunitas kami.</p>
-        <p class="copyright">&copy; 2025. All rights reserved.</p>
-    </div>
-    <div class="footer-section">
-        <h4>Quick Links</h4>
-        <ul class="quick-links">
-            <li><a href="index.html">Dashboard</a></li>
-            <li><a href="products.html">New Products</a></li>
-            <li><a href="order-history.html">Orders History</a></li>
-            <li><a href="ai-assistant.html">AI Assistant</a></li>
-            <li><a href="setting.html">Settings</a></li>
-        </ul>
-    </div>
-    <div class="footer-section">
-        <h4>Connect With Us</h4>
-        <div class="social-icons">
-            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-            <a href="#" target="_blank" aria-label="X (Twitter)"><i class="fab fa-twitter"></i></a>
-            <a href="#" target="_blank" aria-label="Slack"><i class="fab fa-slack"></i></a>
-            <a href="#" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-        </div>
-    </div>
-</div>
-          
+            <div class="footer-section">
+                <h4>Portal by IXIERA</h4>
+                <p>Platform terintegrasi untuk semua kebutuhan Anda. Jelajahi produk, lacak pesanan, dan bergabunglah dengan komunitas kami.</p>
+                <p class="copyright">&copy; 2025. All rights reserved.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="quick-links">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="products.html">New Products</a></li>
+                    <li><a href="order-history.html">Orders History</a></li>
+                    <li><a href="ai-assistant.html">AI Assistant</a></li>
+                    <li><a href="setting.html">Settings</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-icons">
+                    <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" target="_blank" aria-label="X (Twitter)"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank" aria-label="Slack"><i class="fab fa-slack"></i></a>
+                    <a href="#" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                </div>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
@@ -264,16 +270,18 @@
         <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
     </div>
 
-    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="assets/js/core/popper.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
-    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-    <script src="assets/js/kaiadmin.min.js"></script>
+    <!-- [FIX] Menggunakan path absolut untuk semua file JS -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="/assets/js/kaiadmin.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="assets/js/supabase-client.js"></script>
-    <script src="assets/js/dashboard.js"></script>
-      <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/supabase-client.js"></script>
+    <script src="/assets/js/dashboard.js"></script>
+    <script src="/assets/js/main.js"></script>
   </body>
 </html>
+
