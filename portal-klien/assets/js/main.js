@@ -1,47 +1,58 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    const loadComponent = async (selector, url) => {
-        try {
-            // [KUNCI] Menggunakan path absolut dari root domain
-            const response = await fetch(url);
-            if (!response.ok) {
-                console.error(`Gagal memuat partial: ${url}. Status: ${response.status}`);
-                return;
-            }
-            const data = await response.text();
-            const element = document.querySelector(selector);
-            if (element) {
-                element.innerHTML = data;
-            }
-        } catch (error) {
-            console.error(`Error saat fetch ${url}:`, error);
-        }
-    };
 
-    const setActiveSidebarLink = () => {
-        // Logika untuk menandai link aktif di sidebar
-        const currentPath = window.location.pathname;
-        const activePage = (currentPath === '/' || currentPath === '') ? 'index.html' : currentPath.split('/').pop();
 
-        const sidebarLinks = document.querySelectorAll('#sidebar-placeholder .nav-item a');
-        
-        sidebarLinks.forEach(link => {
-            const linkPage = link.getAttribute('href').split('/').pop();
-            link.parentElement.classList.remove('active');
-            if (linkPage === activePage) {
-                link.parentElement.classList.add('active');
-            }
+$(function() {
+  
+  // Memuat komponen partials
+  $("#sidebar-placeholder").load("_partials/_sidebar.html");
+  $("#topbar-placeholder").load("_partials/_topbar.html");
+
+  // Memuat footer dan MENJALANKAN kodenya setelah selesai
+  $("#footer-placeholder").load("_partials/_footer.html", function(response, status, xhr) {
+    
+    // Kode ini dijamin hanya berjalan SETELAH _footer.html 100% selesai dimuat.
+    // Inilah kunci mengapa ini tidak akan rusak.
+    if (status == "success") {
+
+      // --- SEMUA KODE DARI CUSTOM.JS SEKARANG ADA DI SINI ---
+
+      // 1. Inisialisasi Bootstrap Tooltips untuk ikon sosial
+      try {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
         });
-    };
+      } catch (e) {
+        console.error("Gagal menginisialisasi tooltips:", e);
+      }
 
-    // Memuat SEMUA TIGA komponen secara bersamaan
-    await Promise.all([
-        loadComponent('#sidebar-placeholder', '/_partials/_sidebar.html'),
-        loadComponent('#topbar-placeholder', '/_partials/_topbar.html'),
-        loadComponent('#footer-placeholder', '/_partials/_footer.html')
-    ]);
+      // 2. Logika untuk Tombol "Back to Top"
+      let mybutton = document.getElementById("btn-back-to-top");
+      if (mybutton) {
+        window.onscroll = function () {
+          if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            mybutton.style.display = "block";
+          } else {
+            mybutton.style.display = "none";
+          }
+        };
+        mybutton.addEventListener("click", function(e) {
+          e.preventDefault();
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+      }
 
-    // Setelah semua komponen DIJAMIN sudah termuat, baru jalankan fungsi ini
-    setActiveSidebarLink();
+      // 3. Update Tahun Copyright Secara Dinamis
+      const yearSpan = document.getElementById("copyright-year");
+      if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+      }
+
+    } else {
+      // Jika gagal memuat footer, tampilkan error di konsol
+      console.error("KRITIS: Gagal memuat _footer.html:", xhr.status, xhr.statusText);
+    }
+  });
+
 });
 
 

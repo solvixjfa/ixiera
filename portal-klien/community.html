@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="/assets/css/custom.css" />
-    <link rel="stylesheet" href="/assets/css/style.css"/>
+   
 
     <!-- CSS Khusus Halaman Komunitas -->
     <style>
@@ -255,26 +255,6 @@
       }
     </script>
     
-    <!-- Load your custom scripts with error handling -->
-    <script>
-      // Prevent scripts from causing infinite reload
-      const loadScript = (src, required = false) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onerror = () => {
-          console.warn(`Failed to load: ${src}`);
-          if (!required) return;
-        };
-        document.head.appendChild(script);
-      };
-      
-      // Load custom scripts without blocking
-      setTimeout(() => {
-        loadScript('/assets/js/supabase-client.js');
-        loadScript('/assets/js/dashboard.js');
-        loadScript('/assets/js/main.js');
-      }, 100);
-    </script>
 
     <!-- Main Community Script - Fixed -->
     <script>

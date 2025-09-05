@@ -169,3 +169,188 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary-color);
 }
 
+/* Gaya Kustom untuk Footer Biru Tua 
+*/
+
+.footer-custom-dark-blue {
+  background-color: #0D1B2A; /* Ini adalah warna biru navy yang sangat gelap dan profesional */
+  color: #ffffff;
+  border-top: 3px solid #3d8bfd; /* Aksen biru cerah yang cocok dengan tema Kaiadmin */
+}
+
+/* Mengatur warna teks dan tautan */
+.footer-custom-dark-blue h5 {
+  color: #ffffff;
+}
+
+.footer-custom-dark-blue .text-white-50 {
+  transition: color 0.3s ease;
+}
+
+.footer-custom-dark-blue a.text-white-50:hover {
+  color: #ffffff !important; /* Tautan menjadi putih terang saat disentuh kursor */
+}
+
+/* Mengatur gaya ikon sosial media */
+.footer-custom-dark-blue .social-icon-link {
+  color: #ffffff;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-custom-dark-blue .social-icon-link:hover {
+  color: #3d8bfd !important; /* Ikon berubah menjadi warna biru aksen saat disentuh kursor */
+  transform: translateY(-3px); /* Memberi efek sedikit terangkat */
+}
+
+/* Mengatur garis pemisah */
+.footer-custom-dark-blue hr {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+/* =================================================================
+    CUSTOM FOOTER STYLES
+   ================================================================= */
+
+.footer-custom-blue {
+    background-color: #0D1B2A; /* Warna biru navy yang gelap dan elegan */
+    color: rgba(255, 255, 255, 0.7); /* Warna teks putih yang tidak terlalu terang */
+    border-top: 3px solid #1a73e8; /* Aksen biru cerah yang cocok dengan tema Kaiadmin */
+}
+
+.footer-custom-blue .footer-heading {
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.footer-custom-blue .quick-links a,
+.footer-custom-blue .legal-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-custom-blue .quick-links a:hover,
+.footer-custom-blue .legal-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-custom-blue .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 1.25rem; /* Ukuran ikon yang pas */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-custom-blue .social-icons a:hover {
+    background-color: #1a73e8; /* Warna aksen saat di-hover */
+    transform: translateY(-2px);
+}
+
+.footer-custom-blue .copyright-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =================================================================
+    LEGAL PAGES STYLES
+   ================================================================= */
+
+.legal-content {
+    line-height: 1.8; 
+    color: #555;
+}
+
+.legal-content .card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.legal-content .card-category {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.legal-content h5 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a73e8; /* Accent blue color from the theme */
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.legal-content strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.legal-content ul {
+    padding-left: 20px;
+}
+
+.legal-content ul li {
+    margin-bottom: 0.75rem;
+}
+
+/* Gaya untuk Footer Biru Tua Kustom */
+.footer-custom-blue {
+    background-color: #0D1B2A; /* Biru navy gelap */
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 3px solid #1a73e8; /* Aksen biru Kaiadmin */
+}
+
+.footer-custom-blue .footer-heading {
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.footer-custom-blue a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-custom-blue a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-custom-blue .social-icons a {
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+.footer-custom-blue .social-icons a:hover {
+    color: #1a73e8; /* Warna aksen saat di-hover */
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.footer-custom-blue .copyright-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+
+
+
+
+

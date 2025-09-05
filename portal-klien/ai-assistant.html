@@ -20,16 +20,11 @@
         google: { families: ["Public Sans:300,400,500,600,700"] },
         custom: {
           families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
+            "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons",
           ],
           urls: ["assets/css/fonts.min.css"],
         },
-        active: function () {
-          sessionStorage.fonts = true;
-        },
+        active: function () { sessionStorage.fonts = true; },
       });
     </script>
 
@@ -37,412 +32,157 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/plugins.min.css" />
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
-
-    <!-- CUSTOM CSS - Original -->
     <link rel="stylesheet" href="assets/css/custom.css" />
     
-    <!-- AI ASSISTANT PREMIUM CSS -->
+    <!-- CSS UNTUK AI ASSISTANT -->
     <link rel="stylesheet" href="assets/css/ai-assistant.css" />
   </head>
   <body>
     <div class="wrapper">
-      <!-- Sidebar -->
+      <!-- Sidebar Tetap Ada -->
       <div class="sidebar" data-background-color="dark">
         <div class="sidebar-logo">
-          <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-              <img
-                src="assets/img/kaiadmin/logo_light.svg"
-                alt="navbar brand"
-                class="navbar-brand"
-                height="20"
-              />
-            </a>
-            <div class="nav-toggle">
-              <button class="btn btn-toggle toggle-sidebar">
-                <i class="gg-menu-right"></i>
-              </button>
-              <button class="btn btn-toggle sidenav-toggler">
-                <i class="gg-menu-left"></i>
-              </button>
-            </div>
-            <button class="topbar-toggler more">
-              <i class="gg-more-vertical-alt"></i>
-            </button>
+            <a href="index.html" class="logo"><img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/></a>
+            <div class="nav-toggle"><button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button><button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button></div>
+            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
           </div>
-          <!-- End Logo Header -->
         </div>
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
-            <!-- SIDEBAR NAVIGATION -->
             <ul class="nav nav-secondary">
-              <li class="nav-item">
-                <a href="index.html">
-                  <i class="fas fa-tachometer-alt"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
-              <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                  <i class="fa fa-ellipsis-h"></i>
-                </span>
-                <h4 class="text-section">Portal Menu</h4>
-              </li>
-              <li class="nav-item">
-                <a href="products.html">
-                  <i class="fas fa-box-open"></i>
-                  <p>New Products</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="order-history.html">
-                  <i class="fas fa-shopping-cart"></i>
-                  <p>Orders History.</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="community.html">
-                  <i class="fas fa-users"></i>
-                  <p>Community Forum</p>
-                </a>
-              </li>
-              <li class="nav-item active">
-                <a href="ai-assistant.html">
-                  <i class="fas fa-robot"></i>
-                  <p>AI Assistant</p>
-                </a>
-              </li>
-               <li class="nav-section">
-                <span class="sidebar-mini-icon">
-                  <i class="fa fa-ellipsis-h"></i>
-                </span>
-                <h4 class="text-section">Account</h4>
-              </li>
-               <li class="nav-item">
-                <a href="setting.html">
-                  <i class="fas fa-user-cog"></i>
-                  <p>Settings</p>
-                </a>
-              </li>
-               <li class="nav-item">
-                <a href="logout.html" id="logoutButton">
-                  <i class="fas fa-sign-out-alt"></i>
-                  <p>Logout</p>
-                </a>
-              </li>
+              <li class="nav-item"><a href="index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a></li>
+              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Portal Menu</h4></li>
+              <li class="nav-item"><a href="products.html"><i class="fas fa-box-open"></i><p>New Products</p></a></li>
+              <li class="nav-item"><a href="order-history.html"><i class="fas fa-shopping-cart"></i><p>Orders History.</p></a></li>
+              <li class="nav-item"><a href="community.html"><i class="fas fa-users"></i><p>Community Forum</p></a></li>
+              <li class="nav-item active"><a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a></li>
+              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
+              <li class="nav-item"><a href="setting.html"><i class="fas fa-user-cog"></i><p>Settings</p></a></li>
+              <li class="nav-item"><a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a></li>
             </ul>
           </div>
         </div>
       </div>
-      <!-- End Sidebar -->
-
+      
+      <!-- Main Panel Tetap Ada -->
       <div class="main-panel">
         <div class="main-header">
-          <div class="main-header-logo">
-            <!-- Logo Header -->
-            <div class="logo-header" data-background-color="dark">
-              <a href="index.html" class="logo">
-                <img
-                  src="assets/img/kaiadmin/logo_light.svg"
-                  alt="navbar brand"
-                  class="navbar-brand"
-                  height="20"
-                />
-              </a>
-              <div class="nav-toggle">
-                <button class="btn btn-toggle toggle-sidebar">
-                  <i class="gg-menu-right"></i>
-                </button>
-                <button class="btn btn-toggle sidenav-toggler">
-                  <i class="gg-menu-left"></i>
-                </button>
-              </div>
-              <button class="topbar-toggler more">
-                <i class="gg-more-vertical-alt"></i>
-              </button>
-            </div>
-            <!-- End Logo Header -->
-          </div>
-          <!-- Navbar Header -->
-          <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom"
-          >
+           <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                <!-- User Profile Dropdown -->
                 <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a
-                    class="dropdown-toggle profile-pic"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
-                    <div class="avatar-sm">
-                      <img
-                        src="assets/img/profile.jpg"
-                        alt="..."
-                        class="avatar-img rounded-circle"
-                      />
-                    </div>
-                    <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold" id="username-display">Client</span>
-                    </span>
+                  <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                    <div class="avatar-sm"><img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle"/></div>
+                    <span class="profile-username"><span class="op-7">Hi,</span><span class="fw-bold" id="username-display">Client</span></span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <div class="dropdown-user-scroll scrollbar-outer">
-                      <li>
-                        <div class="user-box">
-                          <div class="avatar-lg">
-                            <img
-                              src="assets/img/profile.jpg"
-                              alt="image profile"
-                              class="avatar-img rounded"
-                            />
-                          </div>
-                          <div class="u-text">
-                            <h4 id="username-dropdown">Client Name</h4>
-                            <p class="text-muted" id="user-email-dropdown">client@email.com</p>
-                            <a
-                              href="#"
-                              class="btn btn-xs btn-secondary btn-sm"
-                              >View Profile</a
-                            >
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
-                      </li>
+                      <li><div class="user-box"><div class="avatar-lg"><img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/></div><div class="u-text"><h4 id="username-dropdown">Client Name</h4><p class="text-muted" id="user-email-dropdown">client@email.com</p><a href="setting.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a></div></div></li>
+                      <li><div class="dropdown-divider"></div><a class="dropdown-item" href="setting.html">Account Setting</a><div class="dropdown-divider"></div><a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a></li>
                     </div>
                   </ul>
                 </li>
               </ul>
             </div>
           </nav>
-          <!-- End Navbar -->
         </div>
-
         <div class="container">
-          <div class="page-inner">
-            <!-- Header Section with Premium Design -->
-            <div class="ai-header-section">
-              <div class="row align-items-center">
-                <div class="col-lg-8">
-                  <div class="ai-welcome-content">
-                    <div class="ai-icon-wrapper">
-                      <i class="fas fa-robot ai-main-icon"></i>
-                      <div class="ai-pulse-ring"></div>
-                    </div>
-                    <div class="ai-text-content">
-                      <h2 class="ai-title">AI Assistant</h2>
-                      <p class="ai-subtitle">Your intelligent companion for business insights and support</p>
+           <div class="page-inner">
+              <!-- KONTEN HALAMAN NORMAL ANDA -->
+              <div class="ai-header-section">
+                <div class="row align-items-center">
+                  <div class="col-lg-8">
+                    <div class="ai-welcome-content">
+                      <div class="ai-icon-wrapper"><i class="fas fa-robot ai-main-icon"></i><div class="ai-pulse-ring"></div></div>
+                      <div class="ai-text-content"><h2 class="ai-title">AI Assistant</h2><p class="ai-subtitle">Your intelligent companion for business insights and support</p></div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-4">
-                  <div class="ai-stats-mini">
-                    <div class="stat-item">
-                      <span class="stat-number" id="totalQuestions">0</span>
-                      <span class="stat-label">Questions Asked</span>
-                    </div>
-                    <div class="stat-item">
-                      <span class="stat-number" id="responseTime">~2s</span>
-                      <span class="stat-label">Avg Response</span>
-                    </div>
+                  <div class="col-lg-4">
+                     <!-- Tombol untuk membuka chat fullscreen -->
+                     <button type="button" class="btn btn-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#aiChatModal">
+                       <i class="fas fa-comments me-2"></i> Open Fullscreen Chat
+                     </button>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Premium Chat Interface -->
-            <div class="row">
-              <div class="col-12">
-                <div class="ai-chat-container">
-                  <!-- Chat Header -->
-                  <div class="ai-chat-header">
-                    <div class="d-flex align-items-center">
-                      <div class="ai-avatar-status">
-                        <div class="ai-avatar">
-                          <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="status-indicator online"></div>
-                      </div>
-                      <div class="ai-info">
-                        <h5 class="ai-name">IXIERA Assistant</h5>
-                        <p class="ai-status">Online • Ready to help</p>
-                      </div>
-                    </div>
-                    <div class="chat-controls">
-                      <button class="btn btn-sm btn-outline-light" id="clearChat">
-                        <i class="fas fa-trash-alt"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-light" id="exportChat">
-                        <i class="fas fa-download"></i>
-                      </button>
-                    </div>
-                  </div>
-
-                  <!-- Chat Messages Area -->
-                  <div class="ai-chat-messages" id="chatMessages">
-                    <div class="welcome-message">
-                      <div class="ai-message-bubble ai-bubble">
-                        <div class="message-avatar">
-                          <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="message-content">
-                          <div class="message-text">
-                            <p>Hello! I'm your AI Assistant. I can help you with:</p>
-                            <ul>
-                              <li>Product analytics and insights</li>
-                              <li>Order management questions</li>
-                              <li>Business recommendations</li>
-                              <li>General support and guidance</li>
-                            </ul>
-                            <p>How can I assist you today?</p>
-                          </div>
-                          <div class="message-time">Just now</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Quick Actions -->
-                  <div class="ai-quick-actions" id="quickActions">
-                    <div class="quick-action-item" data-action="analytics">
-                      <i class="fas fa-chart-line"></i>
-                      <span>Show Analytics</span>
-                    </div>
-                    <div class="quick-action-item" data-action="orders">
-                      <i class="fas fa-shopping-cart"></i>
-                      <span>Recent Orders</span>
-                    </div>
-                    <div class="quick-action-item" data-action="products">
-                      <i class="fas fa-box-open"></i>
-                      <span>Product Help</span>
-                    </div>
-                    <div class="quick-action-item" data-action="support">
-                      <i class="fas fa-headset"></i>
-                      <span>Get Support</span>
-                    </div>
-                  </div>
-
-                  <!-- Chat Input -->
-                  <div class="ai-chat-input">
-                    <div class="input-wrapper">
-                      <div class="input-container">
-                        <textarea 
-                          id="messageInput" 
-                          placeholder="Type your message here..." 
-                          rows="1"
-                          maxlength="1000"
-                        ></textarea>
-                        <div class="input-actions">
-                          <button class="btn btn-attachment" id="attachFile">
-                            <i class="fas fa-paperclip"></i>
-                          </button>
-                          <button class="btn btn-voice" id="voiceInput">
-                            <i class="fas fa-microphone"></i>
-                          </button>
-                        </div>
-                      </div>
-                      <button class="btn btn-send" id="sendMessage">
-                        <i class="fas fa-paper-plane"></i>
-                      </button>
-                    </div>
-                    <div class="input-footer">
-                      <div class="character-count">
-                        <span id="charCount">0</span>/1000
-                      </div>
-                      <div class="typing-indicator" id="typingIndicator">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div class="row mt-4">
+                <div class="col-lg-3 col-md-6 mb-4"><div class="ai-capability-card"><div class="capability-icon"><i class="fas fa-brain"></i></div><h5>Smart Analytics</h5><p>Get intelligent insights from your data with AI-powered analysis</p></div></div>
+                <div class="col-lg-3 col-md-6 mb-4"><div class="ai-capability-card"><div class="capability-icon"><i class="fas fa-language"></i></div><h5>Multi-language</h5><p>Communicate in multiple languages for global business needs</p></div></div>
+                <div class="col-lg-3 col-md-6 mb-4"><div class="ai-capability-card"><div class="capability-icon"><i class="fas fa-clock"></i></div><h5>24/7 Support</h5><p>Available round the clock to assist with your queries</p></div></div>
+                <div class="col-lg-3 col-md-6 mb-4"><div class="ai-capability-card"><div class="capability-icon"><i class="fas fa-shield-alt"></i></div><h5>Secure & Private</h5><p>Your conversations are encrypted and kept completely private</p></div></div>
               </div>
-            </div>
-
-            <!-- AI Capabilities Cards -->
-            <div class="row mt-4">
-              <div class="col-lg-3 col-md-6">
-                <div class="ai-capability-card">
-                  <div class="capability-icon">
-                    <i class="fas fa-brain"></i>
-                  </div>
-                  <h5>Smart Analytics</h5>
-                  <p>Get intelligent insights from your data with AI-powered analysis</p>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="ai-capability-card">
-                  <div class="capability-icon">
-                    <i class="fas fa-language"></i>
-                  </div>
-                  <h5>Multi-language</h5>
-                  <p>Communicate in multiple languages for global business needs</p>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="ai-capability-card">
-                  <div class="capability-icon">
-                    <i class="fas fa-clock"></i>
-                  </div>
-                  <h5>24/7 Support</h5>
-                  <p>Available round the clock to assist with your queries</p>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="ai-capability-card">
-                  <div class="capability-icon">
-                    <i class="fas fa-shield-alt"></i>
-                  </div>
-                  <h5>Secure & Private</h5>
-                  <p>Your conversations are encrypted and kept completely private</p>
-                </div>
-              </div>
-            </div>
-          </div>
+           </div>
         </div>
-
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <div class="copyright">
-              2025, AI Assistant by <a href="#">IXIERA</a>
-            </div>
-          </div>
-        </footer>
       </div>
-      <!-- End Main Panel -->
     </div>
 
-    <!-- LOADING SPINNER -->
-    <div id="loadingSpinner" class="loading-spinner">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+    <!-- ======================================================= -->
+    <!-- MODAL FULLSCREEN UNTUK CHAT                             -->
+    <!-- ======================================================= -->
+    <div class="modal fade" id="aiChatModal" tabindex="-1" aria-labelledby="aiChatModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <!-- Seluruh antarmuka chat Anda masuk ke sini -->
+            <div class="fullscreen-chat-container">
+              <div class="ai-chat-wrapper">
+                <div class="ai-chat-container">
+                  <div class="ai-chat-header">
+                    <div class="d-flex align-items-center gap-3">
+                      <img src="assets/img/kaiadmin/logo_light.svg" alt="IXIERA Logo" height="20"/>
+                      <div class="ai-info"><h5 class="ai-name">IXIERA Assistant</h5><p class="ai-status">Online • Ready to help</p></div>
+                    </div>
+                    <!-- Tombol Kembali/Tutup Modal yang Baru -->
+                    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Portal
+                    </button>
+                  </div>
+                  <div class="ai-chat-messages" id="chatMessages">
+                     <!-- Pesan sambutan akan dibuat dinamis oleh JS -->
+                  </div>
+                  <!-- "Starter Prompts" menggantikan Quick Actions statis -->
+                  <div class="ai-starter-prompts" id="starterPrompts">
+                    <div class="starter-prompt-item" data-prompt="Lacak status pesanan terakhir saya.">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Lacak pesanan terakhir</span>
+                    </div>
+                    <div class="starter-prompt-item" data-prompt="Berikan saya rekomendasi produk baru berdasarkan histori pembelian saya.">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Rekomendasi produk</span>
+                    </div>
+                    <div class="starter-prompt-item" data-prompt="Jelaskan perbedaan antara produk 'Template A' dan 'Layanan B'.">
+                        <i class="fas fa-balance-scale-right"></i>
+                        <span>Bandingkan produk</span>
+                    </div>
+                    <div class="starter-prompt-item" data-prompt="Bagaimana cara menghubungi tim support?">
+                        <i class="fas fa-headset"></i>
+                        <span>Hubungi support</span>
+                    </div>
+                  </div>
+                  <div class="ai-chat-input">
+                    <div class="input-wrapper"><div class="input-container"><textarea id="messageInput" placeholder="Type your message here..." rows="1" maxlength="1000"></textarea><div class="input-actions"><button class="btn btn-attachment" id="attachFile"><i class="fas fa-paperclip"></i></button><button class="btn btn-voice" id="voiceInput"><i class="fas fa-microphone"></i></button></div></div><button class="btn btn-primary btn-send" id="sendMessage"><i class="fas fa-paper-plane"></i></button></div><div class="input-footer"><div class="character-count"><span id="charCount">0</span>/1000</div><div class="typing-indicator" id="typingIndicator"><span></span><span></span><span></span></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
-    <!-- CORE JS FILES -->
-        <!-- Core JS Files -->
-        <!-- Core JS Files -->
+    <!-- Core JS & Supabase -->
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
     <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
     <script src="assets/js/kaiadmin.min.js"></script>
-
-    <!-- SUPABASE & CUSTOM JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/ai-assistant.js"></script>
-    
   </body>
 </html>
+
+
