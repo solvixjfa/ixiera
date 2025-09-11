@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Client Portal - Settings</title>
+    <title>Client Portal - Submission Hub</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -27,6 +27,25 @@
     <link rel="stylesheet" href="assets/css/plugins.min.css" />
     <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
     <link rel="stylesheet" href="assets/css/custom.css" />
+    
+    <style>
+      .tally-embed {
+        width: 100%;
+        height: 800px;
+        border: none;
+      }
+      .card-help .icon {
+        font-size: 1.5rem;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #e9e9ff;
+        color: #6861ce;
+        margin-right: 15px;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -46,7 +65,6 @@
         </div>
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
-            <!-- UPDATED SIDEBAR -->
             <ul class="nav nav-secondary">
               <li class="nav-item">
                 <a href="index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a>
@@ -64,12 +82,12 @@
               <li class="nav-item">
                 <a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a>
               </li>
-              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
               <li class="nav-item active">
-                <a href="#"><i class="fas fa-user-cog"></i><p>Settings</p></a>
+                <a href="submission-hub.html"><i class="fas fa-paper-plane"></i><p>Submission Hub</p></a>
               </li>
+              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
               <li class="nav-item">
-                <a href="logout.html" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a>
+                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a>
               </li>
             </ul>
           </div>
@@ -98,7 +116,7 @@
                     <span class="profile-username"><span class="op-7">Hi,</span><span class="fw-bold" id="username-display">Client</span></span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
-                    <div class="dropdown-user-scroll scrollbar-outer">
+                     <div class="dropdown-user-scroll scrollbar-outer">
                       <li>
                         <div class="user-box">
                           <div class="avatar-lg"><img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/></div>
@@ -111,7 +129,7 @@
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="settings.html">Account Setting</a> 
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
                       </li>
@@ -127,131 +145,86 @@
           <div class="page-inner">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
               <div>
-                <h3 class="fw-bold mb-3">Account Settings</h3>
-                <h6 class="op-7 mb-2">Manage your account preferences and security settings</h6>
+                <h3 class="fw-bold mb-3">Submission Hub</h3>
+                <h6 class="op-7 mb-2">Submit a new project, request a quote, or report an issue.</h6>
               </div>
             </div>
             
             <div class="row">
-              <div class="col-md-8">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Profile Information</div>
+              <!-- Kolom Utama untuk Form -->
+              <div class="col-lg-8">
+                <div class="accordion" id="submissionGuideAccordion">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="fas fa-info-circle me-2"></i> Baca Panduan Pengisian Sebelum Mengirim
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#submissionGuideAccordion">
+                      <div class="accordion-body">
+                        <strong>Selamat datang di Submission Hub!</strong> Agar kami dapat memproses permintaan Anda dengan cepat dan akurat, mohon perhatikan beberapa hal berikut:
+                        <ul>
+                          <li><strong>Deskripsi Jelas:</strong> Jelaskan kebutuhan Anda sedetail mungkin. Apa tujuan utama proyek ini? Siapa target audiensinya?</li>
+                          <li><strong>Budget Realistis:</strong> Memberikan estimasi budget akan membantu kami menawarkan solusi yang paling sesuai.</li>
+                          <li><strong>Lampiran:</strong> Jika ada, lampirkan file referensi, mockup, atau dokumen lain yang relevan.</li>
+                        </ul>
+                        Setelah Anda mengirim, permintaan akan masuk ke sistem kami dan tim kami akan segera meninjaunya. Anda akan menerima notifikasi via email.
+                      </div>
                     </div>
-                  </div>
-                  <div class="card-body">
-                    <form id="profileForm">
-                      <div class="form-group row">
-                        <label for="fullName" class="col-sm-3 col-form-label">Full Name</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="fullName" placeholder="Your full name">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-3">
-                        <label for="email" class="col-sm-3 col-form-label">Email Address</label>
-                        <div class="col-sm-9">
-                          <input type="email" class="form-control" id="email" placeholder="Your email address">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-3">
-                        <label for="company" class="col-sm-3 col-form-label">Company</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="company" placeholder="Your company name">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-3">
-                        <label for="phone" class="col-sm-3 col-form-label">Phone Number</label>
-                        <div class="col-sm-9">
-                          <input type="tel" class="form-control" id="phone" placeholder="Your phone number">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-4">
-                        <div class="col-sm-12 text-end">
-                          <button type="submit" class="btn btn-primary">Update Profile</button>
-                        </div>
-                      </div>
-                    </form>
                   </div>
                 </div>
-                
+
                 <div class="card card-round mt-4">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Change Password</div>
-                    </div>
-                  </div>
                   <div class="card-body">
-                    <form id="passwordForm">
-                      <div class="form-group row">
-                        <label for="currentPassword" class="col-sm-3 col-form-label">Current Password</label>
-                        <div class="col-sm-9">
-                          <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-3">
-                        <label for="newPassword" class="col-sm-3 col-form-label">New Password</label>
-                        <div class="col-sm-9">
-                          <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-3">
-                        <label for="confirmPassword" class="col-sm-3 col-form-label">Confirm Password</label>
-                        <div class="col-sm-9">
-                          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password">
-                        </div>
-                      </div>
-                      <div class="form-group row mt-4">
-                        <div class="col-sm-12 text-end">
-                          <button type="submit" class="btn btn-primary">Change Password</button>
-                        </div>
-                      </div>
-                    </form>
+                    <!-- Tally Form akan dimuat di sini oleh JavaScript -->
+                    <iframe
+                      src="about:blank" 
+                      class="tally-embed"
+                      title="Project Brief Form">
+                    </iframe>
                   </div>
                 </div>
               </div>
-              
-              <div class="col-md-4">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Profile Picture</div>
+
+              <!-- Kolom Samping untuk Bantuan & Riwayat -->
+              <div class="col-lg-4">
+                <div class="card card-round card-help">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Butuh Bantuan Cepat?</h5>
+                        <p class="card-text">Jika Anda memiliki pertanyaan singkat atau ingin berdiskusi sebelum mengisi form, jangan ragu untuk menghubungi kami.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="icon"><i class="fab fa-whatsapp"></i></div>
+                            <div>
+                                <a href="https://wa.me/6285702373412" target="_blank">Chat via WhatsApp</a>
+                                <div class="text-muted small">Respon Cepat (Jam Kerja)</div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <a href="mailto:ixieralabs.com">Kirim Email</a>
+                                <div class="text-muted small">Respon dalam 24 jam</div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="card-body text-center">
-                    <div class="avatar-upload">
-                      <div class="avatar-edit">
-                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                        <label for="imageUpload"><i class="fas fa-pencil-alt"></i></label>
-                      </div>
-                      <div class="avatar-preview">
-                        <div id="imagePreview" style="background-image: url('assets/img/profile.jpg');"></div>
-                      </div>
-                    </div>
-                    <p class="text-muted mt-3">Allowed JPG, GIF or PNG. Max size of 2MB</p>
-                  </div>
                 </div>
-                
+
+                <!-- RIWAYAT PENGAJUAN DINAMIS -->
                 <div class="card card-round mt-4">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Security</div>
+                    <div class="card-header">
+                        <div class="card-title">Submission History</div>
                     </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="form-check form-switch mb-3">
-                      <input class="form-check-input" type="checkbox" id="twoFactorAuth" checked>
-                      <label class="form-check-label" for="twoFactorAuth">Two-Factor Authentication</label>
+                    <div class="card-body">
+                        <div id="submission-history-loader" class="text-center p-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Memuat riwayat...</p>
+                        </div>
+                        <ul class="list-group list-group-flush" id="submission-history-list">
+                            <!-- Data dari Supabase akan dimuat di sini -->
+                        </ul>
                     </div>
-                    <div class="form-check form-switch mb-3">
-                      <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
-                      <label class="form-check-label" for="emailNotifications">Email Notifications</label>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="smsNotifications">
-                      <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -260,15 +233,10 @@
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
-            <div class="copyright">2024, Client Portal by <a href="#">IXIERA</a></div>
+            <div class="copyright">2025, Client Portal by <a href="#">IXIERA</a></div>
           </div>
         </footer>
       </div>
-    </div>
-
-    <!-- LOADING SPINNER -->
-    <div id="loadingSpinner" class="loading-spinner">
-        <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
     </div>
 
     <!-- Core JS Files -->
@@ -279,9 +247,10 @@
     <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
     <script src="assets/js/kaiadmin.min.js"></script>
 
-    <!-- SUPABASE & CUSTOM JS -->
+    <!-- ===== SCRIPT UNTUK SUPABASE ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-client.js"></script>
-    <script src="assets/js/setting-demo.js"></script>
+    <script src="assets/js/submission-hub.js"></script>
   </body>
 </html>
+
