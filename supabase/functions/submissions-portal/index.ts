@@ -6,22 +6,22 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Fire-and-forget Discord + log untuk debugging
-const triggerDiscordWebhook = (url: string | undefined, payload: Record<string, unknown>) => {
+// Fire-and-forget Discord + log status
+const triggerDiscordWebhook = async (url: string | undefined, payload: Record<string, unknown>) => {
   if (!url) {
     console.warn('DISCORD_WEBHOOK_URL belum diset.');
     return;
   }
-  // Jalankan async tanpa menunggu (fire-and-forget)
-  setTimeout(() => {
-    fetch(url, {
+  try {
+    const resp = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-    })
-      .then(resp => console.log('Discord notif status:', resp.status))
-      .catch(err => console.error('Discord send error:', err));
-  }, 0);
+    });
+    console.log('Discord notif status:', resp.status);
+  } catch (err) {
+    console.error('Discord send error:', err);
+  }
 };
 
 Deno.serve(async (req) => {
@@ -40,11 +40,9 @@ Deno.serve(async (req) => {
 
     const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
-    // Ambil input JSON
     const formData = await req.json();
     console.log('Form data received:', formData);
 
-    // Validasi minimal
     if (!formData.title || !formData.user_id) {
       throw new Error('Title dan user_id wajib diisi.');
     }
@@ -60,7 +58,6 @@ Deno.serve(async (req) => {
 
     console.log('Prepared submissionData:', submissionData);
 
-    // Insert ke Supabase
     const { data, error } = await supabaseAdmin
       .from('submissions')
       .insert(submissionData)
@@ -74,7 +71,6 @@ Deno.serve(async (req) => {
 
     console.log('Inserted submission ID:', data.id);
 
-    // Fire-and-forget Discord notif
     const discordPayload = {
       content: `📩 **Submission Baru!**  
 ━━━━━━━━━━━━━━━━━━  
@@ -87,8 +83,10 @@ Deno.serve(async (req) => {
 🧩 Metadata: \`${JSON.stringify(data.metadata)}\`  
 ⏰ Created At: ${data.created_at}`,
     };
+
+    // Fire-and-forget Discord notif
     triggerDiscordWebhook(discordWebhookUrl, discordPayload);
-    console.log('Discord notif triggered (fire-and-forget)');
+    console.log('Discord notif triggered');
 
     return new Response(JSON.stringify({ success: true, submission_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
