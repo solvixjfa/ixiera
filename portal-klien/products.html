@@ -36,9 +36,18 @@
       <div class="sidebar" data-background-color="dark">
         <div class="sidebar-logo">
           <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
-              <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/>
-            </a>
+                <a href="index.html" class="logo">
+  <svg xmlns="http://www.w3.org/2000/svg" width="120" height="30" viewBox="0 0 320 80" class="navbar-brand">
+    <text x="0" y="55" 
+          font-family="Poppins, Arial, sans-serif" 
+          font-size="50" 
+          fill="white" 
+          font-weight="700" 
+          letter-spacing="4">
+      IXIERA
+    </text>
+  </svg>
+</a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
               <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
@@ -56,7 +65,7 @@
               <li class="nav-item"><a href="community.html"><i class="fas fa-users"></i><p>Community Forum</p></a></li>
               <li class="nav-item"><a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a></li>
               <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
-              <li class="nav-item"><a href="#"><i class="fas fa-user-cog"></i><p>Settings</p></a></li>
+              <li class="nav-item"><a href="submission.html"><i class="fas fa-user-cog"></i><p>submission</p></a></li>
               <li class="nav-item"><a href="logout.html" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a></li>
             </ul>
           </div>
@@ -98,7 +107,7 @@
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="#">Account submission</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
                       </li>
@@ -134,13 +143,67 @@
         </div>
         <!-- END CONTENT AREA -->
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <div class="copyright">2024, Client Portal by <a href="#">IXIERA</a></div>
-          </div>
-        </footer>
-      </div>
+                  <!-- footer-->
+<footer class="footer footer-custom-blue mt-auto py-5">
+    <div class="container text-center text-lg-start">
+        <div class="row gy-4">
+
+            <!-- Kolom Info Perusahaan -->
+            <div class="col-lg-4 col-md-12">
+                <h6 class="footer-heading mb-3">Portal by IXIERA</h6>
+                <p>
+                    An integrated platform for all your needs. Explore products, track orders, and join our community.
+                </p>
+            </div>
+
+            <!-- Kolom Quick Links -->
+            <div class="col-lg-2 col-md-6">
+                <h6 class="footer-heading mb-3">Quick Links</h6>
+                <ul class="list-unstyled quick-links">
+                    <li class="mb-2"><a href="index.html">Dashboard</a></li>
+                    <li class="mb-2"><a href="products.html">New Products</a></li>
+                    <li class="mb-2"><a href="order-history.html">Order History</a></li>
+                    <li class="mb-2"><a href="community.html">Community</a></li>
+                    <li class="mb-2"><a href="ai-assistant.html">AI Assistant</a></li>
+                </ul>
+            </div>
+
+            <!-- Kolom Media Sosial (Diperbaiki) -->
+            <div class="col-lg-3 col-md-6">
+                <h6 class="footer-heading mb-3">Connect With Us</h6>
+                <div class="social-icons d-flex justify-content-center justify-content-lg-start">
+                    <a href="https://www.instagram.com/ixieraa/" class="me-3" title="Instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/6285702373412" class="me-3" title="WhatsApp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://x.com/4ixiera" class="me-3" title="X (Twitter)" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://t.me/+7MksSZVpdHEyZWNl" title="Telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bagian Copyright & Legal -->
+        <div class="copyright-section pt-4 mt-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                    <!-- Disarankan untuk mengosongkan span dan mengisinya dengan JavaScript -->
+                    <small>Copyright &copy; <span id="copyright-year">2025</span>, Client Portal by IXIERA</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end legal-links">
+                    <small><a href="privacy-policy.html" class="me-3">Privacy Policy</a></small>
+                    <small><a href="terms-of-services.html">Terms of Service</a></small>
+                </div>
+            </div>
+        </div>
     </div>
+</footer>
 
     <!-- MODAL UNTUK DETAIL & PESAN PRODUK -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
