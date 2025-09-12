@@ -7,8 +7,11 @@ const corsHeaders = {
 };
 
 // Fire-and-forget Discord + log untuk debugging
-const triggerDiscordWebhook = async (url: string, payload: Record<string, unknown>) => {
-  if (!url) return console.warn('DISCORD_WEBHOOK_URL belum diset.');
+const triggerDiscordWebhook = async (url: string | undefined, payload: Record<string, unknown>) => {
+  if (!url) {
+    console.warn('DISCORD_WEBHOOK_URL belum diset.');
+    return;
+  }
   try {
     const resp = await fetch(url, {
       method: 'POST',
@@ -24,17 +27,27 @@ const triggerDiscordWebhook = async (url: string, payload: Record<string, unknow
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
+  console.log('Edge Function triggered');
+
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
 
-    if (!supabaseUrl || !serviceRoleKey) throw new Error('Konfigurasi Supabase tidak lengkap.');
+    if (!supabaseUrl || !serviceRoleKey) {
+      throw new Error('Konfigurasi Supabase tidak lengkap.');
+    }
 
     const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
-    const formData = await req.json();
 
-    if (!formData.title || !formData.user_id) throw new Error('Title dan user_id wajib diisi.');
+    // Ambil input JSON
+    const formData = await req.json();
+    console.log('Form data received:', formData);
+
+    // Validasi minimal
+    if (!formData.title || !formData.user_id) {
+      throw new Error('Title dan user_id wajib diisi.');
+    }
 
     const submissionData = {
       user_id: formData.user_id,
@@ -44,6 +57,8 @@ Deno.serve(async (req) => {
       status: formData.status || 'pending',
       metadata: formData.metadata || {},
     };
+
+    console.log('Prepared submissionData:', submissionData);
 
     // Insert ke Supabase
     const { data, error } = await supabaseAdmin
@@ -56,6 +71,8 @@ Deno.serve(async (req) => {
       console.error('Supabase insert error:', error);
       throw new Error('Gagal menyimpan ke tabel submissions.');
     }
+
+    console.log('Inserted submission ID:', data.id);
 
     // Notif Discord
     const discordPayload = {
@@ -71,15 +88,18 @@ Deno.serve(async (req) => {
 ⏰ Created At: ${data.created_at}`,
     };
 
-    triggerDiscordWebhook(discordWebhookUrl!, discordPayload);
+    await triggerDiscordWebhook(discordWebhookUrl, discordPayload);
+
+    console.log('Discord notif triggered');
 
     return new Response(JSON.stringify({ success: true, submission_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
+
   } catch (err) {
-    console.error('Edge Function Error:', err.message);
-    return new Response(JSON.stringify({ success: false, error: err.message }), {
+    console.error('Edge Function Error:', err?.message || err);
+    return new Response(JSON.stringify({ success: false, error: err?.message || 'Unknown error' }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
     });
