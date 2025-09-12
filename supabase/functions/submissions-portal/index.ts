@@ -1,4 +1,4 @@
-// File: supabase/functions/submit-submission/index.ts
+// File: supabase/functions/notify-discord-submission/index.ts
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
@@ -6,19 +6,15 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Kirim Discord dan tunggu sampai selesai
-const sendDiscordWebhook = async (url: string | undefined, payload: Record<string, unknown>) => {
-  if (!url) {
-    console.warn('DISCORD_WEBHOOK_URL belum diset.');
-    return;
-  }
+// Notifikasi Discord (async tapi dijamin jalan sebelum respon)
+const sendDiscordNotification = async (webhookUrl: string, payload: Record<string, unknown>) => {
   try {
-    const resp = await fetch(url, {
+    const resp = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    console.log('Discord notif status:', resp.status); // 204 artinya sukses
+    console.log('Discord notif status:', resp.status); // 204 = success
   } catch (err) {
     console.error('Discord send error:', err);
   }
@@ -27,50 +23,31 @@ const sendDiscordWebhook = async (url: string | undefined, payload: Record<strin
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
-  console.log('Edge Function triggered');
-
   try {
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     const discordWebhookUrl = Deno.env.get('DISCORD_WEBHOOK_URL');
 
-    if (!supabaseUrl || !serviceRoleKey) {
-      throw new Error('Konfigurasi Supabase tidak lengkap.');
+    if (!supabaseUrl || !serviceRoleKey || !discordWebhookUrl) {
+      throw new Error('Konfigurasi Supabase atau Discord Webhook belum lengkap.');
     }
 
     const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
-    const formData = await req.json();
-    console.log('Form data received:', formData);
+    // Ambil input JSON dari request
+    const { submission_id } = await req.json();
+    if (!submission_id) throw new Error('submission_id wajib dikirim.');
 
-    if (!formData.title || !formData.user_id) {
-      throw new Error('Title dan user_id wajib diisi.');
-    }
-
-    const submissionData = {
-      user_id: formData.user_id,
-      submission_type: formData.submission_type || 'Umum',
-      title: formData.title,
-      description: formData.description || null,
-      status: formData.status || 'pending',
-      metadata: formData.metadata || {},
-    };
-    console.log('Prepared submissionData:', submissionData);
-
-    // Insert ke Supabase
+    // Ambil data submission dari DB
     const { data, error } = await supabaseAdmin
       .from('submissions')
-      .insert(submissionData)
-      .select('id, created_at, user_id, submission_type, title, status, metadata')
+      .select('*')
+      .eq('id', submission_id)
       .single();
 
-    if (error) {
-      console.error('Supabase insert error:', error);
-      throw new Error('Gagal menyimpan ke tabel submissions.');
-    }
-    console.log('Inserted submission ID:', data.id);
+    if (error || !data) throw new Error('Submission tidak ditemukan: ' + (error?.message || ''));
 
-    // Kirim notif Discord dengan await, aman dari EarlyDrop
+    // Buat payload Discord
     const discordPayload = {
       content: `📩 **Submission Baru!**  
 ━━━━━━━━━━━━━━━━━━  
@@ -84,8 +61,8 @@ Deno.serve(async (req) => {
 ⏰ Created At: ${data.created_at}`,
     };
 
-    await sendDiscordWebhook(discordWebhookUrl, discordPayload);
-    console.log('Discord notif successfully sent');
+    // Kirim notif
+    await sendDiscordNotification(discordWebhookUrl, discordPayload);
 
     return new Response(JSON.stringify({ success: true, submission_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
