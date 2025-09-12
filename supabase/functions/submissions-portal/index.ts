@@ -6,8 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Fire-and-forget Discord + log status
-const triggerDiscordWebhook = async (url: string | undefined, payload: Record<string, unknown>) => {
+// Kirim Discord dan tunggu sampai selesai
+const sendDiscordWebhook = async (url: string | undefined, payload: Record<string, unknown>) => {
   if (!url) {
     console.warn('DISCORD_WEBHOOK_URL belum diset.');
     return;
@@ -18,7 +18,7 @@ const triggerDiscordWebhook = async (url: string | undefined, payload: Record<st
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    console.log('Discord notif status:', resp.status);
+    console.log('Discord notif status:', resp.status); // 204 artinya sukses
   } catch (err) {
     console.error('Discord send error:', err);
   }
@@ -55,9 +55,9 @@ Deno.serve(async (req) => {
       status: formData.status || 'pending',
       metadata: formData.metadata || {},
     };
-
     console.log('Prepared submissionData:', submissionData);
 
+    // Insert ke Supabase
     const { data, error } = await supabaseAdmin
       .from('submissions')
       .insert(submissionData)
@@ -68,9 +68,9 @@ Deno.serve(async (req) => {
       console.error('Supabase insert error:', error);
       throw new Error('Gagal menyimpan ke tabel submissions.');
     }
-
     console.log('Inserted submission ID:', data.id);
 
+    // Kirim notif Discord dengan await, aman dari EarlyDrop
     const discordPayload = {
       content: `📩 **Submission Baru!**  
 ━━━━━━━━━━━━━━━━━━  
@@ -84,9 +84,8 @@ Deno.serve(async (req) => {
 ⏰ Created At: ${data.created_at}`,
     };
 
-    // Fire-and-forget Discord notif
-    triggerDiscordWebhook(discordWebhookUrl, discordPayload);
-    console.log('Discord notif triggered');
+    await sendDiscordWebhook(discordWebhookUrl, discordPayload);
+    console.log('Discord notif successfully sent');
 
     return new Response(JSON.stringify({ success: true, submission_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
