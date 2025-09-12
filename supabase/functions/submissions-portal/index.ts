@@ -7,21 +7,21 @@ const corsHeaders = {
 };
 
 // Fire-and-forget Discord + log untuk debugging
-const triggerDiscordWebhook = async (url: string | undefined, payload: Record<string, unknown>) => {
+const triggerDiscordWebhook = (url: string | undefined, payload: Record<string, unknown>) => {
   if (!url) {
     console.warn('DISCORD_WEBHOOK_URL belum diset.');
     return;
   }
-  try {
-    const resp = await fetch(url, {
+  // Jalankan async tanpa menunggu (fire-and-forget)
+  setTimeout(() => {
+    fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-    });
-    console.log('Discord notif status:', resp.status);
-  } catch (err) {
-    console.error('Discord send error:', err);
-  }
+    })
+      .then(resp => console.log('Discord notif status:', resp.status))
+      .catch(err => console.error('Discord send error:', err));
+  }, 0);
 };
 
 Deno.serve(async (req) => {
@@ -74,7 +74,7 @@ Deno.serve(async (req) => {
 
     console.log('Inserted submission ID:', data.id);
 
-    // Notif Discord
+    // Fire-and-forget Discord notif
     const discordPayload = {
       content: `📩 **Submission Baru!**  
 ━━━━━━━━━━━━━━━━━━  
@@ -87,10 +87,8 @@ Deno.serve(async (req) => {
 🧩 Metadata: \`${JSON.stringify(data.metadata)}\`  
 ⏰ Created At: ${data.created_at}`,
     };
-
-    await triggerDiscordWebhook(discordWebhookUrl, discordPayload);
-
-    console.log('Discord notif triggered');
+    triggerDiscordWebhook(discordWebhookUrl, discordPayload);
+    console.log('Discord notif triggered (fire-and-forget)');
 
     return new Response(JSON.stringify({ success: true, submission_id: data.id }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
