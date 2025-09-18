@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Page Not Found</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+  body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .container {
+    text-align: center;
+    background: rgba(0,0,0,0.6);
+    padding: 50px 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  h1 {
+    font-size: 96px;
+    margin: 0;
+    color: #ffdd59;
+    animation: pulse 2s infinite;
+  }
+
+  h2 {
+    font-size: 32px;
+    margin: 10px 0;
+    font-weight: 300;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 20px 0;
+  }
+
+  a.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    background: #ff6b6b;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+
+  a.button:hover {
+    transform: scale(1.05);
+    background: #ff4757;
+  }
+
+  /* Animations */
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 60px; }
+    h2 { font-size: 24px; }
+    .container { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>404</h1>
+    <h2>Oops! Page Not Found</h2>
+    <p>The page you're looking for doesn’t exist or has been moved.</p>
+    <a href="index.html" class="button">Go Back Home</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "ixiera-ai-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "cheerio": "^1.1.2",
+    "fs-extra": "^11.3.1",
+    "groq-sdk": "^0.30.0",
+    "resend": "^6.0.1"
+  }
+}

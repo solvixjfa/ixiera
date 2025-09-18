@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Client Portal - Submission Hub</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["assets/css/fonts.min.css"],
+        },
+        active: function () { sessionStorage.fonts = true; },
+      });
+    </script>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="assets/css/custom.css" />
+    
+    <style>
+      body { background-color: #f8f9fa; }
+      .card { box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: none; }
+      .submission-choice-card {
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-left: 4px solid transparent;
+      }
+      .submission-choice-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      }
+      #select-project-tally:hover { border-left-color: #1d62f0; } /* Tambahan style */
+      #select-help:hover { border-left-color: #dc3545; }
+      #select-feedback:hover { border-left-color: #ffc107; }
+      .submission-form { display: none; }
+      .btn-back { font-size: 0.9rem; }
+      .btn-primary { background-image: linear-gradient(to right, #1d62f0, #1a58d8); border: none; }
+      .btn-danger { background-image: linear-gradient(to right, #dc3545, #c82333); border: none; }
+      .btn-warning { background-image: linear-gradient(to right, #ffc107, #e0a800); border: none; }
+      .btn { transition: transform 0.1s ease-in-out; }
+      .btn:hover { transform: scale(1.02); }
+      .history-icon { width: 25px; text-align: center; margin-right: 12px; font-size: 1.1rem; }
+      .list-group-item { transition: background-color 0.2s ease; }
+      .list-group-item:hover { background-color: #f8f9fa; }
+    </style>
+      <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar" data-background-color="dark">
+        <div class="sidebar-logo">
+          <div class="logo-header" data-background-color="dark">
+     <a href="index.html" class="logo">
+  <svg xmlns="http://www.w3.org/2000/svg" width="120" height="30" viewBox="0 0 320 80" class="navbar-brand">
+    <text x="0" y="55" 
+          font-family="Poppins, Arial, sans-serif" 
+          font-size="50" 
+          fill="white" 
+          font-weight="700" 
+          letter-spacing="4">
+      IXIERA
+    </text>
+  </svg>
+</a>
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+              <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+            </div>
+            <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+          </div>
+        </div>
+        <div class="sidebar-wrapper scrollbar scrollbar-inner">
+          <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+              <li class="nav-item">
+                <a href="index.html"><i class="fas fa-tachometer-alt"></i><p>Dashboard</p></a>
+              </li>
+              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Portal Menu</h4></li>
+              <li class="nav-item">
+                <a href="products.html"><i class="fas fa-lightbulb"></i><p>New Products</p></a>
+              </li>
+              <li class="nav-item">
+                <a href="order-history.html"><i class="fas fa-history"></i><p>Order History</p></a>
+              </li>
+              <li class="nav-item">
+                <a href="community.html"><i class="fas fa-users"></i><p>Community Forum</p></a>
+              </li>
+              <li class="nav-item">
+                <a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a>
+              </li>
+              <li class="nav-section"><span class="sidebar-mini-icon"><i class="fa fa-ellipsis-h"></i></span><h4 class="text-section">Account</h4></li>
+                <li class="nav-item active">
+                <a href="submission.html"><i class="fas fa-paper-plane"></i><p>Submission</p></a>
+              </li>
+              <li class="nav-item">
+                <a href="#" id="logoutButton"><i class="fas fa-sign-out-alt"></i><p>Logout</p></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="main-panel">
+        <div class="main-header">
+          <div class="main-header-logo">
+            <div class="logo-header" data-background-color="dark">
+              <a href="index.html" class="logo"><img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20"/></a>
+              <div class="nav-toggle">
+                <button class="btn btn-toggle toggle-sidebar"><i class="gg-menu-right"></i></button>
+                <button class="btn btn-toggle sidenav-toggler"><i class="gg-menu-left"></i></button>
+              </div>
+              <button class="topbar-toggler more"><i class="gg-more-vertical-alt"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="page-inner">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+              <div><h3 class="fw-bold mb-3">Submission Hub</h3><h6 class="op-7 mb-2" id="page-subtitle">Pusat untuk semua kebutuhan Anda.</h6></div>
+            </div>
+            <div class="row">
+              <div class="col-xl-8">
+                <div id="submission-choice" class="card card-round">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Apa yang ingin Anda lakukan?</h5>
+                        <div class="row mt-4">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card card-body text-center submission-choice-card" id="select-project-tally">
+                                    <i class="fas fa-rocket fa-2x text-primary mb-2"></i>
+                                    <h6 class="fw-bold">Ajukan Proyek Baru</h6>
+                                    <p class="small text-muted mb-0">Kirim brief untuk proyek baru.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <div class="card card-body text-center submission-choice-card" id="select-help">
+                                    <i class="fas fa-bug fa-2x text-danger mb-2"></i>
+                                    <h6 class="fw-bold">Lapor Kendala</h6>
+                                    <p class="small text-muted mb-0">Laporkan bug atau masalah teknis.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card card-body text-center submission-choice-card" id="select-feedback">
+                                    <i class="fas fa-lightbulb fa-2x text-warning mb-2"></i>
+                                    <h6 class="fw-bold">Beri Umpan Balik</h6>
+                                    <p class="small text-muted mb-0">Sampaikan ide, saran, atau testimoni.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-container">
+                    <div id="tally-form-container" class="submission-form">
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <h5 class="card-title fw-bold"><i class="fas fa-rocket text-primary"></i> Formulir Pengajuan Proyek</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <iframe id="tally-form" src="https://tally.so/r/mKrbk8?user_id= " frameborder="0" width="100%" height="1300" allowtransparency allow="microphone; camera; clipboard-read; clipboard-write; fullscreen"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="help-form-container" class="submission-form">
+                        <form id="help-form" class="card card-round" novalidate>
+                            <input type="hidden" name="submission_type" value="Bantuan Teknis">
+                            <div class="card-header"><h5 class="card-title fw-bold"><i class="fas fa-bug text-danger"></i> Formulir Laporan Kendala</h5></div>
+                            <div class="card-body">
+                                <div class="mb-3"><label class="form-label">Judul Laporan</label><input type="text" name="title" class="form-control" placeholder="Cth: Tombol login tidak berfungsi" required></div>
+                                <div class="mb-3"><label class="form-label">Tingkat Urgensi</label><select name="urgency" class="form-select" required><option value="" disabled selected>Pilih...</option><option>Rendah</option><option>Sedang</option><option>Tinggi</option></select></div>
+                                <div class="mb-3"><label class="form-label">Deskripsi Kendala</label><textarea name="description" class="form-control" rows="4" placeholder="Jelaskan masalah sedetail mungkin..." required></textarea></div>
+                                <div class="form-message mb-3"></div>
+                                <button type="submit" class="btn btn-danger w-100 fw-bold">Kirim Laporan</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="feedback-form-container" class="submission-form">
+                         <form id="feedback-form" class="card card-round" novalidate>
+                            <input type="hidden" name="submission_type" value="Umpan Balik">
+                            <div class="card-header"><h5 class="card-title fw-bold"><i class="fas fa-lightbulb text-warning"></i> Formulir Umpan Balik</h5></div>
+                            <div class="card-body">
+                                <div class="mb-3"><label class="form-label">Judul Umpan Balik</label><input type="text" name="title" class="form-control" placeholder="Cth: Saran untuk fitur notifikasi email" required></div>
+                                <div class="mb-3"><label class="form-label">Jenis Umpan Balik</label><select name="feedback_type" class="form-select" required><option value="" disabled selected>Pilih...</option><option>Saran Fitur</option><option>Testimoni</option><option>Keluhan</option><option>Lainnya</option></select></div>
+                                <div class="mb-3"><label class="form-label">Detail Umpan Balik</label><textarea name="description" class="form-control" rows="4" placeholder="Jelaskan ide, saran, atau masukan Anda..." required></textarea></div>
+                                <div class="form-message mb-3"></div>
+                                <button type="submit" class="btn btn-warning w-100 fw-bold text-dark">Kirim Umpan Balik</button>
+                            </div>
+                        </form>
+                    </div>
+                     <button class="btn btn-light btn-back mt-2" id="back-to-choices" style="display: none;"><i class="fas fa-arrow-left"></i> Kembali ke Pilihan</button>
+                </div>
+              </div>
+              <div class="col-xl-4">
+                <div class="card card-round">
+                    <div class="card-header"><div class="card-title">Riwayat Pengajuan</div></div>
+                    <div class="card-body">
+                        <div id="submission-history-loader" class="text-center p-4">
+                            <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></span></div>
+                            <p class="mt-2 text-muted">Memuat riwayat...</p>
+                        </div>
+                        <ul class="list-group list-group-flush" id="submission-history-list"></ul>
+                    </div>
+                </div>
+                <div class="card card-round card-help mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title fw-bold">Butuh Bantuan Cepat?</h5>
+                    <p class="card-text">Hubungi kami jika ada pertanyaan sebelum mengisi form.</p>
+
+                    <div class="d-flex align-items-center mb-3">
+                      <div class="icon me-3 d-flex align-items-center justify-content-center rounded-circle bg-success text-white" 
+                           style="width:40px; height:40px; font-size:18px;">
+                        <i class="fab fa-whatsapp"></i>
+                      </div>
+                      <div>
+                        <a href="https://wa.me/6285702373412" target="_blank" class="fw-bold text-dark">
+                          Chat via WhatsApp
+                        </a>
+                        <div class="text-muted small">Respon Cepat (Jam Kerja)</div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                      <div class="icon me-3 d-flex align-items-center justify-content-center rounded-circle bg-primary text-white" 
+                           style="width:40px; height:40px; font-size:18px;">
+                        <i class="fas fa-envelope"></i>
+                      </div>
+                      <div>
+                        <a href="mailto:ixieralabs.com" class="fw-bold text-dark">
+                          Kirim Email
+                        </a>
+                        <div class="text-muted small">Respon dalam 24 jam</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <footer class="footer footer-custom-blue mt-auto py-5">
+          <div class="container text-center text-lg-start">
+            <div class="row gy-4">
+              <div class="col-lg-4 col-md-12">
+                <h6 class="footer-heading mb-3">Portal by IXIERA</h6>
+                <p>
+                  An integrated platform for all your needs. Explore products, track orders, and join our community.
+                </p>
+              </div>
+
+              <div class="col-lg-2 col-md-6">
+                <h6 class="footer-heading mb-3">Quick Links</h6>
+                <ul class="list-unstyled quick-links">
+                  <li class="mb-2"><a href="index.html">Dashboard</a></li>
+                  <li class="mb-2"><a href="products.html">New Products</a></li>
+                  <li class="mb-2"><a href="order-history.html">Order History</a></li>
+                  <li class="mb-2"><a href="community.html">Community</a></li>
+                  <li class="mb-2"><a href="ai-assistant.html">AI Assistant</a></li>
+                  <li class="mb-2"><a href="submission.html">Submission hub</a></li>
+                </ul>
+              </div>
+
+              <div class="col-lg-3 col-md-6">
+                <h6 class="footer-heading mb-3">Connect With Us</h6>
+                <div class="social-icons d-flex justify-content-center justify-content-lg-start">
+                  <a href="https://www.instagram.com/ixieraa/" class="me-3" title="Instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                  </a>
+                  <a href="https://wa.me/6285702373412" class="me-3" title="WhatsApp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                  <a href="https://x.com/4ixiera" class="me-3" title="X (Twitter)" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                  <a href="https://t.me/+7MksSZVpdHEyZWNl" title="Telegram" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+                    <i class="fab fa-telegram"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="copyright-section pt-4 mt-4">
+              <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                  <small>Copyright &copy; <span id="copyright-year">2025</span>, Client Portal by IXIERA</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end legal-links">
+                  <small><a href="privacy-policy.html" class="me-3">Privacy Policy</a></small>
+                  <small><a href="terms-of-services.html">Terms of Service</a></small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+        <a href="#" class="btn btn-primary btn-lg rounded-circle" id="btn-back-to-top" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+          <i class="fas fa-arrow-up"></i>
+        </a>
+      </div>
+    </div>
+
+    <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/core/popper.min.js"></script>
+    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="assets/js/kaiadmin.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-client.js"></script>
+    <script src="assets/js/submission-hub.js"></script>
+    <script src="assets/js/widgetbot.js"></script>
+  </body>
+</html>

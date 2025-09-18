@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sign Up - IXIERA portal</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="https://placehold.co/32x32/6a5acd/white?text=IXIERA" type="image/x-icon" />
+
+
+
+    <!-- External Libraries (Bootstrap & Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
+    
+    <style>
+        /* Styles are identical to sign-in.html for consistency */
+        body { 
+            background-color: #f4f5f8; 
+            font-family: 'Public Sans', sans-serif, system-ui;
+            visibility: hidden;
+        }
+        .signup-container { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 15px; 
+        }
+        .signup-card { 
+            width: 100%; 
+            max-width: 420px; 
+            border: none; 
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+        .form-control { 
+            height: 48px; 
+            border-radius: 8px; 
+        }
+        .form-control:focus {
+            border-color: #6a5acd;
+            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.25);
+        }
+        .btn-primary {
+            background-color: #6a5acd;
+            border-color: #6a5acd;
+        }
+        .btn-primary:hover {
+            background-color: #483d8b;
+            border-color: #483d8b;
+        }
+        .btn-lg { 
+            padding: 0.75rem 1.25rem; 
+            font-size: 1rem; 
+            border-radius: 8px; 
+        }
+        .message-box { 
+            display: none; 
+        }
+        .password-toggle-icon {
+            position: absolute; 
+            top: 50%; 
+            right: 15px; 
+            transform: translateY(-50%);
+            cursor: pointer; 
+            color: #6c757d;
+        }
+    </style>
+      <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+</head>
+<body>
+    <div class="container signup-container">
+        <div class="card signup-card shadow-lg">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="Logo" class="mb-3" style="border-radius: 50%;">
+                    <h3 class="fw-bold mb-1">Create an Account</h3>
+                    <p class="text-muted">Let’s Explore IXIERA Together! </p>
+                </div>
+
+                <!-- Message containers -->
+                <div id="error-message" class="alert alert-danger message-box" role="alert"></div>
+                <div id="success-message" class="alert alert-success message-box" role="alert"></div>
+
+                <form id="signup-form" novalidate>
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullname" placeholder="m.y, goyounjung" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="position-relative">
+                            <input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
+                            <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" id="signup-btn" class="btn btn-primary btn-lg">
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            <span class="btn-text">Create Account</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">Already have an account? <a href="sign-in.html">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+        <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+// --- SUPABASE CLIENT INITIALIZATION ---
+const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/**
+ * Checks for an active session and redirects if found.
+ * Otherwise, makes the page visible and sets up listeners.
+ */
+async function checkSessionAndInitialize() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    if (session) {
+        window.location.href = 'index.html'; // User is already logged in
+    } else {
+        document.body.style.visibility = 'visible'; // No session, show the signup page
+        initializeSignUpListeners();
+    }
+}
+
+/**
+ * Attaches event listeners to the sign-up form.
+ */
+function initializeSignUpListeners() {
+    // --- DOM Element Selection ---
+    const signupForm = document.getElementById('signup-form');
+    const signupButton = document.getElementById('signup-btn');
+    const spinner = signupButton.querySelector('.spinner-border');
+    const btnText = signupButton.querySelector('.btn-text');
+    const errorMessageDiv = document.getElementById('error-message');
+    const successMessageDiv = document.getElementById('success-message');
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('toggle-password');
+
+    // --- UI Helper Functions ---
+    
+    /** Toggles the loading state of the sign-up button. */
+    function showLoading(isLoading) {
+        signupButton.disabled = isLoading;
+        spinner.classList.toggle('d-none', !isLoading);
+        btnText.textContent = isLoading ? 'Processing...' : 'Create Account';
+    }
+
+    /** Displays a message in the specified message box. */
+    function showMessage(element, message) {
+        element.textContent = message;
+        element.style.display = 'block';
+    }
+
+    // --- Event Listeners ---
+
+    /** Toggles password visibility. */
+    togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        togglePassword.querySelector('i').classList.toggle('fa-eye');
+        togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+
+    /** Handles the email/password sign-up form submission. */
+    signupForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        showLoading(true);
+        errorMessageDiv.style.display = 'none';
+        successMessageDiv.style.display = 'none';
+
+        try {
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = passwordInput.value;
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email,
+                password,
+                options: {
+                    user_metadata: {
+                        full_name: fullname,
+                        // Anda bisa menambahkan data lain di sini, seperti avatar_url
+                    }
+                }
+            });
+
+            if (error) throw error;
+            
+            // Supabase mengirim email konfirmasi. Data.user akan null.
+            if (data.user) {
+                 // Ini akan berjalan jika Anda menonaktifkan konfirmasi email.
+                showMessage(successMessageDiv, 'Registrasi berhasil! Anda akan diarahkan ke halaman utama.');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            } else {
+                // Ini akan berjalan jika Anda mengaktifkan konfirmasi email.
+                showMessage(successMessageDiv, 'Registrasi berhasil! Silakan periksa email Anda untuk konfirmasi akun.');
+                signupForm.reset();
+            }
+
+        } catch (error) {
+            showMessage(errorMessageDiv, error.message || 'An unexpected error occurred.');
+        } finally {
+            showLoading(false);
+        }
+    });
+}
+
+// --- SCRIPT EXECUTION ---
+document.addEventListener('DOMContentLoaded', checkSessionAndInitialize);
+    </script>
+</body>
+</html>
+

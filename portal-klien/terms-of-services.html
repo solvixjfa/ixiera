@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Terms of Service - Client Portal</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+
+  <!-- Fonts and icons -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+        urls: ["assets/css/fonts.min.css"],
+      },
+      active: function () { sessionStorage.fonts = true; },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="assets/css/custom.css" /> <!-- ALL CUSTOM STYLES ARE HERE -->
+    <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <div id="sidebar-placeholder"></div>
+    <div class="main-panel">
+      <div id="topbar-placeholder"></div>
+      <div class="container">
+        <div class="page-inner">
+          <div class="page-header">
+            <h3 class="fw-bold mb-3">Terms of Service</h3>
+            <ul class="breadcrumbs">
+              <li class="nav-home"><a href="index.html"><i class="icon-home"></i></a></li>
+              <li class="separator"><i class="icon-arrow-right"></i></li>
+              <li class="nav-item"><a>Terms of Service</a></li>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-round">
+                <div class="card-body legal-content">
+                  <h4 class="card-title">Terms of Service for Portal by IXIERA</h4>
+                  <p class="card-category">Last updated: September 05, 2025</p>
+
+                  <h5>1. Agreement to Terms</h5>
+                  <p>By accessing and using the Portal by IXIERA ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you disagree with any part of the terms, then you may not access the Service.</p>
+
+                  <h5>2. User Accounts</h5>
+                  <ul>
+                    <li>You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password.</li>
+                    <li>You agree to accept responsibility for all activities that occur under your account.</li>
+                    <li>You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.</li>
+                  </ul>
+
+                  <h5>3. Intellectual Property</h5>
+                  <p>The Service and its original content (excluding content provided by users), features, and functionality are and will remain the exclusive property of IXIERA. The Service is protected by copyright and other laws.</p>
+
+                  <h5>4. Prohibited Activities</h5>
+                  <p>You agree not to use the Service for any purpose that is unlawful or prohibited by these Terms. You may not:</p>
+                  <ul>
+                    <li>Use the Service in any manner that could damage, disable, overburden, or impair our servers or networks.</li>
+                    <li>Attempt to gain unauthorized access to the Service, other accounts, or computer systems through hacking or any other means.</li>
+                    <li>Use any automated software or process to access or "scrape" the Service for any purpose.</li>
+                  </ul>
+
+                  <h5>5. Termination</h5>
+                  <p>We may terminate or suspend your access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+
+                  <h5>6. Limitation of Liability</h5>
+                  <p>In no event shall IXIERA, nor its directors, employees, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, or other intangible losses, resulting from your access to or use of, or inability to access or use, the Service.</p>
+                  
+                  <h5>7. Changes to Terms</h5>
+                  <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+
+                  <h5>8. Contact Us</h5>
+                  <p>If you have any questions about these Terms, please contact us by email: <strong>Ixieralabs@gmail.com</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer-placeholder"></div>
+    </div>
+  </div>
+  
+  <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="assets/js/kaiadmin.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script>
+    $(function() {
+      $("#sidebar-placeholder").load("sidebar.html");
+      $("#topbar-placeholder").load("topbar.html");
+      $("#footer-placeholder").load("footer.html", function() {
+        if (typeof initFooter === 'function') {
+          initFooter();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+

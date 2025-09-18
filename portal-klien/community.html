@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Community Forum - Client Portal</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    
+    <!-- WebFont Loader -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+      WebFont.load({
+        google: { families: ["Public Sans:300,400,500,600,700"] },
+        custom: {
+          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+          urls: ["/assets/css/fonts.min.css"],
+        },
+        active: function () { 
+          try {
+            sessionStorage.fonts = true; 
+          } catch(e) {
+            console.warn('SessionStorage not available');
+          }
+        },
+      });
+    </script>
+    
+    <!-- CSS Inti Tema Kaiadmin -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+   
+
+    <!-- CSS Khusus Halaman Komunitas -->
+    <style>
+        html, body {
+            height: 100%; 
+            margin: 0; 
+            overflow: hidden; 
+            background-color: #23272A;
+        }
+        
+        .community-fullscreen-wrapper {
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            position: relative;
+        }
+        
+        .community-header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 20px;
+            background-color: #2C2F33; 
+            flex-shrink: 0; 
+            border-bottom: 1px solid #23272A;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+            z-index: 10;
+        }
+        
+        .community-header .brand {
+            display: flex; 
+            align-items: center; 
+            color: #fff; 
+            font-weight: 600;
+        }
+        
+        .community-header .brand .fab {
+            margin-right: 12px; 
+            color: #7289DA;
+        }
+        
+        .community-header .actions a {
+            color: #fff; 
+            background-color: #40444B; 
+            padding: 8px 15px; 
+            border-radius: 5px;
+            text-decoration: none; 
+            font-size: 14px; 
+            margin-left: 10px; 
+            transition: background-color 0.2s;
+            display: inline-flex; 
+            align-items: center;
+        }
+        
+        .community-header .actions a i { 
+            margin-right: 8px; 
+        }
+        
+        .community-header .actions a:hover { 
+            background-color: #7289DA; 
+        }
+        
+        .discord-widget-container { 
+            flex-grow: 1; 
+            overflow: hidden; 
+            position: relative; 
+            background-color: #2C2F33;
+        }
+        
+        .discord-widget-container iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: none;
+            display: block;
+        }
+        
+        .footer { 
+            flex-shrink: 0; 
+            position: relative !important;
+            margin-top: 0;
+        }
+        
+        #loading-overlay {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: #2C2F33;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            z-index: 100; 
+            transition: opacity 0.5s ease; 
+            color: #fff;
+        }
+        
+        .spinner {
+            border: 5px solid rgba(255, 255, 255, 0.3); 
+            border-radius: 50%; 
+            border-top: 5px solid #fff;
+            width: 50px; 
+            height: 50px; 
+            animation: spin 1s linear infinite;
+        }
+        
+        #loading-overlay p { 
+            margin-top: 20px; 
+            font-size: 1rem; 
+            font-weight: 500; 
+        }
+        
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        
+        /* Error handling styles */
+        .error-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+            background: rgba(220, 53, 69, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #dc3545;
+            display: none;
+        }
+        
+        .retry-btn {
+            background: #7289DA;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .retry-btn:hover {
+            background: #5865f2;
+        }
+    </style>
+      <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+</head>
+<body>
+    <div class="community-fullscreen-wrapper">
+      
+      <div class="community-header">
+        <div class="brand">
+          <i class="fab fa-discord fa-lg"></i>
+          <span>Forum Komunitas</span>
+        </div>
+        <div class="actions">
+          <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Portal</a>
+          <a href="https://discord.com/channels/1411001146788679821/1411001149376430203" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i> Buka di Aplikasi</a>
+        </div>
+      </div>
+      
+      <div class="discord-widget-container">
+        <!-- Loading overlay -->
+        <div id="loading-overlay">
+          <div class="spinner"></div>
+          <p>Memuat Forum Komunitas...</p>
+        </div>
+        
+        <!-- Error message -->
+        <div id="error-message" class="error-message">
+          <h4>Gagal Memuat Forum</h4>
+          <p>Terjadi kesalahan saat memuat widget Discord.</p>
+          <button class="retry-btn" onclick="retryLoadWidget()">Coba Lagi</button>
+        </div>
+        
+        <!-- Discord widget iframe -->
+        <iframe 
+          id="discord-iframe"
+          data-src="https://e.widgetbot.io/channels/1411001146788679821/1411001149376430203?theme=dark&color=%237289DA" 
+          allow="clipboard-write; fullscreen"
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <footer class="footer" id="footer-placeholder"></footer>
+
+    </div>
+    
+    <!-- Load scripts without defer to prevent conflicts -->
+    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/core/popper.min.js"></script>
+    <script src="/assets/js/core/bootstrap.min.js"></script>
+    
+    <!-- Load these scripts conditionally to prevent errors -->
+    <script>
+      // Only load if elements exist to prevent errors
+      if (document.querySelector('.scrollbar-outer, .jquery-scrollbar')) {
+        const scrollbarScript = document.createElement('script');
+        scrollbarScript.src = '/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js';
+        scrollbarScript.onerror = () => console.warn('Scrollbar plugin failed to load');
+        document.head.appendChild(scrollbarScript);
+      }
+      
+      if (document.querySelector('.alert, .notification')) {
+        const notifyScript = document.createElement('script');
+        notifyScript.src = '/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js';
+        notifyScript.onerror = () => console.warn('Bootstrap notify failed to load');
+        document.head.appendChild(notifyScript);
+      }
+    </script>
+    
+    <script src="/assets/js/kaiadmin.min.js"></script>
+    
+    <!-- Load external scripts with error handling -->
+    <script>
+      // Load Supabase conditionally
+      if (typeof supabase === 'undefined') {
+        const supabaseScript = document.createElement('script');
+        supabaseScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+        supabaseScript.onerror = () => console.warn('Supabase failed to load');
+        document.head.appendChild(supabaseScript);
+      }
+    </script>
+    
+
+    <!-- Main Community Script - Fixed -->
+    <script>
+      // Prevent infinite reload by wrapping in try-catch
+      (function() {
+        'use strict';
+        
+        let reloadCount = 0;
+        const maxReloads = 3;
+        
+        // Check if we're in a reload loop
+        const checkReloadLoop = () => {
+          const lastReload = sessionStorage.getItem('communityReloadTime');
+          const now = Date.now();
+          
+          if (lastReload && (now - parseInt(lastReload)) < 5000) {
+            reloadCount = parseInt(sessionStorage.getItem('communityReloadCount') || '0') + 1;
+            sessionStorage.setItem('communityReloadCount', reloadCount.toString());
+            
+            if (reloadCount >= maxReloads) {
+              console.error('Preventing infinite reload loop');
+              showError('Terlalu banyak reload. Halaman dihentikan untuk mencegah loop.');
+              return false;
+            }
+          } else {
+            sessionStorage.setItem('communityReloadCount', '0');
+          }
+          
+          sessionStorage.setItem('communityReloadTime', now.toString());
+          return true;
+        };
+        
+        // Show error message
+        const showError = (message) => {
+          const loader = document.getElementById('loading-overlay');
+          const errorDiv = document.getElementById('error-message');
+          
+          if (loader) loader.style.display = 'none';
+          if (errorDiv) {
+            errorDiv.querySelector('p').textContent = message;
+            errorDiv.style.display = 'block';
+          }
+        };
+        
+        // Retry loading widget
+        window.retryLoadWidget = () => {
+          const iframe = document.getElementById('discord-iframe');
+          const loader = document.getElementById('loading-overlay');
+          const errorDiv = document.getElementById('error-message');
+          
+          if (errorDiv) errorDiv.style.display = 'none';
+          if (loader) loader.style.display = 'flex';
+          
+          if (iframe) {
+            iframe.src = iframe.getAttribute('data-src');
+          }
+        };
+        
+        // Initialize on DOM ready
+        const initCommunity = () => {
+          if (!checkReloadLoop()) return;
+          
+          const iframe = document.getElementById('discord-iframe');
+          const loader = document.getElementById('loading-overlay');
+          const errorDiv = document.getElementById('error-message');
+          
+          if (!iframe || !loader) {
+            console.error('Required elements not found');
+            return;
+          }
+          
+          // Set up iframe loading
+          let loadTimeout;
+          
+          const onLoad = () => {
+            clearTimeout(loadTimeout);
+            try {
+              loader.style.opacity = '0';
+              setTimeout(() => {
+                if (loader) loader.style.display = 'none';
+              }, 500);
+              
+              // Reset reload counter on successful load
+              sessionStorage.setItem('communityReloadCount', '0');
+            } catch (e) {
+              console.error('Error hiding loader:', e);
+            }
+          };
+          
+          const onError = () => {
+            clearTimeout(loadTimeout);
+            console.error('iframe failed to load');
+            showError('Gagal memuat widget Discord. Coba refresh halaman atau gunakan link "Buka di Aplikasi".');
+          };
+          
+          // Set timeout for loading
+          loadTimeout = setTimeout(() => {
+            onError();
+          }, 15000); // 15 second timeout
+          
+          // Add event listeners
+          iframe.addEventListener('load', onLoad);
+          iframe.addEventListener('error', onError);
+          
+          // Start loading the iframe
+          iframe.src = iframe.getAttribute('data-src');
+        };
+        
+        // Wait for DOM to be ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initCommunity);
+        } else {
+          initCommunity();
+        }
+        
+        // Prevent form submissions that might cause reload
+        document.addEventListener('submit', (e) => {
+          if (e.target.tagName === 'FORM') {
+            e.preventDefault();
+            console.warn('Form submission prevented to avoid reload');
+          }
+        });
+        
+        // Prevent hash changes that might cause reload
+        window.addEventListener('hashchange', (e) => {
+          e.preventDefault();
+        });
+        
+      })();
+    </script>
+</body>
+</html>

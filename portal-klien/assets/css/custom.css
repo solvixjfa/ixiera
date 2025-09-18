@@ -1,0 +1,356 @@
+/*
+================================================================================
+| CUSTOM STYLES FOR KAIADMIN CLIENT PORTAL                                   |
+| Author: Gemini                                                               |
+| Version: 1.0                                                                 |
+| Description: Premium override styles for the KaiAdmin template.            |
+================================================================================
+*/
+
+/* 1. Global & Typography
+-------------------------------------------------------------- */
+:root {
+  --primary-color: #6a5acd; /* SlateBlue */
+  --secondary-color: #483d8b; /* DarkSlateBlue */
+  --accent-color: #7b68ee; /* MediumSlateBlue */
+  --background-color: #f4f5f9; /* Lighter gray for background */
+  --sidebar-bg: #1a2035;
+  --sidebar-text: #adb5bd;
+  --sidebar-active-bg: #6a5acd;
+  --card-bg: #ffffff;
+  --text-color: #495057;
+  --heading-color: #343a40;
+  --border-color: #dee2e6;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+body {
+  background-color: var(--background-color) !important;
+  font-family: "Public Sans", sans-serif;
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  font-weight: 600;
+}
+
+/* 2. Sidebar Customization
+-------------------------------------------------------------- */
+.sidebar,
+.sidebar[data-background-color="dark"] {
+  background-color: var(--sidebar-bg);
+}
+
+.logo-header[data-background-color="dark"] {
+  background-color: var(--sidebar-bg) !important;
+}
+
+.sidebar .nav > .nav-item.active > a {
+  background: var(--sidebar-active-bg) !important;
+  box-shadow: 0 4px 15px -2px rgba(106, 90, 205, 0.4);
+}
+.sidebar .nav > .nav-item a:hover {
+    background: var(--secondary-color);
+}
+
+.sidebar .nav > .nav-item a {
+  color: var(--sidebar-text);
+}
+
+.sidebar .nav > .nav-item a p,
+.sidebar .nav > .nav-item a i {
+  color: var(--sidebar-text);
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav > .nav-item.active a p,
+.sidebar .nav > .nav-item.active a i {
+  color: #ffffff;
+}
+
+
+/* 3. Main Panel & Cards
+-------------------------------------------------------------- */
+.main-panel {
+  transition: all 0.3s ease;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px var(--shadow-color);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.card .card-header {
+  background-color: transparent;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.card .card-title {
+    font-weight: 700;
+}
+
+/* 4. Buttons & Forms
+-------------------------------------------------------------- */
+.btn {
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+.btn-primary:hover {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(106, 90, 205, 0.3);
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 10px 15px;
+}
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.25);
+}
+
+/* 5. Modals & Tables
+-------------------------------------------------------------- */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+}
+
+.table thead th {
+    font-weight: 700;
+    color: var(--heading-color);
+    border-bottom-width: 2px;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: #f8f9fa;
+}
+
+/* 6. Helper Classes
+-------------------------------------------------------------- */
+.loading-spinner {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: var(--primary-color);
+}
+
+/* Gaya Kustom untuk Footer Biru Tua 
+*/
+
+.footer-custom-dark-blue {
+  background-color: #0D1B2A; /* Ini adalah warna biru navy yang sangat gelap dan profesional */
+  color: #ffffff;
+  border-top: 3px solid #3d8bfd; /* Aksen biru cerah yang cocok dengan tema Kaiadmin */
+}
+
+/* Mengatur warna teks dan tautan */
+.footer-custom-dark-blue h5 {
+  color: #ffffff;
+}
+
+.footer-custom-dark-blue .text-white-50 {
+  transition: color 0.3s ease;
+}
+
+.footer-custom-dark-blue a.text-white-50:hover {
+  color: #ffffff !important; /* Tautan menjadi putih terang saat disentuh kursor */
+}
+
+/* Mengatur gaya ikon sosial media */
+.footer-custom-dark-blue .social-icon-link {
+  color: #ffffff;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-custom-dark-blue .social-icon-link:hover {
+  color: #3d8bfd !important; /* Ikon berubah menjadi warna biru aksen saat disentuh kursor */
+  transform: translateY(-3px); /* Memberi efek sedikit terangkat */
+}
+
+/* Mengatur garis pemisah */
+.footer-custom-dark-blue hr {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+/* =================================================================
+    CUSTOM FOOTER STYLES
+   ================================================================= */
+
+.footer-custom-blue {
+    background-color: #0D1B2A; /* Warna biru navy yang gelap dan elegan */
+    color: rgba(255, 255, 255, 0.7); /* Warna teks putih yang tidak terlalu terang */
+    border-top: 3px solid #1a73e8; /* Aksen biru cerah yang cocok dengan tema Kaiadmin */
+}
+
+.footer-custom-blue .footer-heading {
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.footer-custom-blue .quick-links a,
+.footer-custom-blue .legal-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-custom-blue .quick-links a:hover,
+.footer-custom-blue .legal-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-custom-blue .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 1.25rem; /* Ukuran ikon yang pas */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-custom-blue .social-icons a:hover {
+    background-color: #1a73e8; /* Warna aksen saat di-hover */
+    transform: translateY(-2px);
+}
+
+.footer-custom-blue .copyright-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =================================================================
+    LEGAL PAGES STYLES
+   ================================================================= */
+
+.legal-content {
+    line-height: 1.8; 
+    color: #555;
+}
+
+.legal-content .card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.legal-content .card-category {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.legal-content h5 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a73e8; /* Accent blue color from the theme */
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.legal-content strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.legal-content ul {
+    padding-left: 20px;
+}
+
+.legal-content ul li {
+    margin-bottom: 0.75rem;
+}
+
+/* Gaya untuk Footer Biru Tua Kustom */
+.footer-custom-blue {
+    background-color: #0D1B2A; /* Biru navy gelap */
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 3px solid #1a73e8; /* Aksen biru Kaiadmin */
+}
+
+.footer-custom-blue .footer-heading {
+    font-weight: 600;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+.footer-custom-blue a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-custom-blue a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.footer-custom-blue .social-icons a {
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+.footer-custom-blue .social-icons a:hover {
+    color: #1a73e8; /* Warna aksen saat di-hover */
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.footer-custom-blue .copyright-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+
+
+
+
+

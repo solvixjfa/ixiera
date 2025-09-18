@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Login - Client Portal</title>
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+    <link rel="icon" href="https://placehold.co/32x32/6a5acd/white?text=IXIERA" type="image/x-icon" />
+
+
+
+    <!-- External Libraries (Bootstrap & Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
+    
+    <style>
+        /* * STYLES FOR LOGIN PAGE
+         * All styles are self-contained in this file for simplicity.
+        */
+
+        /* Prevents a "flash of unstyled content" before the session check redirects */
+        body { 
+            background-color: #f4f5f8; 
+            font-family: 'Public Sans', sans-serif, system-ui;
+            visibility: hidden; /* Content is hidden until JS confirms no active session */
+        }
+
+        .login-container { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 15px; 
+        }
+
+        .login-card { 
+            width: 100%; 
+            max-width: 420px; 
+            border: none; 
+            border-radius: 12px; /* Consistent with custom.css */
+            background-color: #ffffff;
+        }
+
+        .form-control { 
+            height: 48px; 
+            border-radius: 8px; 
+        }
+        .form-control:focus {
+            border-color: #6a5acd;
+            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.25);
+        }
+
+        .btn-primary {
+            background-color: #6a5acd;
+            border-color: #6a5acd;
+        }
+        .btn-primary:hover {
+            background-color: #483d8b;
+            border-color: #483d8b;
+        }
+
+        .btn-lg { 
+            padding: 0.75rem 1.25rem; 
+            font-size: 1rem; 
+            border-radius: 8px; 
+        }
+
+        #error-message { 
+            display: none; 
+        }
+
+        .password-toggle-icon {
+            position: absolute; 
+            top: 50%; 
+            right: 15px; 
+            transform: translateY(-50%);
+            cursor: pointer; 
+            color: #6c757d;
+        }
+
+        .divider { 
+            display: flex; 
+            align-items: center; 
+            text-align: center; 
+            color: #adb5bd; 
+            margin: 1.5rem 0; 
+        }
+        .divider::before, .divider::after {
+            content: ''; 
+            flex: 1; 
+            border-bottom: 1px solid #dee2e6;
+        }
+        .divider:not(:empty)::before { margin-right: .5em; }
+        .divider:not(:empty)::after { margin-left: .5em; }
+
+        .btn-social { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .btn-social i { 
+            margin-right: 0.75rem; 
+            font-size: 1.2rem; 
+        }
+    </style>
+      <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+</head>
+<body>
+    <div class="container login-container">
+        <div class="card login-card shadow-lg">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="Logo" class="mb-3" style="border-radius: 50%;">
+                    <h3 class="fw-bold mb-1">IXIERA portal</h3>
+                    <p class="text-muted">Please log in to continue.</p>
+                </div>
+
+                <div id="error-message" class="alert alert-danger" role="alert"></div>
+
+                <form id="login-form" novalidate>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="position-relative">
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                            <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" id="login-btn" class="btn btn-primary btn-lg">
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            <span class="btn-text">Log In</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="divider">OR</div>
+
+                <div class="d-grid gap-2">
+                    <button id="google-login-btn" class="btn btn-light border btn-lg btn-social">
+                        <i class="fab fa-google"></i> Sign in with Google
+                    </button>
+                    <button id="discord-login-btn" class="btn btn-light border btn-lg btn-social">
+                        <i class="fab fa-discord"></i> Sign in with Discord
+                    </button>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">Don’t have an account? <a href="sign-up.html">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- SUPABASE CLIENT INITIALIZATION ---
+        const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        /**
+         * Checks if a user session exists. If so, redirects to the dashboard.
+         * Otherwise, it makes the login form visible and initializes event listeners.
+         */
+        async function checkSessionAndInitialize() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                window.location.href = 'index.html'; // User is already logged in
+            } else {
+                document.body.style.visibility = 'visible'; // No session, show the login page
+                initializeLoginListeners();
+            }
+        }
+
+        /**
+         * Attaches all necessary event listeners to the login form elements.
+         */
+        function initializeLoginListeners() {
+            // --- DOM Element Selection ---
+            const loginForm = document.getElementById('login-form');
+            const loginButton = document.getElementById('login-btn');
+            const spinner = loginButton.querySelector('.spinner-border');
+            const btnText = loginButton.querySelector('.btn-text');
+            const errorMessageDiv = document.getElementById('error-message');
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('toggle-password');
+            const googleLoginBtn = document.getElementById('google-login-btn');
+            const discordLoginBtn = document.getElementById('discord-login-btn');
+
+            // --- UI Helper Functions ---
+            
+            /** Toggles the loading state of the login button. */
+            function showLoading(isLoading) {
+                loginButton.disabled = isLoading;
+                spinner.classList.toggle('d-none', !isLoading);
+                btnText.textContent = isLoading ? 'Processing...' : 'Log In';
+            }
+
+            /** Displays an error message in the alert box. */
+            function showErrorMessage(message) {
+                errorMessageDiv.textContent = message;
+                errorMessageDiv.style.display = 'block';
+            }
+
+            // --- Event Listeners ---
+
+            /** Toggles password visibility. */
+            togglePassword.addEventListener('click', () => {
+                const isPassword = passwordInput.getAttribute('type') === 'password';
+                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                togglePassword.querySelector('i').classList.toggle('fa-eye');
+                togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            /** Handles the email/password login form submission. */
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                showLoading(true);
+                errorMessageDiv.style.display = 'none'; // Hide previous errors
+
+                try {
+                    const email = document.getElementById('email').value;
+                    const password = passwordInput.value;
+                    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                    if (error) throw error;
+                    window.location.href = 'index.html'; // Success, redirect to dashboard
+                } catch (error) {
+                    showErrorMessage(error.message || 'Invalid email or password.');
+                } finally {
+                    showLoading(false);
+                }
+            });
+            
+            /** Generic function to handle OAuth provider sign-in. */
+            async function signInWithProvider(provider) {
+                showLoading(true); // Visually indicate action
+                await supabaseClient.auth.signInWithOAuth({ provider });
+            }
+
+            /** Attaches OAuth handlers to buttons. */
+            googleLoginBtn.addEventListener('click', () => signInWithProvider('google'));
+            discordLoginBtn.addEventListener('click', () => signInWithProvider('discord'));
+        }
+
+        // --- SCRIPT EXECUTION ---
+        // Start the process when the DOM is ready.
+        document.addEventListener('DOMContentLoaded', checkSessionAndInitialize);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Privacy Policy - Client Portal</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
+
+  <!-- Fonts and icons -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
+        urls: ["assets/css/fonts.min.css"],
+      },
+      active: function () { sessionStorage.fonts = true; },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="assets/css/custom.css" /> <!-- ALL CUSTOM STYLES ARE HERE -->
+    <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <div id="sidebar-placeholder"></div>
+    <div class="main-panel">
+      <div id="topbar-placeholder"></div>
+      <div class="container">
+        <div class="page-inner">
+          <div class="page-header">
+            <h3 class="fw-bold mb-3">Privacy Policy</h3>
+            <ul class="breadcrumbs">
+              <li class="nav-home"><a href="index.html"><i class="icon-home"></i></a></li>
+              <li class="separator"><i class="icon-arrow-right"></i></li>
+              <li class="nav-item"><a>Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-round">
+                <div class="card-body legal-content">
+                  <h4 class="card-title">Privacy Policy for Portal by IXIERA</h4>
+                  <p class="card-category">Last updated: September 05, 2025</p>
+                  
+                  <p>Welcome to the Portal by IXIERA ("Service", "we", "us", "our"). This Privacy Policy outlines our practices regarding the collection, use, and disclosure of your personal information when you use our Service. By using the Service, you agree to the collection and use of information in accordance with this policy.</p>
+
+                  <h5>1. Information Collection and Use</h5>
+                  <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+                  <p><strong>Types of Data Collected:</strong></p>
+                  <ul>
+                    <li><strong>Personal Data:</strong> While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. This includes, but is not limited to:
+                        <ul>
+                            <li>Email address</li>
+                            <li>First name and last name</li>
+                            <li>Usage Data</li>
+                        </ul>
+                    </li>
+                    <li><strong>Usage Data:</strong> We may collect information on how the Service is accessed and used. This Usage Data may include information such as your computer's Internet Protocol (IP) address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, and other diagnostic data.</li>
+                  </ul>
+                  
+                  <h5>2. Use of Data</h5>
+                  <p>IXIERA uses the collected data for various purposes:</p>
+                  <ul>
+                    <li>To provide and maintain our Service.</li>
+                    <li>To notify you about changes to our Service.</li>
+                    <li>To allow you to participate in interactive features of our Service when you choose to do so.</li>
+                    <li>To provide customer support.</li>
+                    <li>To monitor the usage of our Service and to detect, prevent, and address technical issues.</li>
+                  </ul>
+
+                  <h5>3. Data Transfer and Third Parties</h5>
+                  <p>Your information, including Personal Data, may be transferred to — and maintained on — computers located outside of your state, province, or other governmental jurisdiction where the data protection laws may differ from those of your jurisdiction.</p>
+                  <p>We use trusted third-party services for the functionality of our Service:</p>
+                  <ul>
+                      <li><strong>Supabase:</strong> We use Supabase for user authentication and database services. Their privacy policy can be viewed on the Supabase website.</li>
+                  </ul>
+                  
+                  <h5>4. Data Security</h5>
+                  <p>The security of your data is important to us, but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.</p>
+
+                  <h5>5. Changes to This Privacy Policy</h5>
+                  <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes.</p>
+
+                  <h5>6. Contact Us</h5>
+                  <p>If you have any questions about this Privacy Policy, please contact us by email: <strong>Ixieralabs@gmail.com</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer-placeholder"></div>
+    </div>
+  </div>
+  
+  <script src="assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="assets/js/kaiadmin.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script>
+    $(function() {
+      $("#sidebar-placeholder").load("sidebar.html");
+      $("#topbar-placeholder").load("topbar.html");
+      $("#footer-placeholder").load("footer.html", function() {
+        if (typeof initFooter === 'function') {
+          initFooter();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
