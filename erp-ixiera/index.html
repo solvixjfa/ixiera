@@ -35,22 +35,26 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI";
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const ALLOWED_EMAIL = "frankensteinisgood@gmail.com";
+    const ALLOWED_EMAIL = "ixierastudio@gmail.com"; // ✅ Perbaikan: Menggunakan email yang benar
 
-    // Cek session Supabase dulu
-    supabase.auth.getSession().then(({ data }) => {
-      if(data.session && data.session.user.email === ALLOWED_EMAIL){
-        window.location.href = "dashboard.html";
+    // Cek session Supabase untuk pengalihan otomatis
+    async function checkSession() {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (session && session.user.email === ALLOWED_EMAIL) {
+        window.location.href = "dashboard.html"; // ✅ Perbaikan: Mengarahkan ke file index.html
       }
-    });
+    }
+
+    checkSession();
 
     document.getElementById("login-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      if(email !== ALLOWED_EMAIL){
-        document.getElementById("error-msg").textContent = "❌ Access denied";
+      if (email !== ALLOWED_EMAIL) {
+        document.getElementById("error-msg").textContent = "❌ Access denied: Invalid email";
         return;
       }
 
@@ -59,10 +63,10 @@
         password
       });
 
-      if(error){
+      if (error) {
         document.getElementById("error-msg").textContent = "❌ " + error.message;
       } else {
-        window.location.href = "dashboard.html";
+        window.location.href = "dashboard.html"; // ✅ Perbaikan: Mengarahkan ke file index.html
       }
     });
   </script>
