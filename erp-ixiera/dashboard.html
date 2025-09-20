@@ -16,17 +16,50 @@
 </head>
 
 <body>
-    <div class="wrapper">
+      <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
                     <span class="align-middle">IXIERA ERP</span>
                 </a>
                 <ul class="sidebar-nav">
-                    <li class="sidebar-header">Pages</li>
-                    <li class="sidebar-item active">
-                        <a class="sidebar-link" href="#dashboard">
+                    <li class="sidebar-header">Core</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="index.html">
                             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-header">CRM</li>
+                    <li class="sidebar-item active">
+                        <a data-bs-toggle="collapse" class="sidebar-link" href="#crm-nav">
+                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">CRM</span>
+                        </a>
+                        <ul id="crm-nav" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+                            <li class="sidebar-item active"><a class="sidebar-link" href="crm-clients.html">Clients</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="crm-inquiries.html">Inquiries</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="crm-projects.html">Projects</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="crm-products.html">Products</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-header">Content</li>
+                    <li class="sidebar-item">
+                        <a data-bs-toggle="collapse" class="sidebar-link collapsed" href="#blog-nav">
+                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Blog</span>
+                        </a>
+                        <ul id="blog-nav" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item"><a class="sidebar-link" href="blog-posts.html">Posts</a></li>
+                            <li class="sidebar-item"><a class="sidebar-link" href="blog-comments.html">Comments</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-header">Support & Others</li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="feedback.html">
+                            <i class="align-middle" data-feather="message-circle"></i> <span class="align-middle">Feedback</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="chat.html">
+                            <i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Chat History</span>
                         </a>
                     </li>
                 </ul>
