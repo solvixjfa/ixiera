@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="ERP IXIERA - Solopreneur Powerhouse">
+    <meta name="description" content="ERP IXIERA - Solopreneer Powerhouse">
     <meta name="author" content="IXIERA">
     <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
     <title>IXIERA ERP - CEO Dashboard</title>
@@ -14,9 +13,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-
 <body>
-      <div class="wrapper">
+    <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
             <div class="sidebar-content js-simplebar">
                 <a class="sidebar-brand" href="index.html">
@@ -24,18 +22,18 @@
                 </a>
                 <ul class="sidebar-nav">
                     <li class="sidebar-header">Core</li>
-                    <li class="sidebar-item">
+                    <li class="sidebar-item active">
                         <a class="sidebar-link" href="index.html">
                             <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                         </a>
                     </li>
                     <li class="sidebar-header">CRM</li>
-                    <li class="sidebar-item active">
+                    <li class="sidebar-item">
                         <a data-bs-toggle="collapse" class="sidebar-link" href="#crm-nav">
                             <i class="align-middle" data-feather="users"></i> <span class="align-middle">CRM</span>
                         </a>
-                        <ul id="crm-nav" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
-                            <li class="sidebar-item active"><a class="sidebar-link" href="crm-clients.html">Clients</a></li>
+                        <ul id="crm-nav" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                            <li class="sidebar-item"><a class="sidebar-link" href="crm-clients.html">Clients</a></li>
                             <li class="sidebar-item"><a class="sidebar-link" href="crm-inquiries.html">Inquiries</a></li>
                             <li class="sidebar-item"><a class="sidebar-link" href="crm-projects.html">Projects</a></li>
                             <li class="sidebar-item"><a class="sidebar-link" href="crm-products.html">Products</a></li>
@@ -73,6 +71,11 @@
                 </a>
                 <div class="navbar-collapse collapse">
                     <ul class="navbar-nav navbar-align">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="darkModeToggle">
+                                <i class="align-middle" data-feather="moon"></i>
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="CEO" /> <span class="text-dark">CEO</span>
@@ -250,8 +253,8 @@
                                                         <th>Status</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody id="latest-projects-table">
-                                                </tbody>
+                                                <tbody id="latest-projects-table-body">
+                                                    </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -282,7 +285,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="js/app.js"></script>
-    <script type="module" src="js/dashboard.js"></script>
+    <script type="module" src="js/main-dashboard.js"></script>
     <script>
         feather.replace();
     </script>

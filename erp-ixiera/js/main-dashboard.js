@@ -1,7 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 document.addEventListener('DOMContentLoaded', async () => {
-
     // --- Konfigurasi Supabase ---
     const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
@@ -15,10 +14,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'login.html';
         return;
     }
-
-    // --- Inisialisasi Tampilan & Elemen DOM ---
+    
+    // --- Elemen DOM ---
     const monthlyRevenueChart = document.getElementById("monthly-revenue-chart");
-    const latestProjectsTable = document.getElementById("latest-projects-table");
+    const latestProjectsTable = document.getElementById("latest-projects-table-body"); // Ganti dengan id tbody
+    const logoutLink = document.getElementById('logout-link');
+    const darkModeToggle = document.getElementById('darkModeToggle');
 
     // --- Fungsi Bantuan ---
     function formatCurrency(value) {
@@ -50,8 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         const { data: projectsData, error: projectsError } = await supabase
             .from('tally_projects')
-            .select('project_budget, created_at, status, project_title, client_name')
-            .order('created_at', { ascending: false });
+            .select('project_budget, created_at, status, project_title, client_name');
 
         if (projectsError) {
             console.error('Error fetching projects:', projectsError);
@@ -84,7 +84,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             const { projectsData, newInquiries, newsletterSubscribers } = await getDashboardData();
             
-            const completedProjects = projectsData.filter(d => d.status === 'Completed' || d.status === 'Deal');
+            // Filter proyek yang statusnya 'completed' atau 'deal' untuk perhitungan pendapatan
+            const completedProjects = projectsData.filter(d => d.status === 'completed' || d.status === 'deal');
 
             const totalRevenueNum = completedProjects.reduce((sum, d) => sum + parseBudget(d.project_budget), 0);
             const avgDealSizeNum = completedProjects.length ? totalRevenueNum / completedProjects.length : 0;
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 .reduce((sum, d) => sum + parseBudget(d.project_budget), 0);
             
             const salesGrowth = lastMonthRevenue === 0
-                ? currentMonthRevenue ? '+100%' : '0%'
+                ? currentMonthRevenue > 0 ? '+100%' : '0%'
                 : `${((currentMonthRevenue - lastMonthRevenue) / lastMonthRevenue * 100).toFixed(1)}%`;
             
             document.getElementById('total-revenue-value').innerText = formatCurrency(totalRevenueNum);
@@ -126,16 +127,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             const revenueData = Object.values(monthlyRevenueMap);
             
-            // Perbaikan visualisasi grafik di sini
             const ctx = monthlyRevenueChart.getContext("2d");
             if (window.myRevenueChart) {
                 window.myRevenueChart.destroy();
             }
 
-            // Buat gradien untuk area chart
             const gradient = ctx.createLinearGradient(0, 0, 0, 225);
-            gradient.addColorStop(0, 'rgba(106, 90, 205, 0.4)'); // Lebih pekat di atas
-            gradient.addColorStop(1, 'rgba(106, 90, 205, 0)'); // Transparan di bawah
+            gradient.addColorStop(0, 'rgba(106, 90, 205, 0.4)');
+            gradient.addColorStop(1, 'rgba(106, 90, 205, 0)');
 
             window.myRevenueChart = new Chart(ctx, {
                 type: "line",
@@ -144,13 +143,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     datasets: [{
                         label: "Revenue",
                         fill: true,
-                        backgroundColor: gradient, // Gunakan gradien
-                        borderColor: '#6a5acd', // Warna garis
-                        pointBackgroundColor: '#6a5acd', // Warna titik
-                        pointRadius: 4, // Ukuran titik
-                        pointHoverRadius: 6, // Ukuran titik saat di-hover
+                        backgroundColor: gradient,
+                        borderColor: '#6a5acd',
+                        pointBackgroundColor: '#6a5acd',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
                         data: revenueData,
-                        tension: 0.4 // Membuat garis melengkung
+                        tension: 0.4
                     }]
                 },
                 options: {
@@ -178,45 +177,48 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
             
-            // Menampilkan data di tabel Latest Projects
             latestProjectsTable.innerHTML = '';
-            projectsData.slice(0, 5).forEach(project => {
+            // Urutkan data berdasarkan created_at untuk memastikan yang terbaru di atas
+            const sortedProjects = projectsData.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            sortedProjects.slice(0, 5).forEach(project => {
                 const date = new Date(project.created_at).toLocaleDateString('id-ID');
                 const row = document.createElement('tr');
+                let statusClass;
+                switch (project.status) {
+                    case 'completed':
+                        statusClass = 'bg-success';
+                        break;
+                    case 'deal':
+                        statusClass = 'bg-success';
+                        break;
+                    case 'in-progress':
+                        statusClass = 'bg-info';
+                        break;
+                    case 'paused':
+                        statusClass = 'bg-warning';
+                        break;
+                    case 'cancelled':
+                        statusClass = 'bg-danger';
+                        break;
+                    default:
+                        statusClass = 'bg-secondary';
+                }
+
                 row.innerHTML = `
                     <td>${project.project_title}</td>
-                    <td>${project.client_name}</td>
+                    <td>${project.client_name || '-'}</td>
                     <td class="d-none d-xl-table-cell">${formatCurrency(parseBudget(project.project_budget))}</td>
                     <td class="d-none d-xl-table-cell">${date}</td>
-                    <td><span class="badge ${project.status === 'Completed' ? 'bg-success' : 'bg-warning'}">${project.status}</span></td>
+                    <td><span class="badge ${statusClass}">${project.status.replace('-', ' ')}</span></td>
                 `;
                 latestProjectsTable.appendChild(row);
             });
-
         } catch (err) {
             console.error('Error loading dashboard:', err);
         }
     }
     
-    // --- Logika Navigasi & Sesi ---
-    const sidebarLinks = document.querySelectorAll('.sidebar-link');
-    sidebarLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            
-            document.querySelectorAll('div[id]').forEach(section => {
-                section.style.display = 'none';
-            });
-            
-            document.getElementById(targetId).style.display = 'block';
-
-            sidebarLinks.forEach(item => item.parentElement.classList.remove('active'));
-            link.parentElement.classList.add('active');
-        });
-    });
-
-    const logoutLink = document.getElementById('logout-link');
+    // --- Logika Logout & Panggilan Fungsi Awal ---
     if (logoutLink) {
         logoutLink.addEventListener('click', async (e) => {
             e.preventDefault();
@@ -224,7 +226,39 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = 'login.html';
         });
     }
+
+    // --- Dark Mode Logic ---
+    const enableDarkMode = () => {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        if (typeof feather !== 'undefined') feather.replace();
+    };
+
+    const disableDarkMode = () => {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        if (typeof feather !== 'undefined') feather.replace();
+    };
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        enableDarkMode();
+    } else if (savedTheme === 'light') {
+        disableDarkMode();
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        enableDarkMode();
+    }
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (document.body.classList.contains('dark-mode')) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        });
+    }
     
-    // --- Panggil Fungsi Awal ---
     await loadDashboardKPIs();
 });
