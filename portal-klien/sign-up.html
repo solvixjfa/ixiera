@@ -3,23 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sign Up - IXIERA portal</title>
+    <title>Sign Up - IXIERA Client Portal</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="https://placehold.co/32x32/6a5acd/white?text=IXIERA" type="image/x-icon" />
-
-
 
     <!-- External Libraries (Bootstrap & Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
     
     <style>
-        /* Styles are identical to sign-in.html for consistency */
+        /* * STYLES FOR SIGNUP PAGE - Consistent with login page */
         body { 
             background-color: #f4f5f8; 
             font-family: 'Public Sans', sans-serif, system-ui;
             visibility: hidden;
+            overflow-x: hidden;
         }
+
+        /* Premium background with subtle animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #f4f5f8 0%, #e8eaf6 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(106, 90, 205, 0.03) 0%, rgba(106, 90, 205, 0) 70%);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
         .signup-container { 
             display: flex; 
             justify-content: center; 
@@ -27,37 +52,87 @@
             min-height: 100vh; 
             padding: 15px; 
         }
+
         .signup-card { 
             width: 100%; 
-            max-width: 420px; 
+            max-width: 460px; 
             border: none; 
-            border-radius: 12px;
+            border-radius: 16px;
             background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+
+        .signup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(106, 90, 205, 0.15);
+        }
+
+        .signup-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6a5acd, #8a7de3);
+        }
+
         .form-control { 
             height: 48px; 
             border-radius: 8px; 
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            padding-left: 15px;
         }
+        
         .form-control:focus {
             border-color: #6a5acd;
-            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.15);
+            transform: translateY(-1px);
         }
+
         .btn-primary {
-            background-color: #6a5acd;
-            border-color: #6a5acd;
+            background: linear-gradient(135deg, #6a5acd 0%, #8a7de3 100%);
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
+        
         .btn-primary:hover {
-            background-color: #483d8b;
-            border-color: #483d8b;
+            background: linear-gradient(135deg, #5a4aba 0%, #7a6dd3 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
         }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
         .btn-lg { 
             padding: 0.75rem 1.25rem; 
             font-size: 1rem; 
             border-radius: 8px; 
         }
+
         .message-box { 
             display: none; 
+            border-radius: 8px;
+            border-left: 4px solid;
         }
+
+        #error-message {
+            border-left-color: #dc3545;
+        }
+
+        #success-message {
+            border-left-color: #28a745;
+        }
+
         .password-toggle-icon {
             position: absolute; 
             top: 50%; 
@@ -65,6 +140,158 @@
             transform: translateY(-50%);
             cursor: pointer; 
             color: #6c757d;
+            transition: color 0.3s ease;
+        }
+        
+        .password-toggle-icon:hover {
+            color: #6a5acd;
+        }
+
+        /* Improved form structure */
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .form-actions {
+            margin-top: 1.5rem;
+        }
+
+        .login-prompt {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .portal-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(106, 90, 205, 0.2) 0%, rgba(106, 90, 205, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6a5acd;
+            z-index: 5;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.05) 0%, rgba(138, 125, 227, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            border-left: 4px solid #6a5acd;
+        }
+        
+        .feature-highlight h6 {
+            color: #6a5acd;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .feature-highlight ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        
+        .feature-highlight li {
+            margin-bottom: 5px;
+            color: #5a5a72;
+        }
+
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 5px;
+            background-color: #e9ecef;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .password-requirements {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .requirement {
+            margin-bottom: 3px;
+        }
+        
+        .requirement.met {
+            color: #28a745;
+        }
+        
+        .requirement.met::before {
+            content: "✓ ";
+        }
+        
+        .requirement:not(.met) {
+            color: #6c757d;
+        }
+        
+        .requirement:not(.met)::before {
+            content: "○ ";
+        }
+
+        /* Additional styles for new effects */
+        .shake {
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .shadow-sm {
+            box-shadow: 0 0.125rem 0.25rem rgba(106, 90, 205, 0.1) !important;
         }
     </style>
       <!-- Google Analytics -->
@@ -77,162 +304,345 @@
   </script>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    
     <div class="container signup-container">
         <div class="card signup-card shadow-lg">
             <div class="card-body p-4 p-md-5">
+                <!-- Header Section -->
                 <div class="text-center mb-4">
-                    <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="Logo" class="mb-3" style="border-radius: 50%;">
-                    <h3 class="fw-bold mb-1">Create an Account</h3>
-                    <p class="text-muted">Let’s Explore IXIERA Together! </p>
+                    <div class="logo-container">
+                        <div class="logo-glow"></div>
+                        <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="IXIERA Logo" class="mb-3 pulse" style="border-radius: 50%;">
+                    </div>
+                    <h3 class="fw-bold mb-1" style="color: #6a5acd;">Join IXIERA Client Portal</h3>
+                    <p class="portal-description">
+                        Create your account to unlock AI project tracking, order history, and community collaboration.
+                    </p>
                 </div>
 
-                <!-- Message containers -->
+                <!-- Messages Section -->
                 <div id="error-message" class="alert alert-danger message-box" role="alert"></div>
                 <div id="success-message" class="alert alert-success message-box" role="alert"></div>
 
+                <!-- Sign Up Form Section -->
                 <form id="signup-form" novalidate>
-                    <div class="mb-3">
-                        <label for="fullname" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="fullname" placeholder="m.y, goyounjung" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="position-relative">
-                            <input type="password" class="form-control" id="password" placeholder="Create a strong password" required>
-                            <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                    <div class="form-section">
+                        <!-- Full Name Input -->
+                        <div class="mb-3">
+                            <label for="fullname" class="form-label">Full Name</label>
+                            <div class="position-relative">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" class="form-control ps-5" id="fullname" placeholder="e.g. John Smith" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Input -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="position-relative">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" class="form-control ps-5" id="email" placeholder="example@email.com" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Password Input -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="position-relative">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control ps-5" id="password" placeholder="Create a strong password" required>
+                                <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                            </div>
+                            
+                            <!-- Password Strength Indicator -->
+                            <div class="password-strength mt-2">
+                                <div id="password-strength-bar" class="password-strength-bar"></div>
+                            </div>
+                            
+                            <!-- Password Requirements -->
+                            <div id="password-requirements" class="password-requirements">
+                                <div id="length-req" class="requirement">At least 8 characters</div>
+                                <div id="uppercase-req" class="requirement">One uppercase letter</div>
+                                <div id="lowercase-req" class="requirement">One lowercase letter</div>
+                                <div id="number-req" class="requirement">One number</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" id="signup-btn" class="btn btn-primary btn-lg">
-                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                            <span class="btn-text">Create Account</span>
-                        </button>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="terms" required>
+                        <label class="form-check-label small" for="terms">
+                            I agree to the <a href="terms-of-services.html" style="color: #6a5acd;">Terms of Service</a> and <a href="privacy-policy.html" style="color: #6a5acd;">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <!-- Sign Up Button -->
+                    <div class="form-actions">
+                        <div class="d-grid">
+                            <button type="submit" id="signup-btn" class="btn btn-primary btn-lg">
+                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                <span class="btn-text">Create Account</span>
+                            </button>
+                        </div>
                     </div>
                 </form>
 
-                <div class="text-center mt-4">
-                    <p class="text-muted">Already have an account? <a href="sign-in.html">Log In</a></p>
+                <!-- Features Highlight -->
+                <div class="feature-highlight">
+                    <h6><i class="fas fa-rocket me-2"></i>What you'll get with IXIERA:</h6>
+                    <ul>
+                        <li><strong>Project Dashboard:</strong> Track your AI project progress in real-time</li>
+                        <li><strong>Order Management:</strong> Access your complete purchase history</li>
+                        <li><strong>AI Assistant:</strong> Get instant help with our smart assistant</li>
+                        <li><strong>Community Access:</strong> Connect with other IXIERA clients</li>
+                    </ul>
+                </div>
+
+                <!-- Login Prompt -->
+                <div class="login-prompt">
+                    <p class="text-muted mb-0">Already have an account? <a href="sign-in.html" style="color: #6a5acd; text-decoration: none; font-weight: 500;">Log In</a></p>
                 </div>
             </div>
         </div>
     </div>
     
-    
-    
-        <!-- Supabase Client Library -->
+    <!-- Supabase Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-// --- SUPABASE CLIENT INITIALIZATION ---
-const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // --- SUPABASE CLIENT INITIALIZATION ---
+        const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/**
- * Checks for an active session and redirects if found.
- * Otherwise, makes the page visible and sets up listeners.
- */
-async function checkSessionAndInitialize() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-        window.location.href = 'index.html'; // User is already logged in
-    } else {
-        document.body.style.visibility = 'visible'; // No session, show the signup page
-        initializeSignUpListeners();
-    }
-}
-
-/**
- * Attaches event listeners to the sign-up form.
- */
-function initializeSignUpListeners() {
-    // --- DOM Element Selection ---
-    const signupForm = document.getElementById('signup-form');
-    const signupButton = document.getElementById('signup-btn');
-    const spinner = signupButton.querySelector('.spinner-border');
-    const btnText = signupButton.querySelector('.btn-text');
-    const errorMessageDiv = document.getElementById('error-message');
-    const successMessageDiv = document.getElementById('success-message');
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('toggle-password');
-
-    // --- UI Helper Functions ---
-    
-    /** Toggles the loading state of the sign-up button. */
-    function showLoading(isLoading) {
-        signupButton.disabled = isLoading;
-        spinner.classList.toggle('d-none', !isLoading);
-        btnText.textContent = isLoading ? 'Processing...' : 'Create Account';
-    }
-
-    /** Displays a message in the specified message box. */
-    function showMessage(element, message) {
-        element.textContent = message;
-        element.style.display = 'block';
-    }
-
-    // --- Event Listeners ---
-
-    /** Toggles password visibility. */
-    togglePassword.addEventListener('click', () => {
-        const isPassword = passwordInput.getAttribute('type') === 'password';
-        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-        togglePassword.querySelector('i').classList.toggle('fa-eye');
-        togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
-    });
-
-    /** Handles the email/password sign-up form submission. */
-    signupForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        showLoading(true);
-        errorMessageDiv.style.display = 'none';
-        successMessageDiv.style.display = 'none';
-
-        try {
-            const fullname = document.getElementById('fullname').value;
-            const email = document.getElementById('email').value;
-            const password = passwordInput.value;
-
-            const { data, error } = await supabaseClient.auth.signUp({
-                email,
-                password,
-                options: {
-                    user_metadata: {
-                        full_name: fullname,
-                        // Anda bisa menambahkan data lain di sini, seperti avatar_url
-                    }
-                }
-            });
-
-            if (error) throw error;
-            
-            // Supabase mengirim email konfirmasi. Data.user akan null.
-            if (data.user) {
-                 // Ini akan berjalan jika Anda menonaktifkan konfirmasi email.
-                showMessage(successMessageDiv, 'Registrasi berhasil! Anda akan diarahkan ke halaman utama.');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
+        /**
+         * Checks for an active session and redirects if found.
+         * Otherwise, makes the page visible and sets up listeners.
+         */
+        async function checkSessionAndInitialize() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                window.location.href = 'index.html'; // User is already logged in
             } else {
-                // Ini akan berjalan jika Anda mengaktifkan konfirmasi email.
-                showMessage(successMessageDiv, 'Registrasi berhasil! Silakan periksa email Anda untuk konfirmasi akun.');
-                signupForm.reset();
+                document.body.style.visibility = 'visible'; // No session, show the signup page
+                initializeSignUpListeners();
+                addPremiumEffects();
+            }
+        }
+
+        /**
+         * Adds premium visual effects to the signup page
+         */
+        function addPremiumEffects() {
+            // Add subtle hover effect to form inputs
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('shadow-sm');
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('shadow-sm');
+                });
+            });
+            
+            // Add typing effect to the portal description
+            const description = document.querySelector('.portal-description');
+            const originalText = description.textContent;
+            description.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    description.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 30);
+                }
+            };
+            
+            // Start typing effect after a short delay
+            setTimeout(typeWriter, 500);
+        }
+
+        /**
+         * Checks password strength and updates UI accordingly
+         */
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const requirements = {
+                length: false,
+                uppercase: false,
+                lowercase: false,
+                number: false
+            };
+            
+            // Check length
+            if (password.length >= 8) {
+                strength += 25;
+                requirements.length = true;
+            }
+            
+            // Check uppercase
+            if (/[A-Z]/.test(password)) {
+                strength += 25;
+                requirements.uppercase = true;
+            }
+            
+            // Check lowercase
+            if (/[a-z]/.test(password)) {
+                strength += 25;
+                requirements.lowercase = true;
+            }
+            
+            // Check number
+            if (/[0-9]/.test(password)) {
+                strength += 25;
+                requirements.number = true;
+            }
+            
+            // Update strength bar
+            const strengthBar = document.getElementById('password-strength-bar');
+            strengthBar.style.width = `${strength}%`;
+            
+            // Update color based on strength
+            if (strength < 50) {
+                strengthBar.style.backgroundColor = '#dc3545'; // Red
+            } else if (strength < 75) {
+                strengthBar.style.backgroundColor = '#ffc107'; // Yellow
+            } else {
+                strengthBar.style.backgroundColor = '#28a745'; // Green
+            }
+            
+            // Update requirements display
+            document.getElementById('length-req').className = requirements.length ? 'requirement met' : 'requirement';
+            document.getElementById('uppercase-req').className = requirements.uppercase ? 'requirement met' : 'requirement';
+            document.getElementById('lowercase-req').className = requirements.lowercase ? 'requirement met' : 'requirement';
+            document.getElementById('number-req').className = requirements.number ? 'requirement met' : 'requirement';
+            
+            return strength;
+        }
+
+        /**
+         * Attaches event listeners to the sign-up form.
+         */
+        function initializeSignUpListeners() {
+            // --- DOM Element Selection ---
+            const signupForm = document.getElementById('signup-form');
+            const signupButton = document.getElementById('signup-btn');
+            const spinner = signupButton.querySelector('.spinner-border');
+            const btnText = signupButton.querySelector('.btn-text');
+            const errorMessageDiv = document.getElementById('error-message');
+            const successMessageDiv = document.getElementById('success-message');
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('toggle-password');
+            const termsCheckbox = document.getElementById('terms');
+
+            // --- UI Helper Functions ---
+            
+            /** Toggles the loading state of the sign-up button. */
+            function showLoading(isLoading) {
+                signupButton.disabled = isLoading;
+                spinner.classList.toggle('d-none', !isLoading);
+                btnText.textContent = isLoading ? 'Creating Account...' : 'Create Account';
             }
 
-        } catch (error) {
-            showMessage(errorMessageDiv, error.message || 'An unexpected error occurred.');
-        } finally {
-            showLoading(false);
-        }
-    });
-}
+            /** Displays a message in the specified message box. */
+            function showMessage(element, message, isError = true) {
+                element.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'} me-2"></i> ${message}`;
+                element.style.display = 'block';
+                
+                if (isError) {
+                    // Shake animation for error
+                    signupForm.classList.add('shake');
+                    setTimeout(() => {
+                        signupForm.classList.remove('shake');
+                    }, 500);
+                }
+            }
 
-// --- SCRIPT EXECUTION ---
-document.addEventListener('DOMContentLoaded', checkSessionAndInitialize);
+            // --- Event Listeners ---
+
+            /** Toggles password visibility. */
+            togglePassword.addEventListener('click', () => {
+                const isPassword = passwordInput.getAttribute('type') === 'password';
+                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+                togglePassword.querySelector('i').classList.toggle('fa-eye');
+                togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+
+            /** Checks password strength as user types */
+            passwordInput.addEventListener('input', () => {
+                checkPasswordStrength(passwordInput.value);
+            });
+
+            /** Handles the email/password sign-up form submission. */
+            signupForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                showLoading(true);
+                errorMessageDiv.style.display = 'none';
+                successMessageDiv.style.display = 'none';
+
+                // Check if terms are accepted
+                if (!termsCheckbox.checked) {
+                    showMessage(errorMessageDiv, 'Please accept the Terms of Service and Privacy Policy to continue.', true);
+                    showLoading(false);
+                    return;
+                }
+
+                try {
+                    const fullname = document.getElementById('fullname').value;
+                    const email = document.getElementById('email').value;
+                    const password = passwordInput.value;
+
+                    // Check password strength
+                    const passwordStrength = checkPasswordStrength(password);
+                    if (passwordStrength < 75) {
+                        throw new Error('Please use a stronger password that meets all requirements.');
+                    }
+
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email,
+                        password,
+                        options: {
+                            data: {
+                                full_name: fullname,
+                                // You can add other metadata here
+                            }
+                        }
+                    });
+
+                    if (error) throw error;
+                    
+                    // Supabase sends confirmation email. data.user will be null if email confirmation is enabled.
+                    if (data.user) {
+                         // This will run if you disable email confirmation.
+                        showMessage(successMessageDiv, 'Account created successfully! Redirecting to your dashboard...', false);
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 2000);
+                    } else {
+                        // This will run if email confirmation is enabled.
+                        showMessage(successMessageDiv, 'Account created successfully! Please check your email to confirm your account.', false);
+                        signupForm.reset();
+                        
+                        // Reset password strength indicator
+                        document.getElementById('password-strength-bar').style.width = '0%';
+                        document.querySelectorAll('.requirement').forEach(el => {
+                            el.className = 'requirement';
+                        });
+                    }
+
+                } catch (error) {
+                    showMessage(errorMessageDiv, error.message || 'An unexpected error occurred.', true);
+                } finally {
+                    showLoading(false);
+                }
+            });
+        }
+
+        // --- SCRIPT EXECUTION ---
+        document.addEventListener('DOMContentLoaded', checkSessionAndInitialize);
     </script>
 </body>
 </html>
-

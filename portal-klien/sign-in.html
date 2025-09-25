@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Login - Client Portal</title>
+    <title>Login - IXIERA Client Portal</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="https://placehold.co/32x32/6a5acd/white?text=IXIERA" type="image/x-icon" />
-
-
 
     <!-- External Libraries (Bootstrap & Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -23,6 +21,32 @@
             background-color: #f4f5f8; 
             font-family: 'Public Sans', sans-serif, system-ui;
             visibility: hidden; /* Content is hidden until JS confirms no active session */
+            overflow-x: hidden;
+        }
+
+        /* Premium background with subtle animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #f4f5f8 0%, #e8eaf6 100%);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(106, 90, 205, 0.03) 0%, rgba(106, 90, 205, 0) 70%);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         .login-container { 
@@ -35,28 +59,62 @@
 
         .login-card { 
             width: 100%; 
-            max-width: 420px; 
+            max-width: 440px; 
             border: none; 
-            border-radius: 12px; /* Consistent with custom.css */
+            border-radius: 16px; /* Slightly increased for more premium feel */
             background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(106, 90, 205, 0.15);
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #6a5acd, #8a7de3);
         }
 
         .form-control { 
             height: 48px; 
             border-radius: 8px; 
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+            padding-left: 15px;
         }
+        
         .form-control:focus {
             border-color: #6a5acd;
-            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.15);
+            transform: translateY(-1px);
         }
 
         .btn-primary {
-            background-color: #6a5acd;
-            border-color: #6a5acd;
+            background: linear-gradient(135deg, #6a5acd 0%, #8a7de3 100%);
+            border: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
+        
         .btn-primary:hover {
-            background-color: #483d8b;
-            border-color: #483d8b;
+            background: linear-gradient(135deg, #5a4aba 0%, #7a6dd3 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
         .btn-lg { 
@@ -67,6 +125,8 @@
 
         #error-message { 
             display: none; 
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
         }
 
         .password-toggle-icon {
@@ -76,6 +136,11 @@
             transform: translateY(-50%);
             cursor: pointer; 
             color: #6c757d;
+            transition: color 0.3s ease;
+        }
+        
+        .password-toggle-icon:hover {
+            color: #6a5acd;
         }
 
         .divider { 
@@ -84,6 +149,7 @@
             text-align: center; 
             color: #adb5bd; 
             margin: 1.5rem 0; 
+            font-size: 0.9rem;
         }
         .divider::before, .divider::after {
             content: ''; 
@@ -97,10 +163,171 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
+        
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+        
         .btn-social i { 
             margin-right: 0.75rem; 
             font-size: 1.2rem; 
+        }
+        
+        .btn-google {
+            background-color: #fff;
+            color: #757575;
+            border: 1px solid #dadce0;
+        }
+        
+        .btn-google:hover {
+            background-color: #f8f9fa;
+            border-color: #dadce0;
+        }
+        
+        .btn-discord {
+            background-color: #5865f2;
+            color: white;
+            border: 1px solid #5865f2;
+        }
+        
+        .btn-discord:hover {
+            background-color: #4752c4;
+            border-color: #4752c4;
+            color: white;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(106, 90, 205, 0.05) 0%, rgba(138, 125, 227, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            border-left: 4px solid #6a5acd;
+        }
+        
+        .feature-highlight h6 {
+            color: #6a5acd;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .feature-highlight ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        
+        .feature-highlight li {
+            margin-bottom: 5px;
+            color: #5a5a72;
+        }
+        
+        .portal-description {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(106, 90, 205, 0.2) 0%, rgba(106, 90, 205, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6a5acd;
+            z-index: 5;
+        }
+        
+        .form-floating {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .form-floating .form-control {
+            padding-left: 45px;
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
+            border-left: 4px solid #28a745;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Additional styles for new effects */
+        .shake {
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-10px); }
+            80% { transform: translateX(10px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .shadow-sm {
+            box-shadow: 0 0.125rem 0.25rem rgba(106, 90, 205, 0.1) !important;
+        }
+
+        /* Improved form structure */
+        .form-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .form-actions {
+            margin-top: 1.5rem;
+        }
+
+        .auth-options {
+            margin: 1.5rem 0;
+        }
+
+        .signup-prompt {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
         }
     </style>
       <!-- Google Analytics -->
@@ -113,50 +340,92 @@
   </script>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    
     <div class="container login-container">
         <div class="card login-card shadow-lg">
             <div class="card-body p-4 p-md-5">
+                <!-- Header Section -->
                 <div class="text-center mb-4">
-                    <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="Logo" class="mb-3" style="border-radius: 50%;">
-                    <h3 class="fw-bold mb-1">IXIERA portal</h3>
-                    <p class="text-muted">Please log in to continue.</p>
+                    <div class="logo-container">
+                        <div class="logo-glow"></div>
+                        <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="IXIERA Logo" class="mb-3 pulse" style="border-radius: 50%;">
+                    </div>
+                    <h3 class="fw-bold mb-1" style="color: #6a5acd;">IXIERA Client Portal</h3>
+                    <p class="portal-description">
+                        Your centralized dashboard for AI project tracking, order history, and community collaboration.
+                    </p>
                 </div>
 
+                <!-- Messages Section -->
                 <div id="error-message" class="alert alert-danger" role="alert"></div>
+                <div id="success-message" class="success-message" role="alert">
+                    <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
+                    <strong>Welcome back!</strong> Redirecting you to your dashboard...
+                </div>
 
+                <!-- Login Form Section -->
                 <form id="login-form" novalidate>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email Address</label>
-                        <input type="email" class="form-control" id="email" placeholder="example@email.com" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="password" class="form-label">Password</label>
-                        <div class="position-relative">
-                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-                            <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                    <div class="form-section">
+                        <!-- Email Input -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <div class="position-relative">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" class="form-control ps-5" id="email" placeholder="example@email.com" required>
+                            </div>
+                        </div>
+                        
+                        <!-- Password Input -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="position-relative">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" class="form-control ps-5" id="password" placeholder="Enter your password" required>
+                                <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" id="login-btn" class="btn btn-primary btn-lg">
-                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                            <span class="btn-text">Log In</span>
-                        </button>
+
+                    <!-- Login Button -->
+                    <div class="form-actions">
+                        <div class="d-grid">
+                            <button type="submit" id="login-btn" class="btn btn-primary btn-lg">
+                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                <span class="btn-text">Access Your Dashboard</span>
+                            </button>
+                        </div>
                     </div>
                 </form>
 
-                <div class="divider">OR</div>
-
-                <div class="d-grid gap-2">
-                    <button id="google-login-btn" class="btn btn-light border btn-lg btn-social">
-                        <i class="fab fa-google"></i> Sign in with Google
-                    </button>
-                    <button id="discord-login-btn" class="btn btn-light border btn-lg btn-social">
-                        <i class="fab fa-discord"></i> Sign in with Discord
-                    </button>
+                <!-- Social Login Section -->
+                <div class="auth-options">
+                    <div class="divider">Continue with</div>
+                    
+                    <div class="d-grid gap-2">
+                        <button id="google-login-btn" class="btn btn-google btn-lg btn-social">
+                            <i class="fab fa-google"></i> Sign in with Google
+                        </button>
+                        <button id="discord-login-btn" class="btn btn-discord btn-lg btn-social">
+                            <i class="fab fa-discord"></i> Sign in with Discord
+                        </button>
+                    </div>
                 </div>
 
-                <div class="text-center mt-4">
-                    <p class="text-muted">Don’t have an account? <a href="sign-up.html">Sign up</a></p>
+                <!-- Features Highlight -->
+                <div class="feature-highlight">
+                    <h6><i class="fas fa-star me-2"></i>What awaits you inside:</h6>
+                    <ul>
+                        <li><strong>Project Tracking:</strong> Monitor your AI project progress in real-time</li>
+                        <li><strong>Order History:</strong> Access your complete purchase history</li>
+                        <li><strong>AI Assistant:</strong> Get instant help with our smart assistant</li>
+                        <li><strong>Community Chat:</strong> Connect with other IXIERA clients</li>
+                    </ul>
+                </div>
+
+                <!-- Sign Up Prompt -->
+                <div class="signup-prompt">
+                    <p class="text-muted mb-0">New to IXIERA? <a href="sign-up.html" style="color: #6a5acd; text-decoration: none; font-weight: 500;">Create an account</a></p>
                 </div>
             </div>
         </div>
@@ -181,7 +450,42 @@
             } else {
                 document.body.style.visibility = 'visible'; // No session, show the login page
                 initializeLoginListeners();
+                addPremiumEffects();
             }
+        }
+
+        /**
+         * Adds premium visual effects to the login page
+         */
+        function addPremiumEffects() {
+            // Add subtle hover effect to form inputs
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('shadow-sm');
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('shadow-sm');
+                });
+            });
+            
+            // Add typing effect to the portal description
+            const description = document.querySelector('.portal-description');
+            const originalText = description.textContent;
+            description.textContent = '';
+            
+            let i = 0;
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    description.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 30);
+                }
+            };
+            
+            // Start typing effect after a short delay
+            setTimeout(typeWriter, 500);
         }
 
         /**
@@ -194,6 +498,7 @@
             const spinner = loginButton.querySelector('.spinner-border');
             const btnText = loginButton.querySelector('.btn-text');
             const errorMessageDiv = document.getElementById('error-message');
+            const successMessageDiv = document.getElementById('success-message');
             const passwordInput = document.getElementById('password');
             const togglePassword = document.getElementById('toggle-password');
             const googleLoginBtn = document.getElementById('google-login-btn');
@@ -205,13 +510,26 @@
             function showLoading(isLoading) {
                 loginButton.disabled = isLoading;
                 spinner.classList.toggle('d-none', !isLoading);
-                btnText.textContent = isLoading ? 'Processing...' : 'Log In';
+                btnText.textContent = isLoading ? 'Authenticating...' : 'Access Your Dashboard';
             }
 
             /** Displays an error message in the alert box. */
             function showErrorMessage(message) {
-                errorMessageDiv.textContent = message;
+                errorMessageDiv.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i> ${message}`;
                 errorMessageDiv.style.display = 'block';
+                successMessageDiv.style.display = 'none';
+                
+                // Shake animation for error
+                loginForm.classList.add('shake');
+                setTimeout(() => {
+                    loginForm.classList.remove('shake');
+                }, 500);
+            }
+            
+            /** Displays a success message before redirect */
+            function showSuccessMessage() {
+                errorMessageDiv.style.display = 'none';
+                successMessageDiv.style.display = 'block';
             }
 
             // --- Event Listeners ---
@@ -235,9 +553,14 @@
                     const password = passwordInput.value;
                     const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
                     if (error) throw error;
-                    window.location.href = 'index.html'; // Success, redirect to dashboard
+                    
+                    // Show success message before redirect
+                    showSuccessMessage();
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Success, redirect to dashboard
+                    }, 1500);
                 } catch (error) {
-                    showErrorMessage(error.message || 'Invalid email or password.');
+                    showErrorMessage(error.message || 'Invalid email or password. Please try again.');
                 } finally {
                     showLoading(false);
                 }
@@ -260,4 +583,3 @@
     </script>
 </body>
 </html>
-

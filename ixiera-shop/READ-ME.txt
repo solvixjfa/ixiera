@@ -1,0 +1,53 @@
+===========================================================================
+Project Name      : Ixierazone - Premium Sneakers Collection
+===========================================================================
+
+Description:
+Ixierazone is a dynamic and modern sneakers platform designed to showcase
+premium-quality footwear with a wide range of styles including lifestyle,
+running, basketball, classic, and limited edition sneakers. The project
+leverages static HTML pages combined with dynamic Supabase integration for
+product management, newsletter subscriptions, and category updates, providing
+both speed and flexibility.
+
+Key Features:
+- Fully responsive design using Bootstrap 5
+- Dynamic product listing (featured, new arrivals, categories) via Supabase JS
+- Newsletter subscription system
+- Interactive shopping cart logic
+- SEO-friendly structure and meta descriptions
+- Optimized for mobile, tablet, and desktop
+
+Technologies Used:
+- HTML5 / CSS3 / Bootstrap 5 / JavaScript
+- Supabase (Backend as a Service)
+- FontAwesome for icons
+- Optional: Vanilla JS or partials for reusable components (header, footer)
+
+Template Info:
+- Original Template Name: EShopper - Bootstrap Shop Template
+- Template Link: https://htmlcodex.com/bootstrap-shop-template
+- Template License: https://htmlcodex.com/license
+- Template Author: HTML Codex
+- Author Website: https://htmlcodex.com
+
+Installation:
+1. Clone or download the repository.
+2. Update Supabase configuration in `assets/js/supabase.js` with your own
+   Supabase URL and anon key.
+3. Open `index.html` in any browser (no live server required for static pages).
+4. Customize products, categories, and content as needed.
+
+SEO Notes:
+- Meta descriptions and page titles are designed to maximize search engine
+  visibility.
+- Avoids the term “online store” for a more professional branding approach.
+- Includes structured headings and alt texts for all images.
+
+Contact:
+For questions or business inquiries, reach out to:
+Email: info@ixierazone.id
+Phone: +62 812 3456 7890
+Website: https://ixierazone.id
+
+===========================================================================

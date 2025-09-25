@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ixierazone - Tempat Beli Sneakers Terbaik</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Sneakers, Sepatu, E-commerce" name="keywords">
+    <meta content="Dapatkan sneakers favoritmu dengan kualitas premium dan harga terjangkau. Koleksi lengkap dari brand ternama, desain trendi, dan nyaman dipakai untuk sehari-hari maupun aktivitas olahraga." name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/koleksi2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/footer.css" rel="stylesheet">
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="faq.html">FAQ</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="help.html">Bantuan</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="support.html">Support</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="#">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="#">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="#">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="#" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">I</span>xierazone</h1>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 text-left">
+                <form action="#">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Cari sneakers impianmu...">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-6 text-right">
+                <a href="cart.html" class="btn border">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
+                <a href="cart.html" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">Kategori</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <a href="" class="nav-item nav-link" data-category="running">Running</a>
+                        <a href="" class="nav-item nav-link" data-category="basketball">Basketball</a>
+                        <a href="" class="nav-item nav-link" data-category="lifestyle">Lifestyle</a>
+                        <a href="" class="nav-item nav-link" data-category="skateboarding">Skateboarding</a>
+                        <a href="" class="nav-item nav-link" data-category="limited">Limited Edition</a>
+                        <a href="" class="nav-item nav-link" data-category="classic">Classic</a>
+                        <a href="" class="nav-item nav-link" data-category="sports">Sports</a>
+                        <a href="" class="nav-item nav-link" data-category="casual">Casual</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">I</span>xierazone</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link active">Beranda</a>
+                            <a href="shop.html" class="nav-item nav-link">Belanja</a>
+                            <a href="detail.html" class="nav-item nav-link">Detail Produk</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lainnya</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="cart.html" class="dropdown-item">Keranjang Belanja</a>
+                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Kontak</a>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="sign-in.html" class="nav-item nav-link">Login</a>
+                            <a href="sign-up.html" class="nav-item nav-link">Daftar</a>
+                        </div>
+                    </div>
+                </nav>
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Sneakers Limited Edition">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Diskon 10% untuk Pembelian Pertama</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Sneakers Limited Edition</h3>
+                                    <a href="shop.html" class="btn btn-light py-2 px-3">Belanja Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Sneakers Sporty">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">Gratis Ongkir Seluruh Indonesia</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Koleksi Terbaru 2025</h3>
+                                    <a href="shop.html" class="btn btn-light py-2 px-3">Jelajahi Koleksi</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Featured Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Produk Berkualitas</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Gratis Ongkir</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Garansi 14 Hari</h5>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Support 24/7</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Featured End -->
+
+    <!-- Categories Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Kategori Populer</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3" id="categories-container">
+            <!-- Categories will be loaded dynamically from Supabase -->
+        </div>
+    </div>
+    <!-- Categories End -->
+
+    <!-- Products Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Produk Terpopuler</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3" id="featured-products">
+            <!-- Featured products will be loaded dynamically from Supabase -->
+        </div>
+    </div>
+    <!-- Products End -->
+
+    <!-- Subscribe Start -->
+    <div class="container-fluid bg-secondary my-5">
+        <div class="row justify-content-md-center py-5 px-xl-5">
+            <div class="col-md-6 col-12 py-5">
+                <div class="text-center mb-2 pb-2">
+                    <h2 class="section-title px-5 mb-3"><span class="bg-secondary px-2">Tetap Update</span></h2>
+                    <p>Dapatkan info terbaru tentang produk limited edition dan promo spesial langsung ke email Anda!</p>
+                </div>
+                <form id="newsletter-form">
+                    <div class="input-group">
+                        <input type="email" class="form-control border-white p-4" placeholder="Masukkan email Anda" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary px-4" type="submit">Berlangganan</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Subscribe End -->
+
+    <!-- New Arrivals Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Baru Sampai</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3" id="new-arrivals">
+            <!-- New arrivals will be loaded dynamically from Supabase -->
+        </div>
+    </div>
+    <!-- New Arrivals End -->
+
+    <!-- Footer Start -->
+<div class="footer-container">
+    <div class="footer-top">
+        <div class="footer-left">
+            <a href="#" class="footer-logo">
+                <h1><span>I</span>xierazone</h1>
+            </a>
+            <p>Koleksi sneakers terpercaya, nyaman dipakai, dan berkualitas. Temukan sneakers favoritmu yang stylish dan tetap ramah di kantong. Rasakan kenyamanan dan kualitas terbaik setiap langkahmu.</p>
+            <p><i class="fa fa-map-marker-alt"></i> <a href="https://goo.gl/maps/your-google-map-link" target="_blank">Pandaan, East Java, Indonesia</a></p>
+            <p><i class="fa fa-envelope"></i> <a href="mailto:ixierastudio@gmail.com">ixierastudio@gmail.com</a></p>
+            <p><i class="fa fa-phone-alt"></i> <a href="https://wa.me/6285702373412" target="_blank">+62 857-0237-3412</a></p>
+        </div>
+        <div class="footer-right">
+            <div class="footer-column">
+                <h5>Menu Cepat</h5>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="shop.html">Belanja</a></li>
+                    <li><a href="detail.html">Detail Produk</a></li>
+                    <li><a href="cart.html">Keranjang</a></li>
+                    <li><a href="checkout.html">Checkout</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>Kategori</h5>
+                <ul>
+                    <li><a href="shop.html">Running</a></li>
+                    <li><a href="shop.html">Basketball</a></li>
+                    <li><a href="shop.html">Lifestyle</a></li>
+                    <li><a href="shop.html">Limited Edition</a></li>
+                    <li><a href="shop.html">Classic</a></li>
+                    <li><a href="shop.html">Semua Kategori</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>Newsletter</h5>
+                <form id="footer-newsletter">
+                    <input type="text" placeholder="Nama Anda" required>
+                    <input type="email" placeholder="Email Anda" required>
+                    <button type="submit">Berlangganan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; Ixierazone. All Rights Reserved.</p>
+        <img src="img/payments.png" alt="Payment Methods">
+    </div>
+</div>
+<!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+ <!-- Di bagian head -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Di bagian sebelum penutup body -->
+<script src="js/main.js"></script> <!-- jQuery template functions (bawaan) -->
+<script src="js/supabase-config.js"></script> <!-- Supabase configuration -->
+<script src="js/app.js"></script> <!-- Aplikasi e-commerce kita -->
+
+</body>
+</html>
