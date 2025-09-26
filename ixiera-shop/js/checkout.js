@@ -1,4 +1,4 @@
-// js/checkout.js - Versi Konsisten dengan Template
+// js/checkout.js - VERSI FIXED (FULL REPLACEMENT)
 class CheckoutPage {
     constructor() {
         this.checkoutData = null;
@@ -7,8 +7,9 @@ class CheckoutPage {
         this.freeShippingThreshold = 500000;
         
         this.provinces = [
-            'DKI Jakarta', 'Jawa Barat', 'Jawa Tengah', 'Jawa Timur', 
-            'Banten', 'Bali', 'Yogyakarta', 'Sumatera Utara'
+           'DKI Jakarta', 'Jawa Barat', 'Jawa Tengah', 'Jawa Timur', 
+'Banten', 'Bali', 'Yogyakarta', 'Sumatera Utara', 
+'Sulawesi Selatan', 'Kalimantan Timur'
         ];
         
         this.paymentMethods = [
@@ -26,11 +27,20 @@ class CheckoutPage {
     }
 
     async init() {
-        console.log('Checkout Page Initialized');
+        console.log('🔄 Checkout Page Initialized');
+        
+        // Cek apakah SneakZoneApp sudah loaded
+        if (!window.SneakZoneApp) {
+            console.error('❌ SneakZoneApp not loaded!');
+            this.showNotification('Aplikasi belum siap. Silakan refresh halaman.', 'error');
+            return;
+        }
+        
+        console.log('✅ SneakZoneApp loaded:', !!window.SneakZoneApp.OrderService);
         
         // Update cart count
-        if (window.SneakZoneApp && SneakZoneApp.CartService) {
-            SneakZoneApp.CartService.updateCartCount();
+        if (window.SneakZoneApp && window.SneakZoneApp.CartService) {
+            window.SneakZoneApp.CartService.updateCartCount();
         }
         
         this.loadCheckoutData();
@@ -40,7 +50,7 @@ class CheckoutPage {
     }
 
     loadCheckoutData() {
-        console.log('Loading checkout data...');
+        console.log('📦 Loading checkout data...');
         
         // Coba dari sessionStorage dulu
         const savedData = sessionStorage.getItem('checkoutData');
@@ -48,21 +58,21 @@ class CheckoutPage {
         if (savedData) {
             try {
                 this.checkoutData = JSON.parse(savedData);
-                console.log('Checkout data loaded from sessionStorage');
+                console.log('✅ Checkout data loaded from sessionStorage');
                 
                 if (!this.checkoutData.cart || this.checkoutData.cart.length === 0) {
                     this.showEmptyCheckout();
                     return;
                 }
             } catch (error) {
-                console.error('Error loading from sessionStorage:', error);
+                console.error('❌ Error loading from sessionStorage:', error);
                 sessionStorage.removeItem('checkoutData');
             }
         }
         
         // Fallback: Load dari cart
-        if (window.SneakZoneApp && SneakZoneApp.CartService) {
-            const cart = SneakZoneApp.CartService.getCart();
+        if (window.SneakZoneApp && window.SneakZoneApp.CartService) {
+            const cart = window.SneakZoneApp.CartService.getCart();
             if (cart.length === 0) {
                 this.showEmptyCheckout();
                 return;
@@ -70,7 +80,7 @@ class CheckoutPage {
             
             this.checkoutData = this.createCheckoutDataFromCart(cart);
             sessionStorage.setItem('checkoutData', JSON.stringify(this.checkoutData));
-            console.log('Checkout data created from cart');
+            console.log('✅ Checkout data created from cart');
         }
     }
 
@@ -217,8 +227,10 @@ class CheckoutPage {
 
     async handlePlaceOrder(e) {
         e.preventDefault();
+        console.log('🔄 Handle place order clicked');
 
         if (!this.validateForm()) {
+            console.log('❌ Form validation failed');
             return;
         }
 
@@ -230,36 +242,46 @@ class CheckoutPage {
         placeOrderBtn.disabled = true;
 
         try {
-            // Validasi stok
+            console.log('🔍 Starting order process...');
+            
+            // Validasi stok menggunakan OrderService baru
             const stockValidation = await this.validateStock();
             if (!stockValidation.valid) {
+                console.log('❌ Stock validation failed:', stockValidation.message);
                 this.showNotification(stockValidation.message, 'warning');
                 this.updateCartWithCurrentStock();
                 return;
             }
+            console.log('✅ Stock validation passed');
 
-            // Simpan order ke database
+            // Simpan order ke database menggunakan OrderService baru
+            console.log('💾 Saving order to database...');
             const orderResult = await this.saveOrderToDatabase();
+            console.log('📊 Order result:', orderResult);
             
+                // order result
             if (orderResult.success) {
-                // Clear data
-                if (window.SneakZoneApp && SneakZoneApp.CartService) {
-                    SneakZoneApp.CartService.clearCart();
-                }
-                sessionStorage.removeItem('checkoutData');
-                
-                // Redirect ke thank you page
-                this.showNotification('Order berhasil dibuat! Redirecting...', 'success');
-                setTimeout(() => {
-                    window.location.href = `thankyou.html?order_number=${orderResult.orderNumber}`;
-                }, 2000);
-                
-            } else {
-                throw new Error(orderResult.message);
-            }
+    console.log('✅ Order saved successfully!');
+    
+    // Clear data
+    if (window.SneakZoneApp && window.SneakZoneApp.CartService) {
+        window.SneakZoneApp.CartService.clearCart();
+    }
+    sessionStorage.removeItem('checkoutData');
+    
+    // Redirect ke thank you page
+    this.showNotification('Order berhasil dibuat! Redirecting...', 'success');
+    setTimeout(() => {
+        window.location.href = `thankyou.html?order_number=${orderResult.orderNumber}&payment_method=${this.selectedPaymentMethod}&total=${this.checkoutData.total}`;
+    }, 2000);
+    
+} else {
+    console.error('❌ Order failed:', orderResult.message);
+    throw new Error(orderResult.message);
+}
 
         } catch (error) {
-            console.error('Error placing order:', error);
+            console.error('💥 Error placing order:', error);
             this.showNotification(`Gagal membuat order: ${error.message}`, 'error');
         } finally {
             // Restore button state
@@ -268,34 +290,67 @@ class CheckoutPage {
         }
     }
 
-    validateForm() {
-        let isValid = true;
+   validateForm() {
+    console.log('🔍 === FORM VALIDATION START ===');
+    
+    let isValid = true;
 
-        // Validate required fields
-        const requiredFields = document.querySelectorAll('[required]');
-        requiredFields.forEach(field => {
-            if (!this.validateField(field)) {
-                isValid = false;
-            }
-        });
-
-        // Validate phone number format (Indonesia)
-        const phoneField = document.getElementById('phone');
-        if (phoneField && phoneField.value) {
-            const phoneRegex = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
-            if (!phoneRegex.test(phoneField.value.replace(/\s/g, ''))) {
-                this.showFieldError(phoneField, 'Format nomor WhatsApp Indonesia tidak valid');
-                isValid = false;
-            }
+    // Hanya validate field yang VISIBLE dan required
+    const allRequiredFields = document.querySelectorAll('[required]');
+    console.log('All required fields:', allRequiredFields.length);
+    
+    // Filter hanya field yang visible (tidak di collapse hidden)
+    const visibleRequiredFields = Array.from(allRequiredFields).filter(field => {
+        // Cek jika field ada di section yang collapsed
+        const shippingSection = document.getElementById('shipping-address');
+        const isInHiddenSection = shippingSection && !shippingSection.classList.contains('show') && 
+                                 shippingSection.contains(field);
+        
+        return !isInHiddenSection; // Hanya field yang tidak di section hidden
+    });
+    
+    console.log('Visible required fields:', visibleRequiredFields.length);
+    
+    visibleRequiredFields.forEach((field, index) => {
+        const value = field.value.trim();
+        const fieldValid = value !== '';
+        console.log(`Field ${index + 1} (${field.id}): "${value}" -> ${fieldValid ? 'VALID' : 'INVALID'}`);
+        
+        if (!fieldValid) {
+            field.classList.remove('is-valid');
+            field.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            field.classList.remove('is-invalid');
+            field.classList.add('is-valid');
         }
+    });
 
-        if (!this.selectedPaymentMethod) {
-            this.showNotification('Please select a payment method', 'warning');
+    // Validate phone number format
+    const phoneField = document.getElementById('phone');
+    if (phoneField && phoneField.value) {
+        const phoneRegex = /^(\+62|62|0)8[1-9][0-9]{6,9}$/;
+        const phoneValid = phoneRegex.test(phoneField.value.replace(/\s/g, ''));
+        console.log('Phone validation:', phoneValid, 'Value:', phoneField.value);
+        if (!phoneValid) {
+            this.showFieldError(phoneField, 'Format nomor WhatsApp Indonesia tidak valid');
             isValid = false;
         }
-
-        return isValid;
     }
+
+    // Check payment method
+    console.log('Payment method selected:', this.selectedPaymentMethod);
+    if (!this.selectedPaymentMethod) {
+        console.log('❌ No payment method selected');
+        this.showNotification('Please select a payment method', 'warning');
+        isValid = false;
+    } else {
+        console.log('✅ Payment method:', this.selectedPaymentMethod);
+    }
+
+    console.log('🔍 === FORM VALIDATION RESULT:', isValid, '===');
+    return isValid;
+}
 
     validateField(field) {
         const value = field.value.trim();
@@ -351,90 +406,92 @@ class CheckoutPage {
 
     async validateStock() {
         try {
-            if (!window.SneakZoneApp || !SneakZoneApp.ProductService) {
+            console.log('🔍 Validating stock...');
+            
+            if (!window.SneakZoneApp || !window.SneakZoneApp.OrderService) {
+                console.log('⚠️ OrderService not available, skipping stock validation');
                 return { valid: true, message: 'Stock validation skipped' };
             }
 
-            const stockPromises = this.checkoutData.cart.map(async (item) => {
-                const currentProduct = await SneakZoneApp.ProductService.getProductById(item.id);
-                return {
-                    item,
-                    currentStock: currentProduct.stock,
-                    isValid: currentProduct.stock >= item.quantity
-                };
-            });
-
-            const stockResults = await Promise.all(stockPromises);
-            const outOfStockItems = stockResults.filter(result => !result.isValid);
-
-            if (outOfStockItems.length > 0) {
-                const itemNames = outOfStockItems.map(item => item.item.name).join(', ');
+            // Gunakan OrderService untuk validasi stok
+            const validation = await window.SneakZoneApp.OrderService.validateStock(this.checkoutData.cart);
+            console.log('📊 Stock validation result:', validation);
+            
+            if (!validation.valid && validation.outOfStockItems) {
+                const itemNames = validation.outOfStockItems.map(item => item.name).join(', ');
                 return {
                     valid: false,
                     message: `Maaf, stok untuk ${itemNames} tidak mencukupi`
                 };
             }
-
-            return { valid: true, message: 'Stok tersedia' };
+            
+            return validation;
+            
         } catch (error) {
-            console.error('Error validating stock:', error);
+            console.error('❌ Stock validation error:', error);
             return { valid: false, message: 'Error validasi stok' };
         }
     }
 
     async saveOrderToDatabase() {
-        try {
-            const formData = this.getFormData();
+    try {
+        console.log('💾 Saving order to database...');
+        
+        if (!window.SneakZoneApp || !window.SneakZoneApp.OrderService) {
+            throw new Error('OrderService not available');
+        }
 
-            const orderData = {
-                customer_name: formData.fullName,
-                customer_email: formData.email,
-                customer_phone: formData.phone,
-                billing_address: {
-                    address: formData.address,
-                    province: formData.province,
-                    city: formData.city,
-                    postalCode: formData.postalCode,
-                    country: 'Indonesia'
-                },
-                shipping_address: this.getShippingAddress(),
-                ship_to_different_address: document.getElementById('shipto')?.checked || false,
-                items: this.checkoutData.cart,
-                subtotal: this.checkoutData.subtotal,
-                shipping_cost: this.checkoutData.shipping,
-                discount_amount: this.checkoutData.discount,
-                total_amount: this.checkoutData.total,
-                payment_method: this.selectedPaymentMethod,
-                payment_status: 'pending',
-                order_status: 'pending'
-            };
+        const formData = this.getFormData();
+        console.log('📋 Form data:', formData);
 
-            console.log('Saving order to database:', orderData);
+        const orderData = {
+            customer_name: formData.fullName,
+            customer_email: formData.email,
+            customer_phone: formData.phone,
+            billing_address: {
+                address: formData.address,
+                province: formData.province,
+                city: formData.city,
+                postalCode: formData.postalCode,
+                country: 'Indonesia'
+            },
+            shipping_address: this.getShippingAddress(),
 
-            const { data, error } = await supabase
-                .from('orders')
-                .insert([orderData])
-                .select()
-                .single();
+            items: this.checkoutData.cart,
+            subtotal: this.checkoutData.subtotal,
+            shipping_cost: this.checkoutData.shipping,
+            discount_amount: this.checkoutData.discount,
+            total_amount: this.checkoutData.total,
+            payment_method: this.selectedPaymentMethod,
+            payment_status: 'pending',
+            order_status: 'pending'
+        };
 
-            if (error) throw error;
+        console.log('📦 Order data to save:', orderData);
 
+        // GUNAKAN ORDER SERVICE YANG BARU
+        const result = await window.SneakZoneApp.OrderService.createOrder(orderData);
+        console.log('📊 Order creation result:', result);
+
+        if (result.success) {
             return {
                 success: true,
-                orderId: data.id,
-                orderNumber: data.order_number,
+                orderId: result.data.id,
+                orderNumber: result.data.order_number,
                 message: 'Order berhasil dibuat'
             };
-
-        } catch (error) {
-            console.error('Error saving order:', error);
-            return {
-                success: false,
-                message: error.message || 'Terjadi kesalahan saat menyimpan order'
-            };
+        } else {
+            throw new Error(result.error || 'Unknown error');
         }
-    }
 
+    } catch (error) {
+        console.error('💥 Error saving order:', error);
+        return {
+            success: false,
+            message: error.message || 'Terjadi kesalahan saat menyimpan order'
+        };
+    }
+}
     getFormData() {
         return {
             fullName: document.getElementById('fullName')?.value || '',
@@ -477,8 +534,12 @@ class CheckoutPage {
     }
 
     showNotification(message, type = 'info') {
-        // Simple notification using alert for now
-        alert(message);
+        if (window.SneakZoneApp && window.SneakZoneApp.Utils) {
+            window.SneakZoneApp.Utils.showNotification(message, type);
+        } else {
+            // Fallback simple notification
+            alert(message);
+        }
     }
 
     showEmptyCheckout() {
@@ -512,13 +573,13 @@ class CheckoutPage {
     }
 
     updateCartWithCurrentStock() {
-        if (!window.SneakZoneApp || !SneakZoneApp.CartService) return;
+        if (!window.SneakZoneApp || !window.SneakZoneApp.CartService) return;
         
-        const currentCart = SneakZoneApp.CartService.getCart();
+        const currentCart = window.SneakZoneApp.CartService.getCart();
         this.checkoutData.cart.forEach(checkoutItem => {
             const cartItem = currentCart.find(item => item.id === checkoutItem.id);
             if (cartItem) {
-                SneakZoneApp.CartService.updateQuantity(cartItem.id, checkoutItem.max_stock);
+                window.SneakZoneApp.CartService.updateQuantity(cartItem.id, checkoutItem.max_stock);
             }
         });
     }
@@ -526,15 +587,23 @@ class CheckoutPage {
 
 // Initialize checkout page
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded - Initializing Checkout...');
+    console.log('🏁 DOM Content Loaded - Initializing Checkout...');
     
+    // Tunggu sedikit untuk pastikan SneakZoneApp sudah loaded
     setTimeout(() => {
         try {
+            if (!window.SneakZoneApp) {
+                console.error('❌ SneakZoneApp not found!');
+                return;
+            }
+            
+            console.log('✅ SneakZoneApp found, initializing checkout...');
             const checkoutPage = new CheckoutPage();
             checkoutPage.init();
             window.checkoutPage = checkoutPage;
+            console.log('🎉 Checkout page initialized successfully!');
         } catch (error) {
-            console.error('Failed to initialize checkout page:', error);
+            console.error('💥 Failed to initialize checkout page:', error);
         }
-    }, 100);
+    }, 500);
 });

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>IxieraZone - Akses Eksklusif Komunitas Sneaker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap 4 -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23333" stroke-width="0.5"/></svg>');
+    }
+    .auth-container {
+      width: 100%;
+      max-width: 480px;
+      padding: 20px;
+    }
+    .auth-card {
+      background: #111;
+      border-radius: 16px;
+      border: 1px solid #222;
+      padding: 40px 30px;
+      animation: fadeIn 0.8s ease-out;
+      box-shadow: 0 15px 35px rgba(255,255,255,0.05);
+    }
+    .auth-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    .brand-logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    .brand-tagline {
+      color: #aaa;
+      font-size: 1rem;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+    .nav-pills {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 30px;
+    }
+    .nav-pills .nav-link {
+      border-radius: 8px;
+      font-weight: 600;
+      color: #ccc;
+      padding: 12px;
+      transition: all 0.3s ease;
+    }
+    .nav-pills .nav-link.active {
+      background: #fff;
+      color: #000;
+      box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-control {
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+    .form-control:focus {
+      border-color: #555;
+      background: #1a1a1a;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    .form-control::placeholder {
+      color: #666;
+    }
+    .btn-primary {
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      padding: 14px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    .btn-primary:hover {
+      background: #e8e8e8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+    }
+    .btn-google {
+      background: #1a1a1a;
+      color: #fff;
+      border: 1px solid #333;
+      border-radius: 10px;
+      font-weight: 600;
+      padding: 14px;
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+    .btn-google:hover {
+      background: #222;
+      border-color: #444;
+      transform: translateY(-1px);
+    }
+    .support-section {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 30px;
+      border-left: 4px solid #fff;
+    }
+    .support-title {
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+    .support-text {
+      color: #aaa;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+    .support-contact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .support-contact:hover {
+      color: #ccc;
+      text-decoration: none;
+    }
+    .community-note {
+      text-align: center;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid #222;
+      color: #888;
+      font-size: 0.85rem;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive */
+    @media (max-width: 576px) {
+      .auth-card {
+        padding: 30px 20px;
+      }
+      .brand-logo {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-card">
+      <!-- Header -->
+      <div class="auth-header">
+        <div class="brand-logo">IXIERAZONE</div>
+        <p class="brand-tagline">
+          Bergabunglah dengan komunitas sneaker terbesar. Akses koleksi eksklusif, diskon member, dan komunitas pecinta sneaker.
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <ul class="nav nav-pills nav-justified">
+        <li class="nav-item">
+          <a class="nav-link active" id="login-tab" data-toggle="pill" href="#login">Masuk</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="register-tab" data-toggle="pill" href="#register">Daftar Baru</a>
+        </li>
+      </ul>
+
+      <!-- Forms -->
+      <div class="tab-content">
+        <!-- Login -->
+        <div class="tab-pane fade show active" id="login">
+          <form id="loginForm">
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email Anda" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Masuk ke Akun Saya</button>
+          </form>
+          <button id="googleLoginBtn" class="btn btn-google btn-block">
+            <i class="fab fa-google"></i> Lanjutkan dengan Google
+          </button>
+        </div>
+
+        <!-- Register -->
+        <div class="tab-pane fade" id="register">
+          <form id="registerForm">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Nama Lengkap" required>
+            </div>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email Aktif" required>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Buat Password" required>
+            </div>
+            <div class="form-group">
+              <input type="tel" class="form-control" placeholder="Nomor WhatsApp" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Buat Akun Baru</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Support Section -->
+      <div class="support-section">
+        <div class="support-title">Butuh Bantuan?</div>
+        <p class="support-text">
+          Hubungi admin kami via WhatsApp untuk bantuan pendaftaran atau informasi tentang komunitas IxieraZone.
+        </p>
+        <a href="https://wa.me/6281234567890" class="support-contact" target="_blank">
+          <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+          Chat Admin via WhatsApp
+        </a>
+      </div>
+
+      <!-- Community Note -->
+      <div class="community-note">
+        <i class="fas fa-users"></i> Bergabung dengan 5.000+ member komunitas sneaker Indonesia
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const SUPABASE_URL = 'https://armthhnachqtropqlegl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFybXRoaG5hY2hxdHJvcHFsZWdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MDI4NDksImV4cCI6MjA3NDI3ODg0OX0.mSNqVDB4qPu9ZVHJPKW_88k9iM4ibwYZmUzYnRRpUy0';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+      const password = this.querySelector('input[type="password"]').value;
+      
+      // Loading state
+      const btn = this.querySelector('button');
+      const originalText = btn.textContent;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+      btn.disabled = true;
+      
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        
+        // Success feedback
+        btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1000);
+      } catch (error) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert('Login gagal: ' + error.message);
+      }
+    });
+
+    // Register
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const name = this.querySelector('input[type="text"]').value;
+      const email = this.querySelector('input[type="email"]').value;
+      const password = this.querySelector('input[type="password"]').value;
+      const phone = this.querySelector('input[type="tel"]').value;
+      
+      // Loading state
+      const btn = this.querySelector('button');
+      const originalText = btn.textContent;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Membuat akun...';
+      btn.disabled = true;
+      
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { full_name: name, phone } }
+        });
+        if (error) throw error;
+        
+        // Success feedback
+        btn.innerHTML = '<i class="fas fa-check"></i> Berhasil!';
+        setTimeout(() => {
+          alert('Pendaftaran berhasil! Silakan login dengan email dan password Anda.');
+          document.getElementById('login-tab').click();
+          this.reset();
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+        }, 1500);
+      } catch (error) {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        alert('Pendaftaran gagal: ' + error.message);
+      }
+    });
+
+    // Google Login
+    document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('googleLoginBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengarahkan...';
+      
+      try {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.origin + '/dashboard.html' }
+        });
+        if (error) throw error;
+      } catch (error) {
+        btn.innerHTML = originalText;
+        alert('Google login gagal: ' + error.message);
+      }
+    });
+
+    // Auto redirect jika sudah login
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) window.location.href = 'dashboard.html';
+    });
+
+    // Smooth tab switching
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+      // Reset forms ketika ganti tab
+      document.getElementById('loginForm').reset();
+      document.getElementById('registerForm').reset();
+    });
+  </script>
+</body>
+</html>

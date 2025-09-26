@@ -219,26 +219,30 @@
                     </div>
                 </div>
                 <div class="collapse mb-4" id="shipping-address">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Nama Lengkap</label>
-                            <input class="form-control" type="text" id="shipping-name" placeholder="Nama lengkap">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Email</label>
-                            <input class="form-control" type="email" id="shipping-email" placeholder="contoh@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>No. WhatsApp</label>
-                            <input class="form-control" type="text" id="shipping-phone" placeholder="+62 812 3456 7890">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Alamat Lengkap</label>
-                            <textarea class="form-control" id="shipping-address" placeholder="Alamat lengkap pengiriman" rows="3"></textarea>
-                        </div>
-                    </div>
-                </div>
+    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label>Nama Lengkap</label>
+            <input class="form-control" type="text" id="shipping-name" placeholder="Nama lengkap">
+            <!-- HAPUS required -->
+        </div>
+        <div class="col-md-6 form-group">
+            <label>Email</label>
+            <input class="form-control" type="email" id="shipping-email" placeholder="contoh@email.com">
+            <!-- HAPUS required -->
+        </div>
+        <div class="col-md-6 form-group">
+            <label>No. WhatsApp</label>
+            <input class="form-control" type="text" id="shipping-phone" placeholder="+62 812 3456 7890">
+            <!-- HAPUS required -->
+        </div>
+        <div class="col-md-6 form-group">
+            <label>Alamat Lengkap</label>
+            <textarea class="form-control" id="shipping-address" placeholder="Alamat lengkap pengiriman" rows="3"></textarea>
+            <!-- HAPUS required -->
+        </div>
+    </div>
+</div>
             </div>
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
@@ -324,14 +328,14 @@
                     <li><a href="shop.html">Semua Kategori</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h5>Newsletter</h5>
-                <form id="footer-newsletter">
-                    <input type="text" placeholder="Nama Anda" required>
-                    <input type="email" placeholder="Email Anda" required>
-                    <button type="submit">Berlangganan</button>
-                </form>
-            </div>
+         <div class="footer-column">
+    <h5>Newsletter</h5>
+    <form id="footer-newsletter">
+        <input type="text" placeholder="Nama Anda"> <!-- HAPUS required -->
+        <input type="email" placeholder="Email Anda"> <!-- HAPUS required -->
+        <button type="submit">Berlangganan</button>
+    </form>
+</div>
         </div>
     </div>
     <div class="footer-bottom">
@@ -349,19 +353,13 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    
-    <!-- App Configuration -->
-    <script src="js/supabase-config.js"></script>
-    
-    <!-- Core App -->
-    <script src="js/app.js"></script>
-    
-    <!-- Checkout Script -->
-    <script src="js/checkout.js"></script>
+  <!-- logic -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/app.js"></script>
+<script src="js/checkout.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+
 </body>
 </html>

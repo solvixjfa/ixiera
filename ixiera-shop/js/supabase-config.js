@@ -602,8 +602,82 @@ const AnalyticsService = {
             .map(([productId]) => productId);
     }
 };
+// ===== TAMBAHAN ORDER SERVICE ===== 
+// ORDER SERVICE - BARU DITAMBAH (TARUH SEBELUM window.SneakZoneApp)
+const OrderService = {
+    async createOrder(orderData) {
+        try {
+            console.log('🔄 OrderService: Creating order...', orderData);
+            
+            const { data, error } = await supabase
+                .from('orders')
+                .insert([{
+                    ...orderData,
+                    created_at: new Date().toISOString()
+                }])
+                .select()
+                .single();
+            
+            if (error) {
+                console.error('❌ OrderService Error:', error);
+                throw error;
+            }
+            
+            console.log('✅ OrderService: Order created successfully!', data);
+            return { 
+                success: true, 
+                data, 
+                orderId: data.id,
+                orderNumber: data.order_number 
+            };
+            
+        } catch (error) {
+            console.error('💥 OrderService Failed:', error);
+            return { 
+                success: false, 
+                error: error.message,
+                code: error.code
+            };
+        }
+    },
 
-// Export for use in other files
+    async validateStock(items) {
+        try {
+            console.log('🔍 OrderService: Validating stock...', items);
+            
+            const productIds = items.map(item => item.id);
+            const { data: products, error } = await supabase
+                .from('products')
+                .select('id, name, stock')
+                .in('id', productIds);
+            
+            if (error) throw error;
+            
+            const outOfStock = [];
+            items.forEach(cartItem => {
+                const product = products.find(p => p.id === cartItem.id);
+                if (product && product.stock < cartItem.quantity) {
+                    outOfStock.push({
+                        name: cartItem.name,
+                        requested: cartItem.quantity,
+                        available: product.stock
+                    });
+                }
+            });
+            
+            return {
+                valid: outOfStock.length === 0,
+                outOfStockItems: outOfStock
+            };
+            
+        } catch (error) {
+            console.error('❌ Stock validation error:', error);
+            return { valid: false, error: error.message };
+        }
+    }
+};
+
+// Export for use in other files - TAMBAH OrderService ke existing
 window.SneakZoneApp = {
     supabase,
     ProductService,
@@ -611,6 +685,7 @@ window.SneakZoneApp = {
     WishlistService,
     NewsletterService,
     AnalyticsService,
+    OrderService, // ✅ BARU DITAMBAH
     Utils
 };
 

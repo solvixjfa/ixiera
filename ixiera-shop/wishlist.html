@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <title>Wishlist - IxieraZone</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+    <!-- Bootstrap & Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+      <link href="css/footer.css" rel="stylesheet">
+    <style>
+        .wishlist-item:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .product-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .empty-wishlist {
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .heart-icon {
+            color: #dc3545;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .heart-icon:hover {
+            transform: scale(1.2);
+        }
+    </style>
+    
+</head>
+<body>
+   <!-- Navbar Start -->
+    <div class="container-fluid">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">Kategori</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <a href="shop.html?category=Running" class="nav-item nav-link">Running</a>
+                        <a href="shop.html?category=Basketball" class="nav-item nav-link">Basketball</a>
+                        <a href="shop.html?category=Lifestyle" class="nav-item nav-link">Lifestyle</a>
+                        <a href="shop.html?category=Skateboarding" class="nav-item nav-link">Skateboarding</a>
+                        <a href="shop.html?category=Limited Edition" class="nav-item nav-link">Limited Edition</a>
+                        <a href="shop.html?category=Classic" class="nav-item nav-link">Classic</a>
+                        <a href="shop.html?category=Sports" class="nav-item nav-link">Sports</a>
+                        <a href="shop.html?category=Casual" class="nav-item nav-link">Casual</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="index.html" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">S</span>neakZone</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link">Beranda</a>
+                            <a href="shop.html" class="nav-item nav-link">Belanja</a>
+                            <a href="detail.html" class="nav-item nav-link active">Detail Produk</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Lainnya</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="cart.html" class="dropdown-item">Keranjang Belanja</a>
+                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Kontak</a>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="login.html" class="nav-item nav-link">Login</a>
+                            <a href="register.html" class="nav-item nav-link">Daftar</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Page Header -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">My Wishlist</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="index.html">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Wishlist</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Content -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-12">
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="font-weight-semi-bold">Wishlist Items (<span id="wishlist-count">0</span>)</h4>
+                        <button class="btn btn-outline-danger btn-sm" id="clear-wishlist">
+                            <i class="fas fa-trash mr-2"></i>Clear All
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Wishlist Items -->
+                <div id="wishlist-items">
+                    <!-- Items will be loaded by JavaScript -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-wishlist" class="empty-wishlist text-center" style="display: none;">
+                    <div>
+                        <i class="fas fa-heart fa-4x text-muted mb-3"></i>
+                        <h4 class="text-muted">Wishlist Kosong</h4>
+                        <p class="text-muted">Belum ada produk yang ditambahkan ke wishlist</p>
+                        <a href="shop.html" class="btn btn-primary">
+                            <i class="fas fa-shopping-bag mr-2"></i>Jelajahi Produk
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Footer Start -->
+<div class="footer-container">
+    <div class="footer-top">
+        <div class="footer-left">
+            <a href="#" class="footer-logo">
+                <h1><span>I</span>xierazone</h1>
+            </a>
+            <p>Koleksi sneakers terpercaya, nyaman dipakai, dan berkualitas. Temukan sneakers favoritmu yang stylish dan tetap ramah di kantong. Rasakan kenyamanan dan kualitas terbaik setiap langkahmu.</p>
+            <p><i class="fa fa-map-marker-alt"></i> <a href="https://goo.gl/maps/your-google-map-link" target="_blank">Pandaan, East Java, Indonesia</a></p>
+            <p><i class="fa fa-envelope"></i> <a href="mailto:ixierastudio@gmail.com">ixierastudio@gmail.com</a></p>
+            <p><i class="fa fa-phone-alt"></i> <a href="https://wa.me/6285702373412" target="_blank">+62 857-0237-3412</a></p>
+        </div>
+        <div class="footer-right">
+            <div class="footer-column">
+                <h5>Menu Cepat</h5>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="shop.html">Belanja</a></li>
+                    <li><a href="detail.html">Detail Produk</a></li>
+                    <li><a href="cart.html">Keranjang</a></li>
+                    <li><a href="checkout.html">Checkout</a></li>
+                    <li><a href="contact.html">Kontak</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>Kategori</h5>
+                <ul>
+                    <li><a href="shop.html">Running</a></li>
+                    <li><a href="shop.html">Basketball</a></li>
+                    <li><a href="shop.html">Lifestyle</a></li>
+                    <li><a href="shop.html">Limited Edition</a></li>
+                    <li><a href="shop.html">Classic</a></li>
+                    <li><a href="shop.html">Semua Kategori</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h5>Newsletter</h5>
+                <form id="footer-newsletter">
+                    <input type="text" placeholder="Nama Anda" required>
+                    <input type="email" placeholder="Email Anda" required>
+                    <button type="submit">Berlangganan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; Ixierazone. All Rights Reserved.</p>
+        <img src="img/payments.png" alt="Payment Methods">
+    </div>
+</div>
+<!-- Footer End -->
+
+  <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- TAMBAH INI: Load Supabase library DULU -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script src="js/supabase-config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/wishlist.js"></script>
+</body>
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Dashboard - IxieraZone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+    }
+    .dashboard-header {
+      background: #111;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #222;
+    }
+    .dashboard-header h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0;
+      color: #fff;
+    }
+    .dashboard-header button {
+      border-radius: 8px;
+    }
+    .welcome-text {
+      margin: 1rem 1.5rem;
+      color: #aaa;
+    }
+    .dashboard-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 1rem 1.5rem;
+      flex-wrap: wrap;
+    }
+    .dashboard-nav button {
+      background: #111;
+      color: #aaa;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 10px 20px;
+      transition: 0.3s;
+      flex: 1;
+      min-width: 90px;
+    }
+    .dashboard-nav button.active,
+    .dashboard-nav button:hover {
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+    }
+    .tab-content {
+      display: none;
+      padding: 1rem 1.5rem;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+    .card-body {
+      padding: 1rem;
+    }
+    .form-control {
+      background: #222;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 10px;
+    }
+    .form-control:focus {
+      background: #222;
+      border-color: #555;
+      color: #fff;
+      box-shadow: none;
+    }
+    .btn-primary {
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 15px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Order Details Styles */
+    .order-details-section {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      border-left: 3px solid #fff;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    .detail-label {
+      color: #aaa;
+      font-weight: 500;
+    }
+    .detail-value {
+      color: #fff;
+      text-align: right;
+    }
+    .address-section {
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 10px;
+    }
+    .address-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+    .address-text {
+      color: #ccc;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    
+    /* WidgetBot Styles */
+    .admin-support-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #5865F2;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+      transition: all 0.3s ease;
+    }
+    .admin-support-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+    }
+    .admin-support-btn i {
+      font-size: 24px;
+    }
+    
+    /* Fullscreen Widget Container */
+    #widgetbot-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 100000;
+      display: none;
+      flex-direction: column;
+    }
+    
+    #widgetbot-container.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    /* Widget Header */
+    .widget-header {
+      background: #1a1a1a;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #333;
+    }
+    
+    .widget-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+    
+    .widget-title i {
+      color: #5865F2;
+    }
+    
+    .widget-close {
+      background: #ff4757;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .widget-close:hover {
+      background: #ff3742;
+      transform: translateY(-2px);
+    }
+    
+    /* Widget Body */
+    .widget-body {
+      flex: 1;
+      display: flex;
+      padding: 20px;
+    }
+    
+    .widget-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+    }
+    
+    /* Widget Footer */
+    .widget-footer {
+      background: #1a1a1a;
+      padding: 15px 20px;
+      text-align: center;
+      border-top: 1px solid #333;
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .widget-header {
+        padding: 12px 15px;
+      }
+      
+      .widget-title {
+        font-size: 16px;
+      }
+      
+      .widget-body {
+        padding: 10px;
+      }
+      
+      .widget-close {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+      
+      .detail-row {
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+      
+      .detail-value {
+        text-align: left;
+        margin-top: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="dashboard-header">
+    <h2>Dashboard Saya</h2>
+    <button onclick="logout()" class="btn btn-outline-light btn-sm">Logout</button>
+  </div>
+
+  <!-- Welcome -->
+  <p class="welcome-text">Selamat datang, <span id="userName">User</span> 👋</p>
+
+  <!-- Navigation -->
+  <div class="dashboard-nav">
+    <button class="active" onclick="showTab('orders')">Pesanan</button>
+    <button onclick="showTab('profile')">Profil</button>
+    <button onclick="showTab('wishlist')">Wishlist</button>
+  </div>
+
+  <!-- Content -->
+  <div id="orders" class="tab-content active">
+    <h5>Riwayat Pesanan</h5>
+    <div id="orderList">Loading...</div>
+  </div>
+
+  <div id="profile" class="tab-content">
+    <h5>Profil Saya</h5>
+    <form id="profileForm" class="mt-3">
+      <input type="text" id="profileName" placeholder="Nama Lengkap" class="form-control mb-2">
+      <input type="email" id="profileEmail" placeholder="Email" class="form-control mb-2" readonly>
+      <input type="tel" id="profilePhone" placeholder="No. WhatsApp" class="form-control mb-2">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+
+  <div id="wishlist" class="tab-content">
+    <h5>Wishlist Saya</h5>
+    <div id="wishlistItems">Loading...</div>
+  </div>
+
+  <!-- Admin Support Button -->
+  <button class="admin-support-btn" id="adminSupportBtn">
+    <i class="fas fa-headset"></i>
+  </button>
+
+  <!-- Fullscreen Widget Container -->
+  <div id="widgetbot-container">
+    <!-- Widget Header -->
+    <div class="widget-header">
+      <div class="widget-title">
+        <i class="fas fa-headset"></i>
+        <span>Admin Support - IxieraZone</span>
+      </div>
+      <button class="widget-close" id="widgetCloseBtn">
+        <i class="fas fa-times"></i>
+        Tutup
+      </button>
+    </div>
+    
+    <!-- Widget Body -->
+    <div class="widget-body">
+      <iframe class="widget-iframe" id="discordWidget"></iframe>
+    </div>
+    
+    <!-- Widget Footer -->
+    <div class="widget-footer">
+      Hubungi admin kami untuk bantuan terkait pesanan, produk, atau masalah lainnya
+    </div>
+  </div>
+
+  <!-- Supabase + Dashboard JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const SUPABASE_URL = 'https://armthhnachqtropqlegl.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFybXRoaG5hY2hxdHJvcHFsZWdsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg3MDI4NDksImV4cCI6MjA3NDI3ODg0OX0.mSNqVDB4qPu9ZVHJPKW_88k9iM4ibwYZmUzYnRRpUy0';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check authentication
+      supabase.auth.getSession().then(({ data }) => {
+        if (!data.session) return window.location.href = 'auth.html';
+        loadUserData(data.session.user);
+        loadOrders(data.session.user.email);
+        loadWishlist();
+      });
+
+      // Add event listeners
+      document.getElementById('adminSupportBtn').addEventListener('click', showWidget);
+      document.getElementById('widgetCloseBtn').addEventListener('click', hideWidget);
+      
+      // Handle escape key untuk keluar dari widget
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          hideWidget();
+        }
+      });
+    });
+
+    function showWidget() {
+      const container = document.getElementById('widgetbot-container');
+      const iframe = document.getElementById('discordWidget');
+      
+      // Load Discord widget
+      iframe.src = `https://e.widgetbot.io/channels/1411001146788679821/1420987963495550976`;
+      
+      // Tampilkan widget fullscreen
+      container.classList.add('active');
+      
+      // Sembunyikan tombol admin support
+      document.getElementById('adminSupportBtn').style.display = 'none';
+      
+      // Fokus ke iframe setelah animasi selesai
+      setTimeout(() => {
+        iframe.focus();
+      }, 300);
+    }
+
+    function hideWidget() {
+      const container = document.getElementById('widgetbot-container');
+      const iframe = document.getElementById('discordWidget');
+      
+      // Sembunyikan widget
+      container.classList.remove('active');
+      
+      // Tampilkan kembali tombol admin support
+      document.getElementById('adminSupportBtn').style.display = 'flex';
+      
+      // Hentikan iframe
+      iframe.src = '';
+    }
+
+    function loadUserData(user) {
+      document.getElementById('userName').textContent = user.user_metadata.full_name || user.email;
+      document.getElementById('profileName').value = user.user_metadata.full_name || '';
+      document.getElementById('profileEmail').value = user.email;
+      document.getElementById('profilePhone').value = user.user_metadata.phone || '';
+    }
+
+    async function loadOrders(userEmail) {
+      const { data: orders, error } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('customer_email', userEmail)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error loading orders:', error);
+        return document.getElementById('orderList').innerHTML = '<p class="text-center text-muted">Error memuat pesanan</p>';
+      }
+
+      if (!orders || orders.length === 0) {
+        return document.getElementById('orderList').innerHTML = '<p class="text-center text-muted">Belum ada pesanan</p>';
+      }
+
+      document.getElementById('orderList').innerHTML = orders.map(order => {
+        const items = order.items || [];
+        const billingAddress = order.billing_address || {};
+        const shippingAddress = order.shipping_address || {};
+        
+        return `
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h6 class="mb-0">Order #${order.order_number}</h6>
+                <span class="badge badge-${getStatusBadgeClass(order.order_status)}">
+                  ${order.order_status}
+                </span>
+              </div>
+              
+              <div class="order-products mt-3">
+                ${items.map(item => `
+                  <div class="d-flex align-items-center mb-2 p-2 border rounded">
+                    <img src="${item.image_url || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80'}"
+                         width="50" height="50" style="object-fit: cover; border-radius:6px;"
+                         onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80'">
+                    <div class="ml-3 flex-grow-1">
+                      <strong class="d-block">${item.name}</strong>
+                      <small class="text-muted">
+                        ${item.size ? `Size: ${item.size} | ` : ''}Qty: ${item.quantity} | ${formatPrice(item.price)}
+                      </small>
+                    </div>
+                    <div class="text-right">
+                      <strong>${formatPrice(item.price * item.quantity)}</strong>
+                    </div>
+                  </div>`).join('')}
+              </div>
+              
+              <!-- Order Details Section -->
+              <div class="order-details-section">
+                <div class="detail-row">
+                  <span class="detail-label">Metode Pembayaran:</span>
+                  <span class="detail-value">${order.payment_method || 'Transfer Bank'}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Status Pembayaran:</span>
+                  <span class="detail-value">${order.payment_status || 'Pending'}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Subtotal:</span>
+                  <span class="detail-value">${formatPrice(order.subtotal||0)}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Ongkos Kirim:</span>
+                  <span class="detail-value">${order.shipping_cost===0?'FREE':formatPrice(order.shipping_cost||0)}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Total:</span>
+                  <span class="detail-value"><strong>${formatPrice(order.total_amount||0)}</strong></span>
+                </div>
+              </div>
+              
+              <!-- Address Information -->
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <div class="address-section">
+                    <div class="address-title">Alamat Penagihan</div>
+                    <div class="address-text">
+                      ${billingAddress.name || order.customer_name || 'N/A'}<br>
+                      ${billingAddress.address || 'N/A'}<br>
+                      ${billingAddress.city || 'N/A'}, ${billingAddress.province || 'N/A'} ${billingAddress.postalCode || ''}<br>
+                      Telp: ${billingAddress.phone || order.customer_phone || 'N/A'}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="address-section">
+                    <div class="address-title">Alamat Pengiriman</div>
+                    <div class="address-text">
+                      ${shippingAddress.name || order.customer_name || 'N/A'}<br>
+                      ${shippingAddress.address || 'N/A'}<br>
+                      ${shippingAddress.city || 'N/A'}, ${shippingAddress.province || 'N/A'} ${shippingAddress.postalCode || ''}<br>
+                      Telp: ${shippingAddress.phone || order.customer_phone || 'N/A'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <small class="text-muted d-block mt-2">
+                ${new Date(order.created_at).toLocaleDateString('id-ID', { 
+                  weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit'
+                })}
+              </small>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function getStatusBadgeClass(status) {
+      switch(status) {
+        case 'completed': return 'success';
+        case 'processing': return 'primary';
+        case 'shipped': return 'info';
+        case 'cancelled': return 'danger';
+        default: return 'warning';
+      }
+    }
+
+    function loadWishlist() {
+      const wishlist = JSON.parse(localStorage.getItem('sneakzone_wishlist')||'[]');
+      document.getElementById('wishlistItems').innerHTML = wishlist.map(item => `
+        <div class="card d-flex flex-row align-items-center p-2">
+          <img src="${item.image_url}" width="50" height="50" style="object-fit: cover;border-radius:8px;">
+          <div class="ml-3">
+            <h6 class="mb-0">${item.name}</h6>
+            <small>${formatPrice(item.price)}</small>
+          </div>
+        </div>`).join('') || '<p class="text-center text-muted">Wishlist kosong</p>';
+    }
+
+    function showTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.dashboard-nav button').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      window.location.href='auth.html';
+    }
+
+    function formatPrice(price){
+      return new Intl.NumberFormat('id-ID', {style:'currency', currency:'IDR'}).format(price);
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', async function(e){
+      e.preventDefault();
+      const name = document.getElementById('profileName').value;
+      const phone = document.getElementById('profilePhone').value;
+      const { error } = await supabase.auth.updateUser({data:{full_name:name, phone}});
+      if(error) alert('Update gagal: '+error.message);
+      else {
+        alert('Profile updated!');
+        loadUserData((await supabase.auth.getUser()).data.user);
+      }
+    });
+  </script>
+</body>
+</html>

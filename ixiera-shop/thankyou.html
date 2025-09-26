@@ -1,126 +1,528 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
-    <title>Terima Kasih - SneakZone</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>Terima Kasih - IxieraZone</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Sneakers Terbaik dan Terlengkap" name="keywords">
+    <meta content="Terima kasih telah berbelanja di IxieraZone" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .thankyou-container {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
+        .order-success {
+            background: linear-gradient(135deg, #1a202c 0%, #e7d9ff 100%);
+            color: white;
+            padding: 3rem 0;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-width: 500px;
-            width: 90%;
         }
-        
-        .success-icon {
-            font-size: 4rem;
-            color: #10b981;
-            margin-bottom: 1rem;
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
         }
-        
-        h1 {
-            color: #1e293b;
-            margin-bottom: 1rem;
-        }
-        
-        .order-number {
-            background: #f0f4ff;
-            padding: 10px 20px;
+        .order-summary {
+            background: #f8f9fa;
             border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2563eb;
+            padding: 1.5rem;
             margin: 1rem 0;
         }
-        
-        .btn-group {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
+        .payment-card {
+            border-left: 4px solid #0b0810;
         }
-        
-        .btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: #2563eb;
+        .bank-details {
+            background: #1a202c;
             color: white;
-            border: none;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
         }
-        
-        .btn-outline {
-            background: transparent;
-            color: #2563eb;
-            border: 2px solid #2563eb;
+        .whatsapp-btn {
+            background: #0b0810;
+            border-color: #0b0810;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .step-number {
+            background:#0b0810 ;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
         }
     </style>
 </head>
+
 <body>
-    <div class="thankyou-container">
-        <div class="success-icon">
-            <i class="fas fa-check-circle"></i>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-xl-5">
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark" href="">FAQs</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Bantuan</a>
+                    <span class="text-muted px-2">|</span>
+                    <a class="text-dark" href="">Support</a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-        <h1>Terima Kasih!</h1>
-        <p>Pesanan Anda telah berhasil diterima dan sedang diproses.</p>
-        
-        <div class="order-number" id="orderNumber">
-            Order #: Loading...
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="index.html" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">S</span>neakZone</h1>
+                </a>
+            </div>
+            <div class="col-lg-6 col-6 text-left">
+                <form action="">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for products">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-6 text-right">
+                <a href="" class="btn border">
+                    <i class="fas fa-heart text-primary"></i>
+                    <span class="badge" id="wishlist-count">0</span>
+                </a>
+                <a href="" class="btn border">
+                    <i class="fas fa-shopping-cart text-primary"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </a>
+            </div>
         </div>
-        
-        <p>Kami akan mengirimkan konfirmasi ke email dan WhatsApp Anda.</p>
-        
-        <div class="btn-group">
-            <a href="index.html" class="btn btn-primary">
-                <i class="fas fa-home me-2"></i>Kembali ke Home
-            </a>
-            <a href="shop.html" class="btn btn-outline">
-                <i class="fas fa-shopping-bag me-2"></i>Lanjut Belanja
-            </a>
-        </div>
-        
-        <p class="text-muted mt-3 small">
-            Untuk pertanyaan, hubungi WhatsApp: 0812-3456-7890
-        </p>
     </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-4">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0">Categories</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 1;">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <a href="shop.html?category=Running" class="nav-item nav-link">Running</a>
+                        <a href="shop.html?category=Basketball" class="nav-item nav-link">Basketball</a>
+                        <a href="shop.html?category=Lifestyle" class="nav-item nav-link">Lifestyle</a>
+                        <a href="shop.html?category=Limited Edition" class="nav-item nav-link">Limited Edition</a>
+                        <a href="shop.html?category=Classic" class="nav-item nav-link">Classic</a>
+                        <a href="shop.html" class="nav-item nav-link">All Categories</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="index.html" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">S</span>neakZone</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="shop.html" class="nav-item nav-link">Shop</a>
+                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
+                                    <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                    <a href="thankyou.html" class="dropdown-item">Order Success</a>
+                                </div>
+                            </div>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="" class="nav-item nav-link">Login</a>
+                            <a href="" class="nav-item nav-link">Register</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Order Success Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-8 mx-auto">
+                <!-- Success Header -->
+                <div class="order-success rounded mb-5">
+                    <div class="p-5">
+                        <i class="fas fa-check-circle fa-4x mb-3"></i>
+                        <h1 class="font-weight-semi-bold mb-2">Terima Kasih!</h1>
+                        <p class="mb-0">Pesanan Anda telah berhasil diterima dan sedang diproses</p>
+                    </div>
+                </div>
+
+                <!-- Order Details -->
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-header bg-light">
+                        <h4 class="font-weight-semi-bold m-0">Detail Pesanan</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>Order Number:</strong> <span id="order-number" class="text-primary">-</span>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Tanggal:</strong> <span id="order-date">-</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Products List -->
+                        <h5 class="font-weight-semi-bold mb-3">Produk Dipesan</h5>
+                        <div id="order-products">
+                            <!-- Products will be loaded by JavaScript -->
+                        </div>
+                        
+                        <div class="order-summary">
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Subtotal:</strong>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span id="order-subtotal">-</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Shipping:</strong>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span id="order-shipping">-</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Total:</strong>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span id="order-total" class="font-weight-bold text-success">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Instructions -->
+                <div class="card border-0 shadow mb-4 payment-card">
+                    <div class="card-header bg-light">
+                        <h4 class="font-weight-semi-bold m-0">Instruksi Pembayaran</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Bank Transfer Instructions -->
+                        <div id="bank-instructions">
+                            <p>Silakan transfer ke rekening berikut:</p>
+                            <div class="bank-details">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><i class="fas fa-university"></i> <strong>Bank:</strong> <span id="bank-name">SeaBank</span></p>
+                                        <p><i class="fas fa-credit-card"></i> <strong>No. Rekening:</strong> <span id="account-number">1234-5678-9012</span></p>
+                                        <p><i class="fas fa-user"></i> <strong>Atas Nama:</strong> IxieraZone Store</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><i class="fas fa-money-bill-wave"></i> <strong>Jumlah:</strong> <span id="transfer-amount">-</span></p>
+                                        <p><i class="fas fa-clock"></i> <strong>Batas Waktu:</strong> 24 Jam</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COD Instructions -->
+                        <div id="cod-instructions" style="display: none;">
+                            <div class="alert alert-warning">
+                                <h5><i class="fas fa-money-bill-wave"></i> Bayar di Tempat (COD)</h5>
+                                <p class="mb-1">Siapkan uang tunai sejumlah: <strong id="cod-amount">-</strong></p>
+                                <p class="mb-0">Kurir akan menghubungi Anda 1 jam sebelum pengiriman</p>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Confirmation -->
+                        <div class="text-center mt-4">
+                            <a href="#" id="whatsapp-btn" class="btn whatsapp-btn btn-lg">
+                                <i class="fab fa-whatsapp"></i> Konfirmasi via WhatsApp
+                            </a>
+                            <p class="text-muted mt-2 small">Klik untuk konfirmasi pembayaran/pesanan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-header bg-light">
+                        <h4 class="font-weight-semi-bold m-0">Langkah Selanjutnya</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-number">1</span>
+                            <div>
+                                <h6 class="mb-1">Lakukan Pembayaran</h6>
+                                <p class="mb-0 small text-muted">Transfer sesuai instruksi di atas atau siapkan uang tunai untuk COD</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-number">2</span>
+                            <div>
+                                <h6 class="mb-1">Konfirmasi</h6>
+                                <p class="mb-0 small text-muted">Kirim bukti transfer via WhatsApp untuk mempercepat proses</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="step-number">3</span>
+                            <div>
+                                <h6 class="mb-1">Proses Order</h6>
+                                <p class="mb-0 small text-muted">Kami akan proses order dalam 1x24 jam setelah konfirmasi</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="step-number">4</span>
+                            <div>
+                                <h6 class="mb-1">Pengiriman</h6>
+                                <p class="mb-0 small text-muted">Anda akan menerima update pengiriman via WhatsApp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center">
+                    <a href="index.html" class="btn btn-primary btn-lg mr-3">
+                        <i class="fas fa-home mr-2"></i>Kembali ke Beranda
+                    </a>
+                    <a href="shop.html" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-shopping-bag mr-2"></i>Lanjut Belanja
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Order Success End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="index.html" class="text-decoration-none">
+                    <h1 class="mb-4 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border border-white px-3 mr-1">S</span>neakZone</h1>
+                </a>
+                <p>Koleksi sneakers terpercaya, nyaman dipakai, dan berkualitas. Temukan sneakers favoritmu yang stylish dan tetap ramah di kantong.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Pandaan, East Java, Indonesia</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>ixierastudio@gmail.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+62 857-0237-3412</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Menu Cepat</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Shop</a>
+                            <a class="text-dark mb-2" href="detail.html"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Contact</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Kategori</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="shop.html?category=Running"><i class="fa fa-angle-right mr-2"></i>Running</a>
+                            <a class="text-dark mb-2" href="shop.html?category=Basketball"><i class="fa fa-angle-right mr-2"></i>Basketball</a>
+                            <a class="text-dark mb-2" href="shop.html?category=Lifestyle"><i class="fa fa-angle-right mr-2"></i>Lifestyle</a>
+                            <a class="text-dark mb-2" href="shop.html?category=Limited Edition"><i class="fa fa-angle-right mr-2"></i>Limited Edition</a>
+                            <a class="text-dark mb-2" href="shop.html?category=Classic"><i class="fa fa-angle-right mr-2"></i>Classic</a>
+                            <a class="text-dark" href="shop.html"><i class="fa fa-angle-right mr-2"></i>All Categories</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
+                        <form id="footer-newsletter">
+                            <div class="form-group">
+                                <input type="text" class="form-control border-0 py-4" placeholder="Your Name" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control border-0 py-4" placeholder="Your Email" />
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Subscribe Now</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row border-top border-light mx-xl-5 py-4">
+            <div class="col-md-6 px-xl-0">
+                <p class="mb-md-0 text-center text-md-left text-dark">
+                    &copy; <a class="text-dark font-weight-semi-bold" href="#">IxieraZone</a>. All Rights Reserved.
+                </p>
+            </div>
+            <div class="col-md-6 px-xl-0 text-center text-md-right">
+                <img class="img-fluid" src="img/payments.png" alt="Payment Methods">
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 
     <script>
-        // Get order number from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderNumber = urlParams.get('order_number');
-        
-        if (orderNumber) {
-            document.getElementById('orderNumber').textContent = `Order #: ${orderNumber}`;
+        // Format currency function (sama seperti di checkout.js)
+        function formatPrice(price) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(price);
         }
-        
-        // Auto redirect to home after 10 seconds
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 10000);
+
+        // Load order data from sessionStorage (dari checkout)
+        function loadOrderData() {
+            const orderData = sessionStorage.getItem('lastOrder');
+            if (orderData) {
+                return JSON.parse(orderData);
+            }
+            return null;
+        }
+
+        // Display order products
+        function displayOrderProducts(products) {
+            const container = document.getElementById('order-products');
+            if (!products || products.length === 0) return;
+
+            container.innerHTML = products.map(product => `
+                <div class="d-flex align-items-center mb-3 p-3 border rounded">
+                    <img src="${product.image_url}" 
+                         alt="${product.name}" 
+                         class="product-image"
+                         onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80'">
+                    <div class="ml-3 flex-grow-1">
+                        <h6 class="mb-1">${product.name}</h6>
+                        <small class="text-muted">
+                            ${product.size ? `Size: ${product.size} | ` : ''}
+                            Qty: ${product.quantity}
+                        </small>
+                    </div>
+                    <div class="text-right">
+                        <strong>${formatPrice(product.price * product.quantity)}</strong>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize thank you page
+        function initThankYouPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderNumber = urlParams.get('order_number');
+            const paymentMethod = urlParams.get('payment_method') || 'bank_transfer';
+            const orderTotal = parseFloat(urlParams.get('total')) || 0;
+
+            // Set basic order info
+            document.getElementById('order-number').textContent = orderNumber || 'SNK-' + Date.now().toString().slice(-6);
+            document.getElementById('order-date').textContent = new Date().toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+
+            // Try to load detailed order data from sessionStorage
+            const orderData = loadOrderData();
+            if (orderData && orderData.cart) {
+                displayOrderProducts(orderData.cart);
+                document.getElementById('order-subtotal').textContent = formatPrice(orderData.subtotal || 0);
+                document.getElementById('order-shipping').textContent = orderData.shipping === 0 ? 'FREE' : formatPrice(orderData.shipping || 0);
+                document.getElementById('order-total').textContent = formatPrice(orderData.total || orderTotal);
+            } else {
+                // Fallback to URL parameters
+                document.getElementById('order-subtotal').textContent = formatPrice(orderTotal);
+                document.getElementById('order-shipping').textContent = 'FREE';
+                document.getElementById('order-total').textContent = formatPrice(orderTotal);
+            }
+
+            // Set payment instructions
+            if (paymentMethod === 'bank_transfer') {
+                document.getElementById('bank-instructions').style.display = 'block';
+                document.getElementById('cod-instructions').style.display = 'none';
+                document.getElementById('transfer-amount').textContent = formatPrice(orderTotal);
+            } else {
+                document.getElementById('bank-instructions').style.display = 'none';
+                document.getElementById('cod-instructions').style.display = 'block';
+                document.getElementById('cod-amount').textContent = formatPrice(orderTotal);
+            }
+
+            // Setup WhatsApp button
+            setupWhatsAppLink(orderNumber, orderTotal, paymentMethod);
+        }
+
+        // Setup WhatsApp confirmation link
+        function setupWhatsAppLink(orderNumber, orderTotal, paymentMethod) {
+            const phone = '6285702373412';
+            const message = `Halo IxieraZone! Saya sudah melakukan order dengan detail:%0A%0AOrder Number: ${orderNumber || '-'}%0ATotal Amount: ${formatPrice(orderTotal || 0)}%0APayment Method: ${paymentMethod === 'bank_transfer' ? 'Transfer Bank' : 'COD'}%0A%0ATerima kasih!`;
+            
+            const whatsappUrl = `https://wa.me/${phone}?text=${message}`;
+            document.getElementById('whatsapp-btn').href = whatsappUrl;
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initThankYouPage);
     </script>
 </body>
 </html>
