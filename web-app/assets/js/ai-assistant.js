@@ -1,4 +1,4 @@
-// Ashley AI Assistant - Agency Version (Hanya chat_sessions)
+// Ashley AI Assistant - Agency Version (FIXED & SIMPLE)
 import { getSupabase } from './supabase-client.js';
 
 class AshleyAIAssistant {
@@ -38,7 +38,7 @@ class AshleyAIAssistant {
         this.initializeEventListeners();
         this.initializePromptSystem();
         await this.loadChatSessions();
-        console.log('🎯 Ashley AI Assistant initialized - Agency Focus');
+        console.log('🎯 Ashley AI Assistant initialized');
     }
 
     initializeElements() {
@@ -124,19 +124,19 @@ class AshleyAIAssistant {
         };
 
         document.querySelectorAll('.prompt-sidebar-btn').forEach(btn => {
-            btn.addEventListener('click', this.debounce((e) => {
+            btn.addEventListener('click', (e) => {
                 e.preventDefault();
                 const promptType = btn.dataset.prompt;
                 const question = prompts[promptType];
                 if (question) {
                     this.handleSidebarPrompt(question, btn);
                 }
-            }, 300));
+            });
         });
 
         setTimeout(() => {
             document.querySelectorAll('.quick-action-card').forEach(card => {
-                card.addEventListener('click', this.debounce((e) => {
+                card.addEventListener('click', (e) => {
                     e.preventDefault();
                     let question = '';
                     
@@ -151,21 +151,9 @@ class AshleyAIAssistant {
                     if (question) {
                         this.autoSendPrompt(question);
                     }
-                }, 300));
+                });
             });
         }, 100);
-    }
-
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
     }
 
     async handleSendMessage() {
@@ -234,8 +222,8 @@ class AshleyAIAssistant {
 
             this.addMessageToUI('user', message);
             
-            // UPDATE: Hanya update last_message di chat_sessions (tidak simpan ke chat_messages)
-            await this.updateSessionLastMessage(sessionToUse, message);
+            // SIMPLE: Hanya update title jika perlu (pakai kolom existing)
+            await this.updateSessionTitle(sessionToUse, message);
             
             this.userInput.value = '';
             this.autoResizeTextarea();
@@ -246,9 +234,9 @@ class AshleyAIAssistant {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    history: [], // AGENCY VERSION: Tidak pakai history
+                    history: [],
                     currentMessage: message,
-                    questionCount: 0, // AGENCY VERSION: Tidak hitung question
+                    questionCount: 0,
                     userId: this.userId,
                     sessionId: sessionToUse
                 })
@@ -257,9 +245,6 @@ class AshleyAIAssistant {
             console.log('📨 API Response status:', response.status);
 
             if (!response.ok) {
-                if (response.status === 404) {
-                    throw new Error('Endpoint API tidak ditemukan');
-                }
                 throw new Error(`HTTP error: ${response.status}`);
             }
             
@@ -270,21 +255,13 @@ class AshleyAIAssistant {
             }
 
             const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || 
-                             result.response ||
                              "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
             this.addMessageToUI('ai', aiResponse);
-            
-            // UPDATE: Hanya update AI response di chat_sessions
-            await this.updateSessionAIResponse(sessionToUse, aiResponse);
 
         } catch (error) {
             console.error("❌ Error sending message:", error);
-            this.addMessageToUI('ai', 
-                error.message.includes('404') 
-                    ? "Maaf, layanan sedang dalam maintenance. Silakan coba beberapa saat lagi."
-                    : "Maaf, terjadi kendala teknis. Silakan coba lagi."
-            );
+            this.addMessageToUI('ai', "Maaf, terjadi kendala teknis. Silakan coba lagi.");
         } finally {
             this.isSending = false;
             this.isLoading = false;
@@ -292,36 +269,20 @@ class AshleyAIAssistant {
         }
     }
 
-    // UPDATE: Method baru untuk update session
-    async updateSessionLastMessage(sessionId, message) {
+    // SIMPLE: Update session title saja (pakai kolom existing)
+    async updateSessionTitle(sessionId, message) {
         if (!this.supabase) return;
         
+        const title = message.substring(0, 40) + (message.length > 40 ? '...' : '');
         const { error } = await this.supabase
             .from('chat_sessions')
             .update({ 
-                last_message: message,
-                updated_at: new Date().toISOString()
+                title: title
             })
             .eq('id', sessionId);
         
         if (error) {
             console.error('Error updating session:', error);
-        }
-    }
-
-    async updateSessionAIResponse(sessionId, aiResponse) {
-        if (!this.supabase) return;
-        
-        const { error } = await this.supabase
-            .from('chat_sessions')
-            .update({ 
-                ai_response: aiResponse.substring(0, 100) + (aiResponse.length > 100 ? '...' : ''),
-                updated_at: new Date().toISOString()
-            })
-            .eq('id', sessionId);
-        
-        if (error) {
-            console.error('Error updating AI response:', error);
         }
     }
 
@@ -491,7 +452,7 @@ class AshleyAIAssistant {
         this.renderChatSessions();
         this.toggleSidebar(true);
         
-        // AGENCY VERSION: Tidak load history messages, langsung tampilkan welcome
+        // Simple: Selalu tampilkan welcome screen untuk session yang dipilih
         this.showWelcomeScreen();
         this.addMessageToUI('ai', 'Selamat datang kembali! Ada yang bisa saya bantu?');
     }
