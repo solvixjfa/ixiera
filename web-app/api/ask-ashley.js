@@ -1,4 +1,4 @@
-// /api/ask-ashley.js - DENGAN SUPABASE
+// /api/ask-ashley.js - DENGAN DEBUG & LIMIT
 import Groq from 'groq-sdk';
 import { createClient } from '@supabase/supabase-js';
 
@@ -6,10 +6,9 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-// PASTIKAN ENVIRONMENT VARIABLE NAME SAMA!
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY // atau SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_SERVICE_KEY
 );
 
 export default async function handler(req, res) {
@@ -28,25 +27,54 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Request body tidak lengkap atau tidak valid.' });
     }
 
-    // AMBIL DATA REAL DARI SUPABASE
+    // ✅ LIMIT 5 PERTANYAAN
+    if (questionCount >= 5) {
+      return res.status(200).json({
+        candidates: [{
+          content: {
+            parts: [{ text: "Anda telah mencapai batas 5 pertanyaan gratis. Untuk konsultasi lebih lanjut, silakan hubungi tim IXIERA langsung di website kami." }]
+          }
+        }]
+      });
+    }
+
+    // AMBIL DATA DARI SUPABASE DENGAN DEBUG
+    console.log('🔄 Fetching data from Supabase...');
+    
     let packagesText = '';
     let showcasesText = '';
 
     try {
-      // Ambil packages aktif
+      // Debug: Cek koneksi Supabase
+      console.log('🔗 Supabase URL:', process.env.SUPABASE_URL ? '✅ Set' : '❌ Not set');
+      
+      // Ambil packages
       const { data: packages, error: packagesError } = await supabase
         .from('pricing_packages')
-        .select('name, price_display, timeline, target_audience, deliverables')
+        .select('name, slug, price_display, timeline, target_audience, deliverables')
         .eq('is_active', true)
         .order('sort_order', { ascending: true });
 
-      if (!packagesError && packages) {
-        packagesText = packages.map(p => 
-          `• ${p.name}: ${p.price_display} - ${p.timeline} (${p.target_audience})`
-        ).join('\n');
+      console.log('📦 Packages query result:', {
+        data: packages?.length || 0,
+        error: packagesError?.message
+      });
+
+      if (packagesError) {
+        console.error('❌ Packages error:', packagesError);
       }
 
-      // Ambil showcase projects
+      if (packages && packages.length > 0) {
+        packagesText = packages.map(p => 
+          `• ${p.name} (${p.slug}): ${p.price_display} - ${p.timeline} - Untuk: ${p.target_audience}`
+        ).join('\n');
+        console.log('✅ Packages loaded:', packages.length);
+      } else {
+        packagesText = "• Data packages belum tersedia";
+        console.log('⚠️ No packages found');
+      }
+
+      // Ambil showcases
       const { data: showcases, error: showcasesError } = await supabase
         .from('showcase_projects')
         .select('title, category, description, solutions')
@@ -54,44 +82,55 @@ export default async function handler(req, res) {
         .order('sort_order', { ascending: true })
         .limit(3);
 
-      if (!showcasesError && showcases) {
+      console.log('🎯 Showcases query result:', {
+        data: showcases?.length || 0,
+        error: showcasesError?.message
+      });
+
+      if (showcasesError) {
+        console.error('❌ Showcases error:', showcasesError);
+      }
+
+      if (showcases && showcases.length > 0) {
         showcasesText = showcases.map(s =>
           `• ${s.title} (${s.category}): ${s.description?.substring(0, 80)}...`
         ).join('\n');
+        console.log('✅ Showcases loaded:', showcases.length);
+      } else {
+        showcasesText = "• Data showcase belum tersedia";
+        console.log('⚠️ No showcases found');
       }
 
     } catch (dbError) {
-      console.log('⚠️ Database error, using fallback data');
-      // Fallback data
-      packagesText = `• STARTER: Rp 8.9jt - 2-3 minggu (UMKM & Freelancer)
-• GROWTH: Rp 19.9jt - 3-4 minggu (Startup & E-commerce)
-• BUSINESS: Rp 39.9jt - 4-6 minggu (Perusahaan Menengah)`;
-      
-      showcasesText = `• E-commerce Sneakers: Platform jualan sneakers lengkap
-• Company Profile: Website perusahaan modern
-• Automation System: Sistem otomasi bisnis`;
+      console.error('❌ Database connection error:', dbError);
+      packagesText = "• STARTER: Rp 8.9jt - 2-3 minggu (UMKM)\n• GROWTH: Rp 19.9jt - 3-4 minggu (Startup)\n• BUSINESS: Rp 39.9jt - 4-6 minggu (Perusahaan)";
+      showcasesText = "• E-commerce Sneakers: Platform jualan sneakers lengkap\n• Company Profile: Website perusahaan modern";
     }
 
     const systemPrompt = `
-Persona: Anda adalah Ashley - Asisten Digital IXIERA. Nada bicara friendly, natural, ramah.
+# ASHLEY AI - IXIERA ASSISTANT
 
-DATA REAL-TIME DARI DATABASE IXIERA:
+## DATA REAL DARI DATABASE:
 
-PAKET YANG TERSEDIA:
+### PAKET YANG TERSEDIA:
 ${packagesText}
 
-SHOWCASE PROJECTS:
+### SHOWCASE PROJECTS:
 ${showcasesText}
 
-Aturan:
-1. BERIKAN REKOMENDASI SPESIFIK berdasarkan data di atas
-2. Jelaskan showcase projects yang relevan dengan bisnis user
-3. Sertakan harga dan timeline yang akurat
-4. Jawaban singkat & padat (3-4 kalimat)
-5. Balas dalam bahasa yang sama dengan pertanyaan
+## ATURAN STRICT:
+1. HANYA gunakan data di atas - jangan membuat informasi sendiri
+2. Berikan rekomendasi SPESIFIK berdasarkan kebutuhan user
+3. Sertakan HARGA dan TIMELINE dari data
+4. Maksimal 5 pertanyaan per session
+5. Jawaban singkat 3-4 kalimat saja
+6. Jika user tanya lebih dari 5x, ingatkan limit sudah habis
 
-Contoh response akurat:
-"Berdasarkan data terbaru, untuk bisnis e-commerce Anda saya rekomendasikan GROWTH package (Rp 19.9jt) dengan timeline 3-4 minggu. Package ini termasuk payment gateway dan inventory system seperti showcase e-commerce sneakers kami."
+## CONTOH RESPONSE BAIK:
+"Berdasarkan data terbaru IXIERA, untuk bisnis UKM Anda saya rekomendasikan STARTER package (Rp 8.9jt) dengan timeline 2-3 minggu. Cocok untuk website company profile."
+
+## JIKA DATA TIDAK ADA:
+"Maaf, informasi detail tentang itu sedang dalam update. Silakan konsultasi langsung dengan tim IXIERA untuk informasi terbaru."
 `;
 
     const safeHistory = history.reduce((acc, h) => {
@@ -114,11 +153,15 @@ Contoh response akurat:
       messages: messages,
       model: "llama-3.3-70b-versatile",
       temperature: 0.7,
-      max_tokens: 350,
+      max_tokens: 300,
       top_p: 1,
     });
 
     const aiResponse = chatCompletion.choices[0]?.message?.content || "Maaf, terjadi kendala teknis. Silakan coba lagi.";
+
+    // Log untuk debug
+    console.log('🤖 AI Response generated');
+    console.log('📊 Question count:', questionCount);
 
     res.status(200).json({
       candidates: [{
@@ -129,7 +172,7 @@ Contoh response akurat:
     });
 
   } catch (error) {
-    console.error('API Handler Error:', error.message);
+    console.error('❌ API Handler Error:', error.message);
     res.status(500).json({ error: 'Terjadi kesalahan di server.' });
   }
 }

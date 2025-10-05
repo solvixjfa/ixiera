@@ -1,4 +1,4 @@
-// Ashley AI Assistant - Agency Version (FIXED & SIMPLE)
+// Ashley AI Assistant - Fixed Textarea & Removed Process Card
 import { getSupabase } from './supabase-client.js';
 
 class AshleyAIAssistant {
@@ -87,7 +87,12 @@ class AshleyAIAssistant {
                     this.handleSendMessage();
                 }
             });
-            this.userInput.addEventListener('input', () => this.autoResizeTextarea());
+            
+            // FIX: Better textarea resize
+            this.userInput.addEventListener('input', () => {
+                this.autoResizeTextarea();
+                this.fixTextareaBug(); // Tambah fix untuk bug
+            });
         }
 
         if (this.newChatBtn) {
@@ -111,6 +116,36 @@ class AshleyAIAssistant {
                 this.toggleSidebar(false);
             }
         });
+    }
+
+    // FIX: Better textarea handling
+    autoResizeTextarea() {
+        if (!this.userInput) return;
+        
+        // Reset height to auto first
+        this.userInput.style.height = 'auto';
+        
+        // Calculate new height (max 120px untuk mobile friendly)
+        const newHeight = Math.min(this.userInput.scrollHeight, 120);
+        this.userInput.style.height = newHeight + 'px';
+        
+        // Ensure textarea is visible
+        this.userInput.style.overflowY = this.userInput.scrollHeight > 120 ? 'auto' : 'hidden';
+    }
+
+    // FIX: Additional bug fix untuk textarea
+    fixTextareaBug() {
+        if (!this.userInput) return;
+        
+        // Force reflow untuk fix rendering bug
+        this.userInput.style.display = 'none';
+        this.userInput.offsetHeight; // Trigger reflow
+        this.userInput.style.display = 'block';
+        
+        // Focus tetap di textarea
+        if (!this.isLoading) {
+            this.userInput.focus();
+        }
     }
 
     initializePromptSystem() {
@@ -144,9 +179,8 @@ class AshleyAIAssistant {
                         question = "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?";
                     } else if (card.classList.contains('showcase')) {
                         question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
-                    } else if (card.classList.contains('process')) {
-                        question = "Bagaimana proses pengerjaan project dari awal sampai launch?";
                     }
+                    // HAPUS: process card dihapus
                     
                     if (question) {
                         this.autoSendPrompt(question);
@@ -222,11 +256,12 @@ class AshleyAIAssistant {
 
             this.addMessageToUI('user', message);
             
-            // SIMPLE: Hanya update title jika perlu (pakai kolom existing)
             await this.updateSessionTitle(sessionToUse, message);
             
+            // FIX: Clear input sebelum API call
             this.userInput.value = '';
             this.autoResizeTextarea();
+            
             this.toggleLoadingIndicator(true);
 
             console.log('🔄 Sending to API...');
@@ -266,10 +301,15 @@ class AshleyAIAssistant {
             this.isSending = false;
             this.isLoading = false;
             this.toggleLoadingIndicator(false);
+            
+            // FIX: Pastikan textarea bisa dipakai lagi
+            if (this.userInput) {
+                this.userInput.disabled = false;
+                this.userInput.focus();
+            }
         }
     }
 
-    // SIMPLE: Update session title saja (pakai kolom existing)
     async updateSessionTitle(sessionId, message) {
         if (!this.supabase) return;
         
@@ -340,16 +380,10 @@ class AshleyAIAssistant {
             if (this.sendBtn) this.sendBtn.disabled = false;
             if (this.userInput) {
                 this.userInput.disabled = false;
-                this.userInput.focus();
+                setTimeout(() => this.userInput.focus(), 100); // Delay sedikit untuk stability
             }
         }
         this.scrollToBottom();
-    }
-
-    autoResizeTextarea() {
-        if (!this.userInput) return;
-        this.userInput.style.height = 'auto';
-        this.userInput.style.height = Math.min(this.userInput.scrollHeight, 100) + 'px';
     }
 
     scrollToBottom() {
@@ -400,7 +434,7 @@ class AshleyAIAssistant {
                     <h1 class="welcome-title">Halo! Saya Ashley AI</h1>
                     <p class="welcome-subtitle">
                         Asisten Digital Ixiera siap membantu Anda memilih solusi digital yang tepat. 
-                        Tanya tentang packages, showcase projects, atau proses kerja kami.
+                        tanya apa saja
                     </p>
                 </div>
                 
@@ -408,22 +442,17 @@ class AshleyAIAssistant {
                     <div class="quick-action-card package">
                         <div class="quick-action-icon"><i class="bi bi-box-seam"></i></div>
                         <div class="quick-action-title">Rekomendasi Package</div>
-                        <div class="quick-action-desc">Temukan solusi yang tepat untuk bisnis Anda</div>
+                        <div class="quick-action-desc">Temukan solusi tepat untuk bisnis Anda</div>
                     </div>
                     <div class="quick-action-card showcase">
                         <div class="quick-action-icon"><i class="bi bi-laptop"></i></div>
                         <div class="quick-action-title">Lihat Showcase</div>
-                        <div class="quick-action-desc">Pelajari dari project yang sudah kami buat</div>
-                    </div>
-                    <div class="quick-action-card process">
-                        <div class="quick-action-icon"><i class="bi bi-calendar-check"></i></div>
-                        <div class="quick-action-title">Proses Kerja</div>
-                        <div class="quick-action-desc">Pahami timeline dan tahapan pengerjaan</div>
+                        <div class="quick-action-desc">Pelajari dari project kami</div>
                     </div>
                 </div>
 
                 <div class="welcome-note">
-                    <p><strong>Tips:</strong> Jelaskan kebutuhan bisnis Anda secara spesifik untuk mendapatkan rekomendasi yang tepat.</p>
+                    <p><strong>Tips:</strong> Jelaskan kebutuhan bisnis Anda secara spesifik.</p>
                 </div>
             </div>
         `;
@@ -452,7 +481,6 @@ class AshleyAIAssistant {
         this.renderChatSessions();
         this.toggleSidebar(true);
         
-        // Simple: Selalu tampilkan welcome screen untuk session yang dipilih
         this.showWelcomeScreen();
         this.addMessageToUI('ai', 'Selamat datang kembali! Ada yang bisa saya bantu?');
     }
@@ -586,8 +614,7 @@ function handleQuickAction(action) {
     
     const questions = {
         'package': "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?",
-        'showcase': "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?",
-        'process': "Bagaimana proses pengerjaan project dari awal sampai launch?"
+        'showcase': "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?"
     };
     
     if (questions[action]) {
