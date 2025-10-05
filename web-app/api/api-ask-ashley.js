@@ -1,3 +1,4 @@
+// /api/ask-ashley.js
 import Groq from 'groq-sdk';
 import { createClient } from '@supabase/supabase-js';
 
@@ -26,93 +27,71 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Request body tidak lengkap atau tidak valid.' });
     }
 
-    // AMBIL DATA REAL-TIME DARI SUPABASE - SESUAI STRUCTURE TABEL
-    const [packagesData, showcasesData] = await Promise.all([
-      // Ambil pricing_packages sesuai kolom yang ada
-      supabase
+    // AMBIL DATA DARI SUPABASE - SEDERHANA & AMAN
+    let packagesText = '';
+    let showcasesText = '';
+
+    try {
+      // Coba ambil data packages
+      const { data: packages, error: packagesError } = await supabase
         .from('pricing_packages')
-        .select('id, name, slug, tagline, base_price, discounted_price, is_discounted, price_display, price_range, target_audience, deliverables, timeline, support_duration, revision_count, process_description, most_popular, badge_text')
-        .eq('is_active', true)
-        .order('sort_order', { ascending: true }),
-      
-      // Ambil showcase_projects sesuai kolom yang ada  
-      supabase
-        .from('showcase_projects')
-        .select('id, title, description, category, pain_points, solutions, results, live_url, featured_image')
+        .select('name, price_display, timeline, target_audience')
         .eq('is_active', true)
         .order('sort_order', { ascending: true })
-    ]);
+        .limit(5);
 
-    const packages = packagesData.data || [];
-    const showcases = showcasesData.data || [];
+      if (!packagesError && packages) {
+        packagesText = packages.map(p => 
+          `• ${p.name}: ${p.price_display} - ${p.timeline} (${p.target_audience})`
+        ).join('\n');
+      }
 
-    console.log('📦 Packages loaded:', packages.length);
-    console.log('🎯 Showcases loaded:', showcases.length);
+      // Coba ambil data showcases
+      const { data: showcases, error: showcasesError } = await supabase
+        .from('showcase_projects')
+        .select('title, category, description')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true })
+        .limit(3);
 
-    // FORMAT DATA UNTUK AI - SESUAI KOLOM TABEL
-    const packagesContext = packages.map(pkg => `
-PAKET: ${pkg.name} (${pkg.slug})
-- Harga: ${pkg.price_display}${pkg.price_range ? ` | Range: ${pkg.price_range}` : ''}
-- Harga Base: ${pkg.base_price} | Discounted: ${pkg.discounted_price} | Diskon: ${pkg.is_discounted ? 'Ya' : 'Tidak'}
-- Tagline: ${pkg.tagline}
-- Timeline: ${pkg.timeline}
-- Support: ${pkg.support_duration}
-- Revisi: ${pkg.revision_count}
-- Target Audience: ${pkg.target_audience}
-- Deliverables: ${Array.isArray(pkg.deliverables) ? pkg.deliverables.slice(0, 4).join(', ') : 'Tersedia fitur lengkap'}
-- Proses: ${pkg.process_description ? pkg.process_description.substring(0, 100) + '...' : 'Proses terstruktur'}
-- Most Popular: ${pkg.most_popular ? 'YA' : 'Tidak'}
-- Badge: ${pkg.badge_text || 'Tidak ada'}
-    `).join('\n');
+      if (!showcasesError && showcases) {
+        showcasesText = showcases.map(s =>
+          `• ${s.title} (${s.category}): ${s.description?.substring(0, 80)}...`
+        ).join('\n');
+      }
 
-    const showcasesContext = showcases.map(project => `
-SHOWCASE: ${project.title}
-- Kategori: ${project.category}
-- Deskripsi: ${project.description}
-- Pain Points: ${Array.isArray(project.pain_points) ? project.pain_points.join(', ') : project.pain_points}
-- Solutions: ${Array.isArray(project.solutions) ? project.solutions.join(', ') : project.solutions}
-- Results: ${project.results}
-- Live URL: ${project.live_url}
-- Featured Image: ${project.featured_image}
-    `).join('\n');
+    } catch (dbError) {
+      console.log('⚠️ Using fallback data:', dbError.message);
+      // Fallback data jika Supabase error
+      packagesText = `• STARTER: Rp 8.9jt - 2-3 minggu (UMKM & Freelancer)
+• GROWTH: Rp 19.9jt - 3-4 minggu (Startup & E-commerce)
+• BUSINESS: Rp 39.9jt - 4-6 minggu (Perusahaan Menengah)`;
+      
+      showcasesText = `• E-commerce Sneakers: Platform jualan sneakers lengkap
+• Company Profile: Website perusahaan modern & responsive`;
+    }
 
-    // SYSTEM PROMPT DENGAN DATA REAL-TIME
+    // SYSTEM PROMPT DENGAN DATA SUPABASE
     const systemPrompt = `
-# PERSONA: ASHLEY - DIGITAL SOLUTIONS ASSISTANT IXIERA
+Persona: Anda adalah Ashley - Asisten Digital IXIERA. Nada bicara friendly, natural, ramah, mudah dipahami.
 
-## IDENTITY:
-- Nama: Ashley AI
-- Role: Digital Solutions Specialist di IXIERA  
-- Expertise: Website development, business automation, digital systems
-- Tone: Professional, helpful, specific, solution-oriented
-- Bahasa: Gunakan bahasa yang sama dengan pertanyaan user
+DATA REAL-TIME DARI IXIERA:
 
-## DATA REAL-TIME DARI DATABASE IXIERA:
+PAKET YANG TERSEDIA:
+${packagesText}
 
-### PAKET HARGA YANG TERSEDIA (dari tabel pricing_packages):
-${packagesContext}
+SHOWCASE PROJECTS:
+${showcasesText}
 
-### SHOWCASE PROJECTS (dari tabel showcase_projects):
-${showcasesContext}
+Aturan Utama:
+1. SELALU gunakan data di atas untuk memberikan rekomendasi
+2. Balas dalam bahasa yang SAMA dengan pertanyaan user
+3. Jawaban singkat & padat (maksimal 3-4 kalimat)
+4. Berikan rekomendasi spesifik berdasarkan kebutuhan user
+5. Jika tidak yakin, sarankan konsultasi langsung dengan tim IXIERA
 
-## ATURAN STRICT:
-1. **HANYA GUNAKAN DATA DI ATAS** - jangan membuat informasi sendiri
-2. **REFERENSI SPESIFIK** ke nama paket (STARTER, GROWTH, BUSINESS, ENTERPRISE) dan showcase
-3. **REKOMENDASI BERDASARKAN DATA** - sesuaikan dengan kebutuhan user
-4. **JIKA TIDAK TAHU** katakan: "Berdasarkan informasi yang saya miliki, [jawaban berdasarkan data]"
-5. **FOKUS PADA:** Package recommendations, showcase details, process explanation
-
-## CONTOH RESPONSE BAIK:
-"Berdasarkan data package IXIERA, untuk bisnis Anda yang butuh e-commerce lengkap, BUSINESS package cocok karena termasuk sistem inventory, payment gateway, dan dashboard admin. Harga ${packages.find(p => p.slug === 'business')?.price_display || 'Custom Pricing'} dengan timeline ${packages.find(p => p.slug === 'business')?.timeline || '3-6 minggu'}."
-
-## CONTOH JIKA TIDAK ADA DATA:
-"Maaf, informasi spesifik tentang itu belum tersedia di database saya. Saya sarankan konsultasi langsung dengan tim IXIERA untuk detail lengkap."
-
-## PRIORITAS:
-1. Rekomendasi package berdasarkan kebutuhan user
-2. Penjelasan showcase projects yang relevan  
-3. Informasi process & timeline
-4. Arahkan ke contact untuk konsultasi detail
+Contoh response baik:
+"Berdasarkan kebutuhan bisnis UKM Anda, saya rekomendasikan package STARTER dengan harga Rp 8.9jt. Cocok untuk website company profile dengan timeline 2-3 minggu."
 `;
 
     const safeHistory = history.reduce((acc, h) => {

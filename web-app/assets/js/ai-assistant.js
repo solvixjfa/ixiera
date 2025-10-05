@@ -1,16 +1,16 @@
-// Ashley AI Assistant - Agency Focus Version
+// Ashley AI Assistant - Agency Version (Hanya chat_sessions)
 import { getSupabase } from './supabase-client.js';
 
 class AshleyAIAssistant {
     constructor() {
         this.CACHE_KEYS = {
             SESSIONS: 'ashley_sessions',
-            MESSAGES: 'ashley_messages_',
             USER: 'ashley_user',
             THEME: 'ashley_theme'
         };
         
         this.isLoading = false;
+        this.isSending = false;
         this.currentSessionId = null;
         this.chatSessions = [];
         this.userId = null;
@@ -54,12 +54,8 @@ class AshleyAIAssistant {
 
     async initializeSupabase() {
         try {
-            if (typeof getSupabase === 'function') {
-                this.supabase = getSupabase();
-                console.log('✅ Using existing Supabase client');
-            } else {
-                console.warn('⚠️ getSupabase function not found, using localStorage only');
-            }
+            this.supabase = getSupabase();
+            console.log('✅ Supabase client initialized');
         } catch (error) {
             console.error('Supabase initialization failed:', error);
         }
@@ -80,19 +76,17 @@ class AshleyAIAssistant {
     }
 
     initializeEventListeners() {
-        // Pastikan element ada sebelum add event listener
         if (this.sendBtn) {
-            this.sendBtn.addEventListener('click', () => this.sendMessage());
+            this.sendBtn.addEventListener('click', () => this.handleSendMessage());
         }
         
         if (this.userInput) {
             this.userInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
-                    this.sendMessage();
+                    this.handleSendMessage();
                 }
             });
-
             this.userInput.addEventListener('input', () => this.autoResizeTextarea());
         }
 
@@ -120,7 +114,6 @@ class AshleyAIAssistant {
     }
 
     initializePromptSystem() {
-        // PROMPTS FOKUS AGENCY SERVICES
         const prompts = {
             'package-recommendation': "Saya butuh bantuan memilih package yang tepat. Bisnis saya [jenis bisnis], kebutuhan utama [sebutkan 2-3 kebutuhan digital]. Package mana yang Anda rekomendasikan?",
             'showcase-details': "Bisa jelaskan lebih detail tentang showcase e-commerce sneakers? Fitur payment dan dashboard trackingnya bagaimana implementasinya?",
@@ -130,22 +123,20 @@ class AshleyAIAssistant {
             'automation-features': "Fitur automation apa saja yang termasuk di package? Bisa beri contoh workflow yang bisa diotomasi?"
         };
 
-        // Event listeners untuk tombol prompt di sidebar
         document.querySelectorAll('.prompt-sidebar-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', this.debounce((e) => {
                 e.preventDefault();
                 const promptType = btn.dataset.prompt;
                 const question = prompts[promptType];
                 if (question) {
                     this.handleSidebarPrompt(question, btn);
                 }
-            });
+            }, 300));
         });
 
-        // Event listeners untuk quick actions di welcome screen (diperbaiki)
         setTimeout(() => {
             document.querySelectorAll('.quick-action-card').forEach(card => {
-                card.addEventListener('click', (e) => {
+                card.addEventListener('click', this.debounce((e) => {
                     e.preventDefault();
                     let question = '';
                     
@@ -160,9 +151,30 @@ class AshleyAIAssistant {
                     if (question) {
                         this.autoSendPrompt(question);
                     }
-                });
+                }, 300));
             });
         }, 100);
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    async handleSendMessage() {
+        if (this.isSending || this.isLoading) {
+            console.log('⚠️ Message already in progress, please wait...');
+            return;
+        }
+        
+        await this.sendMessage();
     }
 
     handleSidebarPrompt(question, buttonElement) {
@@ -183,14 +195,14 @@ class AshleyAIAssistant {
                 if (this.userInput) {
                     this.userInput.value = question;
                     this.autoResizeTextarea();
-                    setTimeout(() => this.sendMessage(), 200);
+                    setTimeout(() => this.handleSendMessage(), 200);
                 }
             }, 200);
         } else {
             if (this.userInput) {
                 this.userInput.value = question;
                 this.autoResizeTextarea();
-                this.sendMessage();
+                this.handleSendMessage();
             }
         }
     }
@@ -199,60 +211,117 @@ class AshleyAIAssistant {
         if (!this.userInput) return;
         
         const message = this.userInput.value.trim();
-        if (message === '' || this.isLoading) return;
+        if (message === '') return;
+
+        this.isSending = true;
+        this.isLoading = true;
 
         let sessionToUse = this.currentSessionId;
 
-        if (!sessionToUse) {
-            const newSession = await this.createNewSession(message);
-            if (!newSession) {
-                this.addMessageToUI('ai', 'Maaf, gagal memulai percakapan baru.');
-                return;
-            }
-            this.currentSessionId = newSession.id;
-            sessionToUse = newSession.id;
-            this.chatSessions.unshift(newSession);
-            this.renderChatSessions();
-            this.clearWelcomeScreen();
-        }
-
-        this.addMessageToUI('user', message);
-        await this.saveMessage(sessionToUse, 'user', message);
-        
-        this.userInput.value = '';
-        this.autoResizeTextarea();
-        this.toggleLoadingIndicator(true);
-
         try {
-            const history = await this.getMessages(sessionToUse);
+            if (!sessionToUse) {
+                const newSession = await this.createNewSession(message);
+                if (!newSession) {
+                    this.addMessageToUI('ai', 'Maaf, gagal memulai percakapan baru.');
+                    return;
+                }
+                this.currentSessionId = newSession.id;
+                sessionToUse = newSession.id;
+                this.chatSessions.unshift(newSession);
+                this.renderChatSessions();
+                this.clearWelcomeScreen();
+            }
+
+            this.addMessageToUI('user', message);
             
+            // UPDATE: Hanya update last_message di chat_sessions (tidak simpan ke chat_messages)
+            await this.updateSessionLastMessage(sessionToUse, message);
+            
+            this.userInput.value = '';
+            this.autoResizeTextarea();
+            this.toggleLoadingIndicator(true);
+
+            console.log('🔄 Sending to API...');
             const response = await fetch('/api/ask-ashley', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    history: this.formatHistory(history),
+                    history: [], // AGENCY VERSION: Tidak pakai history
                     currentMessage: message,
-                    questionCount: history.filter(m => m.role === 'user').length,
+                    questionCount: 0, // AGENCY VERSION: Tidak hitung question
                     userId: this.userId,
                     sessionId: sessionToUse
                 })
             });
 
-            if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+            console.log('📨 API Response status:', response.status);
+
+            if (!response.ok) {
+                if (response.status === 404) {
+                    throw new Error('Endpoint API tidak ditemukan');
+                }
+                throw new Error(`HTTP error: ${response.status}`);
+            }
             
             const result = await response.json();
+            
+            if (result.error) {
+                throw new Error(result.error);
+            }
+
             const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || 
                              result.response ||
                              "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
-            this.toggleLoadingIndicator(false);
             this.addMessageToUI('ai', aiResponse);
-            await this.saveMessage(sessionToUse, 'ai', aiResponse);
+            
+            // UPDATE: Hanya update AI response di chat_sessions
+            await this.updateSessionAIResponse(sessionToUse, aiResponse);
 
         } catch (error) {
-            console.error("Error sending message:", error);
+            console.error("❌ Error sending message:", error);
+            this.addMessageToUI('ai', 
+                error.message.includes('404') 
+                    ? "Maaf, layanan sedang dalam maintenance. Silakan coba beberapa saat lagi."
+                    : "Maaf, terjadi kendala teknis. Silakan coba lagi."
+            );
+        } finally {
+            this.isSending = false;
+            this.isLoading = false;
             this.toggleLoadingIndicator(false);
-            this.addMessageToUI('ai', "Maaf, terjadi kendala teknis. Silakan coba lagi.");
+        }
+    }
+
+    // UPDATE: Method baru untuk update session
+    async updateSessionLastMessage(sessionId, message) {
+        if (!this.supabase) return;
+        
+        const { error } = await this.supabase
+            .from('chat_sessions')
+            .update({ 
+                last_message: message,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', sessionId);
+        
+        if (error) {
+            console.error('Error updating session:', error);
+        }
+    }
+
+    async updateSessionAIResponse(sessionId, aiResponse) {
+        if (!this.supabase) return;
+        
+        const { error } = await this.supabase
+            .from('chat_sessions')
+            .update({ 
+                ai_response: aiResponse.substring(0, 100) + (aiResponse.length > 100 ? '...' : ''),
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', sessionId);
+        
+        if (error) {
+            console.error('Error updating AI response:', error);
         }
     }
 
@@ -398,7 +467,6 @@ class AshleyAIAssistant {
             </div>
         `;
 
-        // Re-initialize event listeners untuk quick actions
         setTimeout(() => {
             this.initializePromptSystem();
         }, 50);
@@ -422,19 +490,10 @@ class AshleyAIAssistant {
         this.currentSessionId = sessionId;
         this.renderChatSessions();
         this.toggleSidebar(true);
-        const messages = await this.getMessages(sessionId);
-        this.renderMessages(messages);
-    }
-
-    renderMessages(messages) {
-        if (!this.chatHistory) return;
         
-        this.chatHistory.innerHTML = '';
-        if (messages.length === 0) {
-            this.showWelcomeScreen();
-        } else {
-            messages.forEach(msg => this.addMessageToUI(msg.role, msg.content));
-        }
+        // AGENCY VERSION: Tidak load history messages, langsung tampilkan welcome
+        this.showWelcomeScreen();
+        this.addMessageToUI('ai', 'Selamat datang kembali! Ada yang bisa saya bantu?');
     }
 
     renderChatSessions() {
@@ -491,29 +550,15 @@ class AshleyAIAssistant {
         const title = firstMessage.substring(0, 40) + (firstMessage.length > 40 ? '...' : '');
         const { data, error } = await this.supabase
             .from('chat_sessions')
-            .insert({ user_id: this.userId, title: title })
+            .insert({ 
+                user_id: this.userId, 
+                title: title,
+                created_at: new Date().toISOString()
+            })
             .select()
             .single();
 
         return error ? null : data;
-    }
-
-    async saveMessage(sessionId, role, content) {
-        if (!this.supabase) return true;
-        const { error } = await this.supabase
-            .from('chat_messages')
-            .insert({ session_id: sessionId, role: role, content: content });
-        return !error;
-    }
-
-    async getMessages(sessionId) {
-        if (!this.supabase) return [];
-        const { data, error } = await this.supabase
-            .from('chat_messages')
-            .select('role, content')
-            .eq('session_id', sessionId)
-            .order('created_at', { ascending: true });
-        return error ? [] : (data || []);
     }
 
     async loadChatSessions() {
@@ -531,21 +576,17 @@ class AshleyAIAssistant {
 
             this.chatSessions = error ? [] : (data || []);
             this.renderChatSessions();
-            this.chatSessions.length > 0 
-                ? await this.handleSelectChat(this.chatSessions[0].id)
-                : this.showWelcomeScreen();
+            
+            if (this.chatSessions.length > 0) {
+                await this.handleSelectChat(this.chatSessions[0].id);
+            } else {
+                this.showWelcomeScreen();
+            }
 
         } catch (error) {
             console.error('Error loading sessions:', error);
             this.showWelcomeScreen();
         }
-    }
-
-    formatHistory(history) {
-        return history.slice(0, -1).map(m => ({
-            role: m.role === 'ai' ? 'model' : 'user',
-            parts: [{ text: m.content }]
-        }));
     }
 
     setCache(key, data) {
@@ -565,19 +606,18 @@ class AshleyAIAssistant {
     }
 }
 
-// Initialize dengan error handling
+// Initialize
 let aiAssistant = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     try {
         aiAssistant = new AshleyAIAssistant();
-        window.aiAssistant = aiAssistant; // Expose ke global scope
+        window.aiAssistant = aiAssistant;
     } catch (error) {
         console.error('Failed to initialize Ashley AI Assistant:', error);
     }
 });
 
-// Fallback untuk quick actions yang ada di HTML
 function handleQuickAction(action) {
     if (!aiAssistant) {
         aiAssistant = new AshleyAIAssistant();
@@ -593,3 +633,5 @@ function handleQuickAction(action) {
         aiAssistant.autoSendPrompt(questions[action]);
     }
 }
+
+export { AshleyAIAssistant };
