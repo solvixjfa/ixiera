@@ -1,9 +1,16 @@
-// API SIMPLE TANPA SUPABASE - PAKAI DATA STATIS
+// /api/ask-ashley.js - DENGAN SUPABASE
 import Groq from 'groq-sdk';
+import { createClient } from '@supabase/supabase-js';
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
+
+// PASTIKAN ENVIRONMENT VARIABLE NAME SAMA!
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY // atau SUPABASE_SERVICE_KEY
+);
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -21,30 +28,70 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Request body tidak lengkap atau tidak valid.' });
     }
 
-    // DATA STATIS UNTUK AGENCY - LEBIH SIMPLE
-    const packagesText = `• STARTER: Rp 8.9jt - 2-3 minggu (UMKM & Freelancer)
-• GROWTH: Rp 19.9jt - 3-4 minggu (Startup & E-commerce) 
-• BUSINESS: Rp 39.9jt - 4-6 minggu (Perusahaan Menengah)`;
+    // AMBIL DATA REAL DARI SUPABASE
+    let packagesText = '';
+    let showcasesText = '';
 
-    const showcasesText = `• E-commerce Sneakers: Platform jualan sneakers dengan payment gateway & inventory
-• Company Profile: Website perusahaan modern & responsive
-• Automation System: Sistem otomasi bisnis dengan dashboard`;
+    try {
+      // Ambil packages aktif
+      const { data: packages, error: packagesError } = await supabase
+        .from('pricing_packages')
+        .select('name, price_display, timeline, target_audience, deliverables')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
+
+      if (!packagesError && packages) {
+        packagesText = packages.map(p => 
+          `• ${p.name}: ${p.price_display} - ${p.timeline} (${p.target_audience})`
+        ).join('\n');
+      }
+
+      // Ambil showcase projects
+      const { data: showcases, error: showcasesError } = await supabase
+        .from('showcase_projects')
+        .select('title, category, description, solutions')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true })
+        .limit(3);
+
+      if (!showcasesError && showcases) {
+        showcasesText = showcases.map(s =>
+          `• ${s.title} (${s.category}): ${s.description?.substring(0, 80)}...`
+        ).join('\n');
+      }
+
+    } catch (dbError) {
+      console.log('⚠️ Database error, using fallback data');
+      // Fallback data
+      packagesText = `• STARTER: Rp 8.9jt - 2-3 minggu (UMKM & Freelancer)
+• GROWTH: Rp 19.9jt - 3-4 minggu (Startup & E-commerce)
+• BUSINESS: Rp 39.9jt - 4-6 minggu (Perusahaan Menengah)`;
+      
+      showcasesText = `• E-commerce Sneakers: Platform jualan sneakers lengkap
+• Company Profile: Website perusahaan modern
+• Automation System: Sistem otomasi bisnis`;
+    }
 
     const systemPrompt = `
 Persona: Anda adalah Ashley - Asisten Digital IXIERA. Nada bicara friendly, natural, ramah.
 
-DATA IXIERA:
-PAKET: ${packagesText}
-SHOWCASE: ${showcasesText}
+DATA REAL-TIME DARI DATABASE IXIERA:
+
+PAKET YANG TERSEDIA:
+${packagesText}
+
+SHOWCASE PROJECTS:
+${showcasesText}
 
 Aturan:
-1. Berikan rekomendasi package berdasarkan kebutuhan user
-2. Jelaskan showcase projects yang relevan  
-3. Jawaban singkat & padat (3-4 kalimat)
-4. Balas dalam bahasa yang sama dengan pertanyaan
-5. Jika tidak yakin, sarankan konsultasi langsung
+1. BERIKAN REKOMENDASI SPESIFIK berdasarkan data di atas
+2. Jelaskan showcase projects yang relevan dengan bisnis user
+3. Sertakan harga dan timeline yang akurat
+4. Jawaban singkat & padat (3-4 kalimat)
+5. Balas dalam bahasa yang sama dengan pertanyaan
 
-Contoh: "Untuk bisnis UKM, saya rekomendasikan STARTER package dengan harga Rp 8.9jt. Cocok untuk website company profile dengan timeline 2-3 minggu."
+Contoh response akurat:
+"Berdasarkan data terbaru, untuk bisnis e-commerce Anda saya rekomendasikan GROWTH package (Rp 19.9jt) dengan timeline 3-4 minggu. Package ini termasuk payment gateway dan inventory system seperti showcase e-commerce sneakers kami."
 `;
 
     const safeHistory = history.reduce((acc, h) => {
