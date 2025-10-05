@@ -451,10 +451,13 @@ class AshleyAIAssistant {
                     </div>
                 </div>
 
-                <div class="welcome-note">
-                    <p><strong>Tips:</strong> Jelaskan kebutuhan bisnis Anda secara spesifik.</p>
-                </div>
-            </div>
+             <div class="welcome-note">
+  <p><strong>Panduan:</strong> Jelaskan kebutuhan bisnis Anda secara detail.</p>
+  <p class="development-note">
+    <i class="bi bi-info-circle"></i>
+    <small>Assistant AI dalam pengembangan - konfirmasi dengan tim kami untuk informasi terakurat</small>
+  </p>
+</div>
         `;
 
         setTimeout(() => {
