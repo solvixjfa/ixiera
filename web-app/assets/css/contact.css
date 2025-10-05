@@ -1,0 +1,292 @@
+/* ===== ELEGANT CONTACT FORM STYLES ===== */
+
+/* Elegant Card */
+.elegant-card {
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .elegant-card {
+    background: rgba(30, 30, 30, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Elegant Header */
+.elegant-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    border: none;
+    padding: 2rem;
+    color: white;
+}
+
+.elegant-header .card-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.elegant-header .card-category {
+    opacity: 0.9;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+/* Elegant Card Body */
+.elegant-card .card-body {
+    padding: 2.5rem;
+}
+
+/* Elegant Labels */
+.elegant-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+[data-bs-theme="dark"] .elegant-label {
+    color: #ecf0f1;
+}
+
+/* Elegant Inputs */
+.elegant-input {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    color: #2c3e50;
+}
+
+.elegant-input:focus {
+    border-color: #2c3e50;
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.15);
+    background: white;
+}
+
+[data-bs-theme="dark"] .elegant-input {
+    background: rgba(45, 45, 45, 0.8);
+    border-color: #444;
+    color: #ecf0f1;
+}
+
+[data-bs-theme="dark"] .elegant-input:focus {
+    background: #2d2d2d;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.15);
+}
+
+/* Elegant Premium Button */
+.elegant-premium {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.elegant-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: white;
+}
+
+.elegant-premium:active {
+    transform: translateY(0);
+}
+
+[data-bs-theme="dark"] .elegant-premium {
+    background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+    color: #2c3e50;
+}
+
+[data-bs-theme="dark"] .elegant-premium:hover {
+    background: linear-gradient(135deg, #ffffff 0%, #ecf0f1 100%);
+    color: #2c3e50;
+}
+
+/* Elegant Secondary Button */
+.elegant-secondary {
+    background: transparent;
+    border: 2px solid #95a5a6;
+    color: #95a5a6;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.elegant-secondary:hover {
+    background: #95a5a6;
+    color: white;
+    border-color: #95a5a6;
+}
+
+/* Elegant Colors */
+.elegant-primary {
+    color: #2c3e50 !important;
+}
+
+[data-bs-theme="dark"] .elegant-primary {
+    color: #3498db !important;
+}
+
+.elegant-success {
+    color: #27ae60 !important;
+}
+
+.elegant-danger {
+    color: #e74c3c !important;
+}
+
+.elegant-muted {
+    color: #7f8c8d !important;
+}
+
+[data-bs-theme="dark"] .elegant-muted {
+    color: #bdc3c7 !important;
+}
+
+.elegant-link {
+    color: #2c3e50;
+    transition: color 0.3s ease;
+}
+
+.elegant-link:hover {
+    color: #3498db;
+}
+
+[data-bs-theme="dark"] .elegant-link {
+    color: #ecf0f1;
+}
+
+[data-bs-theme="dark"] .elegant-link:hover {
+    color: #3498db;
+}
+
+/* Elegant Badge */
+.elegant-badge {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+/* Loading States */
+.elegant-premium:disabled {
+    opacity: 0.7;
+    transform: none !important;
+    cursor: not-allowed;
+}
+
+/* Elegant Alert Styles */
+.elegant-alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.elegant-alert-success {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.elegant-alert-danger {
+    background: linear-gradient(135deg, #f8d7da, #f1b0b7);
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+[data-bs-theme="dark"] .elegant-alert-success {
+    background: linear-gradient(135deg, #155724, #0f401b);
+    color: #d4edda;
+}
+
+[data-bs-theme="dark"] .elegant-alert-danger {
+    background: linear-gradient(135deg, #721c24, #58151c);
+    color: #f8d7da;
+}
+
+/* Elegant Contact Cards */
+.contact-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent !important;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    border-color: #2c3e50 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+[data-bs-theme="dark"] .contact-card {
+    background: rgba(45, 45, 45, 0.9);
+}
+
+[data-bs-theme="dark"] .contact-card:hover {
+    border-color: #3498db !important;
+}
+
+/* Elegant Form Validation */
+.elegant-input.is-invalid {
+    border-color: #e74c3c;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23e74c3c'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 3.6.4.4.4-.4'/%3e%3cpath d='M6 7v1'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.elegant-input.is-invalid:focus {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.15);
+}
+
+/* Animation for package section */
+#selected-package-section {
+    animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .elegant-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .elegant-header {
+        padding: 1.5rem;
+    }
+    
+    .elegant-premium {
+        padding: 0.875rem 1.5rem;
+    }
+}

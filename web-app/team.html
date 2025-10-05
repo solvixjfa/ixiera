@@ -1,9 +1,10 @@
-<!DOCTYPE html><html lang="id"><head>
+<!DOCTYPE html>
+<html lang="id" data-bs-theme="light">
+<head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>AI Assistant - Konsultasi Bisnis Digital Anda | Ixiera</title>
-  <meta name="description" content="Ngobrol dengan Asisten Digital Ixiera. Dapatkan analisis awal dan rekomendasi solusi untuk tantangan bisnis Anda, ditenagai oleh teknologi AI Gemini.">
-  <meta name="keywords" content="ai assistant, chatbot bisnis, konsultasi digital, strategi bisnis, ixiera, gemini">
+  <title>Ashley AI - Asisten Digital Ixiera</title>
+  <meta name="description" content="Ngobrol dengan Ashley AI - Asisten Digital Ixiera. Dapatkan rekomendasi package dan solusi digital yang tepat untuk bisnis Anda.">
 
   <!-- Favicons -->
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png" rel="icon">
@@ -11,249 +12,113 @@
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS -->
-  <link href="assets/css/main.css" rel="stylesheet">
-  <link href="assets/css/custom.css" rel="stylesheet">
-  
-  <!-- Google Analytics -->
-  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-4MK0Q0R584');
-  </script>
-
-  <!-- [DIHAPUS] Script Supabase global tidak lagi diperlukan karena sudah dihandle oleh module -->
-
-  <style>
-    :root { --ai-accent-color: #0d6efd; --ai-bg-light: #f8f9fa; --ai-border-color: #e9ecef; }
-    [data-bs-theme="dark"] { --ai-accent-color: #409fff; --ai-bg-light: #212529; --ai-border-color: #343a40; }
-    
-    .chat-interface-wrapper { position: relative; width: 100%; height: 80vh; overflow: hidden; border-radius: 12px; border: 1px solid var(--ai-border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-    .chat-sidebar { position: absolute; top: 0; left: 0; width: 300px; max-width: 80%; height: 100%; padding: 20px; background-color: var(--background-color); z-index: 1001; transform: translateX(-100%); transition: transform 0.3s ease-in-out; border-right: 1px solid var(--ai-border-color); display: flex; flex-direction: column; }
-    .chat-sidebar h3 { font-size: 1.2rem; margin-bottom: 15px; }
-    .new-chat-btn { width: 100%; margin-bottom: 20px; }
-    .chat-history-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
-    .chat-history-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: background-color 0.2s; margin-bottom: 8px; border: 1px solid transparent; }
-    .chat-history-item:hover { background-color: var(--ai-bg-light); }
-    .chat-history-item.active { background-color: var(--ai-accent-color); color: white; }
-    .chat-history-item span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-grow: 1; margin-right: 10px; }
-    .delete-chat-btn { background: none; border: none; color: #999; opacity: 0; transition: opacity 0.2s; }
-    .chat-history-item:hover .delete-chat-btn { opacity: 1; }
-    .chat-history-item.active .delete-chat-btn, .delete-chat-btn:hover { color: white; }
-    .sidebar-visible .chat-sidebar { transform: translateX(0); }
-    .sidebar-visible .chat-overlay { opacity: 1; pointer-events: auto; }
-    .chat-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
-    .chat-container { display: flex; flex-direction: column; height: 100%; background: var(--background-color); }
-    .chat-header { display: flex; align-items: center; padding: 10px 15px; border-bottom: 1px solid var(--ai-border-color); }
-    .sidebar-toggle-btn { background: none; border: 1px solid var(--ai-border-color); color: var(--default-color); border-radius: 8px; padding: 5px 10px; font-size: 1.2rem; margin-right: 15px; }
-    .chat-header-title { font-weight: 500; margin: 0; font-size: 1.1rem; }
-    .chat-history { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-    .chat-message { padding: 12px 18px; border-radius: 18px; max-width: 85%; line-height: 1.6; word-wrap: break-word; position: relative;}
-    .user-message { background-color: var(--accent-color, #0d6efd); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .ai-message { background-color: var(--contrast-background-color, #f1f3f5); color: var(--default-color, #212529); align-self: flex-start; border-bottom-left-radius: 4px; }
-    .ai-message .copy-btn { position: absolute; bottom: 5px; right: -35px; background: none; border: none; color: #999; cursor: pointer; opacity: 0; transition: opacity 0.2s; font-size: 16px; }
-    .ai-message:hover .copy-btn { opacity: 1; }
-    .copy-btn:hover { color: var(--ai-accent-color); }
-    .chat-input-area { display: flex; padding: 15px; border-top: 1px solid var(--border-color, #e9ecef); }
-    .chat-input-area input { flex-grow: 1; border-radius: 20px; border: 1px solid var(--border-color, #ced4da); padding: 10px 15px; margin-right: 10px; background-color: var(--background-color, #fff); color: var(--default-color, #212529); }
-    .chat-input-area input:focus { outline: none; border-color: var(--accent-color, #0d6efd); box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25); }
-    .chat-input-area button { border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: var(--accent-color, #0d6efd); color: white; border: none; transition: background-color 0.3s; }
-    .chat-input-area button:hover { background-color: #0b5ed7; }
-    .loading-indicator { display: flex; align-items: center; align-self: flex-start; padding: 12px 18px; }
-    .dot { width: 8px; height: 8px; margin: 0 3px; background-color: #aaa; border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
-    .dot:nth-child(1) { animation-delay: -0.32s; }
-    .dot:nth-child(2) { animation-delay: -0.16s; }
-    @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
-  </style>
+  <!-- AI Assistant CSS -->
+  <link href="assets/css/ai-assistant.css" rel="stylesheet">
 </head>
 
-<body class="team-page">
-
-<header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center" data-translate="team_a_1">
-        <h1 class="sitename" data-translate="team_h1_1">Ixiera</h1>
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="portfolio.html">Showcase</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              <li><a href="team.html" class="active">AI Assistant</a></li>
-              <li><a href="services-details.html">Service Details</a></li>
-              <li><a href="portfolio-details.html">Showcase Details</a></li>
-              <li><a href="blog-details.html">Blog Details</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact</a></li>
-           <!-- MODE GELAP -->
-        <li class="nav-item d-flex align-items-center mt-2 me-2">
-  <a href="https://ixiera-dashboard.vercel.app" class="btn btn-primary btn-sm rounded-pill px-3" style="background-color: #4db8ff; border: none;">
-    Go to Dashboard
-  </a>
-</li>
-<li class="nav-item d-flex align-items-center mt-2">
-  <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-    <i class="bi bi-moon-stars-fill"></i>
-    <i class="bi bi-sun-fill"></i>
-    <span class="ms-3">Mode</span>
-  </button>
-</li>
-</ul>
-<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-</nav>
-    </div>
-  </header>
-
-
-  <main class="main">
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/team-page-title-bg.jpg);">
-      <div class="container">
-        <h1 data-translate="team_h1_2">Asisten Digital Ixiera</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li data-translate="team_li_1"><a href="index.html" data-translate="team_a_2">Home</a></li>
-            <li class="current" data-translate="team_li_2">AI Assistant</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-    
-    <section id="ai-assistant" class="ai-assistant section">
-      <div class="container" data-aos="fade-up">
-        <div class="col-lg-10 mx-auto">
-          <div class="chat-interface-wrapper" id="chat-interface-wrapper">
-            
-            <div class="chat-sidebar" id="chat-sidebar">
-              <h3 data-translate="team_h3_1">Riwayat Percakapan</h3>
-              <button class="btn btn-primary new-chat-btn" id="new-chat-btn" data-translate="team_button_1">
-                <i class="bi bi-plus-lg"></i> Percakapan Baru
-              </button>
-              <ul class="chat-history-list" id="chat-history-list">
-              </ul>
-            </div>
-
-            <div class="chat-container">
-              <div class="chat-header">
-                <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Toggle history">
-                  <i class="bi bi-list"></i>
-                </button>
-                <h2 class="chat-header-title" data-translate="team_h2_1">Percakapan</h2>
-              </div>
-              <div class="chat-history" id="chat-history">
-              </div>
-              <div class="chat-input-area">
-                <input type="text" id="user-input" placeholder="Ketik masalah Anda di sini..." autocomplete="off">
-                <button id="send-btn" aria-label="Send message"><i class="bi bi-send-fill"></i></button>
-              </div>
-            </div>
-
-            <div class="chat-overlay" id="chat-overlay"></div>
-          </div>
+<body>
+  <!-- AI Interface -->
+  <div class="ai-interface">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-avatar">A</div>
+        <div class="brand-text">
+          <h3>Ashley AI</h3>
+          <p>Ixiera Digital Assistant</p>
         </div>
       </div>
-    </section>
-  </main>
-  
-  <footer id="footer" class="footer light-background">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center" data-translate="team_a_3">
-              <span class="sitename" data-translate="team_span_1">Ixiera</span>
-            </a>
-            <p data-translate="team_p_1">Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
-            <div class="social-links d-flex mt-4">
-              <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
-              <a href="https://www.instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
-              <a href="https://www.threads.net/@4majority" target="_blank"><i class="bi bi-threads"></i></a>
-              <a href="https://wa.me/6285736048626" target="_blank"><i class="bi bi-whatsapp"></i></a>
-            </div>
-          </div>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4 data-translate="team_h4_1">Quick Links</h4>
-            <ul>
-              <li data-translate="team_li_3"><a href="index.html" data-translate="team_a_4">Home</a></li>
-              <li data-translate="team_li_4"><a href="about.html" data-translate="team_a_5">About</a></li>
-              <li data-translate="team_li_5"><a href="services.html" data-translate="team_a_6">Services</a></li>
-              <li data-translate="team_li_6"><a href="blog.html" data-translate="team_a_7">Blog</a></li>
-              <li data-translate="team_li_7"><a href="contact.html" data-translate="team_a_8">Contact</a></li>
-            </ul>
-          </div>
+      <button class="new-chat-btn" id="new-chat-btn">
+        <i class="bi bi-plus-lg"></i>
+        <span>Percakapan Baru</span>
+      </button>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4 data-translate="team_h4_2">Our Services</h4>
-            <ul>
-              <li data-translate="team_li_8"><a href="services.html" data-translate="team_a_9">Websites &amp; Systems</a></li>
-              <li data-translate="team_li_9"><a href="services.html" data-translate="team_a_10">Business Automation</a></li>
-              <li data-translate="team_li_10"><a href="services.html" data-translate="team_a_11">Branding &amp; Design</a></li>
-              <li data-translate="team_li_11"><a href="services.html" data-translate="team_a_12">Growth Marketing</a></li>
-              <li data-translate="team_li_12"><a href="services.html" data-translate="team_a_13">Growth Partnership</a></li>
-            </ul>
-          </div>
+      <!-- Prompt Quick Access - FOKUS AGENCY -->
+      <div class="prompt-sidebar-section">
+        <h4 class="section-title">Tanya Tentang</h4>
+        <div class="prompt-sidebar-list">
+          <button class="prompt-sidebar-btn" data-prompt="package-recommendation">
+            <i class="bi bi-box-seam"></i>
+            <span>Rekomendasi Package</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="showcase-details">
+            <i class="bi bi-laptop"></i>
+            <span>Detail Showcase</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="process-timeline">
+            <i class="bi bi-calendar-check"></i>
+            <span>Proses & Timeline</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="technical-capabilities">
+            <i class="bi bi-gear"></i>
+            <span>Kemampuan Teknis</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="ecommerce-solutions">
+            <i class="bi bi-cart"></i>
+            <span>Solusi E-commerce</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="automation-features">
+            <i class="bi bi-robot"></i>
+            <span>Fitur Otomasi</span>
+          </button>
+        </div>
+      </div>
 
-         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4 data-translate="team_h4_3">Contact</h4>
-            <p data-translate="team_p_2">Jl. Raya Surabaya - Malang No.1<br>
-            Pandaan, Pasuruan, Jawa Timur 67156<br>
-            Indonesia</p>
-            <p class="mt-4" data-translate="team_p_3">
-              <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;" data-translate="team_a_14">+62 857 3604 8626</a>
-            </p>
-            <p data-translate="team_p_4">
-              <strong>Email:</strong>
-              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;" data-translate="team_a_15">solvixone@gmail.com</a>
-            </p>
+      <div class="chat-history-section">
+        <h4 class="section-title">Riwayat Percakapan</h4>
+        <ul class="chat-history-list" id="chat-history-list">
+          <!-- Dynamic content -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Chat Area -->
+    <div class="chat-main">
+      <div class="chat-header">
+        <button class="sidebar-toggle-btn" id="sidebar-toggle-btn">
+          <i class="bi bi-list"></i>
+        </button>
+        
+        <div class="header-actions">
+          <button class="theme-toggle-btn" id="theme-toggle-btn">
+            <i class="bi bi-sun-fill"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-history" id="chat-history">
+        <!-- Welcome screen akan diisi oleh JavaScript -->
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-container">
+          <div class="input-wrapper">
+            <textarea 
+              class="chat-input" 
+              id="user-input" 
+              placeholder="Tanya tentang packages, showcase, atau solusi digital untuk bisnis Anda..." 
+              rows="1"
+            ></textarea>
           </div>
+          <button class="send-btn" id="send-btn">
+            <i class="bi bi-send-fill"></i>
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container copyright text-center">
-      <p data-translate="team_p_5">© <span data-translate="team_span_2">Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span data-translate="team_span_3">All Rights Reserved</span></p>
-    </div>
-
-  </footer>
-  
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <div id="preloader"></div>
-
-  <!-- Vendor JS -->
+  <!-- Scripts -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  
-  <!-- Main JS -->
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/custom.js"></script>
-  
-  <!-- [DIPERBARUI] Logika AI Assistant sekarang dimuat sebagai module -->
-  <script type="module" src="assets/js/ai.js"></script>
-
+  <script type="module" src="assets/js/ai-assistant.js"></script>
 </body>
 </html>
-

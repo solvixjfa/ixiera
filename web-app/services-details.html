@@ -1,9 +1,11 @@
-<!DOCTYPE html><html lang="id"><head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Service Detail: Websites &amp; System modern| Ixiera</title>
-  <meta name="description" content="Pelajari bagaimana layanan website dan toko online kami membantu bisnis Anda memiliki 'rumah' digital yang profesional, mudah dikelola, dan benar-benar menghasilkan.">
-  <meta name="keywords" content="layanan website, buat toko online, jasa website, Ixiera, solusi digital">
+  <title>Website & Sistem Otomatis | Ixiera</title>
+  <meta name="description" content="Website dengan sistem otomatis yang bekerja untuk bisnis Anda. Notifikasi WhatsApp, manajemen stok, laporan real-time - semua berjalan otomatis.">
+  <meta name="keywords" content="website otomatis, sistem bisnis, otomatisasi, dashboard real-time, manajemen inventory">
 
   <!-- Favicons -->
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png" rel="icon">
@@ -24,209 +26,411 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
-    <!-- Google Analytics -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-4MK0Q0R584');
-    </script>
+  
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body class="service-details-page">
 
+  <!-- Header -->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center" data-translate="services-details_a_1">
-        <h1 class="sitename" data-translate="services-details_h1_1">Ixiera</h1>
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename">IXIERA</h1>
       </a>
+
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="services.html" class="active">Services</a></li>
           <li><a href="portfolio.html">Showcase</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
           <li><a href="blog.html">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="#"><span>Features</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="team.html">AI Assistant</a></li>
-              <li><a href="services-details.html">Service Details</a></li>
-              <li><a href="portfolio-details.html">Showcase Details</a></li>
-              <li><a href="blog-details.html">Blog Details</a></li>
+              <li><a href="https://ixiera-dashboard.vercel.app">Workspace</a></li>
+               <li><a href="pricing.html">Plans</a></li>
             </ul>
           </li>
           <li><a href="contact.html">Contact</a></li>
-           <!-- MODE GELAP -->
-        <li class="nav-item d-flex align-items-center mt-2 me-2">
-  <a href="https://ixiera-dashboard.vercel.app" class="btn btn-primary btn-sm rounded-pill px-3" style="background-color: #4db8ff; border: none;">
-    Go to Dashboard
-  </a>
-</li>
-<li class="nav-item d-flex align-items-center mt-2">
-  <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-    <i class="bi bi-moon-stars-fill"></i>
-    <i class="bi bi-sun-fill"></i>
-    <span class="ms-3">Mode</span>
-  </button>
-</li>
-</ul>
-<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-</nav>
+        </ul>
+      </nav>
+
+      <!-- Tombol Toggle Simple -->
+      <div class="header-actions">
+        <button type="button" class="btn btn-sm btn-toggle-theme" id="theme-toggle-btn" title="Toggle theme">
+          <i class="bi bi-sun"></i>
+        </button>
+      </div>
+
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </div>
-</header>
+  </header>
 
   <main class="main">
 
     <!-- Page Title -->
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/services-page-title-bg.webp);">
       <div class="container">
-        <h1 data-translate="services-details_h1_2">Service Detail</h1>
+        <h1>Website & Sistem Otomatis</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li data-translate="services-details_li_1"><a href="index.html" data-translate="services-details_a_2">Home</a></li>
-            <li class="current" data-translate="services-details_li_2">Service Detail</li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li class="current">Website & Sistem</li>
           </ol>
         </nav>
       </div>
-    </div><!-- End Page Title -->
+    </div>
 
     <!-- Service Details Section -->
     <section id="service-details" class="service-details section">
-
       <div class="container">
-
         <div class="row gy-5">
 
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-
+            <!-- Services List -->
             <div class="service-box">
-              <h4 data-translate="services-details_h4_1">Our Services</h4>
+              <h4>Layanan Kami</h4>
               <div class="services-list">
-                <a href="services-details.html" class="active" data-translate="services-details_a_3"><i class="bi bi-arrow-right-circle"></i><span data-translate="services-details_span_1">Websites &amp; System </span></a>
-                <a href="#" data-translate="services-details_a_4"><i class="bi bi-arrow-right-circle"></i><span data-translate="services-details_span_2">Social Media Management</span></a>
-                <a href="#" data-translate="services-details_a_5"><i class="bi bi-arrow-right-circle"></i><span data-translate="services-details_span_3">Digital Ads</span></a>
-                <a href="#" data-translate="services-details_a_6"><i class="bi bi-arrow-right-circle"></i><span data-translate="services-details_span_4">Branding &amp; Graphic Design</span></a>
-                <a href="#" data-translate="services-details_a_7"><i class="bi bi-arrow-right-circle"></i><span data-translate="services-details_span_5">Google Optimization (SEO)</span></a>
-                <a href="#" data-translate="services-details_a_8"><i class="bi bi-arrow-right-circle"></i><span data-translate="services-details_span_6">Digital Business Consulting</span></a>
+                <a href="services-details.html?service=website-system" class="active">
+                  <i class="bi bi-window-desktop"></i>
+                  <span>Website & Sistem</span>
+                </a>
+                <a href="services-details.html?service=automation">
+                  <i class="bi bi-robot"></i>
+                  <span>Otomatisasi Bisnis</span>
+                </a>
+                <a href="services-details.html?service=dashboard">
+                  <i class="bi bi-graph-up"></i>
+                  <span>Dashboard & Laporan</span>
+                </a>
+                <a href="services-details.html?service=inventory">
+                  <i class="bi bi-cart-check"></i>
+                  <span>Manajemen Inventory</span>
+                </a>
+                <a href="services-details.html?service=booking">
+                  <i class="bi bi-calendar-check"></i>
+                  <span>Sistem Booking</span>
+                </a>
+                <a href="services-details.html?service=integration">
+                  <i class="bi bi-sliders"></i>
+                  <span>Integrasi Sistem</span>
+                </a>
               </div>
-            </div><!-- End Services List -->
-
-            <div class="service-box">
-              <h4 data-translate="services-details_h4_2">Download Brochure</h4>
-              <div class="download-catalog">
-                <a href="#" data-translate="services-details_a_9"><i class="bi bi-filetype-pdf"></i><span data-translate="services-details_span_7">Service Brochure (PDF)</span></a>
-                <a href="#" data-translate="services-details_a_10"><i class="bi bi-file-earmark-word"></i><span data-translate="services-details_span_8">Proposal (DOC)</span></a>
-              </div>
-            </div><!-- End Services List -->
-
-            <div class="help-box d-flex flex-column justify-content-center align-items-center">
-              <i class="bi bi-headset help-icon"></i>
-              <h4 data-translate="services-details_h4_3">Punya Pertanyaan?</h4>
-              <p class="d-flex align-items-center mt-2 mb-0" data-translate="services-details_p_1"><i class="bi bi-whatsapp me-2"></i> <span data-translate="services-details_span_9">+62 857 3604 8626</span></p>
-              <p class="d-flex align-items-center mt-1 mb-0" data-translate="services-details_p_2"><i class="bi bi-envelope me-2"></i> <a href="mailto:solvixone@gmail.com" data-translate="services-details_a_11">solvixone@gmail.com</a></p>
             </div>
 
+            <!-- Features Box -->
+            <div class="service-box">
+              <h4>Fitur Utama</h4>
+              <div class="features-list">
+                <div class="feature-item">
+                  <i class="bi bi-whatsapp"></i>
+                  <span>Notifikasi WhatsApp</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-shield-check"></i>
+                  <span>Keamanan Data</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-phone"></i>
+                  <span>Mobile Friendly</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-cloud-arrow-down"></i>
+                  <span>Backup Otomatis</span>
+                </div>
+                <div class="feature-item">
+                  <i class="bi bi-graph-up-arrow"></i>
+                  <span>Analytics Real-time</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Help Box -->
+            <div class="help-box d-flex flex-column justify-content-center align-items-center">
+              <i class="bi bi-headset help-icon"></i>
+             <h4>Butuh Konsultasi?</h4>
+<p class="d-flex align-items-center mt-2 mb-0">
+  <i class="bi bi-whatsapp me-2"></i>
+  <a href="https://wa.me/6285702373412" target="_blank" class="text-decoration-none">
+    +62 857-0237-3412
+  </a>
+</p>
+              <p class="d-flex align-items-center mt-1 mb-0">
+                <i class="bi bi-envelope me-2"></i> 
+                <a href="mailto:ixierastudio@gmail.com">ixierastudio@gmail.com</a>
+              </p>
+            </div>
           </div>
 
           <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
-            <img src="https://ik.imagekit.io/solviXone/ixiera/img/pages/services.jpg" alt="Tim Ixiera sedang berdiskusi merancang website untuk klien." class="img-fluid services-img">
-            <h3 data-translate="services-details_h3_1">Membangun 'Rumah' Digital yang Profesional untuk Bisnis Anda</h3>
-            <p data-translate="services-details_p_3">
-              Mengandalkan media sosial saja rasanya seperti membangun bisnis di atas tanah sewaan. Aturannya bisa berubah, dan kita tidak punya kendali penuh. Website adalah 'rumah' milik Anda sendiri, tempat di mana Andalah yang menentukan aturannya.
-            </p>
-            <p data-translate="services-details_p_4">
-              Kami paham, bagi banyak pemilik bisnis, membuat website mungkin terdengar rumit atau mahal. Karena itu, kami fokus menyediakan layanan pembuatan website dan toko online yang tidak hanya terlihat profesional, tapi juga mudah Anda kelola dan benar-benar membantu bisnis.
-            </p>
-            <ul>
-              <li data-translate="services-details_li_3"><i class="bi bi-check-circle"></i> <span data-translate="services-details_span_10"><strong>Membangun Kepercayaan Pelanggan:</strong> Website yang profesional menunjukkan Anda serius dan bisa diandalkan.</span></li>
-              <li data-translate="services-details_li_4"><i class="bi bi-check-circle"></i> <span data-translate="services-details_span_11"><strong>Menjangkau Pelanggan di Mana Saja:</strong> Toko Anda 'buka' 24 jam, siap melayani pelanggan dari kota mana pun.</span></li>
-              <li data-translate="services-details_li_5"><i class="bi bi-check-circle"></i> <span data-translate="services-details_span_12"><strong>Anda yang Pegang Kendali Penuh:</strong> Bebas menampilkan produk dan cerita brand sesuai gaya Anda, tanpa batasan platform.</span></li>
-              <li data-translate="services-details_li_6"><i class="bi bi-check-circle"></i> <span data-translate="services-details_span_13"><strong>Satu Tempat untuk Semua Informasi:</strong> Mudahkan pelanggan menemukan alamat, kontak, promo, dan testimoni di satu tempat.</span></li>
-            </ul>
-            <p data-translate="services-details_p_5">
-              Tim kami akan mendampingi Anda dari awal hingga akhir. Kami pastikan 'rumah' digital Anda tidak hanya bagus, tapi juga nyaman digunakan, cepat diakses, dan aman.
-            </p>
-            <p data-translate="services-details_p_6">
-              Setelah selesai, kami tidak akan meninggalkan Anda begitu saja. Kami akan berikan panduan agar Anda bisa mengelola konten dan produk dengan mudah. Mari wujudkan etalase digital impian Anda bersama kami.
-            </p>
+            <!-- 3D Visualization Section -->
+            <div class="visualization-section mb-5">
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <h3 class="mb-4">Website yang Bekerja untuk Bisnis Anda</h3>
+                  <p class="mb-4">
+                    Bukan sekadar website biasa, tapi sistem lengkap yang mengotomasi pekerjaan harian Anda. Bayangkan website yang bisa kirim notifikasi WhatsApp otomatis, update stok sendiri, dan generate laporan real-time.
+                  </p>
+                  <div class="d-flex">
+                    <div class="stat-box me-3">
+                      <div class="stat-number">24/7</div>
+                      <div class="stat-label">Operasional</div>
+                    </div>
+                    <div class="stat-box me-3">
+                      <div class="stat-number">99%</div>
+                      <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-number">30+</div>
+                      <div class="stat-label">Integrasi</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div id="threejs-container" class="threejs-container">
+                    <!-- Three.js canvas akan diisi oleh JavaScript -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="benefits-section mb-5">
+              <h4 class="section-title">Mengapa Memilih Sistem Kami?</h4>
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <div class="benefit-card">
+                    <div class="benefit-icon">
+                      <i class="bi bi-lightning"></i>
+                    </div>
+                    <div class="benefit-content">
+                      <h5>Proses Otomatis</h5>
+                      <p>Notifikasi, konfirmasi, dan reminder berjalan sendiri tanpa intervensi manual</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="benefit-card">
+                    <div class="benefit-icon">
+                      <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <div class="benefit-content">
+                      <h5>Data Real-time</h5>
+                      <p>Lihat penjualan dan performa bisnis secara live dengan dashboard interaktif</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="benefit-card">
+                    <div class="benefit-icon">
+                      <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div class="benefit-content">
+                      <h5>Kontrol Penuh</h5>
+                      <p>Semua data milik Anda, tidak tergantung platform pihak ketiga</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="benefit-card">
+                    <div class="benefit-icon">
+                      <i class="bi bi-phone"></i>
+                    </div>
+                    <div class="benefit-content">
+                      <h5>Akses Mobile</h5>
+                      <p>Kelola bisnis dari smartphone kapan saja, di mana saja</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="features-section mb-5">
+              <h4 class="section-title">Apa yang Anda Dapatkan?</h4>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <div class="feature-icon">
+                      <i class="bi bi-window-desktop"></i>
+                    </div>
+                    <div class="feature-content">
+                      <h5>Website Profesional</h5>
+                      <p>Tampilan modern dan mudah dinavigasi pelanggan dengan UX yang optimal</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <div class="feature-icon">
+                      <i class="bi bi-gear"></i>
+                    </div>
+                    <div class="feature-content">
+                      <h5>Panel Admin Mudah</h5>
+                      <p>Kelola konten, produk, dan pesanan tanpa coding dengan interface intuitif</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <div class="feature-icon">
+                      <i class="bi bi-bell"></i>
+                    </div>
+                    <div class="feature-content">
+                      <h5>Notifikasi Otomatis</h5>
+                      <p>WhatsApp/email konfirmasi untuk setiap order baru atau perubahan status</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <div class="feature-icon">
+                      <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="feature-content">
+                      <h5>Manajemen Stok</h5>
+                      <p>Update otomatis, alert saat stok hampir habis, dan tracking inventori</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <div class="feature-icon">
+                      <i class="bi bi-graph-up"></i>
+                    </div>
+                    <div class="feature-content">
+                      <h5>Dashboard Laporan</h5>
+                      <p>Lihat penjualan, traffic, dan performa bisnis dengan visualisasi data</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="feature-card">
+                    <div class="feature-icon">
+                      <i class="bi bi-credit-card"></i>
+                    </div>
+                    <div class="feature-content">
+                      <h5>Integrasi Payment</h5>
+                      <p>Multiple payment gateway untuk kemudahan transaksi pelanggan</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Process Section -->
+            <div class="process-section mb-5">
+              <h4 class="section-title">Bagaimana Sistem Bekerja?</h4>
+              <div class="row mt-4">
+                <div class="col-md-4 text-center">
+                  <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                      <i class="bi bi-cart-plus"></i>
+                    </div>
+                    <h6>Customer Order</h6>
+                    <p>Pelanggan pesan melalui website dengan pengalaman belanja yang mudah</p>
+                  </div>
+                </div>
+                <div class="col-md-4 text-center">
+                  <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                      <i class="bi bi-whatsapp"></i>
+                    </div>
+                    <h6>Auto Notifikasi</h6>
+                    <p>Admin dapat WhatsApp, customer dapat konfirmasi secara otomatis</p>
+                  </div>
+                </div>
+                <div class="col-md-4 text-center">
+                  <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                      <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h6>Data Tercatat</h6>
+                    <p>Laporan update real-time di dashboard untuk analisis bisnis</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!-- CTA Section -->
+            <div class="cta-section text-center p-5 rounded">
+              <h4>Siap Otomatisasi Bisnis Anda?</h4>
+              <p class="mb-4">Diskusikan kebutuhan sistem digital untuk bisnis yang lebih efisien</p>
+              <a href="contact.html" class="btn btn-primary btn-lg me-3">Konsultasi Gratis</a>
+              <a href="portfolio.html" class="btn btn-outline-primary btn-lg">Lihat Showcase</a>
+            </div>
           </div>
 
         </div>
-
       </div>
-
-    </section><!-- /Service Details Section -->
+    </section>
   </main>
-<section id="newsletter" class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-4 col-md-12 bg-body-tertiary text-body p-4 rounded-4">
-      <h4 class="mb-2" data-translate="services-details_h4_4">Dapatkan Insight, Bukan Spam.</h4>
-      <p class="mb-3" data-translate="services-details_p_7">Sesekali, kami akan kirim email berisi ide dan strategi praktis untuk bisnis Anda.</p>
-      <form id="newsletter-form">
-        <div class="input-group">
-          <input type="email" id="email" class="form-control" placeholder="Your email" required="">
-          <button class="btn btn-primary" type="submit" data-translate="services-details_button_1">Subscribe</button>
-        </div>
-        <div id="form-status" class="mt-2 small"></div>
-      </form>
-    </div>
-  </div>
-</section>
-   <footer id="footer" class="footer light-background">
+
+  <!-- FOOTER -->
+  <footer id="footer" class="footer light-background">
 
     <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center" data-translate="services-details_a_12">
-              <span class="sitename" data-translate="services-details_span_14">Ixiera</span>
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Ixiera</span>
             </a>
-            <p data-translate="services-details_p_8">Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
+            <p>Kami membantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus kami adalah membuat sistem yang bekerja untuk Anda.</p>
             <div class="social-links d-flex mt-4">
-              <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
-              <a href="https://www.instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
-              <a href="https://www.threads.net/@4majority" target="_blank"><i class="bi bi-threads"></i></a>
-              <a href="https://wa.me/6285736048626" target="_blank"><i class="bi bi-whatsapp"></i></a>
+              <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
+              <a href="https://discord.gg/FqxEMxn9" target="_blank">
+                <i class="bi bi-discord"></i>
+              </a>
+              <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
+              <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
             </div>
           </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4 data-translate="services-details_h4_5">Quick Links</h4>
+            <h4>Menu Cepat</h4>
             <ul>
-              <li data-translate="services-details_li_7"><a href="index.html" data-translate="services-details_a_13">Home</a></li>
-              <li data-translate="services-details_li_8"><a href="about.html" data-translate="services-details_a_14">About</a></li>
-              <li data-translate="services-details_li_9"><a href="services.html" data-translate="services-details_a_15">Services</a></li>
-              <li data-translate="services-details_li_10"><a href="blog.html" data-translate="services-details_a_16">Blog</a></li>
-              <li data-translate="services-details_li_11"><a href="contact.html" data-translate="services-details_a_17">Contact</a></li>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4 data-translate="services-details_h4_6">Our Services</h4>
+            <h4>Layanan Kami</h4>
             <ul>
-              <li data-translate="services-details_li_12"><a href="services.html" data-translate="services-details_a_18">Websites &amp; Systems</a></li>
-              <li data-translate="services-details_li_13"><a href="services.html" data-translate="services-details_a_19">Business Automation</a></li>
-              <li data-translate="services-details_li_14"><a href="services.html" data-translate="services-details_a_20">Branding &amp; Design</a></li>
-              <li data-translate="services-details_li_15"><a href="services.html" data-translate="services-details_a_21">Growth Marketing</a></li>
-              <li data-translate="services-details_li_16"><a href="services.html" data-translate="services-details_a_22">Growth Partnership</a></li>
+              <li><a href="services.html">Website & Sistem</a></li>
+              <li><a href="services.html">Otomatisasi Bisnis</a></li>
+              <li><a href="services.html">Branding & Desain</a></li>
+              <li><a href="services.html">Marketing Digital</a></li>
+              <li><a href="services.html">Kemitraan Strategis</a></li>
             </ul>
           </div>
 
-         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4 data-translate="services-details_h4_7">Contact</h4>
-            <p data-translate="services-details_p_9">Jl. Raya Surabaya - Malang No.1<br>
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Kontak</h4>
+            <p>Jl. Raya Surabaya - Malang No.1<br>
             Pandaan, Pasuruan, Jawa Timur 67156<br>
             Indonesia</p>
-            <p class="mt-4" data-translate="services-details_p_10">
+            <p class="mt-4">
               <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;" data-translate="services-details_a_23">+62 857 3604 8626</a>
+              <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
             </p>
-            <p data-translate="services-details_p_11">
+            <p>
               <strong>Email:</strong>
-              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;" data-translate="services-details_a_24">solvixone@gmail.com</a>
+              <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
             </p>
           </div>
         </div>
@@ -234,10 +438,12 @@
     </div>
 
     <div class="container copyright text-center">
-      <p data-translate="services-details_p_12">© <span data-translate="services-details_span_15">Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span data-translate="services-details_span_16">All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
     </div>
 
   </footer>
+  
+
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -254,8 +460,111 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-<script src="assets/js/custom.js"></script>
-<script type="module" src="assets/js/newsletter.js"></script>
-
+  <script src="assets/js/custom.js"></script>
+  
+  <!-- Three.js Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Three.js Implementation
+      const container = document.getElementById('threejs-container');
+      
+      // Scene setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+      
+      // Add lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+      
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      directionalLight.position.set(10, 10, 5);
+      scene.add(directionalLight);
+      
+      // Create floating geometric shapes
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshPhongMaterial({ 
+        color: 0x000000,
+        shininess: 100,
+        specular: 0x222222
+      });
+      
+      const cubes = [];
+      const cubeCount = 8;
+      
+      for (let i = 0; i < cubeCount; i++) {
+        const cube = new THREE.Mesh(geometry, material);
+        
+        // Random position
+        cube.position.x = (Math.random() - 0.5) * 10;
+        cube.position.y = (Math.random() - 0.5) * 6;
+        cube.position.z = (Math.random() - 0.5) * 4;
+        
+        // Random rotation
+        cube.rotation.x = Math.random() * Math.PI;
+        cube.rotation.y = Math.random() * Math.PI;
+        
+        // Random scale
+        const scale = 0.5 + Math.random() * 0.5;
+        cube.scale.set(scale, scale, scale);
+        
+        scene.add(cube);
+        cubes.push({
+          mesh: cube,
+          speed: {
+            x: (Math.random() - 0.5) * 0.02,
+            y: (Math.random() - 0.5) * 0.02,
+            z: (Math.random() - 0.5) * 0.02
+          },
+          rotation: {
+            x: (Math.random() - 0.5) * 0.02,
+            y: (Math.random() - 0.5) * 0.02,
+            z: (Math.random() - 0.5) * 0.02
+          }
+        });
+      }
+      
+      // Position camera
+      camera.position.z = 8;
+      
+      // Animation
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        // Animate cubes
+        cubes.forEach(cube => {
+          // Move cubes
+          cube.mesh.position.x += cube.speed.x;
+          cube.mesh.position.y += cube.speed.y;
+          cube.mesh.position.z += cube.speed.z;
+          
+          // Rotate cubes
+          cube.mesh.rotation.x += cube.rotation.x;
+          cube.mesh.rotation.y += cube.rotation.y;
+          cube.mesh.rotation.z += cube.rotation.z;
+          
+          // Bounce cubes when they reach boundaries
+          if (Math.abs(cube.mesh.position.x) > 5) cube.speed.x *= -1;
+          if (Math.abs(cube.mesh.position.y) > 3) cube.speed.y *= -1;
+          if (Math.abs(cube.mesh.position.z) > 2) cube.speed.z *= -1;
+        });
+        
+        renderer.render(scene, camera);
+      }
+      
+      animate();
+      
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+    });
+  </script>
 </body>
 </html>

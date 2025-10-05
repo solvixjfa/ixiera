@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="id"><head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <!-- [DINAMIS] Judul akan diisi oleh JavaScript -->
   <title>Memuat Artikel... - Ixiera Blog</title>
   <meta name="description" content="Mengandalkan media sosial saja tidak cukup. Pahami kenapa memiliki website sendiri adalah langkah krusial untuk membangun kepercayaan dan mesin pertumbuhan bisnis Anda.">
   <meta name="keywords" content="strategi digital, pertumbuhan bisnis, blog teknologi, pentingnya website, aset digital, Ixiera">
@@ -23,71 +24,67 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-    <link href="assets/css/custom.css" rel="stylesheet">
-      <!-- Google Analytics -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-4MK0Q0R584');
-    </script>
-
+  <link href="assets/css/custom.css" rel="stylesheet">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
 </head>
 
 <body class="blog-details-page">
 
+    <!-- Header -->
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center" data-translate="blog-details_a_1">
-        <h1 class="sitename" data-translate="blog-details_h1_1">Ixiera</h1>
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename">IXIERA</h1>
       </a>
+
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="services.html">Services</a></li>
+          <li><a href="services.html" class="active">Services</a></li>
           <li><a href="portfolio.html">Showcase</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="blog.html" class="active">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>More</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li><a href="blog.html">Blog</a></li>
+          <li class="dropdown"><a href="#"><span>features</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="team.html">AI Assistant</a></li>
-              <li><a href="services-details.html">Service Details</a></li>
-              <li><a href="portfolio-details.html">Showcase Details</a></li>
-              <li><a href="blog-details.html">Blog Details</a></li>
+              <li><a href="https://ixiera-dashboard.vercel.app">Workspace</a></li>
+               <li><a href="pricing.html">Plans</a></li>
             </ul>
           </li>
           <li><a href="contact.html">Contact</a></li>
-                    <!-- MODE GELAP -->
-<li class="nav-item d-flex align-items-center mt-2 me-2">
-  <a href="https://ixiera-dashboard.vercel.app" class="btn btn-primary btn-sm rounded-pill px-3" style="background-color: #4db8ff; border: none;">
-    Go to Dashboard
-  </a>
-</li>
-<li class="nav-item d-flex align-items-center mt-2">
-  <button type="button" class="btn btn-outline-secondary rounded-pill btn-toggle-theme" id="theme-toggle-btn">
-    <i class="bi bi-moon-stars-fill"></i>
-    <i class="bi bi-sun-fill"></i>
-    <span class="ms-3">Mode</span>
-  </button>
-</li>
-</ul>
-<i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-</nav>
+        </ul>
+      </nav>
+
+      <!-- Tombol Toggle Simple -->
+      <div class="header-actions">
+        <button type="button" class="btn btn-sm btn-toggle-theme" id="theme-toggle-btn" title="Toggle theme">
+          <i class="bi bi-sun"></i>
+        </button>
+      </div>
+
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </div>
-</header>
+  </header>
 
   <main class="main">
 
     <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/blog-page-title-bg.jpg?tr=q-80,f-webp);">
       <div class="container">
-        <h1 data-translate="blog-details_h1_2">Blog Detail</h1>
+        <h1>Blog Detail</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li data-translate="blog-details_li_1"><a href="index.html" data-translate="blog-details_a_2">Home</a></li>
-            <li data-translate="blog-details_li_2"><a href="blog.html" data-translate="blog-details_a_3">Blog</a></li>
-            <li class="current" id="breadcrumb-title" data-translate="blog-details_li_3">...</li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li class="current" id="breadcrumb-title">Memuat...</li>
           </ol>
         </nav>
       </div>
@@ -103,32 +100,77 @@
 
               <article class="article" id="article-container">
 
-                <div class="post-img">
-                  <img src="https://ik.imagekit.io/solviXone/tr:bl-10,q-20/ixiera/img/placeholder.png" alt="Memuat gambar artikel..." class="img-fluid" id="post-image">
+                <!-- PERBAIKAN: Tambah loading state tanpa menghilangkan struktur asli -->
+                <div id="loading-state" class="text-center py-5" style="display: none;">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Memuat artikel...</span>
+                  </div>
+                  <p class="mt-2">Memuat artikel...</p>
                 </div>
 
-                <h2 class="title placeholder-glow">
-                  <span class="placeholder col-12" id="post-title"></span>
+                <!-- PERBAIKAN: Tambah error state -->
+                <div id="error-state" class="alert alert-danger text-center" style="display: none;">
+                  <h5>Gagal Memuat Artikel</h5>
+                  <p class="mb-0">Artikel tidak dapat ditemukan atau terjadi kesalahan.</p>
+                </div>
+
+                <!-- PERTAHANKAN STRUKTUR ASLI TAPI TAMBAH STATE MANAGEMENT -->
+                <div class="post-img">
+                  <img src="https://ik.imagekit.io/solviXone/tr:bl-10,q-20/ixiera/img/placeholder.png" 
+                       alt="Memuat gambar artikel..." 
+                       class="img-fluid" 
+                       id="post-image">
+                </div>
+
+                <h2 class="title" id="post-title">
+                  <span class="placeholder-glow">
+                    <span class="placeholder col-12">Memuat judul artikel...</span>
+                  </span>
                 </h2>
 
                 <div class="meta-top">
                   <ul>
-                    <li class="d-flex align-items-center" data-translate="blog-details_li_4"><i class="bi bi-person"></i> <span id="post-author-name" data-translate="blog-details_span_1">Jeffry</span></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <time datetime="" id="post-date" class="placeholder-glow"><span class="placeholder col-4"></span></time></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-book"></i> <span id="post-reading-time" class="placeholder-glow"><span class="placeholder col-3"></span></span></li>
+                    <li class="d-flex align-items-center">
+                      <i class="bi bi-person"></i> 
+                      <span id="post-author-name">Jeffry</span>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <i class="bi bi-clock"></i> 
+                      <time datetime="" id="post-date" class="placeholder-glow">
+                        <span class="placeholder col-4">Memuat tanggal...</span>
+                      </time>
+                    </li>
+                    <li class="d-flex align-items-center">
+                      <i class="bi bi-book"></i> 
+                      <span id="post-reading-time" class="placeholder-glow">
+                        <span class="placeholder col-3">Memuat...</span>
+                      </span>
+                    </li>
                   </ul>
                 </div>
 
-                <div class="content placeholder-glow" id="post-content">
-                  <span class="placeholder col-12"></span><span class="placeholder col-11"></span>
-                  <span class="placeholder col-12"></span><span class="placeholder col-10"></span>
+                <div class="content" id="post-content">
+                  <div class="placeholder-glow">
+                    <span class="placeholder col-12"></span>
+                    <span class="placeholder col-11"></span>
+                    <span class="placeholder col-12"></span>
+                    <span class="placeholder col-10"></span>
+                    <span class="placeholder col-12"></span>
+                    <span class="placeholder col-9"></span>
+                  </div>
                 </div>
 
                 <div class="meta-bottom">
                   <i class="bi bi-folder"></i>
-                  <ul class="cats" id="post-categories"><li data-translate="blog-details_li_5"><a href="#" data-translate="blog-details_a_4">...</a></li></ul>
+                  <ul class="cats" id="post-categories">
+                    <li><a href="#">Blog</a></li>
+                  </ul>
                   <i class="bi bi-tags"></i>
-                  <ul class="tags" id="post-tags"><li data-translate="blog-details_li_6"><a href="#" data-translate="blog-details_a_5">...</a></li></ul>
+                  <ul class="tags" id="post-tags">
+                    <li><a href="#">Digital Strategy</a></li>
+                    <li><a href="#">Business Growth</a></li>
+                    <li><a href="#">Website</a></li>
+                  </ul>
                 </div>
 
               </article>
@@ -139,15 +181,17 @@
           <section id="blog-author" class="blog-author section">
             <div class="container">
               <div class="author-container d-flex align-items-center">
-                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-120,h-120,q-90" class="rounded-circle flex-shrink-0" alt="Foto Jeffry">
+                <img src="https://ik.imagekit.io/solviXone/ixiera/img/blog/blog-author.jpg?tr=w-120,h-120,q-90" 
+                     class="rounded-circle flex-shrink-0" 
+                     alt="Foto Jeffry">
                 <div>
-                  <h4 data-translate="blog-details_h4_1">Jeffry</h4>
+                  <h4>Jeffry</h4>
                   <div class="social-links">
                     <a href="https://x.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
                     <a href="https://facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
                     <a href="https://instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
                   </div>
-                  <p data-translate="blog-details_p_1">
+                  <p>
                     Digital Strategist di Ixiera yang senang membantu bisnis menemukan solusi lewat teknologi. Saya percaya, teknologi yang tepat bisa membuat pekerjaan jadi lebih ringan, bukan lebih rumit.
                   </p>
                 </div>
@@ -157,28 +201,31 @@
 
           <section id="blog-comments" class="blog-comments section">
             <div class="container">
-              <h4 class="comments-count" id="comments-count" data-translate="blog-details_h4_2">0 Comments</h4>
+              <h4 class="comments-count" id="comments-count">Memuat komentar...</h4>
               <div id="comments-list">
                 <!-- Komentar akan dimuat di sini -->
               </div>
               <div class="reply-form mt-5">
-                <h4 data-translate="blog-details_h4_3">Tinggalkan Komentar</h4>
-                <p data-translate="blog-details_p_2">Komentar Anda sangat berharga untuk diskusi.</p>
+                <h4>Tinggalkan Komentar</h4>
+                <p>Komentar Anda sangat berharga untuk diskusi.</p>
                 <form id="comment-form">
                   <div class="row">
                     <div class="col-md-6 form-group mb-3">
-                      <input name="name" type="text" class="form-control" placeholder="Nama Anda*" required="">
+                      <input name="name" type="text" class="form-control" placeholder="Nama Anda*" required>
+                    </div>
+                    <div class="col-md-6 form-group mb-3">
+                      <input name="email" type="email" class="form-control" placeholder="Email Anda (opsional)">
                     </div>
                   </div>
                   <div class="row">
                     <div class="col form-group mb-3">
-                      <textarea name="comment" class="form-control" placeholder="Tulis komentar Anda di sini*" rows="5" required=""></textarea>
+                      <textarea name="comment" class="form-control" placeholder="Tulis komentar Anda di sini*" rows="5" required></textarea>
                     </div>
                   </div>
                   <div class="form-group" aria-hidden="true" style="position: absolute; left: -5000px;">
-                      <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+                    <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
                   </div>
-                  <button type="submit" class="btn btn-primary" data-translate="blog-details_button_1">Kirim Komentar</button>
+                 <button type="submit" class="btn btn-white" data-translate="blog-details_button_1">Kirim Komentar</button>
                   <div id="comment-status" class="mt-2 small"></div>
                 </form>
               </div>
@@ -188,65 +235,103 @@
         </div>
 
         <div class="col-lg-4 sidebar">
-          <!-- ... (Sidebar Anda tetap sama) ... -->
+          <!-- Sidebar content -->
+          <div class="widgets-container">
+            <div class="search-widget widget-item">
+              <h3 class="widget-title">Search Articles</h3>
+              <form action="">
+                <input type="text" placeholder="Search for ideas...">
+                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+              </form>
+            </div>
+            
+            <div class="cta-widget widget-item">
+              <h3 class="widget-title">Punya Tantangan Spesifik?</h3>
+              <p class="mb-3">Tidak menemukan jawaban yang Anda cari? Mari diskusikan tantangan bisnis Anda dalam sesi konsultasi gratis.</p>
+             <a href="contact.html" class="btn btn-white w-100" data-translate="blog_a_3">Schedule a Free Call</a>
+            </div>
+            
+            <div class="recent-posts-widget widget-item">
+              <h3 class="widget-title">Recent Articles</h3>
+              <div id="recent-posts-container">
+                <!-- Recent posts akan diisi oleh JavaScript -->
+              </div>
+            </div>
+            
+            <div class="categories-widget widget-item">
+              <h3 class="widget-title">Browse by Topic</h3>
+              <ul class="mt-3">
+                <li><a href="#">Growth Strategy <span>(25)</span></a></li>
+                <li><a href="#">Social Ecosystem <span>(12)</span></a></li>
+                <li><a href="#">Digital Presence <span>(8)</span></a></li>
+                <li><a href="#">Brand & Design <span>(5)</span></a></li>
+                <li><a href="#">Showcase <span>(9)</span></a></li>
+                <li><a href="#">Automation <span>(14)</span></a></li>
+              </ul>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </main>
 
+  <!-- FOOTER -->
   <footer id="footer" class="footer light-background">
-<div class="footer-top">
+
+    <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center" data-translate="blog_a_10">
-              <span class="sitename" data-translate="blog_span_7">Ixiera</span>
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Ixiera</span>
             </a>
-            <p data-translate="blog_p_3">Kami membangun sistem digital yang bekerja cerdas, agar Anda bisa kembali fokus pada hal yang paling penting: mengembangkan bisnis dan melayani pelanggan.</p>
-      <div class="social-links d-flex mt-4">
-        <a href="https://twitter.com/@4Jeff" target="_blank"><i class="bi bi-twitter-x"></i></a>
-        <a href="https://www.facebook.com/Jeff(k)" target="_blank"><i class="bi bi-facebook"></i></a>
-        <a href="https://www.instagram.com/4jeffryy" target="_blank"><i class="bi bi-instagram"></i></a>
-        <a href="https://www.threads.net/@4majority" target="_blank"><i class="bi bi-threads"></i></a>
-        <a href="https://wa.me/6285736048626" target="_blank"><i class="bi bi-whatsapp"></i></a>
-      </div>
-    </div>
+            <p>Kami membantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus kami adalah membuat sistem yang bekerja untuk Anda.</p>
+            <div class="social-links d-flex mt-4">
+              <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
+              <a href="https://discord.gg/FqxEMxn9" target="_blank">
+                <i class="bi bi-discord"></i>
+              </a>
+              <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
+              <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4 data-translate="blog_h4_2">Quick Links</h4>
+            <h4>Menu Cepat</h4>
             <ul>
-              <li data-translate="blog_li_9"><a href="index.html" data-translate="blog_a_11">Home</a></li>
-              <li data-translate="blog_li_10"><a href="about.html" data-translate="blog_a_12">About</a></li>
-              <li data-translate="blog_li_11"><a href="services.html" data-translate="blog_a_13">Services</a></li>
-              <li data-translate="blog_li_12"><a href="blog.html" data-translate="blog_a_14">Blog</a></li>
-              <li data-translate="blog_li_13"><a href="contact.html" data-translate="blog_a_15">Contact</a></li>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
             </ul>
           </div>
 
           <div class="col-lg-2 col-6 footer-links">
-            <h4 data-translate="blog_h4_3">Our Services</h4>
+            <h4>Layanan Kami</h4>
             <ul>
-              <li data-translate="blog_li_14"><a href="services.html" data-translate="blog_a_16">Websites &amp; Systems</a></li>
-              <li data-translate="blog_li_15"><a href="services.html" data-translate="blog_a_17">Business Automation</a></li>
-              <li data-translate="blog_li_16"><a href="services.html" data-translate="blog_a_18">Branding &amp; Design</a></li>
-              <li data-translate="blog_li_17"><a href="services.html" data-translate="blog_a_19">Growth Marketing</a></li>
-              <li data-translate="blog_li_18"><a href="services.html" data-translate="blog_a_20">Growth Partnership</a></li>
+              <li><a href="services.html">Website & Sistem</a></li>
+              <li><a href="services.html">Otomatisasi Bisnis</a></li>
+              <li><a href="services.html">Branding & Desain</a></li>
+              <li><a href="services.html">Marketing Digital</a></li>
+              <li><a href="services.html">Kemitraan Strategis</a></li>
             </ul>
           </div>
 
-         <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4 data-translate="blog_h4_4">Contact</h4>
-            <p data-translate="blog_p_4">Jl. Raya Surabaya - Malang No.1<br>
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Kontak</h4>
+            <p>Jl. Raya Surabaya - Malang No.1<br>
             Pandaan, Pasuruan, Jawa Timur 67156<br>
             Indonesia</p>
-            <p class="mt-4" data-translate="blog_p_5">
+            <p class="mt-4">
               <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285736048626" style="text-decoration:none; color:inherit;" data-translate="blog_a_21">+62 857 3604 8626</a>
+              <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
             </p>
-            <p data-translate="blog_p_6">
+            <p>
               <strong>Email:</strong>
-              <a href="mailto:solvixone@gmail.com" style="text-decoration:none; color:inherit;" data-translate="blog_a_22">solvixone@gmail.com</a>
+              <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
             </p>
           </div>
         </div>
@@ -254,31 +339,26 @@
     </div>
 
     <div class="container copyright text-center">
-      <p data-translate="blog_p_7">© <span data-translate="blog_span_8">Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span data-translate="blog_span_9">All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
     </div>
+
   </footer>
+  
   
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
 
-  <!-- ... Vendor JS Files ... -->
+  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
-  <!-- ... file vendor lainnya ... -->
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <!-- Script Utama Template -->
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS Files -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/custom.js"></script>
   
-  <!-- Script Fungsional (sebagai module) -->
-  <script type="module" src="assets/js/newsletter.js"></script> 
-  
-  <!-- [PERBAIKAN] Menambahkan versi untuk memaksa browser memuat file baru -->
-  <script type="module" src="assets/js/blog-details.js?v=2"></script> 
-  
-
-  
-
+  <!-- Blog Details JS -->
+  <script type="module" src="assets/js/blog-details.js?v=4"></script>
 </body>
 </html>
-

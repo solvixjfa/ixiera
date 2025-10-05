@@ -1,19 +1,19 @@
 
-/* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Montserrat",  sans-serif;
-  --nav-font: "Raleway",  sans-serif;
+  --default-font: "Lato", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --heading-font: "Playfair Display", "Times New Roman", Times, serif;
+  --nav-font: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
-  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
-  --default-color: #2b180d; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #1b2f45; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #56b8e6; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
-  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
-  --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+  --background-color: #fdfcfc;  /* Putih icy elegan */
+  --default-color: #2b180d;     /* Teks normal */
+  --heading-color: #1b2f45;     /* Heading elegan */
+  --accent-color: #111827;      /* Dark premium base (hitam abu elite) */
+  --accent-gradient: linear-gradient(135deg, #111827, #1f2937); /* Glossy gradient */
+  --surface-color: #EDEFF2;     /* Surface/card */
+  --contrast-color: #ffffff;    /* Putih murni untuk teks di atas tombol */
 }
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
@@ -34,7 +34,7 @@
 }
 
 .dark-background {
-  --background-color: #17283b;
+  --background-color: #0b0b0b;
   --default-color: #ffffff;
   --heading-color: #ffffff;
   --surface-color: #254160;
@@ -164,7 +164,13 @@ h6 {
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
-  --background-color: rgba(23, 40, 59, 0.9);
+  --background-color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgb(0,0,0) 0%,     /* deep navy */
+    rgba(3,3,4,0.858) 100% /* aurora ice blue */
+  );
+  box-shadow: 0 4px 24px rgb(0,0,0);
 }
 
 /*--------------------------------------------------------------
@@ -405,31 +411,38 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Global Footer
+# Global Footer - Dark Premium Glossy (Deep Black)
 --------------------------------------------------------------*/
 .footer {
-  color: var(--default-color);
-  background-color: var(--background-color);
+  color: #d0d3d9;
+  background: linear-gradient(180deg, #050509 0%, #0b0b11 50%, #101018 100%);
   font-size: 14px;
   position: relative;
+  overflow: hidden;
 }
 
+/* Glossy reflection at top */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.06), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+/* Content wrapper */
 .footer .footer-top {
   padding-top: 50px;
+  position: relative;
+  z-index: 1;
 }
 
-.footer .footer-about .logo {
-  line-height: 1;
-  margin-bottom: 25px;
-}
-
-.footer .footer-about .logo img {
-  max-height: 40px;
-  margin-right: 6px;
-}
-
+/* Logo text */
 .footer .footer-about .logo span {
-  color: var(--heading-color);
+  color: #f5f5f5;
   font-size: 30px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -439,48 +452,44 @@ h6 {
 .footer .footer-about p {
   font-size: 14px;
   font-family: var(--heading-font);
+  color: #a1a6b0;
 }
 
+/* Social icons */
 .footer .social-links a {
-  color: var(--contrast-color);
-  background-color: var(--accent-color);
+  color: #ffffff;
+  background: linear-gradient(135deg, #1e1e22, #2b2b31);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   font-size: 16px;
   margin-right: 10px;
   transition: 0.3s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
 }
 
 .footer .social-links a:hover {
-  color: var(--contrast-color);
-  background-color: color-mix(in srgb, var(--accent-color) 90%, black 15%);
+  transform: scale(1.08);
+  background: linear-gradient(135deg, #2c2c32, #3a3a42);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.6);
 }
 
+/* Headings */
 .footer h4 {
   font-size: 16px;
   font-weight: bold;
-  position: relative;
   padding-bottom: 12px;
+  color: #ffffff;
 }
 
-.footer .footer-links {
-  margin-bottom: 30px;
-}
-
+/* Links */
 .footer .footer-links ul {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.footer .footer-links ul i {
-  padding-right: 2px;
-  font-size: 12px;
-  line-height: 0;
 }
 
 .footer .footer-links ul li {
@@ -489,40 +498,38 @@ h6 {
   align-items: center;
 }
 
-.footer .footer-links ul li:first-child {
-  padding-top: 0;
-}
-
 .footer .footer-links ul a {
-  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  color: #8f94a1;
   display: inline-block;
-  line-height: 1;
+  transition: 0.3s;
 }
 
 .footer .footer-links ul a:hover {
-  color: var(--accent-color);
+  color: #ffffff;
+  transform: translateX(4px);
 }
 
+/* Contact */
 .footer .footer-contact p {
   margin-bottom: 5px;
+  color: #9fa4b2;
 }
 
+/* Bottom section */
 .footer .copyright {
-  border-top: 1px solid color-mix(in srgb, var(--accent-color), transparent 80%);
+  border-top: 1px solid rgba(255,255,255,0.06);
   margin-top: 25px;
   padding-top: 25px;
   padding-bottom: 25px;
-}
-
-.footer .copyright p {
-  margin-bottom: 0;
+  text-align: center;
+  color: #7d818d;
 }
 
 .footer .credits {
   margin-top: 5px;
   font-size: 13px;
+  color: #666b76;
 }
-
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
