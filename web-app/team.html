@@ -25,6 +25,9 @@
 </head>
 
 <body>
+  <!-- Simple Particles Background -->
+  <canvas id="particles-background"></canvas>
+  
   <!-- AI Interface -->
   <div class="ai-interface">
     <!-- Sidebar -->
@@ -42,36 +45,36 @@
         <span>Percakapan Baru</span>
       </button>
 
-<!-- Prompt Quick Access - FOKUS AGENCY -->
-<div class="prompt-sidebar-section">
-  <h4 class="section-title">Tanya Tentang</h4>
-  <div class="prompt-sidebar-list">
-    <button class="prompt-sidebar-btn" data-prompt="package-recommendation">
-      <i class="bi bi-box-seam"></i>
-      <span>Rekomendasi Package</span>
-    </button>
-    <button class="prompt-sidebar-btn" data-prompt="showcase-details">
-      <i class="bi bi-laptop"></i>
-      <span>Detail Showcase</span>
-    </button>
-    <button class="prompt-sidebar-btn" data-prompt="process-timeline">
-      <i class="bi bi-calendar-check"></i>
-      <span>Proses & Timeline</span>
-    </button>
-    <button class="prompt-sidebar-btn" data-prompt="technical-capabilities">
-      <i class="bi bi-gear"></i>
-      <span>Kemampuan Teknis</span>
-    </button>
-    <button class="prompt-sidebar-btn" data-prompt="ecommerce-solutions">
-      <i class="bi bi-cart"></i>
-      <span>Solusi E-commerce</span>
-    </button>
-    <button class="prompt-sidebar-btn" data-prompt="automation-features">
-      <i class="bi bi-robot"></i>
-      <span>Fitur Otomasi</span>
-    </button>
-  </div>
-</div>
+      <!-- Prompt Quick Access -->
+      <div class="prompt-sidebar-section">
+        <h4 class="section-title">Tanya Tentang</h4>
+        <div class="prompt-sidebar-list">
+          <button class="prompt-sidebar-btn" data-prompt="package-recommendation">
+            <i class="bi bi-box-seam"></i>
+            <span>Rekomendasi Package</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="showcase-details">
+            <i class="bi bi-laptop"></i>
+            <span>Detail Showcase</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="process-timeline">
+            <i class="bi bi-calendar-check"></i>
+            <span>Proses & Timeline</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="technical-capabilities">
+            <i class="bi bi-gear"></i>
+            <span>Kemampuan Teknis</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="ecommerce-solutions">
+            <i class="bi bi-cart"></i>
+            <span>Solusi E-commerce</span>
+          </button>
+          <button class="prompt-sidebar-btn" data-prompt="automation-features">
+            <i class="bi bi-robot"></i>
+            <span>Fitur Otomasi</span>
+          </button>
+        </div>
+      </div>
 
       <div class="chat-history-section">
         <h4 class="section-title">Riwayat Percakapan</h4>
@@ -105,8 +108,9 @@
             <textarea 
               class="chat-input" 
               id="user-input" 
-              placeholder="Tanya apapun tentang ixiera" 
+              placeholder="Tanya apapun tentang ixiera..." 
               rows="1"
+              aria-label="Ketik pesan Anda di sini"
             ></textarea>
           </div>
           <button class="send-btn" id="send-btn">

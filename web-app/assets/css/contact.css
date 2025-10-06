@@ -18,7 +18,7 @@
 
 /* Elegant Header */
 .elegant-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #7c6f5c 0%, #9c8e7a 100%);
     border: none;
     padding: 2rem;
     color: white;
@@ -44,13 +44,13 @@
 /* Elegant Labels */
 .elegant-label {
     font-weight: 600;
-    color: #2c3e50;
+    color: #1a1a1a;
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
 }
 
 [data-bs-theme="dark"] .elegant-label {
-    color: #ecf0f1;
+    color: #f0f0f0;
 }
 
 /* Elegant Inputs */
@@ -61,30 +61,30 @@
     font-size: 0.95rem;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.8);
-    color: #2c3e50;
+    color: #1a1a1a;
 }
 
 .elegant-input:focus {
-    border-color: #2c3e50;
-    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.15);
+    border-color: #7c6f5c;
+    box-shadow: 0 0 0 0.2rem rgba(124, 111, 92, 0.15);
     background: white;
 }
 
 [data-bs-theme="dark"] .elegant-input {
     background: rgba(45, 45, 45, 0.8);
     border-color: #444;
-    color: #ecf0f1;
+    color: #f0f0f0;
 }
 
 [data-bs-theme="dark"] .elegant-input:focus {
     background: #2d2d2d;
-    border-color: #3498db;
-    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.15);
+    border-color: #b8a994;
+    box-shadow: 0 0 0 0.2rem rgba(184, 169, 148, 0.15);
 }
 
 /* Elegant Premium Button */
 .elegant-premium {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    background: linear-gradient(135deg, #7c6f5c 0%, #9c8e7a 100%);
     border: none;
     color: white;
     padding: 1rem 2rem;
@@ -99,8 +99,8 @@
 
 .elegant-premium:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
-    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    box-shadow: 0 8px 25px rgba(124, 111, 92, 0.3);
+    background: linear-gradient(135deg, #9c8e7a 0%, #7c6f5c 100%);
     color: white;
 }
 
@@ -109,20 +109,20 @@
 }
 
 [data-bs-theme="dark"] .elegant-premium {
-    background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
-    color: #2c3e50;
+    background: linear-gradient(135deg, #b8a994 0%, #d4c8b8 100%);
+    color: #1a1a1a;
 }
 
 [data-bs-theme="dark"] .elegant-premium:hover {
-    background: linear-gradient(135deg, #ffffff 0%, #ecf0f1 100%);
-    color: #2c3e50;
+    background: linear-gradient(135deg, #d4c8b8 0%, #b8a994 100%);
+    color: #1a1a1a;
 }
 
 /* Elegant Secondary Button */
 .elegant-secondary {
     background: transparent;
-    border: 2px solid #95a5a6;
-    color: #95a5a6;
+    border: 2px solid #7c6f5c;
+    color: #7c6f5c;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -130,18 +130,29 @@
 }
 
 .elegant-secondary:hover {
-    background: #95a5a6;
+    background: #7c6f5c;
     color: white;
-    border-color: #95a5a6;
+    border-color: #7c6f5c;
+}
+
+[data-bs-theme="dark"] .elegant-secondary {
+    border: 2px solid #b8a994;
+    color: #b8a994;
+}
+
+[data-bs-theme="dark"] .elegant-secondary:hover {
+    background: #b8a994;
+    color: #1a1a1a;
+    border-color: #b8a994;
 }
 
 /* Elegant Colors */
 .elegant-primary {
-    color: #2c3e50 !important;
+    color: #7c6f5c !important;
 }
 
 [data-bs-theme="dark"] .elegant-primary {
-    color: #3498db !important;
+    color: #b8a994 !important;
 }
 
 .elegant-success {
@@ -153,37 +164,42 @@
 }
 
 .elegant-muted {
-    color: #7f8c8d !important;
+    color: #666666 !important;
 }
 
 [data-bs-theme="dark"] .elegant-muted {
-    color: #bdc3c7 !important;
+    color: #a8a8a8 !important;
 }
 
 .elegant-link {
-    color: #2c3e50;
+    color: #7c6f5c;
     transition: color 0.3s ease;
 }
 
 .elegant-link:hover {
-    color: #3498db;
+    color: #9c8e7a;
 }
 
 [data-bs-theme="dark"] .elegant-link {
-    color: #ecf0f1;
+    color: #b8a994;
 }
 
 [data-bs-theme="dark"] .elegant-link:hover {
-    color: #3498db;
+    color: #d4c8b8;
 }
 
 /* Elegant Badge */
 .elegant-badge {
-    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    background: linear-gradient(135deg, #7c6f5c 0%, #9c8e7a 100%);
     color: white;
     font-weight: 600;
     padding: 0.5rem 1rem;
     border-radius: 20px;
+}
+
+[data-bs-theme="dark"] .elegant-badge {
+    background: linear-gradient(135deg, #b8a994 0%, #d4c8b8 100%);
+    color: #1a1a1a;
 }
 
 /* Loading States */
@@ -204,7 +220,7 @@
 .elegant-alert-success {
     background: linear-gradient(135deg, #d4edda, #c3e6cb);
     color: #155724;
-    border-left: 4px solid #28a745;
+    border-left: 4px solid #7c6f5c;
 }
 
 .elegant-alert-danger {
@@ -216,6 +232,7 @@
 [data-bs-theme="dark"] .elegant-alert-success {
     background: linear-gradient(135deg, #155724, #0f401b);
     color: #d4edda;
+    border-left: 4px solid #b8a994;
 }
 
 [data-bs-theme="dark"] .elegant-alert-danger {
@@ -234,7 +251,7 @@
 
 .contact-card:hover {
     transform: translateY(-5px);
-    border-color: #2c3e50 !important;
+    border-color: #7c6f5c !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -243,7 +260,7 @@
 }
 
 [data-bs-theme="dark"] .contact-card:hover {
-    border-color: #3498db !important;
+    border-color: #b8a994 !important;
 }
 
 /* Elegant Form Validation */

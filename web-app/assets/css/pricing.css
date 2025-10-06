@@ -3,13 +3,15 @@
   /* LIGHT MODE — Premium White Elegance */
   --pricing-card-bg: linear-gradient(160deg, #ffffff 0%, #fafafa 100%);
   --pricing-card-border: #e8e8e8;
-  --pricing-text-primary: #1a1a1a; /* Deep charcoal for premium feel */
-  --pricing-text-secondary: #666666; /* Sophisticated gray */
-  --pricing-accent: #2c2c2c; /* Elegant dark accent */
-  --pricing-accent-hover: #000000; /* Pure black on hover */
-  --pricing-success: #404040; /* Success in dark tone */
+  --pricing-text-primary: #1a1a1a;
+  --pricing-text-secondary: #666666;
+  --pricing-accent: #2c2c2c;
+  --pricing-accent-hover: #000000;
+  --pricing-success: #404040;
   --pricing-featured-glow: rgba(0, 0, 0, 0.08);
-  --bg-secondary: rgba(248, 248, 248, 0.8); /* Subtle background for highlights */
+  --bg-secondary: rgba(248, 248, 248, 0.8);
+  --elegant-accent: #7c6f5c; /* Warm taupe untuk elegance */
+  --elegant-accent-light: #9c8e7a; /* Light taupe */
   
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -18,15 +20,15 @@
   /* DARK MODE — Premium Dark Sophistication */
   --pricing-card-bg: linear-gradient(170deg, #0a0a0a 0%, #151515 100%);
   --pricing-card-border: #2a2a2a;
-  --pricing-text-primary: #f5f5f5; /* Premium white text */
-  --pricing-text-secondary: #a0a0a0; /* Elegant light gray */
-  --pricing-accent: #e0e0e0; /* Sophisticated light accent */
-  --pricing-accent-hover: #ffffff; /* Pure white on hover */
-  --pricing-success: #d4d4d4; /* Success in light tone */
-  --pricing-featured-glow: rgba(255, 255, 255, 0.12);
-  --bg-secondary: rgba(30, 30, 30, 0.6); /* Dark background for highlights */
-  
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --pricing-text-primary: #f0f0f0;
+  --pricing-text-secondary: #a8a8a8;
+  --pricing-accent: #d0d0d0;
+  --pricing-accent-hover: #ffffff;
+  --pricing-success: #c8c8c8;
+  --pricing-featured-glow: rgba(255, 255, 255, 0.1);
+  --bg-secondary: rgba(40, 40, 40, 0.6);
+  --elegant-accent: #b8a994; /* Warm gold-taupe untuk dark mode */
+  --elegant-accent-light: #d4c8b8; /* Light gold-taupe */
 }
 
 /* Pricing Cards */
@@ -46,28 +48,30 @@
 .pricing-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  border-color: var(--pricing-accent);
+  border-color: var(--elegant-accent); /* Gunakan elegant accent */
 }
 
 .pricing-card.featured {
-  border: 2px solid var(--pricing-accent);
-  box-shadow: 0 0 0 1px var(--pricing-accent), 0 10px 40px var(--pricing-featured-glow);
+  border: 2px solid var(--elegant-accent); /* Elegant accent untuk featured */
+  box-shadow: 0 0 0 1px var(--elegant-accent), 0 10px 40px var(--pricing-featured-glow);
 }
 
-/* Popular Badge */
+/* Popular Badge - ELEGANT STYLE */
 .popular-badge {
   position: absolute;
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--pricing-accent), var(--pricing-accent-hover));
-  color: var(--pricing-card-bg);
+  background: linear-gradient(135deg, var(--elegant-accent), var(--elegant-accent-light));
+  color: #ffffff;
   padding: 6px 20px;
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
   backdrop-filter: blur(10px);
+  border: 1px solid var(--elegant-accent);
+  letter-spacing: 0.5px;
 }
 
 /* Pricing Header */
@@ -92,7 +96,7 @@
   margin: 0;
 }
 
-/* Pricing Display */
+/* Pricing Display - ELEGANT ACCENT */
 .pricing-display {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -101,7 +105,7 @@
 .pricing-amount {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--pricing-accent);
+  color: var(--elegant-accent); /* Gunakan elegant accent */
   line-height: 1;
   margin-bottom: 0.25rem;
 }
@@ -127,8 +131,8 @@
 }
 
 .discount-tag {
-  background: var(--pricing-success);
-  color: var(--pricing-card-bg);
+  background: var(--elegant-accent); /* Elegant accent */
+  color: #ffffff;
   padding: 2px 8px;
   border-radius: 12px;
   font-size: 0.75rem;
@@ -157,7 +161,7 @@
 }
 
 .highlight-item:hover {
-  border-color: var(--pricing-accent);
+  border-color: var(--elegant-accent); /* Elegant accent */
 }
 
 .highlight-icon {
@@ -166,7 +170,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pricing-accent);
+  color: var(--elegant-accent); /* Elegant accent */
   flex-shrink: 0;
 }
 
@@ -198,24 +202,24 @@
 }
 
 .feature-icon {
-  color: var(--pricing-success);
+  color: var(--elegant-accent); /* Elegant accent */
   font-size: 1rem;
   margin-top: 0.125rem;
   flex-shrink: 0;
 }
 
 .more-features {
-  color: var(--pricing-accent);
+  color: var(--elegant-accent); /* Elegant accent */
   font-weight: 600;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .more-features:hover {
-  color: var(--pricing-accent-hover);
+  color: var(--elegant-accent-light);
 }
 
-/* Pricing Actions */
+/* Pricing Actions - ELEGANT BUTTONS */
 .pricing-actions {
   margin-top: auto;
 }
@@ -223,8 +227,8 @@
 .btn-detail {
   width: 100%;
   background: transparent;
-  border: 1px solid var(--pricing-accent);
-  color: var(--pricing-accent);
+  border: 1px solid var(--elegant-accent); /* Elegant accent */
+  color: var(--elegant-accent); /* Elegant accent */
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -235,14 +239,14 @@
 }
 
 .btn-detail:hover {
-  background: var(--pricing-accent);
-  color: var(--pricing-card-bg);
+  background: var(--elegant-accent);
+  color: #ffffff;
 }
 
 .btn-primary {
   width: 100%;
-  background: var(--pricing-accent);
-  color: var(--pricing-card-bg);
+  background: var(--elegant-accent); /* Elegant accent */
+  color: #ffffff;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -255,38 +259,56 @@
 }
 
 .btn-primary:hover {
-  background: var(--pricing-accent-hover);
-  color: var(--pricing-card-bg);
+  background: var(--elegant-accent-light);
+  color: #ffffff;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(124, 111, 92, 0.3);
 }
 
-/* AI CTA Section */
+/* AI CTA Section - ELEGANT DESIGN */
 .ai-cta-section {
-  background: linear-gradient(135deg, var(--pricing-accent), var(--pricing-accent-hover));
-  color: var(--pricing-card-bg);
+  background: linear-gradient(135deg, var(--elegant-accent), var(--elegant-accent-light));
+  color: #ffffff;
   padding: 3rem 2rem;
   border-radius: 16px;
   text-align: center;
   margin: 4rem 0;
   backdrop-filter: blur(10px);
+  border: 1px solid var(--elegant-accent);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  opacity: 0.5;
 }
 
 .ai-cta-title {
-  color: var(--pricing-card-bg);
+  color: #ffffff;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
+  position: relative;
 }
 
 .ai-cta-description {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1.5rem;
   font-size: 1rem;
+  position: relative;
+  line-height: 1.6;
 }
 
 .ai-cta-button {
-  background: var(--pricing-card-bg);
-  color: var(--pricing-accent);
+  background: #ffffff;
+  color: var(--elegant-accent);
   padding: 0.75rem 2rem;
   border-radius: 8px;
   text-decoration: none;
@@ -295,12 +317,15 @@
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s ease;
+  border: 1px solid transparent;
+  position: relative;
 }
 
 .ai-cta-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  color: var(--pricing-accent);
+  background: #f8f8f8;
+  color: var(--elegant-accent);
 }
 
 /* Loading State */
@@ -312,7 +337,7 @@
 
 .loading-spinner {
   border: 3px solid var(--pricing-card-border);
-  border-top: 3px solid var(--pricing-accent);
+  border-top: 3px solid var(--elegant-accent); /* Elegant accent */
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -332,6 +357,7 @@
   overflow: hidden;
   background: var(--pricing-card-bg);
   color: var(--pricing-text-primary);
+  border: 1px solid var(--elegant-accent); /* Elegant accent */
 }
 
 .pricing-modal .modal-header {
@@ -354,6 +380,27 @@
   border-top: 1px solid var(--pricing-card-border);
   padding: 1.5rem;
   background: var(--pricing-card-bg);
+}
+
+/* Additional elegant touches */
+[data-bs-theme="dark"] .pricing-card {
+  background: linear-gradient(170deg, #0a0a0a 0%, #151515 100%);
+}
+
+[data-bs-theme="dark"] .highlight-item {
+  background: rgba(45, 45, 45, 0.6);
+}
+
+[data-bs-theme="dark"] .feature-item {
+  border-bottom-color: #333333;
+}
+
+/* Elegant focus states */
+.btn-detail:focus,
+.btn-primary:focus,
+.ai-cta-button:focus {
+  outline: 2px solid var(--elegant-accent);
+  outline-offset: 2px;
 }
 
 /* Responsive Design */
@@ -395,14 +442,6 @@
 .pricing-card:nth-child(2) { animation-delay: 0.1s; }
 .pricing-card:nth-child(3) { animation-delay: 0.2s; }
 .pricing-card:nth-child(4) { animation-delay: 0.3s; }
-
-/* Enhanced focus states for accessibility */
-.btn-detail:focus,
-.btn-primary:focus,
-.ai-cta-button:focus {
-  outline: 2px solid var(--pricing-accent);
-  outline-offset: 2px;
-}
 
 /* Smooth theme transition for all elements */
 * {

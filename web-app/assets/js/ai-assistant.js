@@ -1,6 +1,139 @@
 // Ashley AI Assistant - Fixed Textarea & Removed Process Card
 import { getSupabase } from './supabase-client.js';
 
+// ParticlesBackground
+class ParticlesBackground {
+  constructor() {
+    this.canvas = document.getElementById('particles-background');
+    if (!this.canvas) {
+      console.log('❌ Particles canvas not found');
+      return;
+    }
+    
+    this.ctx = this.canvas.getContext('2d');
+    this.particles = [];
+    this.mouse = { x: null, y: null, radius: 100 };
+    
+    this.init();
+  }
+
+  init() {
+    this.resizeCanvas();
+    this.createParticles();
+    this.animate();
+    
+    // Event listeners
+    window.addEventListener('resize', () => this.resizeCanvas());
+    window.addEventListener('mousemove', (e) => {
+      this.mouse.x = e.x;
+      this.mouse.y = e.y;
+    });
+    
+    window.addEventListener('mouseout', () => {
+      this.mouse.x = null;
+      this.mouse.y = null;
+    });
+
+    console.log('✅ Particles initialized');
+  }
+
+  resizeCanvas() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    this.createParticles();
+  }
+
+  createParticles() {
+    this.particles = [];
+    const particleCount = Math.min(30, Math.floor((window.innerWidth * window.innerHeight) / 25000));
+    
+    for (let i = 0; i < particleCount; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        size: Math.random() * 1.5 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.2 + 0.05
+      });
+    }
+  }
+
+  getParticleColor() {
+    const theme = document.documentElement.getAttribute('data-bs-theme');
+    return theme === 'dark' ? '255, 255, 255' : '0, 0, 0';
+  }
+
+  drawParticles() {
+    const color = this.getParticleColor();
+    
+    this.particles.forEach(particle => {
+      // Draw particle
+      this.ctx.beginPath();
+      this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      this.ctx.fillStyle = `rgba(${color}, ${particle.opacity})`;
+      this.ctx.fill();
+
+      // Draw connections
+      this.particles.forEach(otherParticle => {
+        const dx = particle.x - otherParticle.x;
+        const dy = particle.y - otherParticle.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 100) {
+          const opacity = 1 - (distance / 100);
+          this.ctx.beginPath();
+          this.ctx.strokeStyle = `rgba(${color}, ${opacity * 0.05})`;
+          this.ctx.lineWidth = 0.3;
+          this.ctx.moveTo(particle.x, particle.y);
+          this.ctx.lineTo(otherParticle.x, otherParticle.y);
+          this.ctx.stroke();
+        }
+      });
+
+      // Mouse interaction
+      if (this.mouse.x && this.mouse.y) {
+        const dx = particle.x - this.mouse.x;
+        const dy = particle.y - this.mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < this.mouse.radius) {
+          const force = (this.mouse.radius - distance) / this.mouse.radius;
+          const angle = Math.atan2(dy, dx);
+          particle.x += Math.cos(angle) * force * 1.5;
+          particle.y += Math.sin(angle) * force * 1.5;
+        }
+      }
+    });
+  }
+
+  updateParticles() {
+    this.particles.forEach(particle => {
+      particle.x += particle.speedX;
+      particle.y += particle.speedY;
+
+      // Bounce off walls
+      if (particle.x <= 0 || particle.x >= this.canvas.width) {
+        particle.speedX *= -1;
+      }
+      if (particle.y <= 0 || particle.y >= this.canvas.height) {
+        particle.speedY *= -1;
+      }
+
+      // Keep particles within bounds
+      particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+      particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+    });
+  }
+
+  animate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.updateParticles();
+    this.drawParticles();
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
 class AshleyAIAssistant {
     constructor() {
         this.CACHE_KEYS = {
@@ -15,6 +148,7 @@ class AshleyAIAssistant {
         this.chatSessions = [];
         this.userId = null;
         this.supabase = null;
+        this.particles = null;
         
         this.init();
     }
@@ -32,6 +166,7 @@ class AshleyAIAssistant {
     }
 
     async initialize() {
+        this.initializeParticles();
         this.initializeElements();
         await this.initializeSupabase();
         await this.initializeUser();
@@ -39,6 +174,15 @@ class AshleyAIAssistant {
         this.initializePromptSystem();
         await this.loadChatSessions();
         console.log('🎯 Ashley AI Assistant initialized');
+    }
+
+    initializeParticles() {
+        try {
+            this.particles = new ParticlesBackground();
+            console.log('✅ Particles background initialized');
+        } catch (error) {
+            console.warn('⚠️ Particles initialization failed:', error);
+        }
     }
 
     initializeElements() {
@@ -88,10 +232,9 @@ class AshleyAIAssistant {
                 }
             });
             
-            // FIX: Better textarea resize
             this.userInput.addEventListener('input', () => {
                 this.autoResizeTextarea();
-                this.fixTextareaBug(); // Tambah fix untuk bug
+                this.fixTextareaBug();
             });
         }
 
@@ -118,31 +261,22 @@ class AshleyAIAssistant {
         });
     }
 
-    // FIX: Better textarea handling
     autoResizeTextarea() {
         if (!this.userInput) return;
         
-        // Reset height to auto first
         this.userInput.style.height = 'auto';
-        
-        // Calculate new height (max 120px untuk mobile friendly)
         const newHeight = Math.min(this.userInput.scrollHeight, 120);
         this.userInput.style.height = newHeight + 'px';
-        
-        // Ensure textarea is visible
         this.userInput.style.overflowY = this.userInput.scrollHeight > 120 ? 'auto' : 'hidden';
     }
 
-    // FIX: Additional bug fix untuk textarea
     fixTextareaBug() {
         if (!this.userInput) return;
         
-        // Force reflow untuk fix rendering bug
         this.userInput.style.display = 'none';
-        this.userInput.offsetHeight; // Trigger reflow
+        this.userInput.offsetHeight;
         this.userInput.style.display = 'block';
         
-        // Focus tetap di textarea
         if (!this.isLoading) {
             this.userInput.focus();
         }
@@ -180,7 +314,6 @@ class AshleyAIAssistant {
                     } else if (card.classList.contains('showcase')) {
                         question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
                     }
-                    // HAPUS: process card dihapus
                     
                     if (question) {
                         this.autoSendPrompt(question);
@@ -258,7 +391,6 @@ class AshleyAIAssistant {
             
             await this.updateSessionTitle(sessionToUse, message);
             
-            // FIX: Clear input sebelum API call
             this.userInput.value = '';
             this.autoResizeTextarea();
             
@@ -302,7 +434,6 @@ class AshleyAIAssistant {
             this.isLoading = false;
             this.toggleLoadingIndicator(false);
             
-            // FIX: Pastikan textarea bisa dipakai lagi
             if (this.userInput) {
                 this.userInput.disabled = false;
                 this.userInput.focus();
@@ -380,7 +511,7 @@ class AshleyAIAssistant {
             if (this.sendBtn) this.sendBtn.disabled = false;
             if (this.userInput) {
                 this.userInput.disabled = false;
-                setTimeout(() => this.userInput.focus(), 100); // Delay sedikit untuk stability
+                setTimeout(() => this.userInput.focus(), 100);
             }
         }
         this.scrollToBottom();
@@ -412,6 +543,12 @@ class AshleyAIAssistant {
             this.themeToggleBtn.innerHTML = newTheme === 'dark' ? '<i class="bi bi-moon-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
         }
         this.setCache(this.CACHE_KEYS.THEME, newTheme);
+        
+        if (this.particles) {
+            setTimeout(() => {
+                this.particles.createParticles();
+            }, 100);
+        }
     }
 
     async copyToClipboard(text, button) {

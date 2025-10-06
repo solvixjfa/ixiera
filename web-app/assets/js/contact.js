@@ -322,7 +322,7 @@ Looking forward to discussing this further!`;
         if (formMessage) {
             formMessage.innerHTML = `
                 <div class="alert elegant-alert elegant-alert-success alert-dismissible fade show" role="alert">
-                    <strong>🎉 Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours.
+                    <strong> Thank you!</strong> Your message has been sent successfully. We'll contact you within 24 hours.
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             `;
