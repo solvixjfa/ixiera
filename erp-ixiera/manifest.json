@@ -1,0 +1,21 @@
+{
+  "name": "Ixiera Agency", 
+  "short_name": "Ixiera",
+  "description": "Agency Management System",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#D4AF37",
+  "icons": [
+    {
+      "src": "https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png", 
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
