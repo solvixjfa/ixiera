@@ -1,187 +1,457 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="ERP IXIERA - Solopreneur Powerhouse">
-    <meta name="author" content="IXIERA">
-    <link rel="shortcut icon" href="img/icons/icon-48x48.png" />
-    <title>IXIERA ERP - Projects</title>
-    <link href="css/app.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IXIERA ERP | CRM Projects</title>
+  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <style>
+    .filters-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .filter-label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.5rem;
+      display: block;
+      font-size: 0.875rem;
+    }
+    .filter-select, .filter-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      transition: border-color 0.2s;
+    }
+    .filter-select:focus, .filter-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+      margin-right: 0.5rem;
+    }
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+    .btn-outline-primary {
+      background: transparent;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+    }
+    .btn-outline-primary:hover {
+      background: #4f46e5;
+      color: white;
+    }
+    .btn-outline-info {
+      background: transparent;
+      color: #06b6d4;
+      border: 2px solid #06b6d4;
+    }
+    .btn-outline-info:hover {
+      background: #06b6d4;
+      color: white;
+    }
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+    .avatar-placeholder {
+      width: 32px;
+      height: 32px;
+      background: #e9ecef;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+      font-weight: bold;
+      color: #6b7280;
+    }
+    .progress-item {
+      margin-bottom: 1rem;
+    }
+    .project-name {
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+    .progress-text {
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.875rem;
+    }
+    .progress {
+      background-color: #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      transition: width 0.3s ease;
+    }
+    .badge-overdue {
+      background: #ef4444;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .badge-completed {
+      background: #10b981;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .badge-active {
+      background: #3b82f6;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .badge-planning {
+      background: #f59e0b;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .cache-indicator {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
-<body>
-    <div class="wrapper">
-        <nav id="sidebar" class="sidebar js-sidebar">
-            <div class="sidebar-content js-simplebar">
-                <a class="sidebar-brand" href="index.html">
-                    <span class="align-middle">IXIERA ERP</span>
-                </a>
-                <ul class="sidebar-nav">
-                    <li class="sidebar-header">Core</li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="index.html">
-                            <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-header">CRM</li>
-                    <li class="sidebar-item active">
-                        <a data-bs-toggle="collapse" class="sidebar-link" href="#crm-nav">
-                            <i class="align-middle" data-feather="users"></i> <span class="align-middle">CRM</span>
-                        </a>
-                        <ul id="crm-nav" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="crm-clients.html">Clients</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="crm-inquiries.html">Inquiries</a></li>
-                            <li class="sidebar-item active"><a class="sidebar-link" href="crm-projects.html">Projects</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="crm-products.html">Products</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-header">Content</li>
-                    <li class="sidebar-item">
-                        <a data-bs-toggle="collapse" class="sidebar-link collapsed" href="#blog-nav">
-                            <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Blog</span>
-                        </a>
-                        <ul id="blog-nav" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                            <li class="sidebar-item"><a class="sidebar-link" href="blog-posts.html">Posts</a></li>
-                            <li class="sidebar-item"><a class="sidebar-link" href="blog-comments.html">Comments</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-header">Support & Others</li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="feedback.html">
-                            <i class="align-middle" data-feather="message-circle"></i> <span class="align-middle">Feedback</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link" href="chat.html">
-                            <i class="align-middle" data-feather="message-square"></i> <span class="align-middle">Chat History</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="main">
-            <nav class="navbar navbar-expand navbar-light navbar-bg">
-                <a class="sidebar-toggle js-sidebar-toggle">
-                    <i class="hamburger align-self-center"></i>
-                </a>
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav navbar-align">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="darkModeToggle">
-                                <i class="align-middle" data-feather="moon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="CEO" /> <span class="text-dark">CEO</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Profile</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" id="logout-link">Log out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <main class="content">
-                <div class="container-fluid p-0">
-                    <h1 class="h3 mb-3"><strong>Projects</strong> CRM</h1>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">List of Projects</h5>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#crudModal" id="addNewBtn">
-                                            <i class="align-middle" data-feather="plus"></i> Add New Project
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-striped my-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Title</th>
-                                                    <th>Client Name</th>
-                                                    <th>Status</th>
-                                                    <th>Budget</th>
-                                                    <th class="d-none d-md-table-cell">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="projects-table-body">
-                                                </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
 
-    <div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="crudModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="crudModalLabel">Add New Project</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="crudForm">
-                    <div class="modal-body">
-                        <input type="hidden" id="projectId">
-                        <div class="mb-3">
-                            <label for="projectTitle" class="form-label">Project Title</label>
-                            <input type="text" class="form-control" id="projectTitle" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="clientName" class="form-label">Client Name</label>
-                            <input type="text" class="form-control" id="clientName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="serviceType" class="form-label">Service Type</label>
-                            <input type="text" class="form-control" id="serviceType">
-                        </div>
-                        <div class="mb-3">
-                            <label for="projectBudget" class="form-label">Budget</label>
-                            <input type="text" class="form-control" id="projectBudget">
-                        </div>
-                        <div class="mb-3">
-                            <label for="projectStatus" class="form-label">Status</label>
-                            <select class="form-select" id="projectStatus" required>
-                                <option value="in-progress">In Progress</option>
-                                <option value="completed">Completed</option>
-                                <option value="paused">Paused</option>
-                                <option value="cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="projectNeeds" class="form-label">Project Needs</label>
-                            <textarea class="form-control" id="projectNeeds" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="saveBtn">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+<body>
+  <div class="layer"></div>
+  <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+  <div class="page-flex">
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="js/app.js"></script>
-    <script type="module" src="js/main-projects.js"></script>
-    <script>
-        feather.replace();
-    </script>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-start">
+        <div class="sidebar-head">
+          <a href="/" class="logo-wrapper" title="Home">
+            <span class="sr-only">Home</span>
+            <span class="icon logo" aria-hidden="true"></span>
+            <div class="logo-text">
+              <span class="logo-title">IXIERA</span>
+              <span class="logo-subtitle">ERP</span>
+            </div>
+          </a>
+          <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+            <span class="sr-only">Toggle menu</span>
+            <span class="icon menu-toggle" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="sidebar-body">
+          <ul class="sidebar-body-menu">
+            <li>
+              <a href="index.html"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+            </li>
+            
+            <!-- CRM SECTION -->
+            <li>
+              <a class="show-cat-btn" href="##">
+                <span class="icon user-3" aria-hidden="true"></span>CRM
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li><a href="crm-clients.html">Clients</a></li>
+                <li><a href="crm-inquiries.html">Inquiries</a></li>
+                <li><a class="active" href="crm-projects.html">Projects</a></li>
+              </ul>
+            </li>
+
+            <!-- FINANCE SECTION -->
+            <li>
+              <a class="show-cat-btn" href="##">
+                <span class="icon paper" aria-hidden="true"></span>Finance
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li><a href="invoices.html">Invoices</a></li>
+                <li><a href="reports.html">Reports</a></li>
+              </ul>
+            </li>
+          </ul>
+          <span class="system-menu__title">system</span>
+          <ul class="sidebar-body-menu">
+            <li>
+              <a href="settings.html"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+            </li>
+            <li>
+              <a href="#" id="logout-btn"><span class="icon log-out" aria-hidden="true"></span>Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <a href="##" class="sidebar-user">
+          <span class="sidebar-user-img">
+            <picture><source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-01.png" alt="User name"></picture>
+          </span>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user__title" id="user-name">CEO</span>
+            <span class="sidebar-user__subtitle" id="user-role">IXIERA</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <!-- MAIN NAV -->
+      <nav class="main-nav--bg">
+        <div class="container main-nav">
+          <div class="main-nav-start">
+            <div class="search-wrapper">
+              <i data-feather="search" aria-hidden="true"></i>
+              <input type="text" placeholder="Search projects..." id="global-search">
+            </div>
+          </div>
+          <div class="main-nav-end">
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+              <span class="sr-only">Toggle menu</span>
+              <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+            </button>
+            
+            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+              <span class="sr-only">Switch theme</span>
+              <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+              <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+            </button>
+
+            <!-- Refresh Button -->
+            <button class="btn btn-outline-primary btn-sm" id="refresh-btn" title="Refresh Data">
+              <i data-feather="refresh-cw" class="me-1"></i> Refresh
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <main class="main users chart-page" id="skip-target">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="main-title">CRM Projects</h2>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm" id="clear-cache-btn" title="Clear Cache">
+                <i data-feather="trash-2" class="me-1"></i> Clear Cache
+              </button>
+              <a href="crm-inquiries.html" class="btn btn-primary">
+                <i data-feather="plus" class="me-2"></i>New Project
+              </a>
+            </div>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="row stat-cards">
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon primary">
+                  <i data-feather="briefcase" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="total-projects">0</p>
+                  <p class="stat-cards-info__title">Total Projects</p>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon success">
+                  <i data-feather="activity" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="active-projects">0</p>
+                  <p class="stat-cards-info__title">Active Projects</p>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon warning">
+                  <i data-feather="check-circle" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="completed-projects">0</p>
+                  <p class="stat-cards-info__title">Completed</p>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon danger">
+                  <i data-feather="alert-triangle" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="overdue-projects">0</p>
+                  <p class="stat-cards-info__title">Overdue</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Project Progress Section -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="filters-card">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h4 class="mb-0">Active Projects Progress</h4>
+                  <small class="text-muted" id="progress-update-time"></small>
+                </div>
+                <div id="project-progress-bars">
+                  <!-- Progress bars will be populated by JavaScript -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="filters-card">
+                <div class="filters-body">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                      <label class="filter-label">Project Status</label>
+                      <select class="filter-select" id="status-filter">
+                        <option value="">All Status</option>
+                        <option value="planning">Planning</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="overdue">Overdue</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="filter-label">Service Type</label>
+                      <select class="filter-select" id="service-filter">
+                        <option value="">All Services</option>
+                        <option value="website">Website Development</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="design">UI/UX Design</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="filter-label">Timeline</label>
+                      <select class="filter-select" id="timeline-filter">
+                        <option value="">All Timelines</option>
+                        <option value="this-week">This Week</option>
+                        <option value="this-month">This Month</option>
+                        <option value="next-month">Next Month</option>
+                        <option value="overdue">Overdue</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="filter-label">Priority</label>
+                      <select class="filter-select" id="priority-filter">
+                        <option value="">All Priorities</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projects Table -->
+          <div class="row">
+            <div class="col-12">
+              <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>Project</th>
+                      <th>Client</th>
+                      <th>Service</th>
+                      <th>Timeline</th>
+                      <th>Progress</th>
+                      <th>Status</th>
+                      <th>Budget</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="projects-table-body">
+                    <tr>
+                      <td colspan="8" class="text-center py-4">
+                        <div class="spinner-border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="container footer--flex">
+          <div class="footer-start">
+            <p>2024 © IXIERA ERP - Agency Management System</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Cache Indicator -->
+  <div id="cache-indicator" class="cache-indicator" style="display: none;">
+    Using cached data
+  </div>
+
+  <!-- Chart library -->
+  <script src="./plugins/chart.min.js"></script>
+  <!-- Icons library -->
+  <script src="plugins/feather.min.js"></script>
+  
+  <!-- Our Modules -->
+  <script type="module" src="js/shared.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/crm-projects.js"></script>
+  
+  <!-- Template Scripts -->
+  <script src="js/script.js"></script>
 </body>
 </html>

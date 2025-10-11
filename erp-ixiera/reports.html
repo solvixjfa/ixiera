@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IXIERA ERP | Reports & Analytics</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./css/style.min.css">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./css/custom.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="layer"></div>
+<!-- ! Body -->
+<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+<div class="page-flex">
+  <!-- ! Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-start">
+        <div class="sidebar-head">
+            <a href="/" class="logo-wrapper" title="Home">
+                <span class="sr-only">Home</span>
+                <span class="icon logo" aria-hidden="true"></span>
+                <div class="logo-text">
+                    <span class="logo-title">IXIERA</span>
+                    <span class="logo-subtitle">ERP</span>
+                </div>
+            </a>
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                <span class="sr-only">Toggle menu</span>
+                <span class="icon menu-toggle" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="sidebar-body-menu">
+                <li>
+                    <a href="index.html"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                </li>
+                
+                <!-- CRM Menu -->
+                <li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon user-3" aria-hidden="true"></span>CRM
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="crm-clients.html">Clients</a>
+                        </li>
+                        <li>
+                            <a href="crm-inquiries.html">Inquiries</a>
+                        </li>
+                        <li>
+                            <a href="crm-projects.html">Projects</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Finance Menu -->
+                <li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon paper" aria-hidden="true"></span>Finance
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="invoices.html">Invoices</a>
+                        </li>
+                        <li>
+                            <a class="active" href="reports.html">Reports</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Content Menu -->
+                <li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon document" aria-hidden="true"></span>Content
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="blog-posts.html">Blog Posts</a>
+                        </li>
+                        <li>
+                            <a href="newsletter.html">Newsletter</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <span class="system-menu__title">system</span>
+            <ul class="sidebar-body-menu">
+                <li>
+                    <a href="settings.html"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+                </li>
+                <li>
+                    <a href="#" id="logout-btn"><span class="icon log-out" aria-hidden="true"></span>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <a href="##" class="sidebar-user">
+            <span class="sidebar-user-img">
+                <picture><source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-01.png" alt="User name"></picture>
+            </span>
+            <div class="sidebar-user-info">
+                <span class="sidebar-user__title" id="user-name">Nafisa Sh.</span>
+                <span class="sidebar-user__subtitle" id="user-role">CEO</span>
+            </div>
+        </a>
+    </div>
+</aside>
+
+  <div class="main-wrapper">
+    <!-- ! Main nav -->
+    <nav class="main-nav--bg">
+      <div class="container main-nav">
+        <div class="main-nav-start">
+          <div class="search-wrapper">
+            <i data-feather="search" aria-hidden="true"></i>
+            <input type="text" placeholder="Search reports..." required id="reports-search">
+          </div>
+        </div>
+        <div class="main-nav-end">
+          <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+            <span class="sr-only">Toggle menu</span>
+            <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+          </button>
+          
+          <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+            <span class="sr-only">Switch theme</span>
+            <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+            <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+          </button>
+          
+          <div class="notification-wrapper">
+            <button class="gray-circle-btn dropdown-btn" title="To messages" type="button">
+              <span class="sr-only">To messages</span>
+              <span class="icon notification" aria-hidden="true" id="notification-icon"></span>
+            </button>
+            <ul class="users-item-dropdown notification-dropdown dropdown">
+              <li>
+                <a href="crm-inquiries.html">
+                  <div class="notification-dropdown-icon info">
+                    <i data-feather="mail"></i>
+                  </div>
+                  <div class="notification-dropdown-text">
+                    <span class="notification-dropdown__title" id="new-leads-count">0 new leads</span>
+                    <span class="notification-dropdown__subtitle">Check new inquiries</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="crm-projects.html">
+                  <div class="notification-dropdown-icon warning">
+                    <i data-feather="clock" aria-hidden="true"></i>
+                  </div>
+                  <div class="notification-dropdown-text">
+                    <span class="notification-dropdown__title" id="urgent-projects-count">0 urgent projects</span>
+                    <span class="notification-dropdown__subtitle">Deadline approaching</span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="link-to-page" href="crm-inquiries.html">Go to Inquiries page</a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="nav-user-wrapper">
+            <button href="##" class="nav-user-btn dropdown-btn" title="My profile" type="button">
+              <span class="sr-only">My profile</span>
+              <span class="nav-user-img">
+                <picture><source srcset="./img/avatar/avatar-illustrated-02.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-02.png" alt="User name"></picture>
+              </span>
+            </button>
+            <ul class="users-item-dropdown nav-user-dropdown dropdown">
+              <li><a href="##">
+                  <i data-feather="user" aria-hidden="true"></i>
+                  <span>Profile</span>
+                </a></li>
+              <li><a href="settings.html">
+                  <i data-feather="settings" aria-hidden="true"></i>
+                  <span>Account settings</span>
+                </a></li>
+              <li><a class="danger" href="#" id="nav-logout-btn">
+                  <i data-feather="log-out" aria-hidden="true"></i>
+                  <span>Log out</span>
+                </a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ! Main -->
+    <main class="main users chart-page" id="skip-target">
+      <div class="container">
+        <!-- Header Section -->
+        <div class="row align-items-center mb-4">
+          <div class="col">
+            <h2 class="main-title">Reports & Analytics</h2>
+          </div>
+          <div class="col-auto">
+            <div class="btn-group">
+              <button class="btn btn-primary" id="refresh-reports">
+                <i data-feather="refresh-cw" class="me-2"></i>Refresh Data
+              </button>
+              <button class="btn btn-success" id="export-reports">
+                <i data-feather="download" class="me-2"></i>Export CSV
+              </button>
+              <button class="btn btn-outline-secondary" onclick="clearEnhancedReportsCache()" title="Clear Cache">
+                <i data-feather="trash-2" class="me-2"></i>Clear Cache
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Date Range Filter -->
+        <div class="white-block date-filter-section">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h4 class="mb-3"> Filter Period</h4>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">From Date</label>
+                  <input type="date" class="form-control" id="date-from">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">To Date</label>
+                  <input type="date" class="form-control" id="date-to">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Quick Select</label>
+                  <select class="form-control" id="period-select">
+                    <option value="7days">Last 7 Days</option>
+                    <option value="30days" selected>Last 30 Days</option>
+                    <option value="90days">Last 90 Days</option>
+                    <option value="year">This Year</option>
+                    <option value="all">All Time</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <div class="h2 mb-1 text-primary" id="total-revenue-display">Rp 0</div>
+                <p class="mb-1 text-muted">Total Revenue (Enhanced)</p>
+                <span class="badge-pill success">
+                  <i data-feather="trending-up" class="me-1" width="14"></i>
+                  <span id="revenue-growth">0%</span> growth
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial Overview -->
+        <div class="row stat-cards">
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon primary">
+                <i data-feather="dollar-sign" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="total-revenue">Rp 0</p>
+                <p class="stat-cards-info__title">Total Revenue</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit success">
+                    <i data-feather="trending-up" aria-hidden="true"></i>
+                    <span id="revenue-growth-percent">0%</span>
+                  </span>
+                  vs previous period
+                </p>
+              </div>
+            </article>
+          </div>
+          
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon warning">
+                <i data-feather="clock" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="pending-invoices">0</p>
+                <p class="stat-cards-info__title">Pending Invoices</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit danger">
+                    <i data-feather="alert-circle" aria-hidden="true"></i>
+                    <span id="pending-amount">Rp 0</span>
+                  </span>
+                  Awaiting payment
+                </p>
+              </div>
+            </article>
+          </div>
+          
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon success">
+                <i data-feather="check-circle" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="completed-projects">0</p>
+                <p class="stat-cards-info__title">Completed Projects</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit success">
+                    <i data-feather="trending-up" aria-hidden="true"></i>
+                    <span id="completion-rate">0%</span>
+                  </span>
+                  Success rate
+                </p>
+              </div>
+            </article>
+          </div>
+          
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="users" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="active-clients">0</p>
+                <p class="stat-cards-info__title">Active Clients</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit success">
+                    <i data-feather="trending-up" aria-hidden="true"></i>
+                    <span id="client-growth">0</span>
+                  </span>
+                  New this period
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Service Revenue Breakdown -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Service Revenue Breakdown</h3>
+                <p>Detailed revenue distribution by service type</p>
+              </div>
+              <div id="service-revenue-breakdown" class="revenue-breakdown">
+                <div class="text-center py-4 text-muted">
+                  <i data-feather="bar-chart-2" class="mb-2" width="32"></i>
+                  <p>Loading service revenue data...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="row mt-4">
+          <!-- Revenue Chart -->
+          <div class="col-lg-8">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Revenue Analytics</h3>
+                <p>Monthly revenue trends with projections</p>
+              </div>
+              <div class="chart">
+                <canvas id="revenueChart" height="300"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Projects Status -->
+          <div class="col-lg-4">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Projects Status</h3>
+                <p>Distribution by current status</p>
+              </div>
+              <div class="chart">
+                <canvas id="projectsStatusChart" height="300"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <!-- Invoice Status -->
+          <div class="col-lg-6">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Invoice Status</h3>
+                <p>Current invoice distribution</p>
+              </div>
+              <div class="chart">
+                <canvas id="invoiceStatusChart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Service Type Performance -->
+          <div class="col-lg-6">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Service Performance</h3>
+                <p>Revenue by service type (Enhanced)</p>
+              </div>
+              <div class="chart">
+                <canvas id="serviceTypeChart" height="250"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Reports Tables -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Recent Completed Projects</h3>
+                <p>Latest project deliveries and revenue</p>
+              </div>
+              <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>Project</th>
+                      <th>Client</th>
+                      <th>Service</th>
+                      <th>Budget</th>
+                      <th>Completed</th>
+                      <th>Revenue</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-projects-body">
+                    <tr>
+                      <td colspan="7" class="text-center py-4">
+                        <div class="spinner-border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Metrics -->
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Conversion Rate</h3>
+                <p>Inquiry to project conversion</p>
+              </div>
+              <div class="text-center py-4">
+                <div class="display-4 text-primary" id="conversion-rate">0%</div>
+                <p class="text-muted">Inquiry → Project</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Average Project Value</h3>
+                <p>Mean project budget</p>
+              </div>
+              <div class="text-center py-4">
+                <div class="display-4 text-success" id="avg-project-value">Rp 0</div>
+                <p class="text-muted">Per completed project</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3> Client Retention</h3>
+                <p>Repeat business rate</p>
+              </div>
+              <div class="text-center py-4">
+                <div class="display-4 text-warning" id="retention-rate">0%</div>
+                <p class="text-muted">Returning clients</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Status -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <h3>🔍 Data Status</h3>
+                <p>Enhanced analytics system information</p>
+              </div>
+              <div class="row text-center">
+                <div class="col-md-3">
+                  <div class="h5 text-primary" id="data-version">v2.0</div>
+                  <small class="text-muted">Data Version</small>
+                </div>
+                <div class="col-md-3">
+                  <div class="h5 text-success" id="cache-status">Active</div>
+                  <small class="text-muted">Cache Status</small>
+                </div>
+                <div class="col-md-3">
+                  <div class="h5 text-info" id="data-sources">2 Sources</div>
+                  <small class="text-muted">Revenue Sources</small>
+                </div>
+                <div class="col-md-3">
+                  <div class="h5 text-warning" id="last-updated">Just now</div>
+                  <small class="text-muted">Last Updated</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <!-- ! Footer -->
+    <footer class="footer">
+      <div class="container footer--flex">
+        <div class="footer-start">
+          <p>2024 © IXIERA ERP - <a href="https://ixiera.com" target="_blank" rel="noopener noreferrer">Enhanced Analytics System</a></p>
+        </div>
+        <ul class="footer-end">
+          <li><a href="##">Help</a></li>
+          <li><a href="##">Contact</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+</div>
+
+<!-- Chart library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Icons library -->
+<script src="plugins/feather.min.js"></script>
+
+<!-- Our JavaScript Modules -->
+<script type="module" src="js/shared.js"></script>
+<script type="module" src="js/auth.js"></script>
+<script type="module" src="js/reports.js"></script>
+
+<!-- Template Scripts -->
+<script src="js/script.js"></script>
+
+<script>
+// Global function untuk clear cache dari HTML
+function clearEnhancedReportsCache() {
+    if (window.clearEnhancedReportsCache) {
+        window.clearEnhancedReportsCache();
+        showToast('Cache cleared successfully!', 'success');
+        
+        // Refresh data setelah clear cache
+        setTimeout(() => {
+            if (window.loadEnhancedReports) {
+                window.loadEnhancedReports();
+            }
+        }, 1000);
+    } else {
+        showToast('Enhanced reports not loaded yet', 'warning');
+    }
+}
+
+// Helper function untuk toast
+function showToast(message, type = 'info') {
+    // Simple toast implementation
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#3b82f6'};
+        color: white;
+        border-radius: 8px;
+        z-index: 10000;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        font-family: system-ui, -apple-system, sans-serif;
+    `;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (toast.parentNode) {
+            document.body.removeChild(toast);
+        }
+    }, 3000);
+}
+</script>
+
+<style>
+/* Enhanced Reports Styles */
+.revenue-breakdown {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.service-revenue-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s;
+}
+
+.service-revenue-item:hover {
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+}
+
+.service-revenue-item:last-child {
+    border-bottom: none;
+}
+
+.service-name {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+.service-amount {
+    font-weight: 700;
+    color: #059669;
+    font-size: 0.95rem;
+}
+
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge-pill.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.badge-pill.warning {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+}
+
+.badge-pill.danger {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* Chart container enhancements */
+.white-block {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+    margin-bottom: 1.5rem;
+}
+
+.top-cat-title h3 {
+    margin-bottom: 0.5rem;
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.top-cat-title p {
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+/* Loading states */
+.spinner-border {
+    width: 2rem;
+    height: 2rem;
+}
+
+.text-muted {
+    color: #6b7280 !important;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .white-block {
+        padding: 1rem;
+    }
+    
+    .service-revenue-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Data status indicators */
+#data-version, #cache-status, #data-sources, #last-updated {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+}
+</style>
+</body>
+</html>

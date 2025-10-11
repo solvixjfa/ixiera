@@ -1,5 +1,10 @@
 {
-  "rewrites": [
-    { "source": "/:slug", "destination": "/:slug.html" }
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*.html",
+      "destination": "/:path*",
+      "permanent": true
+    }
   ]
 }

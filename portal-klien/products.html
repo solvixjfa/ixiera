@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>IXIERA Portal - Product Catalog</title>
+    <title>IXIERA Portal - Katalog Layanan</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
 
@@ -64,23 +64,23 @@
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon"><i class="fas fa-th-large"></i></span>
-                <h4 class="text-section">Portal Menu</h4>
+                <h4 class="text-section">Menu Portal</h4>
               </li>
               <li class="nav-item active">
-                <a href="products.html"><i class="fas fa-cube"></i><p>New Products</p></a>
+                <a href="products.html"><i class="fas fa-cube"></i><p>Layanan Baru</p></a>
               </li>
               <li class="nav-item">
-                <a href="order-history.html"><i class="fas fa-clock"></i><p>Order History</p></a>
+                <a href="project-hub.html"><i class="fas fa-rocket"></i><p>Project Hub</p></a>
               </li>
               <li class="nav-item">
-                <a href="community.html"><i class="fas fa-comments"></i><p>Community Forum</p></a>
+                <a href="community.html"><i class="fas fa-comments"></i><p>Komunitas</p></a>
               </li>
               <li class="nav-item">
                 <a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a>
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon"><i class="fas fa-user"></i></span>
-                <h4 class="text-section">Account</h4>
+                <h4 class="text-section">Akun</h4>
               </li>
               <li class="nav-item">
                 <a href="submission.html"><i class="fas fa-cog"></i><p>Submission Hub</p></a>
@@ -126,8 +126,8 @@
                       <img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle"/>
                     </div>
                     <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold" id="username-display">Client</span>
+                      <span class="op-7">Hai,</span>
+                      <span class="fw-bold" id="username-display">Klien</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -138,15 +138,15 @@
                             <img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/>
                           </div>
                           <div class="u-text">
-                            <h4 id="username-dropdown">Client Name</h4>
-                            <p class="text-muted" id="user-email-dropdown">client@email.com</p>
-                            <a href="submission.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                            <h4 id="username-dropdown">Nama Klien</h4>
+                            <p class="text-muted" id="user-email-dropdown">klien@email.com</p>
+                            <a href="submission.html" class="btn btn-xs btn-secondary btn-sm">Lihat Profil</a>
                           </div>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="submission.html">Account Setting</a>
+                        <a class="dropdown-item" href="submission.html">Pengaturan Akun</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
                       </li>
@@ -165,13 +165,13 @@
             <div class="page-header">
               <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                 <div>
-                  <h3 class="fw-bold mb-2">Product Catalog</h3>
-                  <h6 class="op-7 mb-2">Explore our latest offerings and place an order.</h6>
+                  <h3 class="fw-bold mb-2">Katalog Layanan</h3>
+                  <h6 class="op-7 mb-2">Jelajahi layanan terbaru kami dan pesan project Anda.</h6>
                 </div>
                 <div class="ms-md-auto py-2 py-md-0">
                   <div class="d-flex gap-2">
                     <div class="input-group" style="width: 250px;">
-                      <input type="text" class="form-control" placeholder="Search products..." id="product-search">
+                      <input type="text" class="form-control" placeholder="Cari layanan..." id="product-search">
                       <button class="btn btn-outline-secondary" type="button">
                         <i class="fas fa-search"></i>
                       </button>
@@ -191,11 +191,11 @@
                   <div class="d-flex flex-wrap gap-3 justify-content-center">
                     <div class="quick-stat-item">
                       <i class="fas fa-cube me-2"></i>
-                      <span>Available Products: <span id="products-count">0</span></span>
+                      <span>Layanan Tersedia: <span id="products-count">0</span></span>
                     </div>
                     <div class="quick-stat-item">
                       <i class="fas fa-clock me-2"></i>
-                      <span>Last Updated: <span id="last-updated-time">Just now</span></span>
+                      <span>Update Terakhir: <span id="last-updated-time">Baru saja</span></span>
                     </div>
                   </div>
                 </div>
@@ -206,9 +206,9 @@
             <div id="product-gallery" class="row">
               <div id="gallery-loader" class="col-12 text-center p-5">
                 <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                  <span class="visually-hidden">Loading products...</span>
+                  <span class="visually-hidden">Memuat layanan...</span>
                 </div>
-                <p class="mt-3">Loading Products...</p>
+                <p class="mt-3">Memuat Layanan...</p>
               </div>
               <!-- Product cards akan dimasukkan di sini oleh products.js -->
             </div>
@@ -216,8 +216,8 @@
             <!-- Empty State -->
             <div id="empty-products" class="text-center p-5" style="display: none;">
               <i class="fas fa-cubes fa-3x text-muted mb-3"></i>
-              <h4>No Products Available</h4>
-              <p class="text-muted">Check back later for new product offerings.</p>
+              <h4>Tidak Ada Layanan Tersedia</h4>
+              <p class="text-muted">Silakan cek kembali nanti untuk penawaran layanan baru.</p>
             </div>
           </div>
         </div>
@@ -229,125 +229,224 @@
             <div class="row gy-4">
               <div class="col-lg-4 col-md-12">
                 <h6 class="footer-heading mb-3">
-                  <i class="fas fa-cube me-2"></i>Portal by IXIERA
+                  <i class="fas fa-cube me-2"></i>Portal oleh IXIERA
                 </h6>
-                <p>An integrated platform for all your needs. Explore products, track orders, and join our community.</p>
+                <p class="text-muted">Platform terintegrasi untuk semua kebutuhan digital Anda. Jelajahi layanan, lacak project, dan bergabung dengan komunitas kami.</p>
               </div>
               <div class="col-lg-2 col-md-6">
-                <h6 class="footer-heading mb-3">Quick Links</h6>
+                <h6 class="footer-heading mb-3">Tautan Cepat</h6>
                 <ul class="list-unstyled quick-links">
-                  <li class="mb-2"><a href="index.html">Dashboard</a></li>
-                  <li class="mb-2"><a href="products.html">New Products</a></li>
-                  <li class="mb-2"><a href="order-history.html">Order History</a></li>
-                  <li class="mb-2"><a href="community.html">Community</a></li>
-                  <li class="mb-2"><a href="ai-assistant.html">AI Assistant</a></li>
+                  <li class="mb-2"><a href="index.html" class="text-muted">Dashboard</a></li>
+                  <li class="mb-2"><a href="products.html" class="text-muted">Layanan Baru</a></li>
+                  <li class="mb-2"><a href="project-hub.html" class="text-muted">Project Hub</a></li>
+                  <li class="mb-2"><a href="community.html" class="text-muted">Komunitas</a></li>
+                  <li class="mb-2"><a href="ai-assistant.html" class="text-muted">AI Assistant</a></li>
                 </ul>
               </div>
               <div class="col-lg-3 col-md-6">
-                <h6 class="footer-heading mb-3">Connect With Us</h6>
+                <h6 class="footer-heading mb-3">Terhubung Dengan Kami</h6>
                 <div class="social-icons d-flex justify-content-center justify-content-lg-start">
-                  <a href="https://www.instagram.com/ixieraa/" class="social-icon" title="Instagram" target="_blank">
+                  <a href="https://www.instagram.com/ixieraa/" class="social-icon bg-dark text-white" title="Instagram" target="_blank">
                     <i class="fab fa-instagram"></i>
                   </a>
-                  <a href="https://wa.me/6285702373412" class="social-icon" title="WhatsApp" target="_blank">
+                  <a href="https://wa.me/6285702373412" class="social-icon bg-dark text-white" title="WhatsApp" target="_blank">
                     <i class="fab fa-whatsapp"></i>
                   </a>
-                  <a href="https://x.com/4ixiera" class="social-icon" title="X" target="_blank">
+                  <a href="https://x.com/4ixiera" class="social-icon bg-dark text-white" title="X" target="_blank">
                     <i class="fab fa-twitter"></i>
                   </a>
-                  <a href="https://t.me/+7MksSZVpdHEyZWNl" class="social-icon" title="Telegram" target="_blank">
+                  <a href="https://t.me/+7MksSZVpdHEyZWNl" class="social-icon bg-dark text-white" title="Telegram" target="_blank">
                     <i class="fab fa-telegram"></i>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="copyright-section pt-4 mt-4">
+            <div class="copyright-section pt-4 mt-4 border-top">
               <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                  <small>Copyright &copy; <span id="copyright-year">2025</span>, Client Portal by IXIERA</small>
+                  <small class="text-muted">Hak Cipta &copy; <span id="copyright-year">2025</span>, Client Portal oleh IXIERA</small>
                 </div>
                 <div class="col-md-6 text-center text-md-end legal-links">
-                  <small><a href="privacy-policy.html" class="me-3">Privacy Policy</a></small>
-                  <small><a href="terms-of-services.html">Terms of Service</a></small>
+                  <small><a href="privacy-policy.html" class="text-muted me-3">Kebijakan Privasi</a></small>
+                  <small><a href="terms-of-services.html" class="text-muted">Syarat Layanan</a></small>
                 </div>
               </div>
             </div>
           </div>
         </footer>
 
-        <!-- MODAL UNTUK DETAIL & PESAN PRODUK -->
-        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel">Product Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col-md-5">
-                    <img id="modal-product-image" src="https://placehold.co/400x400/f4f5f9/ccc?text=Product" class="img-fluid rounded product-modal-image" alt="Product Image">
-                  </div>
-                  <div class="col-md-7">
-                    <h3 id="modal-product-name" class="product-modal-name">Product Name</h3>
-                    <h4 id="modal-product-price" class="text-primary fw-bold mb-3">$0.00</h4>
-                    <p id="modal-product-description" class="product-modal-description">Full product description goes here.</p>
-                    
-                    <div class="product-details mb-3">
-                      <small class="text-muted">
-                        <i class="fas fa-box me-1"></i>
-                        <span id="modal-product-category">Digital Product</span>
-                      </small>
-                    </div>
-                    
-                    <hr>
-                    <form id="lead-form">
-                      <input type="hidden" id="modal-product-id" value="">
-                      <div class="mb-3">
-                        <label for="quantity" class="form-label fw-bold">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" value="1" min="1" max="10">
-                      </div>
-                      <div class="mb-3">
-                        <label for="notes" class="form-label fw-bold">Special Instructions (Optional)</label>
-                        <textarea class="form-control" id="notes" rows="3" placeholder="Any specific requirements or questions..."></textarea>
-                      </div>
-                      <button type="submit" class="btn btn-primary w-100 py-2">
-                        <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                        <span class="btn-text">
-                          <i class="fas fa-shopping-cart me-2"></i>Place Order
-                        </span>
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
+<!-- MODAL UNTUK DETAIL & PESAN LAYANAN -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title" id="productModalLabel">Detail Layanan</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-5">
+            <img id="modal-product-image" src="https://placehold.co/400x400/000/fff?text=Loading..." class="img-fluid rounded product-modal-image" alt="Product Image">
+            <!-- Demo Button -->
+            <div class="mt-3 text-center">
+              <a href="#" id="modal-demo-link" class="btn btn-outline-dark btn-sm w-100" target="_blank" style="display: none;">
+                <i class="fas fa-external-link-alt me-2"></i>Lihat Demo
+              </a>
             </div>
           </div>
-        </div>
+          <div class="col-md-7">
+            <h3 id="modal-product-name" class="product-modal-name fw-bold">Nama Layanan</h3>
+            <h4 id="modal-product-price" class="text-dark fw-bold mb-3">Rp 0</h4>
+            <p id="modal-product-description" class="product-modal-description text-muted">Deskripsi lengkap layanan akan ditampilkan di sini.</p>
+            
+            <div class="product-details mb-3">
+              <small class="text-muted">
+                <i class="fas fa-box me-1"></i>
+                <span id="modal-product-category">Layanan Digital</span>
+              </small>
+              <br>
+              <small class="text-muted">
+                <i class="fas fa-clock me-1"></i>
+                <span id="modal-product-duration">Estimasi: - hari</span>
+              </small>
+            </div>
+            
+            <hr>
+            <form id="lead-form">
+              <input type="hidden" id="modal-product-id" value="">
+              
+              <!-- Project Details -->
+              <div class="mb-3">
+                <label for="project_name" class="form-label fw-bold">Nama Project <span class="text-danger">*</span></label>
+                <input type="text" class="form-control border-dark" id="project_name" placeholder="Contoh: Website Company Profile PT ABC" required>
+              </div>
+<!-- Tambah di modal form (setelah project_name) -->
+<div class="mb-3">
+  <label for="client_company" class="form-label fw-bold">Nama Perusahaan/Usaha</label>
+  <input type="text" class="form-control border-dark" id="client_company" placeholder="Nama perusahaan atau bisnis Anda">
+</div>
 
+<div class="mb-3">
+  <label for="client_phone" class="form-label fw-bold">Nomor WhatsApp <span class="text-danger">*</span></label>
+  <input type="tel" class="form-control border-dark" id="client_phone" placeholder="Contoh: 081234567890" required>
+</div>
+
+<div class="mb-3">
+  <label class="form-label fw-bold">Metode Komunikasi yang Disukai</label>
+  <div class="form-check">
+    <input class="form-check-input border-dark" type="radio" name="contact_method" id="contact_whatsapp" value="whatsapp" checked>
+    <label class="form-check-label" for="contact_whatsapp">
+      <i class="fab fa-whatsapp me-1 text-success"></i>WhatsApp
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input border-dark" type="radio" name="contact_method" id="contact_email" value="email">
+    <label class="form-check-label" for="contact_email">
+      <i class="fas fa-envelope me-1 text-primary"></i>Email
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input border-dark" type="radio" name="contact_method" id="contact_phone" value="phone">
+    <label class="form-check-label" for="contact_phone">
+      <i class="fas fa-phone me-1 text-info"></i>Telepon
+    </label>
+  </div>
+</div>
+              <!-- Service Type (auto-filled from product) -->
+              <input type="hidden" id="service_type" value="">
+
+              <!-- Integration Services - OPTIONAL, hanya tampil jika relevan -->
+              <div class="mb-3" id="integration-section" style="display: none;">
+                <label class="form-label fw-bold">Layanan Integrasi yang Diinginkan (Opsional)</label>
+                <div class="form-check">
+                  <input class="form-check-input border-dark" type="checkbox" value="whatsapp" id="integration_whatsapp">
+                  <label class="form-check-label" for="integration_whatsapp">
+                    WhatsApp Integration
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input border-dark" type="checkbox" value="slack" id="integration_slack">
+                  <label class="form-check-label" for="integration_slack">
+                    Slack Integration
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input border-dark" type="checkbox" value="discord" id="integration_discord">
+                  <label class="form-check-label" for="integration_discord">
+                    Discord Integration
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input border-dark" type="checkbox" value="telegram" id="integration_telegram">
+                  <label class="form-check-label" for="integration_telegram">
+                    Telegram Integration
+                  </label>
+                </div>
+              </div>
+
+              <!-- Requirements -->
+              <div class="mb-3">
+                <label for="requirements" class="form-label fw-bold">Requirements Project <span class="text-danger">*</span></label>
+                <textarea class="form-control border-dark" id="requirements" rows="4" placeholder="Jelaskan kebutuhan project Anda secara detail:
+- Tujuan website/sistem
+- Fitur yang diinginkan  
+- Target audience
+- Contoh referensi (jika ada)
+- Warna/preferensi desain" required></textarea>
+              </div>
+
+              <!-- Deadline -->
+              <div class="mb-3">
+                <label for="deadline" class="form-label fw-bold">Target Deadline (Opsional)</label>
+                <input type="date" class="form-control border-dark" id="deadline" min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>">
+              </div>
+
+              <!-- Additional Notes -->
+              <div class="mb-3">
+                <label for="notes" class="form-label fw-bold">Catatan Tambahan</label>
+                <textarea class="form-control border-dark" id="notes" rows="2" placeholder="Informasi tambahan atau pertanyaan khusus..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-dark w-100 py-2 fw-bold">
+                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                <span class="btn-text">
+                  <i class="fas fa-rocket me-2"></i>Mulai Project
+                </span>
+              </button>
+              <small class="text-muted d-block mt-2 text-center">
+                Setelah order, tim kami akan menghubungi Anda untuk konsultasi lebih lanjut.
+              </small>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
         <!-- LOADING SPINNER -->
         <div id="loadingSpinner" class="loading-spinner">
           <div class="spinner-content">
             <div class="spinner-border" role="status">
-              <span class="visually-hidden">Loading...</span>
+              <span class="visually-hidden">Memproses...</span>
             </div>
-            <p class="mt-2">Processing...</p>
+            <p class="mt-2">Memproses...</p>
           </div>
         </div>
 
-        <!-- Core JS Files -->
-        <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-        <script src="assets/js/core/popper.min.js"></script>
-        <script src="assets/js/core/bootstrap.min.js"></script>
-        <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-        <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-        <script src="assets/js/kaiadmin.min.js"></script>
+<!-- Di bagian sebelum </body> - UBAH URUTAN LOADING SCRIPT -->
+<script src="assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="assets/js/kaiadmin.min.js"></script>
 
-        <!-- SUPABASE & CUSTOM JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-        <script src="assets/js/supabase-client.js" defer></script>
-        <script src="assets/js/products.js" defer></script>
-        <script src="assets/js/widgetbot.js"></script>
+<!-- SUPABASE & CUSTOM JS - UBAH URUTAN INI -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-client.js"></script>
+<!-- HAPUS defer DAN PASTIKAN products.js LOAD TERAKHIR -->
+<script src="assets/js/products.js"></script>
+<script src="assets/js/tawkto.js"></script>
       </div>
     </div>
   </body>

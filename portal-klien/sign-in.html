@@ -1,52 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Login - IXIERA Client Portal</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="https://placehold.co/32x32/6a5acd/white?text=IXIERA" type="image/x-icon" />
+    <link rel="icon" href="https://placehold.co/32x32/000000/white?text=IX" type="image/x-icon" />
 
     <!-- External Libraries (Bootstrap & Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
     
     <style>
-        /* * STYLES FOR LOGIN PAGE
-         * All styles are self-contained in this file for simplicity.
-        */
+        /* * STYLES FOR LOGIN PAGE - BLACK & WHITE MINIMALIST */
 
-        /* Prevents a "flash of unstyled content" before the session check redirects */
         body { 
-            background-color: #f4f5f8; 
-            font-family: 'Public Sans', sans-serif, system-ui;
-            visibility: hidden; /* Content is hidden until JS confirms no active session */
+            background-color: #ffffff; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            visibility: hidden;
             overflow-x: hidden;
-        }
-
-        /* Premium background with subtle animation */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #f4f5f8 0%, #e8eaf6 100%);
-        }
-
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(106, 90, 205, 0.03) 0%, rgba(106, 90, 205, 0) 70%);
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         .login-container { 
@@ -61,17 +33,10 @@
             width: 100%; 
             max-width: 440px; 
             border: none; 
-            border-radius: 16px; /* Slightly increased for more premium feel */
+            border-radius: 12px;
             background-color: #ffffff;
-            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(106, 90, 205, 0.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f0f0;
         }
 
         .login-card::before {
@@ -80,53 +45,42 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #6a5acd, #8a7de3);
+            height: 3px;
+            background: #000000;
         }
 
         .form-control { 
             height: 48px; 
-            border-radius: 8px; 
-            transition: all 0.3s ease;
+            border-radius: 6px; 
             border: 1px solid #e0e0e0;
-            padding-left: 15px;
+            padding-left: 45px;
+            background: #fafafa;
         }
         
         .form-control:focus {
-            border-color: #6a5acd;
-            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.15);
-            transform: translateY(-1px);
+            border-color: #000000;
+            box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.1);
+            background: #ffffff;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #6a5acd 0%, #8a7de3 100%);
+        .btn-login {
+            background: #000000;
             border: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            padding: 12px 24px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            color: white;
         }
         
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #5a4aba 0%, #7a6dd3 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-lg { 
-            padding: 0.75rem 1.25rem; 
-            font-size: 1rem; 
-            border-radius: 8px; 
+        .btn-login:hover:not(:disabled) {
+            background: #333333;
         }
 
         #error-message { 
             display: none; 
-            border-radius: 8px;
-            border-left: 4px solid #dc3545;
+            border-radius: 6px;
+            border-left: 4px solid #000000;
+            background: #f8f9fa;
         }
 
         .password-toggle-icon {
@@ -136,11 +90,10 @@
             transform: translateY(-50%);
             cursor: pointer; 
             color: #6c757d;
-            transition: color 0.3s ease;
         }
         
         .password-toggle-icon:hover {
-            color: #6a5acd;
+            color: #000000;
         }
 
         .divider { 
@@ -163,30 +116,30 @@
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            border-radius: 8px;
+            border-radius: 6px;
             transition: all 0.3s ease;
             font-weight: 500;
+            padding: 12px;
         }
         
         .btn-social:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            transform: translateY(-1px);
         }
         
         .btn-social i { 
             margin-right: 0.75rem; 
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
         }
         
         .btn-google {
             background-color: #fff;
-            color: #757575;
-            border: 1px solid #dadce0;
+            color: #424242;
+            border: 1px solid #e0e0e0;
         }
         
         .btn-google:hover {
-            background-color: #f8f9fa;
-            border-color: #dadce0;
+            background-color: #fafafa;
+            border-color: #bdbdbd;
         }
         
         .btn-discord {
@@ -202,15 +155,15 @@
         }
 
         .feature-highlight {
-            background: linear-gradient(135deg, rgba(106, 90, 205, 0.05) 0%, rgba(138, 125, 227, 0.05) 100%);
-            border-radius: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
             padding: 20px;
             margin-top: 25px;
-            border-left: 4px solid #6a5acd;
+            border-left: 4px solid #000000;
         }
         
         .feature-highlight h6 {
-            color: #6a5acd;
+            color: #000000;
             font-weight: 600;
             margin-bottom: 10px;
         }
@@ -222,7 +175,7 @@
         
         .feature-highlight li {
             margin-bottom: 5px;
-            color: #5a5a72;
+            color: #424242;
         }
         
         .portal-description {
@@ -237,74 +190,28 @@
             margin-bottom: 10px;
         }
         
-        .logo-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(106, 90, 205, 0.2) 0%, rgba(106, 90, 205, 0) 70%);
-            border-radius: 50%;
-            z-index: -1;
-        }
-        
         .input-icon {
             position: absolute;
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #6a5acd;
+            color: #000000;
             z-index: 5;
-        }
-        
-        .form-floating {
-            position: relative;
-            margin-bottom: 1rem;
-        }
-        
-        .form-floating .form-control {
-            padding-left: 45px;
         }
         
         .success-message {
             display: none;
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
-            border-left: 4px solid #28a745;
-            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #000000;
+            border-radius: 6px;
             padding: 15px;
             margin-top: 20px;
         }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+
+        .loading-spinner {
+            display: none;
         }
 
-        /* Additional styles for new effects */
-        .shake {
-            animation: shake 0.5s;
-        }
-        
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-10px); }
-            40% { transform: translateX(10px); }
-            60% { transform: translateX(-10px); }
-            80% { transform: translateX(10px); }
-            100% { transform: translateX(0); }
-        }
-        
-        .shadow-sm {
-            box-shadow: 0 0.125rem 0.25rem rgba(106, 90, 205, 0.1) !important;
-        }
-
-        /* Improved form structure */
         .form-section {
             margin-bottom: 1.5rem;
         }
@@ -312,7 +219,7 @@
         .form-label {
             font-weight: 500;
             margin-bottom: 0.5rem;
-            color: #495057;
+            color: #424242;
         }
 
         .form-actions {
@@ -329,39 +236,37 @@
             padding-top: 1.5rem;
             border-top: 1px solid #e9ecef;
         }
+
+        /* ICON MESSAGE - SEMUA HITAM */
+        .message-icon {
+            color: #000000 !important;
+        }
     </style>
-      <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-4MK0Q0R584');
-  </script>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    
     <div class="container login-container">
-        <div class="card login-card shadow-lg">
+        <div class="card login-card">
             <div class="card-body p-4 p-md-5">
                 <!-- Header Section -->
                 <div class="text-center mb-4">
                     <div class="logo-container">
-                        <div class="logo-glow"></div>
-                        <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="IXIERA Logo" class="mb-3 pulse" style="border-radius: 50%;">
+                        <img src="https://placehold.co/80x80/000000/white?text=IX" alt="IXIERA Logo" class="mb-3" style="border-radius: 12px;">
                     </div>
-                    <h3 class="fw-bold mb-1" style="color: #6a5acd;">IXIERA Client Portal</h3>
+                    <h3 class="fw-bold mb-1" style="color: #000000;">Portal Klien IXIERA</h3>
                     <p class="portal-description">
-                        Your centralized dashboard for AI project tracking, order history, and community collaboration.
+                        Dashboard terpusat untuk melacak project, riwayat order, dan kolaborasi tim.
                     </p>
                 </div>
 
-                <!-- Messages Section -->
-                <div id="error-message" class="alert alert-danger" role="alert"></div>
-                <div id="success-message" class="success-message" role="alert">
-                    <i class="fas fa-check-circle me-2" style="color: #28a745;"></i>
-                    <strong>Welcome back!</strong> Redirecting you to your dashboard...
+                <!-- Messages Section - KOSONG AWALNYA -->
+                <div id="error-message" class="alert alert-light d-flex align-items-center" role="alert">
+                    <i class="fas fa-exclamation-circle me-2 message-icon"></i>
+                    <div id="error-text"></div>
+                </div>
+                
+                <div id="success-message" class="success-message d-flex align-items-center" role="alert">
+                    <i class="fas fa-check-circle me-2 message-icon"></i>
+                    <div id="success-text"></div>
                 </div>
 
                 <!-- Login Form Section -->
@@ -369,10 +274,10 @@
                     <div class="form-section">
                         <!-- Email Input -->
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
+                            <label for="email" class="form-label">Alamat Email</label>
                             <div class="position-relative">
                                 <i class="fas fa-envelope input-icon"></i>
-                                <input type="email" class="form-control ps-5" id="email" placeholder="example@email.com" required>
+                                <input type="email" class="form-control" id="email" placeholder="contoh@email.com" required>
                             </div>
                         </div>
                         
@@ -381,7 +286,7 @@
                             <label for="password" class="form-label">Password</label>
                             <div class="position-relative">
                                 <i class="fas fa-lock input-icon"></i>
-                                <input type="password" class="form-control ps-5" id="password" placeholder="Enter your password" required>
+                                <input type="password" class="form-control" id="password" placeholder="Masukkan password Anda" required>
                                 <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
                             </div>
                         </div>
@@ -390,9 +295,9 @@
                     <!-- Login Button -->
                     <div class="form-actions">
                         <div class="d-grid">
-                            <button type="submit" id="login-btn" class="btn btn-primary btn-lg">
-                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                <span class="btn-text">Access Your Dashboard</span>
+                            <button type="submit" id="login-btn" class="btn btn-login btn-lg">
+                                <span class="loading-spinner spinner-border spinner-border-sm me-2" role="status"></span>
+                                <span class="btn-text">Masuk ke Dashboard</span>
                             </button>
                         </div>
                     </div>
@@ -400,92 +305,64 @@
 
                 <!-- Social Login Section -->
                 <div class="auth-options">
-                    <div class="divider">Continue with</div>
+                    <div class="divider">Atau lanjutkan dengan</div>
                     
                     <div class="d-grid gap-2">
-                        <button id="google-login-btn" class="btn btn-google btn-lg btn-social">
-                            <i class="fab fa-google"></i> Sign in with Google
+                        <button id="google-login-btn" class="btn btn-google btn-social">
+                            <i class="fab fa-google"></i> Masuk dengan Google
                         </button>
-                        <button id="discord-login-btn" class="btn btn-discord btn-lg btn-social">
-                            <i class="fab fa-discord"></i> Sign in with Discord
+                        <button id="discord-login-btn" class="btn btn-discord btn-social">
+                            <i class="fab fa-discord"></i> Masuk dengan Discord
                         </button>
                     </div>
                 </div>
 
                 <!-- Features Highlight -->
                 <div class="feature-highlight">
-                    <h6><i class="fas fa-star me-2"></i>What awaits you inside:</h6>
+                    <h6><i class="fas fa-rocket me-2"></i>Akses lengkap ke:</h6>
                     <ul>
-                        <li><strong>Project Tracking:</strong> Monitor your AI project progress in real-time</li>
-                        <li><strong>Order History:</strong> Access your complete purchase history</li>
-                        <li><strong>AI Assistant:</strong> Get instant help with our smart assistant</li>
-                        <li><strong>Community Chat:</strong> Connect with other IXIERA clients</li>
+                        <li><strong>Pelacakan Project:</strong> Pantau progress project secara real-time</li>
+                        <li><strong>Riwayat Order:</strong> Lihat semua project yang pernah dibuat</li>
+                        <li><strong>AI Assistant:</strong> Bantuan instan dengan asisten AI kami</li>
+                        <li><strong>Komunitas:</strong> Kolaborasi dengan klien IXIERA lainnya</li>
                     </ul>
                 </div>
 
                 <!-- Sign Up Prompt -->
                 <div class="signup-prompt">
-                    <p class="text-muted mb-0">New to IXIERA? <a href="sign-up.html" style="color: #6a5acd; text-decoration: none; font-weight: 500;">Create an account</a></p>
+                    <p class="text-muted mb-0">Baru di IXIERA? <a href="sign-up.html" style="color: #000000; text-decoration: none; font-weight: 500;">Buat akun baru</a></p>
                 </div>
             </div>
         </div>
     </div>
-    
-        <!-- Supabase Client Library -->
+
+    <!-- Supabase Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // --- SUPABASE CLIENT INITIALIZATION ---
         const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
+        
+        // Initialize Supabase client
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.dbClient = supabaseClient;
 
         /**
          * Checks if a user session exists. If so, redirects to the dashboard.
-         * Otherwise, it makes the login form visible and initializes event listeners.
          */
         async function checkSessionAndInitialize() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                window.location.href = 'index.html'; // User is already logged in
-            } else {
-                document.body.style.visibility = 'visible'; // No session, show the login page
-                initializeLoginListeners();
-                addPremiumEffects();
-            }
-        }
-
-        /**
-         * Adds premium visual effects to the login page
-         */
-        function addPremiumEffects() {
-            // Add subtle hover effect to form inputs
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    input.parentElement.classList.add('shadow-sm');
-                });
-                
-                input.addEventListener('blur', () => {
-                    input.parentElement.classList.remove('shadow-sm');
-                });
-            });
-            
-            // Add typing effect to the portal description
-            const description = document.querySelector('.portal-description');
-            const originalText = description.textContent;
-            description.textContent = '';
-            
-            let i = 0;
-            const typeWriter = () => {
-                if (i < originalText.length) {
-                    description.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 30);
+            try {
+                const { data: { session } } = await supabaseClient.auth.getSession();
+                if (session) {
+                    window.location.href = 'index.html';
+                } else {
+                    document.body.style.visibility = 'visible';
+                    initializeLoginListeners();
                 }
-            };
-            
-            // Start typing effect after a short delay
-            setTimeout(typeWriter, 500);
+            } catch (error) {
+                document.body.style.visibility = 'visible';
+                initializeLoginListeners();
+            }
         }
 
         /**
@@ -495,10 +372,13 @@
             // --- DOM Element Selection ---
             const loginForm = document.getElementById('login-form');
             const loginButton = document.getElementById('login-btn');
-            const spinner = loginButton.querySelector('.spinner-border');
+            const spinner = loginButton.querySelector('.loading-spinner');
             const btnText = loginButton.querySelector('.btn-text');
             const errorMessageDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
             const successMessageDiv = document.getElementById('success-message');
+            const successText = document.getElementById('success-text');
+            const emailInput = document.getElementById('email');
             const passwordInput = document.getElementById('password');
             const togglePassword = document.getElementById('toggle-password');
             const googleLoginBtn = document.getElementById('google-login-btn');
@@ -509,27 +389,28 @@
             /** Toggles the loading state of the login button. */
             function showLoading(isLoading) {
                 loginButton.disabled = isLoading;
-                spinner.classList.toggle('d-none', !isLoading);
-                btnText.textContent = isLoading ? 'Authenticating...' : 'Access Your Dashboard';
+                spinner.style.display = isLoading ? 'inline-block' : 'none';
+                btnText.textContent = isLoading ? 'Memproses...' : 'Masuk ke Dashboard';
             }
 
-            /** Displays an error message in the alert box. */
+            /** Displays an error message */
             function showErrorMessage(message) {
-                errorMessageDiv.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i> ${message}`;
-                errorMessageDiv.style.display = 'block';
+                errorText.textContent = message;
+                errorMessageDiv.style.display = 'flex';
                 successMessageDiv.style.display = 'none';
-                
-                // Shake animation for error
-                loginForm.classList.add('shake');
-                setTimeout(() => {
-                    loginForm.classList.remove('shake');
-                }, 500);
             }
             
             /** Displays a success message before redirect */
             function showSuccessMessage() {
+                successText.innerHTML = '<strong>Login berhasil!</strong> Mengarahkan ke dashboard...';
                 errorMessageDiv.style.display = 'none';
-                successMessageDiv.style.display = 'block';
+                successMessageDiv.style.display = 'flex';
+            }
+
+            /** Hide all messages */
+            function hideAllMessages() {
+                errorMessageDiv.style.display = 'none';
+                successMessageDiv.style.display = 'none';
             }
 
             // --- Event Listeners ---
@@ -542,25 +423,47 @@
                 togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
             });
 
+            /** Hide messages when user starts typing */
+            emailInput.addEventListener('input', hideAllMessages);
+            passwordInput.addEventListener('input', hideAllMessages);
+
             /** Handles the email/password login form submission. */
             loginForm.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 showLoading(true);
-                errorMessageDiv.style.display = 'none'; // Hide previous errors
+                hideAllMessages();
 
                 try {
-                    const email = document.getElementById('email').value;
+                    const email = emailInput.value;
                     const password = passwordInput.value;
+                    
+                    if (!email || !password) {
+                        showErrorMessage('Harap isi email dan password');
+                        showLoading(false);
+                        return;
+                    }
+
                     const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
                     if (error) throw error;
                     
                     // Show success message before redirect
                     showSuccessMessage();
                     setTimeout(() => {
-                        window.location.href = 'index.html'; // Success, redirect to dashboard
+                        window.location.href = 'index.html';
                     }, 1500);
                 } catch (error) {
-                    showErrorMessage(error.message || 'Invalid email or password. Please try again.');
+                    console.error('Login error:', error);
+                    
+                    let errorMessage = 'Email atau password salah. Silakan coba lagi.';
+                    if (error.message.includes('Invalid login credentials')) {
+                        errorMessage = 'Email atau password tidak valid.';
+                    } else if (error.message.includes('Email not confirmed')) {
+                        errorMessage = 'Email belum dikonfirmasi. Silakan check email Anda.';
+                    } else if (error.message.includes('Too many requests')) {
+                        errorMessage = 'Terlalu banyak percobaan login. Silakan coba lagi nanti.';
+                    }
+                    
+                    showErrorMessage(errorMessage);
                 } finally {
                     showLoading(false);
                 }
@@ -568,18 +471,42 @@
             
             /** Generic function to handle OAuth provider sign-in. */
             async function signInWithProvider(provider) {
-                showLoading(true); // Visually indicate action
-                await supabaseClient.auth.signInWithOAuth({ provider });
+                showLoading(true);
+                hideAllMessages();
+                try {
+                    await supabaseClient.auth.signInWithOAuth({ 
+                        provider,
+                        options: {
+                            redirectTo: window.location.origin + '/index.html'
+                        }
+                    });
+                } catch (error) {
+                    console.error('OAuth error:', error);
+                    showErrorMessage('Error login dengan ' + provider);
+                    showLoading(false);
+                }
             }
 
             /** Attaches OAuth handlers to buttons. */
             googleLoginBtn.addEventListener('click', () => signInWithProvider('google'));
             discordLoginBtn.addEventListener('click', () => signInWithProvider('discord'));
+
+            // Check URL parameters for messages
+            const urlParams = new URLSearchParams(window.location.search);
+            const message = urlParams.get('message');
+            
+            if (message === 'signup_success') {
+                successText.innerHTML = '<strong>Akun berhasil dibuat!</strong> Silakan login dengan email dan password Anda.';
+                successMessageDiv.style.display = 'flex';
+                
+                // Auto hide success message after 5 seconds
+                setTimeout(hideAllMessages, 5000);
+            }
         }
 
         // --- SCRIPT EXECUTION ---
-        // Start the process when the DOM is ready.
         document.addEventListener('DOMContentLoaded', checkSessionAndInitialize);
     </script>
+    <script src="assets/js/tawkto.js"></script>
 </body>
 </html>

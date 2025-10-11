@@ -133,7 +133,7 @@ function handleGeneralQuestion(message) {
   }
   
   if (/(kontak|hubungi|call|telepon|whatsapp)/i.test(lowerMsg)) {
-    return "📞 **HUBUNGI KAMI:**\n\nWhatsApp: +62...\nWebsite: ixiera.com\nEmail: hello@ixiera.com\n\nTim kami siap membantu!";
+    return "📞 **HUBUNGI KAMI:**\n\nWhatsApp: +62 857-0237-3412\nWebsite: ixiera.id\nEmail: ixierastudio@gmail.com\n\nTim kami siap membantu!";
   }
   
   return null;

@@ -1,397 +1,275 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Community Forum - Client Portal</title>
+    <title>Live Chat Support - IXIERA</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     
-    <!-- WebFont Loader -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <script>
-      WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
-        custom: {
-          families: ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"],
-          urls: ["/assets/css/fonts.min.css"],
-        },
-        active: function () { 
-          try {
-            sessionStorage.fonts = true; 
-          } catch(e) {
-            console.warn('SessionStorage not available');
-          }
-        },
-      });
-    </script>
-    
-    <!-- CSS Inti Tema Kaiadmin -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
-    <link rel="stylesheet" href="/assets/css/custom.css" />
-   
-
-    <!-- CSS Khusus Halaman Komunitas -->
     <style>
-        html, body {
-            height: 100%; 
-            margin: 0; 
-            overflow: hidden; 
-            background-color: #23272A;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
-        .community-fullscreen-wrapper {
-            display: flex; 
-            flex-direction: column; 
-            height: 100vh; 
-            position: relative;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+            height: 100vh;
+            overflow: hidden;
         }
         
-        .community-header {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 20px;
-            background-color: #2C2F33; 
-            flex-shrink: 0; 
-            border-bottom: 1px solid #23272A;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
-            z-index: 10;
+        .chat-container {
+            display: flex;
+            height: 100vh;
+            background: white;
         }
         
-        .community-header .brand {
-            display: flex; 
-            align-items: center; 
-            color: #fff; 
-            font-weight: 600;
-        }
-        
-        .community-header .brand .fab {
-            margin-right: 12px; 
-            color: #7289DA;
-        }
-        
-        .community-header .actions a {
-            color: #fff; 
-            background-color: #40444B; 
-            padding: 8px 15px; 
-            border-radius: 5px;
-            text-decoration: none; 
-            font-size: 14px; 
-            margin-left: 10px; 
-            transition: background-color 0.2s;
-            display: inline-flex; 
+        /* Header */
+        .chat-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #333;
         }
         
-        .community-header .actions a i { 
-            margin-right: 8px; 
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
-        .community-header .actions a:hover { 
-            background-color: #7289DA; 
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #1a1a1a;
         }
         
-        .discord-widget-container { 
-            flex-grow: 1; 
-            overflow: hidden; 
-            position: relative; 
-            background-color: #2C2F33;
+        .brand-text h1 {
+            font-size: 1.2rem;
+            margin: 0;
         }
         
-        .discord-widget-container iframe { 
-            width: 100%; 
-            height: 100%; 
+        .brand-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: transparent;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+        
+        /* Tawk.to Fullscreen Container */
+        #tawkto-container {
+            flex: 1;
+            margin-top: 80px; /* Offset for header */
+            height: calc(100vh - 80px);
+            border: none;
+        }
+        
+        #tawkto-container iframe {
+            width: 100%;
+            height: 100%;
             border: none;
             display: block;
         }
         
-        .footer { 
-            flex-shrink: 0; 
-            position: relative !important;
-            margin-top: 0;
-        }
-        
-        #loading-overlay {
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: #2C2F33;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
             align-items: center;
-            z-index: 100; 
-            transition: opacity 0.5s ease; 
-            color: #fff;
+            height: 100%;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 1.1rem;
         }
         
         .spinner {
-            border: 5px solid rgba(255, 255, 255, 0.3); 
-            border-radius: 50%; 
-            border-top: 5px solid #fff;
-            width: 50px; 
-            height: 50px; 
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1a1a1a;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
+            margin-right: 1rem;
         }
         
-        #loading-overlay p { 
-            margin-top: 20px; 
-            font-size: 1rem; 
-            font-weight: 500; 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
-        @keyframes spin { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
-        }
-        
-        /* Error handling styles */
-        .error-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            text-align: center;
-            background: rgba(220, 53, 69, 0.1);
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid #dc3545;
-            display: none;
-        }
-        
-        .retry-btn {
-            background: #7289DA;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 1rem;
-        }
-        
-        .retry-btn:hover {
-            background: #5865f2;
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .chat-header {
+                padding: 0.8rem 1rem;
+            }
+            
+            .brand-text h1 {
+                font-size: 1rem;
+            }
+            
+            .brand-text p {
+                display: none;
+            }
+            
+            .btn span {
+                display: none;
+            }
+            
+            .btn {
+                padding: 0.6rem;
+            }
+            
+            #tawkto-container {
+                margin-top: 60px;
+                height: calc(100vh - 60px);
+            }
         }
     </style>
-      <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-4MK0Q0R584');
-  </script>
 </head>
 <body>
-    <div class="community-fullscreen-wrapper">
-      
-      <div class="community-header">
+    <!-- Header -->
+    <div class="chat-header">
         <div class="brand">
-          <i class="fab fa-discord fa-lg"></i>
-          <span>Forum Komunitas</span>
+            <div class="brand-logo">IX</div>
+            <div class="brand-text">
+                <h1>Live Chat Support</h1>
+                <p>Chat langsung dengan tim IXIERA</p>
+            </div>
         </div>
-        <div class="actions">
-          <a href="index.html"><i class="fas fa-arrow-left"></i> Kembali ke Portal</a>
-          <a href="https://discord.com/channels/1411001146788679821/1411001149376430203" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i> Buka di Aplikasi</a>
+        <div class="header-actions">
+            <a href="index.html" class="btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Dashboard</span>
+            </a>
         </div>
-      </div>
-      
-      <div class="discord-widget-container">
-        <!-- Loading overlay -->
-        <div id="loading-overlay">
-          <div class="spinner"></div>
-          <p>Memuat Forum Komunitas...</p>
-        </div>
-        
-        <!-- Error message -->
-        <div id="error-message" class="error-message">
-          <h4>Gagal Memuat Forum</h4>
-          <p>Terjadi kesalahan saat memuat widget Discord.</p>
-          <button class="retry-btn" onclick="retryLoadWidget()">Coba Lagi</button>
-        </div>
-        
-        <!-- Discord widget iframe -->
-        <iframe 
-          id="discord-iframe"
-          data-src="https://e.widgetbot.io/channels/1411001146788679821/1411001149376430203?theme=dark&color=%237289DA" 
-          allow="clipboard-write; fullscreen"
-          loading="lazy">
-        </iframe>
-      </div>
-
-      <footer class="footer" id="footer-placeholder"></footer>
-
     </div>
-    
-    <!-- Load scripts without defer to prevent conflicts -->
-    <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="/assets/js/core/popper.min.js"></script>
-    <script src="/assets/js/core/bootstrap.min.js"></script>
-    
-    <!-- Load these scripts conditionally to prevent errors -->
-    <script>
-      // Only load if elements exist to prevent errors
-      if (document.querySelector('.scrollbar-outer, .jquery-scrollbar')) {
-        const scrollbarScript = document.createElement('script');
-        scrollbarScript.src = '/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js';
-        scrollbarScript.onerror = () => console.warn('Scrollbar plugin failed to load');
-        document.head.appendChild(scrollbarScript);
-      }
-      
-      if (document.querySelector('.alert, .notification')) {
-        const notifyScript = document.createElement('script');
-        notifyScript.src = '/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js';
-        notifyScript.onerror = () => console.warn('Bootstrap notify failed to load');
-        document.head.appendChild(notifyScript);
-      }
-    </script>
-    
-    <script src="/assets/js/kaiadmin.min.js"></script>
-    
-    <!-- Load external scripts with error handling -->
-    <script>
-      // Load Supabase conditionally
-      if (typeof supabase === 'undefined') {
-        const supabaseScript = document.createElement('script');
-        supabaseScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-        supabaseScript.onerror = () => console.warn('Supabase failed to load');
-        document.head.appendChild(supabaseScript);
-      }
-    </script>
-    
 
-    <!-- Main Community Script - Fixed -->
+    <!-- Tawk.to Fullscreen Container -->
+    <div id="tawkto-container">
+        <div class="loading">
+            <div class="spinner"></div>
+            Memuat live chat...
+        </div>
+    </div>
+
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+    <!-- Tawk.to Fullscreen Script -->
     <script>
-      // Prevent infinite reload by wrapping in try-catch
-      (function() {
-        'use strict';
-        
-        let reloadCount = 0;
-        const maxReloads = 3;
-        
-        // Check if we're in a reload loop
-        const checkReloadLoop = () => {
-          const lastReload = sessionStorage.getItem('communityReloadTime');
-          const now = Date.now();
-          
-          if (lastReload && (now - parseInt(lastReload)) < 5000) {
-            reloadCount = parseInt(sessionStorage.getItem('communityReloadCount') || '0') + 1;
-            sessionStorage.setItem('communityReloadCount', reloadCount.toString());
+        // Tawk.to Fullscreen Implementation
+        function initializeTawkTo() {
+            // Remove Tawk.to default widget first
+            if (window.Tawk_API && window.Tawk_API.hideWidget) {
+                Tawk_API.hideWidget();
+            }
             
-            if (reloadCount >= maxReloads) {
-              console.error('Preventing infinite reload loop');
-              showError('Terlalu banyak reload. Halaman dihentikan untuk mencegah loop.');
-              return false;
-            }
-          } else {
-            sessionStorage.setItem('communityReloadCount', '0');
-          }
-          
-          sessionStorage.setItem('communityReloadTime', now.toString());
-          return true;
-        };
-        
-        // Show error message
-        const showError = (message) => {
-          const loader = document.getElementById('loading-overlay');
-          const errorDiv = document.getElementById('error-message');
-          
-          if (loader) loader.style.display = 'none';
-          if (errorDiv) {
-            errorDiv.querySelector('p').textContent = message;
-            errorDiv.style.display = 'block';
-          }
-        };
-        
-        // Retry loading widget
-        window.retryLoadWidget = () => {
-          const iframe = document.getElementById('discord-iframe');
-          const loader = document.getElementById('loading-overlay');
-          const errorDiv = document.getElementById('error-message');
-          
-          if (errorDiv) errorDiv.style.display = 'none';
-          if (loader) loader.style.display = 'flex';
-          
-          if (iframe) {
-            iframe.src = iframe.getAttribute('data-src');
-          }
-        };
-        
-        // Initialize on DOM ready
-        const initCommunity = () => {
-          if (!checkReloadLoop()) return;
-          
-          const iframe = document.getElementById('discord-iframe');
-          const loader = document.getElementById('loading-overlay');
-          const errorDiv = document.getElementById('error-message');
-          
-          if (!iframe || !loader) {
-            console.error('Required elements not found');
-            return;
-          }
-          
-          // Set up iframe loading
-          let loadTimeout;
-          
-          const onLoad = () => {
-            clearTimeout(loadTimeout);
-            try {
-              loader.style.opacity = '0';
-              setTimeout(() => {
-                if (loader) loader.style.display = 'none';
-              }, 500);
-              
-              // Reset reload counter on successful load
-              sessionStorage.setItem('communityReloadCount', '0');
-            } catch (e) {
-              console.error('Error hiding loader:', e);
-            }
-          };
-          
-          const onError = () => {
-            clearTimeout(loadTimeout);
-            console.error('iframe failed to load');
-            showError('Gagal memuat widget Discord. Coba refresh halaman atau gunakan link "Buka di Aplikasi".');
-          };
-          
-          // Set timeout for loading
-          loadTimeout = setTimeout(() => {
-            onError();
-          }, 15000); // 15 second timeout
-          
-          // Add event listeners
-          iframe.addEventListener('load', onLoad);
-          iframe.addEventListener('error', onError);
-          
-          // Start loading the iframe
-          iframe.src = iframe.getAttribute('data-src');
-        };
-        
-        // Wait for DOM to be ready
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initCommunity);
-        } else {
-          initCommunity();
+            // Create fullscreen iframe
+            const tawkToIframe = document.createElement('iframe');
+            tawkToIframe.src = 'https://tawk.to/chat/68e35e3ec72178194fdad4a8/default';
+            tawkToIframe.style.width = '100%';
+            tawkToIframe.style.height = '100%';
+            tawkToIframe.style.border = 'none';
+            tawkToIframe.allow = 'microphone; camera';
+            
+            // Replace loading with iframe when loaded
+            tawkToIframe.onload = function() {
+                document.querySelector('.loading').style.display = 'none';
+                console.log('Tawk.to fullscreen loaded');
+            };
+            
+            tawkToIframe.onerror = function() {
+                document.querySelector('.loading').innerHTML = 
+                    '❌ Gagal memuat chat. <a href="javascript:location.reload()">Coba refresh</a>';
+            };
+            
+            document.getElementById('tawkto-container').appendChild(tawkToIframe);
         }
         
-        // Prevent form submissions that might cause reload
-        document.addEventListener('submit', (e) => {
-          if (e.target.tagName === 'FORM') {
-            e.preventDefault();
-            console.warn('Form submission prevented to avoid reload');
-          }
+        // Alternative method using Tawk.to API
+        function initializeTawkToAPI() {
+            var Tawk_API = Tawk_API || {};
+            var Tawk_LoadStart = new Date();
+            
+            // Custom Tawk.to implementation
+            const s1 = document.createElement('script');
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/68e35e3ec72178194fdad4a8/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            
+            s1.onload = function() {
+                // Customize Tawk.to behavior for fullscreen
+                if (window.Tawk_API) {
+                    Tawk_API = window.Tawk_API;
+                    Tawk_API.onLoad = function() {
+                        // Hide default widget
+                        Tawk_API.hideWidget();
+                        
+                        // Show fullscreen version
+                        document.querySelector('.loading').style.display = 'none';
+                        console.log('Tawk.to API loaded successfully');
+                    };
+                }
+            };
+            
+            document.head.appendChild(s1);
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Try both methods
+            initializeTawkTo();
+            // initializeTawkToAPI(); // Uncomment if first method doesn't work
         });
         
-        // Prevent hash changes that might cause reload
-        window.addEventListener('hashchange', (e) => {
-          e.preventDefault();
+        // Handle page refresh
+        window.addEventListener('beforeunload', function() {
+            // Clean up Tawk.to session if needed
+            if (window.Tawk_API && Tawk_API.endChat) {
+                Tawk_API.endChat();
+            }
         });
-        
-      })();
     </script>
+
 </body>
 </html>

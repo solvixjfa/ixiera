@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IXIERA ERP | Invoices</title>
+  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <style>
+    .filters-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .filter-label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.5rem;
+      display: block;
+      font-size: 0.875rem;
+    }
+    .filter-select, .filter-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      transition: border-color 0.2s;
+    }
+    .filter-select:focus, .filter-input:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+      margin-right: 0.5rem;
+    }
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+    .btn-success {
+      background: #10b981;
+      color: white;
+    }
+    .btn-success:hover {
+      background: #059669;
+    }
+    .btn-warning {
+      background: #f59e0b;
+      color: white;
+    }
+    .btn-warning:hover {
+      background: #d97706;
+    }
+    .btn-outline-primary {
+      background: transparent;
+      color: #4f46e5;
+      border: 2px solid #4f46e5;
+    }
+    .btn-outline-primary:hover {
+      background: #4f46e5;
+      color: white;
+    }
+    .btn-outline-success {
+      background: transparent;
+      color: #10b981;
+      border: 2px solid #10b981;
+    }
+    .btn-outline-success:hover {
+      background: #10b981;
+      color: white;
+    }
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+    .badge-paid {
+      background: #10b981;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .badge-pending {
+      background: #f59e0b;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .badge-overdue {
+      background: #ef4444;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .badge-draft {
+      background: #6b7280;
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+    }
+    .invoice-number {
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      color: #374151;
+    }
+    .amount-badge {
+      background: #1f2937;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.875rem;
+    }
+    .cache-indicator {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #10b981;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+  
+  <!-- PDF Generation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+  <div class="layer"></div>
+  <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+  <div class="page-flex">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-start">
+        <div class="sidebar-head">
+          <a href="/" class="logo-wrapper" title="Home">
+            <span class="sr-only">Home</span>
+            <span class="icon logo" aria-hidden="true"></span>
+            <div class="logo-text">
+              <span class="logo-title">IXIERA</span>
+              <span class="logo-subtitle">ERP</span>
+            </div>
+          </a>
+          <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+            <span class="sr-only">Toggle menu</span>
+            <span class="icon menu-toggle" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="sidebar-body">
+          <ul class="sidebar-body-menu">
+            <li>
+              <a href="index.html"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+            </li>
+            
+            <!-- CRM SECTION -->
+            <li>
+              <a class="show-cat-btn" href="##">
+                <span class="icon user-3" aria-hidden="true"></span>CRM
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li><a href="crm-clients.html">Clients</a></li>
+                <li><a href="crm-inquiries.html">Inquiries</a></li>
+                <li><a href="crm-projects.html">Projects</a></li>
+              </ul>
+            </li>
+
+            <!-- FINANCE SECTION -->
+            <li>
+              <a class="show-cat-btn" href="##">
+                <span class="icon paper" aria-hidden="true"></span>Finance
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li><a class="active" href="invoices.html">Invoices</a></li>
+                <li><a href="reports.html">Reports</a></li>
+              </ul>
+            </li>
+          </ul>
+          <span class="system-menu__title">system</span>
+          <ul class="sidebar-body-menu">
+            <li>
+              <a href="settings.html"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+            </li>
+            <li>
+              <a href="#" id="logout-btn"><span class="icon log-out" aria-hidden="true"></span>Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <a href="##" class="sidebar-user">
+          <span class="sidebar-user-img">
+            <picture><source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-01.png" alt="User name"></picture>
+          </span>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user__title" id="user-name">CEO</span>
+            <span class="sidebar-user__subtitle" id="user-role">IXIERA</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <!-- MAIN NAV -->
+      <nav class="main-nav--bg">
+        <div class="container main-nav">
+          <div class="main-nav-start">
+            <div class="search-wrapper">
+              <i data-feather="search" aria-hidden="true"></i>
+              <input type="text" placeholder="Search invoices..." id="global-search">
+            </div>
+          </div>
+          <div class="main-nav-end">
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+              <span class="sr-only">Toggle menu</span>
+              <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+            </button>
+            
+            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+              <span class="sr-only">Switch theme</span>
+              <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+              <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+            </button>
+
+            <!-- Refresh Button -->
+            <button class="btn btn-outline-primary btn-sm" id="refresh-btn" title="Refresh Data">
+              <i data-feather="refresh-cw" class="me-1"></i> Refresh
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <main class="main users chart-page" id="skip-target">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="main-title">Invoices</h2>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm" id="clear-cache-btn" title="Clear Cache">
+                <i data-feather="trash-2" class="me-1"></i> Clear Cache
+              </button>
+              <button class="btn btn-primary" id="create-invoice-btn">
+                <i data-feather="plus" class="me-2"></i>Create Invoice
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="row stat-cards">
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon primary">
+                  <i data-feather="file-text" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="total-invoices">0</p>
+                  <p class="stat-cards-info__title">Total Invoices</p>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon warning">
+                  <i data-feather="clock" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="pending-invoices">0</p>
+                  <p class="stat-cards-info__title">Pending</p>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon success">
+                  <i data-feather="check-circle" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="paid-invoices">0</p>
+                  <p class="stat-cards-info__title">Paid</p>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-xl-3">
+              <article class="stat-cards-item">
+                <div class="stat-cards-icon danger">
+                  <i data-feather="alert-triangle" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                  <p class="stat-cards-info__num" id="overdue-invoices">0</p>
+                  <p class="stat-cards-info__title">Overdue</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="filters-card">
+                <div class="row g-3">
+                  <div class="col-md-8">
+                    <h5 class="mb-0">Quick Invoice Generation</h5>
+                    <p class="text-muted mb-0">Select completed projects to generate invoices automatically</p>
+                  </div>
+                  <div class="col-md-4 text-end">
+                    <button class="btn btn-success" id="auto-generate-btn">
+                      <i data-feather="zap" class="me-2"></i>Auto-Generate from Projects
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="filters-card">
+                <div class="filters-body">
+                  <div class="row g-3 align-items-center">
+                    <div class="col-md-3">
+                      <label class="filter-label">Status</label>
+                      <select class="filter-select" id="status-filter">
+                        <option value="">All Status</option>
+                        <option value="draft">Draft</option>
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                        <option value="overdue">Overdue</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="filter-label">Client</label>
+                      <select class="filter-select" id="client-filter">
+                        <option value="">All Clients</option>
+                        <!-- Client options will be populated by JavaScript -->
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="filter-label">Date From</label>
+                      <input type="date" class="filter-input" id="date-from">
+                    </div>
+                    <div class="col-md-3">
+                      <label class="filter-label">Date To</label>
+                      <input type="date" class="filter-input" id="date-to">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invoices Table -->
+          <div class="row">
+            <div class="col-12">
+              <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>Invoice #</th>
+                      <th>Client</th>
+                      <th>Project</th>
+                      <th>Issue Date</th>
+                      <th>Due Date</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="invoices-table-body">
+                    <tr>
+                      <td colspan="8" class="text-center py-4">
+                        <div class="spinner-border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="container footer--flex">
+          <div class="footer-start">
+            <p>2024 © IXIERA ERP - Agency Management System</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Cache Indicator -->
+  <div id="cache-indicator" class="cache-indicator" style="display: none;">
+    Using cached data
+  </div>
+
+  <!-- Chart library -->
+  <script src="./plugins/chart.min.js"></script>
+  <!-- Icons library -->
+  <script src="plugins/feather.min.js"></script>
+  
+  <!-- Our Modules -->
+  <script type="module" src="js/shared.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/invoices.js"></script>
+  
+  <!-- Template Scripts -->
+  <script src="js/script.js"></script>
+</body>
+</html>

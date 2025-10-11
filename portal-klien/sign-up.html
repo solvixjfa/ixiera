@@ -1,73 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Sign Up - IXIERA Client Portal</title>
+    <title>Bergabung dengan IXIERA - Akses Workspace</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="https://placehold.co/32x32/6a5acd/white?text=IXIERA" type="image/x-icon" />
-
-    <!-- External Libraries (Bootstrap & Font Awesome) -->
+    <link rel="icon" href="https://placehold.co/32x32/000000/white?text=IX" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" />
     
     <style>
-        /* * STYLES FOR SIGNUP PAGE - Consistent with login page */
-        body { 
-            background-color: #f4f5f8; 
-            font-family: 'Public Sans', sans-serif, system-ui;
-            visibility: hidden;
-            overflow-x: hidden;
+        :root {
+            --primary-bg: #ffffff;
+            --secondary-bg: #f8f9fa;
+            --primary-text: #1a1a1a;
+            --secondary-text: #666666;
+            --accent-color: #1a1a1a;
+            --accent-hover: #333333;
+            --border-color: #e9ecef;
+            --success-color: #27ae60;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
         }
 
-        /* Premium background with subtle animation */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
+        [data-bs-theme="dark"] {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #2d2d2d;
+            --primary-text: #ffffff;
+            --secondary-text: #a0a0a0;
+            --accent-color: #ffffff;
+            --accent-hover: #e0e0e0;
+            --border-color: #404040;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            background: var(--primary-bg);
+            color: var(--primary-text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .signup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .signup-card {
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, #f4f5f8 0%, #e8eaf6 100%);
-        }
-
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(106, 90, 205, 0.03) 0%, rgba(106, 90, 205, 0) 70%);
-            animation: float 15s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        .signup-container { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 15px; 
-        }
-
-        .signup-card { 
-            width: 100%; 
-            max-width: 460px; 
-            border: none; 
-            border-radius: 16px;
-            background-color: #ffffff;
-            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 440px;
+            border: none;
+            border-radius: 20px;
+            background: var(--primary-bg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-        }
-
-        .signup-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(106, 90, 205, 0.15);
         }
 
         .signup-card::before {
@@ -77,572 +76,544 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #6a5acd, #8a7de3);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
         }
 
-        .form-control { 
-            height: 48px; 
-            border-radius: 8px; 
-            transition: all 0.3s ease;
-            border: 1px solid #e0e0e0;
-            padding-left: 15px;
-        }
-        
-        .form-control:focus {
-            border-color: #6a5acd;
-            box-shadow: 0 0 0 0.2rem rgba(106, 90, 205, 0.15);
-            transform: translateY(-1px);
+        .card-body {
+            padding: 2.5rem;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #6a5acd 0%, #8a7de3 100%);
-            border: none;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #5a4aba 0%, #7a6dd3 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0);
+        .brand-section {
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .btn-lg { 
-            padding: 0.75rem 1.25rem; 
-            font-size: 1rem; 
-            border-radius: 8px; 
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-color);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-bg);
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+            border: 2px solid var(--border-color);
         }
 
-        .message-box { 
-            display: none; 
-            border-radius: 8px;
-            border-left: 4px solid;
+        .brand-title {
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        #error-message {
-            border-left-color: #dc3545;
-        }
-
-        #success-message {
-            border-left-color: #28a745;
-        }
-
-        .password-toggle-icon {
-            position: absolute; 
-            top: 50%; 
-            right: 15px; 
-            transform: translateY(-50%);
-            cursor: pointer; 
-            color: #6c757d;
-            transition: color 0.3s ease;
-        }
-        
-        .password-toggle-icon:hover {
-            color: #6a5acd;
-        }
-
-        /* Improved form structure */
-        .form-section {
-            margin-bottom: 1.5rem;
+        .brand-subtitle {
+            color: var(--secondary-text);
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         .form-label {
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--primary-text);
             margin-bottom: 0.5rem;
-            color: #495057;
+            font-size: 0.9rem;
         }
 
-        .form-actions {
-            margin-top: 1.5rem;
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            height: 52px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: var(--secondary-bg);
+            color: var(--primary-text);
+            padding-left: 50px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(26, 26, 26, 0.1);
+            background: var(--primary-bg);
+        }
+
+        [data-bs-theme="dark"] .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+            z-index: 2;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 18px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--secondary-text);
+            transition: color 0.2s ease;
+            z-index: 2;
+        }
+
+        .password-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-signup {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            border: none;
+            border-radius: 12px;
+            padding: 14px 24px;
+            font-weight: 600;
+            color: var(--primary-bg);
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-signup:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-signup:active {
+            transform: translateY(0);
+        }
+
+        .loading-spinner {
+            display: none;
+        }
+
+        .terms-check {
+            margin: 1.5rem 0;
+        }
+
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.2rem;
+            border: 2px solid var(--border-color);
+            background: var(--secondary-bg);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .form-check-label {
+            color: var(--secondary-text);
+            font-size: 0.85rem;
+            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .form-check-label a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-check-label a:hover {
+            text-decoration: underline;
         }
 
         .login-prompt {
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #e9ecef;
+            border-top: 1px solid var(--border-color);
         }
 
-        .portal-description {
-            color: #6c757d;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        
-        .logo-container {
-            position: relative;
-            margin-bottom: 10px;
-        }
-        
-        .logo-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(106, 90, 205, 0.2) 0%, rgba(106, 90, 205, 0) 70%);
-            border-radius: 50%;
-            z-index: -1;
-        }
-        
-        .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #6a5acd;
-            z-index: 5;
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .login-prompt p {
+            color: var(--secondary-text);
+            margin-bottom: 0.5rem;
         }
 
-        .feature-highlight {
-            background: linear-gradient(135deg, rgba(106, 90, 205, 0.05) 0%, rgba(138, 125, 227, 0.05) 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 25px;
-            border-left: 4px solid #6a5acd;
-        }
-        
-        .feature-highlight h6 {
-            color: #6a5acd;
+        .login-link {
+            color: var(--accent-color);
             font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .feature-highlight ul {
-            margin-bottom: 0;
-            padding-left: 20px;
-        }
-        
-        .feature-highlight li {
-            margin-bottom: 5px;
-            color: #5a5a72;
+            text-decoration: none;
+            transition: color 0.2s ease;
         }
 
-        .password-strength {
-            height: 4px;
-            border-radius: 2px;
-            margin-top: 5px;
-            background-color: #e9ecef;
-            overflow: hidden;
+        .login-link:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
         }
-        
-        .password-strength-bar {
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease, background-color 0.3s ease;
+
+        .alert {
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
         }
-        
-        .password-requirements {
+
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da, #f1b0b7);
+            color: #721c24;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border-left: 4px solid var(--success-color);
+        }
+
+        [data-bs-theme="dark"] .alert-danger {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(231, 76, 60, 0.1));
+            color: #f8d7da;
+        }
+
+        [data-bs-theme="dark"] .alert-success {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.2), rgba(39, 174, 96, 0.1));
+            color: #d4edda;
+        }
+
+        .feature-list {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-list h6 {
+            color: var(--primary-text);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
             font-size: 0.8rem;
-            color: #6c757d;
-            margin-top: 5px;
-        }
-        
-        .requirement {
-            margin-bottom: 3px;
-        }
-        
-        .requirement.met {
-            color: #28a745;
-        }
-        
-        .requirement.met::before {
-            content: "✓ ";
-        }
-        
-        .requirement:not(.met) {
-            color: #6c757d;
-        }
-        
-        .requirement:not(.met)::before {
-            content: "○ ";
+            color: var(--secondary-text);
         }
 
-        /* Additional styles for new effects */
-        .shake {
-            animation: shake 0.5s;
+        .feature-item:last-child {
+            margin-bottom: 0;
         }
-        
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-10px); }
-            40% { transform: translateX(10px); }
-            60% { transform: translateX(-10px); }
-            80% { transform: translateX(10px); }
-            100% { transform: translateX(0); }
+
+        .feature-icon {
+            color: var(--success-color);
+            font-size: 0.9rem;
         }
-        
-        .shadow-sm {
-            box-shadow: 0 0.125rem 0.25rem rgba(106, 90, 205, 0.1) !important;
+
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 2rem 1.5rem;
+            }
+            
+            .brand-title {
+                font-size: 1.5rem;
+            }
+            
+            .form-control {
+                height: 48px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-card {
+            animation: fadeInUp 0.6s ease-out;
         }
     </style>
-      <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-4MK0Q0R584');
-  </script>
 </head>
 <body>
-    <div class="bg-animation"></div>
-    
     <div class="container signup-container">
-        <div class="card signup-card shadow-lg">
-            <div class="card-body p-4 p-md-5">
+        <div class="card signup-card">
+            <div class="card-body">
                 <!-- Header Section -->
-                <div class="text-center mb-4">
-                    <div class="logo-container">
-                        <div class="logo-glow"></div>
-                        <img src="https://placehold.co/100x100/6a5acd/white?text=IXIERA" alt="IXIERA Logo" class="mb-3 pulse" style="border-radius: 50%;">
-                    </div>
-                    <h3 class="fw-bold mb-1" style="color: #6a5acd;">Join IXIERA Client Portal</h3>
-                    <p class="portal-description">
-                        Create your account to unlock AI project tracking, order history, and community collaboration.
+                <div class="brand-section">
+                    <div class="brand-logo">IX</div>
+                    <h1 class="brand-title">Bergabung dengan IXIERA</h1>
+                    <p class="brand-subtitle">
+                        Akses workspace premium untuk kolaborasi project, tracking progress, dan tools AI assistant
                     </p>
                 </div>
 
-                <!-- Messages Section -->
-                <div id="error-message" class="alert alert-danger message-box" role="alert"></div>
-                <div id="success-message" class="alert alert-success message-box" role="alert"></div>
+                <!-- Messages -->
+                <div id="error-message" class="alert alert-danger d-none"></div>
+                <div id="success-message" class="alert alert-success d-none"></div>
 
-                <!-- Sign Up Form Section -->
-                <form id="signup-form" novalidate>
-                    <div class="form-section">
-                        <!-- Full Name Input -->
-                        <div class="mb-3">
-                            <label for="fullname" class="form-label">Full Name</label>
-                            <div class="position-relative">
-                                <i class="fas fa-user input-icon"></i>
-                                <input type="text" class="form-control ps-5" id="fullname" placeholder="e.g. John Smith" required>
-                            </div>
-                        </div>
-                        
-                        <!-- Email Input -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <div class="position-relative">
-                                <i class="fas fa-envelope input-icon"></i>
-                                <input type="email" class="form-control ps-5" id="email" placeholder="example@email.com" required>
-                            </div>
-                        </div>
-                        
-                        <!-- Password Input -->
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <div class="position-relative">
-                                <i class="fas fa-lock input-icon"></i>
-                                <input type="password" class="form-control ps-5" id="password" placeholder="Create a strong password" required>
-                                <span id="toggle-password" class="password-toggle-icon"><i class="fas fa-eye"></i></span>
-                            </div>
-                            
-                            <!-- Password Strength Indicator -->
-                            <div class="password-strength mt-2">
-                                <div id="password-strength-bar" class="password-strength-bar"></div>
-                            </div>
-                            
-                            <!-- Password Requirements -->
-                            <div id="password-requirements" class="password-requirements">
-                                <div id="length-req" class="requirement">At least 8 characters</div>
-                                <div id="uppercase-req" class="requirement">One uppercase letter</div>
-                                <div id="lowercase-req" class="requirement">One lowercase letter</div>
-                                <div id="number-req" class="requirement">One number</div>
-                            </div>
+                <!-- Sign Up Form -->
+                <form id="signup-form">
+                    <div class="input-group">
+                        <label class="form-label">Nama Lengkap</label>
+                        <div class="position-relative">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" class="form-control" id="fullname" placeholder="Masukkan nama kamu" required>
                         </div>
                     </div>
 
-                    <!-- Terms and Conditions -->
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="terms" required>
-                        <label class="form-check-label small" for="terms">
-                            I agree to the <a href="terms-of-services.html" style="color: #6a5acd;">Terms of Service</a> and <a href="privacy-policy.html" style="color: #6a5acd;">Privacy Policy</a>
-                        </label>
+                    <div class="input-group">
+                        <label class="form-label">Email kamu</label>
+                        <div class="position-relative">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" class="form-control" id="email" placeholder="nama@goyounjung.com" required>
+                        </div>
                     </div>
 
-                    <!-- Sign Up Button -->
-                    <div class="form-actions">
-                        <div class="d-grid">
-                            <button type="submit" id="signup-btn" class="btn btn-primary btn-lg">
-                                <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                                <span class="btn-text">Create Account</span>
-                            </button>
+                    <div class="input-group">
+                        <label class="form-label">Password</label>
+                        <div class="position-relative">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" class="form-control" id="password" placeholder="Minimal 8 karakter" required minlength="6">
+                            <span class="password-toggle" id="toggle-password">
+                                <i class="fas fa-eye"></i>
+                            </span>
                         </div>
+                    </div>
+
+                    <div class="terms-check">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                Saya menyetujui <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan Privasi</a> IXIERA
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" id="signup-btn" class="btn btn-signup">
+                            <span class="loading-spinner spinner-border spinner-border-sm me-2" role="status"></span>
+                            <span class="btn-text">Buat Akun Workspace</span>
+                        </button>
                     </div>
                 </form>
 
-                <!-- Features Highlight -->
-                <div class="feature-highlight">
-                    <h6><i class="fas fa-rocket me-2"></i>What you'll get with IXIERA:</h6>
-                    <ul>
-                        <li><strong>Project Dashboard:</strong> Track your AI project progress in real-time</li>
-                        <li><strong>Order Management:</strong> Access your complete purchase history</li>
-                        <li><strong>AI Assistant:</strong> Get instant help with our smart assistant</li>
-                        <li><strong>Community Access:</strong> Connect with other IXIERA clients</li>
-                    </ul>
+                <!-- Features Preview -->
+                <div class="feature-list">
+                    <h6>Akses yang akan kamu dapatkan:</h6>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle feature-icon"></i>
+                        <span>Dashboard Project Tracking</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle feature-icon"></i>
+                        <span>Kolaborasi Tim Real-time</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle feature-icon"></i>
+                        <span>AI Assistant Premium</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle feature-icon"></i>
+                        <span>Showcase Portfolio</span>
+                    </div>
                 </div>
 
                 <!-- Login Prompt -->
                 <div class="login-prompt">
-                    <p class="text-muted mb-0">Already have an account? <a href="sign-in.html" style="color: #6a5acd; text-decoration: none; font-weight: 500;">Log In</a></p>
+                    <p>Sudah memiliki akun workspace?</p>
+                    <a href="sign-in.html" class="login-link">Masuk ke Akun kamu</a>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Supabase Client Library -->
+
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        // --- SUPABASE CLIENT INITIALIZATION ---
-        const SUPABASE_URL = 'https://xtarsaurwclktwhhryas.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        /**
-         * Checks for an active session and redirects if found.
-         * Otherwise, makes the page visible and sets up listeners.
-         */
-        async function checkSessionAndInitialize() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                window.location.href = 'index.html'; // User is already logged in
-            } else {
-                document.body.style.visibility = 'visible'; // No session, show the signup page
-                initializeSignUpListeners();
-                addPremiumEffects();
-            }
+ <script>
+    // Tunggu Supabase load
+    function initializeApp() {
+        if (typeof supabase === 'undefined') {
+            setTimeout(initializeApp, 100);
+            return;
         }
 
-        /**
-         * Adds premium visual effects to the signup page
-         */
-        function addPremiumEffects() {
-            // Add subtle hover effect to form inputs
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    input.parentElement.classList.add('shadow-sm');
-                });
+        console.log('✅ Supabase loaded');
+
+        // Initialize client - PASTIKAN INI ADA
+        const supabaseClient = supabase.createClient(
+            'https://xtarsaurwclktwhhryas.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0YXJzYXVyd2Nsa3R3aGhyeWFzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM1ODksImV4cCI6MjA2NzM3OTU4OX0.ZAgs8NbZs8F2GuBVfiFYuyqOLrRC1hemdMyE-i4riYI'
+        );
+        window.dbClient = supabaseClient;
+
+        // Helper functions
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            errorEl.textContent = message;
+            errorEl.classList.remove('d-none');
+            document.getElementById('success-message').classList.add('d-none');
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('success-message');
+            successEl.textContent = message;
+            successEl.classList.remove('d-none');
+            document.getElementById('error-message').classList.add('d-none');
+        }
+
+        function hideMessages() {
+            document.getElementById('error-message').classList.add('d-none');
+            document.getElementById('success-message').classList.add('d-none');
+        }
+
+        // Password toggle
+        document.getElementById('toggle-password').addEventListener('click', function() {
+            const input = document.getElementById('password');
+            const isPassword = input.type === 'password';
+            input.type = isPassword ? 'text' : 'password';
+            this.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+        });
+
+        // Real-time validation
+        document.getElementById('fullname').addEventListener('input', hideMessages);
+        document.getElementById('email').addEventListener('input', hideMessages);
+        document.getElementById('password').addEventListener('input', hideMessages);
+
+        // Form submission - VERSION WITH CLIENTS TABLE
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('signup-btn');
+            const spinner = btn.querySelector('.loading-spinner');
+            const btnText = btn.querySelector('.btn-text');
+            
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const terms = document.getElementById('terms').checked;
+
+            // Validation
+            if (!fullname || !email || !password) {
+                showError('Harap lengkapi semua field yang diperlukan');
+                return;
+            }
+            if (!terms) {
+                showError('kamu harus menyetujui Syarat & Ketentuan untuk melanjutkan');
+                return;
+            }
+            if (password.length < 6) {
+                showError('Password harus minimal 6 karakter');
+                return;
+            }
+
+            // Show loading
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Membuat akun...';
+
+            try {
+                console.log('🔄 Starting signup...');
                 
-                input.addEventListener('blur', () => {
-                    input.parentElement.classList.remove('shadow-sm');
-                });
-            });
-            
-            // Add typing effect to the portal description
-            const description = document.querySelector('.portal-description');
-            const originalText = description.textContent;
-            description.textContent = '';
-            
-            let i = 0;
-            const typeWriter = () => {
-                if (i < originalText.length) {
-                    description.textContent += originalText.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 30);
-                }
-            };
-            
-            // Start typing effect after a short delay
-            setTimeout(typeWriter, 500);
-        }
-
-        /**
-         * Checks password strength and updates UI accordingly
-         */
-        function checkPasswordStrength(password) {
-            let strength = 0;
-            const requirements = {
-                length: false,
-                uppercase: false,
-                lowercase: false,
-                number: false
-            };
-            
-            // Check length
-            if (password.length >= 8) {
-                strength += 25;
-                requirements.length = true;
-            }
-            
-            // Check uppercase
-            if (/[A-Z]/.test(password)) {
-                strength += 25;
-                requirements.uppercase = true;
-            }
-            
-            // Check lowercase
-            if (/[a-z]/.test(password)) {
-                strength += 25;
-                requirements.lowercase = true;
-            }
-            
-            // Check number
-            if (/[0-9]/.test(password)) {
-                strength += 25;
-                requirements.number = true;
-            }
-            
-            // Update strength bar
-            const strengthBar = document.getElementById('password-strength-bar');
-            strengthBar.style.width = `${strength}%`;
-            
-            // Update color based on strength
-            if (strength < 50) {
-                strengthBar.style.backgroundColor = '#dc3545'; // Red
-            } else if (strength < 75) {
-                strengthBar.style.backgroundColor = '#ffc107'; // Yellow
-            } else {
-                strengthBar.style.backgroundColor = '#28a745'; // Green
-            }
-            
-            // Update requirements display
-            document.getElementById('length-req').className = requirements.length ? 'requirement met' : 'requirement';
-            document.getElementById('uppercase-req').className = requirements.uppercase ? 'requirement met' : 'requirement';
-            document.getElementById('lowercase-req').className = requirements.lowercase ? 'requirement met' : 'requirement';
-            document.getElementById('number-req').className = requirements.number ? 'requirement met' : 'requirement';
-            
-            return strength;
-        }
-
-        /**
-         * Attaches event listeners to the sign-up form.
-         */
-        function initializeSignUpListeners() {
-            // --- DOM Element Selection ---
-            const signupForm = document.getElementById('signup-form');
-            const signupButton = document.getElementById('signup-btn');
-            const spinner = signupButton.querySelector('.spinner-border');
-            const btnText = signupButton.querySelector('.btn-text');
-            const errorMessageDiv = document.getElementById('error-message');
-            const successMessageDiv = document.getElementById('success-message');
-            const passwordInput = document.getElementById('password');
-            const togglePassword = document.getElementById('toggle-password');
-            const termsCheckbox = document.getElementById('terms');
-
-            // --- UI Helper Functions ---
-            
-            /** Toggles the loading state of the sign-up button. */
-            function showLoading(isLoading) {
-                signupButton.disabled = isLoading;
-                spinner.classList.toggle('d-none', !isLoading);
-                btnText.textContent = isLoading ? 'Creating Account...' : 'Create Account';
-            }
-
-            /** Displays a message in the specified message box. */
-            function showMessage(element, message, isError = true) {
-                element.innerHTML = `<i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'} me-2"></i> ${message}`;
-                element.style.display = 'block';
-                
-                if (isError) {
-                    // Shake animation for error
-                    signupForm.classList.add('shake');
-                    setTimeout(() => {
-                        signupForm.classList.remove('shake');
-                    }, 500);
-                }
-            }
-
-            // --- Event Listeners ---
-
-            /** Toggles password visibility. */
-            togglePassword.addEventListener('click', () => {
-                const isPassword = passwordInput.getAttribute('type') === 'password';
-                passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-                togglePassword.querySelector('i').classList.toggle('fa-eye');
-                togglePassword.querySelector('i').classList.toggle('fa-eye-slash');
-            });
-
-            /** Checks password strength as user types */
-            passwordInput.addEventListener('input', () => {
-                checkPasswordStrength(passwordInput.value);
-            });
-
-            /** Handles the email/password sign-up form submission. */
-            signupForm.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                showLoading(true);
-                errorMessageDiv.style.display = 'none';
-                successMessageDiv.style.display = 'none';
-
-                // Check if terms are accepted
-                if (!termsCheckbox.checked) {
-                    showMessage(errorMessageDiv, 'Please accept the Terms of Service and Privacy Policy to continue.', true);
-                    showLoading(false);
-                    return;
-                }
-
-                try {
-                    const fullname = document.getElementById('fullname').value;
-                    const email = document.getElementById('email').value;
-                    const password = passwordInput.value;
-
-                    // Check password strength
-                    const passwordStrength = checkPasswordStrength(password);
-                    if (passwordStrength < 75) {
-                        throw new Error('Please use a stronger password that meets all requirements.');
+                // 1. SIGN UP di Auth
+                const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                    email,
+                    password,
+                    options: { 
+                        data: { 
+                            full_name: fullname,
+                            user_type: 'client'
+                        } 
                     }
+                });
 
-                    const { data, error } = await supabaseClient.auth.signUp({
-                        email,
-                        password,
-                        options: {
-                            data: {
-                                full_name: fullname,
-                                // You can add other metadata here
-                            }
-                        }
-                    });
+                if (authError) throw authError;
 
-                    if (error) throw error;
+                if (authData.user) {
+                    console.log('✅ Auth success - creating client profile...');
                     
-                    // Supabase sends confirmation email. data.user will be null if email confirmation is enabled.
-                    if (data.user) {
-                         // This will run if you disable email confirmation.
-                        showMessage(successMessageDiv, 'Account created successfully! Redirecting to your dashboard...', false);
-                        setTimeout(() => {
-                            window.location.href = 'index.html';
-                        }, 2000);
+                    // 2. BUAT PROFIL DI TABEL CLIENTS (ganti dari profiles ke clients)
+                    const { data: clientData, error: clientError } = await supabaseClient
+                        .from('clients')  // GUNAKAN CLIENTS BUKAN PROFILES
+                        .insert([{ 
+                            user_id: authData.user.id,
+                            full_name: fullname,
+                            email: email,
+                            avatar_url: 'assets/img/profile.jpg',
+                            created_at: new Date().toISOString(),
+                            updated_at: new Date().toISOString()
+                        }])
+                        .select();
+
+                    if (clientError) {
+                        console.error('❌ Client profile creation failed:', clientError);
+                        // Tapi tetap lanjut, karena auth sudah berhasil
+                        console.log('⚠️ Continuing without client profile...');
                     } else {
-                        // This will run if email confirmation is enabled.
-                        showMessage(successMessageDiv, 'Account created successfully! Please check your email to confirm your account.', false);
-                        signupForm.reset();
-                        
-                        // Reset password strength indicator
-                        document.getElementById('password-strength-bar').style.width = '0%';
-                        document.querySelectorAll('.requirement').forEach(el => {
-                            el.className = 'requirement';
-                        });
+                        console.log('✅ Client profile created:', clientData);
                     }
 
-                } catch (error) {
-                    showMessage(errorMessageDiv, error.message || 'An unexpected error occurred.', true);
-                } finally {
-                    showLoading(false);
-                }
-            });
-        }
+                    // Success message
+                    showSuccess('Akun berhasil dibuat! Silakan check email untuk verifikasi.');
+                    document.getElementById('signup-form').reset();
 
-        // --- SCRIPT EXECUTION ---
-        document.addEventListener('DOMContentLoaded', checkSessionAndInitialize);
-    </script>
+                    // Redirect to login setelah 3 detik
+                    setTimeout(() => {
+                        window.location.href = 'sign-in.html?message=signup_success';
+                    }, 3000);
+                }
+
+            } catch (error) {
+                console.error('❌ Signup error:', error);
+                let message = 'Terjadi kesalahan sistem. Silakan coba lagi.';
+                
+                if (error.message.includes('already registered')) {
+                    message = 'Email sudah terdaftar';
+                } else if (error.message.includes('valid email')) {
+                    message = 'Format email tidak valid';
+                } else if (error.message.includes('password')) {
+                    message = 'Password tidak memenuhi requirements';
+                } else {
+                    message = error.message || message;
+                }
+                
+                showError(message);
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.textContent = 'Buat Akun';
+            }
+        });
+
+        // Check existing session
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (session) {
+                window.location.href = 'index.html';
+            }
+        });
+    }
+
+    // Start app
+    document.addEventListener('DOMContentLoaded', initializeApp);
+</script>
+    <script src="assets/js/tawkto.js"></script>
 </body>
 </html>

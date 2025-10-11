@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IXIERA ERP | Edit Inquiry</title>
+  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <link rel="stylesheet" href="./css/style.min.css">
+  <style>
+    .form-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.5rem;
+      display: block;
+      font-size: 0.875rem;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #4f46e5;
+    }
+    .form-select {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      background-color: white;
+    }
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+      margin-right: 0.5rem;
+    }
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+    .btn-secondary {
+      background: #6b7280;
+      color: white;
+    }
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    .loading-spinner {
+      text-align: center;
+      padding: 2rem;
+    }
+    .error-message {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .success-message {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .info-message {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .inquiry-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .inquiry-id-badge {
+      background: #e5e7eb;
+      color: #374151;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layer"></div>
+  <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+  <div class="page-flex">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-start">
+        <div class="sidebar-head">
+          <a href="/" class="logo-wrapper" title="Home">
+            <span class="sr-only">Home</span>
+            <span class="icon logo" aria-hidden="true"></span>
+            <div class="logo-text">
+              <span class="logo-title">IXIERA</span>
+              <span class="logo-subtitle">ERP</span>
+            </div>
+          </a>
+          <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+            <span class="sr-only">Toggle menu</span>
+            <span class="icon menu-toggle" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="sidebar-body">
+          <ul class="sidebar-body-menu">
+            <li>
+              <a href="index.html"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+            </li>
+            
+            <!-- CRM SECTION -->
+            <li>
+              <a class="show-cat-btn" href="##">
+                <span class="icon user-3" aria-hidden="true"></span>CRM
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li><a href="crm-clients.html">Clients</a></li>
+                <li><a href="crm-inquiries.html">Inquiries</a></li>
+                <li><a href="crm-projects.html">Projects</a></li>
+              </ul>
+            </li>
+
+            <!-- FINANCE SECTION -->
+            <li>
+              <a class="show-cat-btn" href="##">
+                <span class="icon paper" aria-hidden="true"></span>Finance
+                <span class="category__btn transparent-btn" title="Open list">
+                  <span class="sr-only">Open list</span>
+                  <span class="icon arrow-down" aria-hidden="true"></span>
+                </span>
+              </a>
+              <ul class="cat-sub-menu">
+                <li><a href="invoices.html">Invoices</a></li>
+                <li><a href="reports.html">Reports</a></li>
+              </ul>
+            </li>
+          </ul>
+          <span class="system-menu__title">system</span>
+          <ul class="sidebar-body-menu">
+            <li>
+              <a href="settings.html"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+            </li>
+            <li>
+              <a href="#" id="logout-btn"><span class="icon log-out" aria-hidden="true"></span>Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <a href="##" class="sidebar-user">
+          <span class="sidebar-user-img">
+            <picture><source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-01.png" alt="User name"></picture>
+          </span>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user__title" id="user-name">CEO</span>
+            <span class="sidebar-user__subtitle" id="user-role">IXIERA</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <!-- MAIN NAV -->
+      <nav class="main-nav--bg">
+        <div class="container main-nav">
+          <div class="main-nav-start">
+            <div class="search-wrapper">
+              <i data-feather="search" aria-hidden="true"></i>
+              <input type="text" placeholder="Enter keywords..." id="global-search">
+            </div>
+          </div>
+          <div class="main-nav-end">
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+              <span class="sr-only">Toggle menu</span>
+              <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+            </button>
+            
+            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+              <span class="sr-only">Switch theme</span>
+              <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+              <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <main class="main users chart-page" id="skip-target">
+        <div class="container">
+          <!-- Header dengan ID Badge -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+              <h2 class="main-title">Edit Inquiry</h2>
+              <div class="inquiry-id-badge" id="inquiry-id-badge">
+                Loading ID...
+              </div>
+            </div>
+            <a href="crm-inquiries.html" class="btn btn-secondary">
+              <i data-feather="arrow-left" class="me-2"></i>Back to Inquiries
+            </a>
+          </div>
+
+          <!-- Messages Container -->
+          <div id="message-container"></div>
+
+          <!-- Loading State -->
+          <div id="loading-state" class="loading-spinner">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading inquiry data...</span>
+            </div>
+            <p class="mt-2">Loading inquiry data...</p>
+          </div>
+
+          <!-- Edit Form -->
+          <div id="edit-form-container" style="display: none;">
+            <div class="form-container">
+              <form id="edit-inquiry-form">
+                <!-- Client Information -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label" for="client_name">Client Name *</label>
+                      <input type="text" class="form-control" id="client_name" name="client_name" required>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label" for="client_email">Client Email *</label>
+                      <input type="email" class="form-control" id="client_email" name="client_email" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label" for="client_phone">Client Phone</label>
+                      <input type="tel" class="form-control" id="client_phone" name="client_phone">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label" for="service_type">Service Type *</label>
+                      <select class="form-select" id="service_type" name="service_type" required>
+                        <option value="">Select Service Type</option>
+                        <option value="website">Website Development</option>
+                        <option value="ecommerce">E-commerce</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="design">UI/UX Design</option>
+                        <option value="consulting">IT Consulting</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+<!-- Project Details -->
+<div class="row">
+  <!-- Budget Manual -->
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-label" for="budget">Budget (Manual)</label>
+      <input type="text" class="form-control" id="budget" name="budget" placeholder="Masukkan budget proyek secara manual">
+    </div>
+  </div>
+
+  <!-- Deadline -->
+  <div class="col-md-6">
+    <div class="form-group">
+      <label class="form-label" for="deadline">Desired Deadline</label>
+      <input type="date" class="form-control" id="deadline" name="deadline">
+    </div>
+  </div>
+</div>
+      <!-- Requirements -->
+                <div class="form-group">
+                  <label class="form-label" for="project_requirements">Project Requirements *</label>
+                  <textarea class="form-control form-textarea" id="project_requirements" name="project_requirements" required></textarea>
+                </div>
+
+<select class="form-select" id="status" name="status" required>
+    <option value="new">New</option>
+    <option value="in-progress">In Progress</option>
+    <option value="development">Development</option>
+    <option value="design">Design</option>
+    <option value="revision">Revision</option>
+    
+    <option value="completed">Completed</option>
+    <option value="lost">Lost</option>
+    <option value="cancelled">Cancelled</option>
+</select>
+
+                <!-- Internal Notes -->
+                <div class="form-group">
+                  <label class="form-label" for="internal_notes">Internal Notes</label>
+                  <textarea class="form-control form-textarea" id="internal_notes" name="internal_notes" placeholder="Add any internal notes or comments..."></textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                  <div>
+                    <button type="button" class="btn btn-danger" id="delete-btn">
+                      <i data-feather="trash-2" class="me-2"></i>Delete Inquiry
+                    </button>
+                  </div>
+                  <div>
+                    <a href="crm-inquiries.html" class="btn btn-secondary me-2">
+                      Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                      <i data-feather="save" class="me-2"></i>Update Inquiry
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Error State -->
+          <div id="error-state" class="error-message" style="display: none;">
+            <i data-feather="alert-triangle" class="me-2"></i>
+            <span id="error-message">Error loading inquiry data</span>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="container footer--flex">
+          <div class="footer-start">
+            <p>2024 © IXIERA ERP - Agency Management System</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Chart library -->
+  <script src="./plugins/chart.min.js"></script>
+  <!-- Icons library -->
+  <script src="plugins/feather.min.js"></script>
+  
+  <!-- Our Modules -->
+  <script type="module" src="js/shared.js"></script>
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/edit-inquiry.js"></script>
+  
+  <!-- Template Scripts -->
+  <script src="js/script.js"></script>
+</body>
+</html>

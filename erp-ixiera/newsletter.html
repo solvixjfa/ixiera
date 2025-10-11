@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IXIERA Admin | Newsletter Management</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="./css/style.min.css">
+</head>
+
+<body>
+  <div class="layer"></div>
+<!-- ! Body -->
+<a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+<div class="page-flex">
+  <!-- ! Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-start">
+        <div class="sidebar-head">
+            <a href="/" class="logo-wrapper" title="Home">
+                <span class="sr-only">Home</span>
+                <span class="icon logo" aria-hidden="true"></span>
+                <div class="logo-text">
+                    <span class="logo-title">IXIERA</span>
+                    <span class="logo-subtitle">Admin</span>
+                </div>
+            </a>
+            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                <span class="sr-only">Toggle menu</span>
+                <span class="icon menu-toggle" aria-hidden="true"></span>
+            </button>
+        </div>
+        <div class="sidebar-body">
+            <ul class="sidebar-body-menu">
+                <li>
+                    <a href="index.html"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                </li>
+                
+                <!-- CRM Menu -->
+                <li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon user-3" aria-hidden="true"></span>CRM
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="crm-clients.html">Clients</a>
+                        </li>
+                        <li>
+                            <a href="crm-inquiries.html">Inquiries</a>
+                        </li>
+                        <li>
+                            <a href="crm-projects.html">Projects</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Finance Menu -->
+                <li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon paper" aria-hidden="true"></span>Finance
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="invoices.html">Invoices</a>
+                        </li>
+                        <li>
+                            <a href="reports.html">Reports</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Content Menu -->
+                <li>
+                    <a class="show-cat-btn" href="##">
+                        <span class="icon document" aria-hidden="true"></span>Content
+                        <span class="category__btn transparent-btn" title="Open list">
+                            <span class="sr-only">Open list</span>
+                            <span class="icon arrow-down" aria-hidden="true"></span>
+                        </span>
+                    </a>
+                    <ul class="cat-sub-menu">
+                        <li>
+                            <a href="blog-posts.html">Blog Posts</a>
+                        </li>
+                        <li>
+                            <a class="active" href="newsletter.html">Newsletter</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <span class="system-menu__title">system</span>
+            <ul class="sidebar-body-menu">
+                <li>
+                    <a href="settings.html"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+                </li>
+                <li>
+                    <a href="#" id="logout-btn"><span class="icon log-out" aria-hidden="true"></span>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="sidebar-footer">
+        <a href="##" class="sidebar-user">
+            <span class="sidebar-user-img">
+                <picture><source srcset="./img/avatar/avatar-illustrated-01.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-01.png" alt="User name"></picture>
+            </span>
+            <div class="sidebar-user-info">
+                <span class="sidebar-user__title" id="user-name">Nafisa Sh.</span>
+                <span class="sidebar-user__subtitle" id="user-role">CEO</span>
+            </div>
+        </a>
+    </div>
+</aside>
+
+  <div class="main-wrapper">
+    <!-- ! Main nav -->
+    <nav class="main-nav--bg">
+  <div class="container main-nav">
+    <div class="main-nav-start">
+      <div class="search-wrapper">
+        <i data-feather="search" aria-hidden="true"></i>
+        <input type="text" placeholder="Search subscribers..." required id="newsletter-search">
+      </div>
+    </div>
+    <div class="main-nav-end">
+      <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+        <span class="sr-only">Toggle menu</span>
+        <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+      </button>
+      
+      <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+        <span class="sr-only">Switch theme</span>
+        <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+        <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+      </button>
+      
+      <div class="nav-user-wrapper">
+        <button class="nav-user-btn dropdown-btn" title="My profile" type="button">
+          <span class="sr-only">My profile</span>
+          <span class="nav-user-img">
+            <picture><source srcset="./img/avatar/avatar-illustrated-02.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-02.png" alt="User name"></picture>
+          </span>
+        </button>
+        <ul class="users-item-dropdown nav-user-dropdown dropdown">
+          <li><a href="##">
+              <i data-feather="user" aria-hidden="true"></i>
+              <span>Profile</span>
+            </a></li>
+          <li><a href="settings.html">
+              <i data-feather="settings" aria-hidden="true"></i>
+              <span>Account settings</span>
+            </a></li>
+          <li><a class="danger" href="#" id="nav-logout-btn">
+              <i data-feather="log-out" aria-hidden="true"></i>
+              <span>Log out</span>
+            </a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <!-- ! Main -->
+    <main class="main users chart-page" id="skip-target">
+      <div class="container">
+        <div class="card-toolbar">
+          <h2 class="main-title">Newsletter Management</h2>
+          <button class="refresh-btn" id="refresh-newsletter" title="Refresh Newsletter">
+            <i data-feather="refresh-cw"></i>
+          </button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions-grid">
+          <button class="quick-action-card" id="add-subscriber">
+            <div class="action-icon">
+              <i data-feather="user-plus"></i>
+            </div>
+            <h4>Add Subscriber</h4>
+            <p>Add new email subscriber</p>
+          </button>
+          
+          <button class="quick-action-card success" onclick="exportSubscribers()">
+            <div class="action-icon">
+              <i data-feather="download"></i>
+            </div>
+            <h4>Export CSV</h4>
+            <p>Export all subscribers</p>
+          </button>
+          
+          <button class="quick-action-card warning" onclick="showImportHelp()">
+            <div class="action-icon">
+              <i data-feather="help-circle"></i>
+            </div>
+            <h4>Import Help</h4>
+            <p>Bulk import guide</p>
+          </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row stat-cards">
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon primary">
+                <i data-feather="users" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="total-subscribers">0</p>
+                <p class="stat-cards-info__title">Total Subscribers</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit success">
+                    <i data-feather="trending-up" aria-hidden="true"></i>
+                    <span id="subscribers-growth">0</span>
+                  </span>
+                  This month
+                </p>
+              </div>
+            </article>
+          </div>
+          
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon success">
+                <i data-feather="check-circle" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="active-subscribers">0</p>
+                <p class="stat-cards-info__title">Active</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit success">
+                    <i data-feather="trending-up" aria-hidden="true"></i>
+                    <span id="active-rate">100%</span>
+                  </span>
+                  Active rate
+                </p>
+              </div>
+            </article>
+          </div>
+          
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon warning">
+                <i data-feather="calendar" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="new-this-month">0</p>
+                <p class="stat-cards-info__title">New This Month</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit warning">
+                    <i data-feather="trending-up" aria-hidden="true"></i>
+                    <span id="month-growth">0%</span>
+                  </span>
+                  Monthly growth
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3">
+            <article class="stat-cards-item">
+              <div class="stat-cards-icon purple">
+                <i data-feather="mail" aria-hidden="true"></i>
+              </div>
+              <div class="stat-cards-info">
+                <p class="stat-cards-info__num" id="total-campaigns">-</p>
+                <p class="stat-cards-info__title">Ready</p>
+                <p class="stat-cards-info__progress">
+                  <span class="stat-cards-info__profit success">
+                    <i data-feather="zap" aria-hidden="true"></i>
+                    <span id="campaigns-growth">Export</span>
+                  </span>
+                  Available
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Subscribers Table -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="white-block">
+              <div class="top-cat-title">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h3>Subscribers List</h3>
+                    <p id="table-count">Loading subscribers...</p>
+                  </div>
+                </div>
+              </div>
+              <div class="users-table table-wrapper">
+                <table class="posts-table">
+                  <thead>
+                    <tr class="users-table-info">
+                      <th>Email</th>
+                      <th>Name</th>
+                      <th>Source</th>
+                      <th>Subscribed</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="subscribers-body">
+                    <tr>
+                      <td colspan="5" class="text-center py-4">
+                        <div class="spinner-border" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <!-- ! Footer -->
+    <footer class="footer">
+  <div class="container footer--flex">
+    <div class="footer-start">
+      <p>2024 © IXIERA Admin - Newsletter Management System</p>
+    </div>
+  </div>
+</footer>
+  </div>
+</div>
+
+
+<!-- Icons library -->
+<script src="plugins/feather.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Our JavaScript Modules -->
+<script type="module" src="js/shared.js"></script>
+<script type="module" src="js/auth.js"></script>
+<script type="module" src="js/newsletter.js"></script>
+
+<!-- Template Scripts -->
+<script src="js/script.js"></script>
+
+<style>
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quick-action-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.quick-action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.quick-action-card.success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.quick-action-card.warning {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.quick-action-card.danger {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+}
+
+.action-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    color: #3b82f6;
+    background: #f3f4f6;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+</style>
+
+<script>
+function showImportHelp() {
+    alert('To import subscribers:\n\n1. Prepare a CSV file with columns: email, name, phone, source\n2. Use the export template as reference\n3. Contact support for bulk import assistance');
+}
+
+// Global functions for newsletter
+window.exportSubscribers = function() {
+    if (window.newsletterData && window.newsletterData.subscribers && window.newsletterData.subscribers.length > 0) {
+        // This will be handled by the newsletter.js module
+        const event = new CustomEvent('exportSubscribers');
+        window.dispatchEvent(event);
+    } else {
+        alert('No subscribers to export');
+    }
+};
+
+window.deleteSubscriber = function(id) {
+    if (confirm('Delete this subscriber?')) {
+        const event = new CustomEvent('deleteSubscriber', { detail: id });
+        window.dispatchEvent(event);
+    }
+};
+</script>
+</body>
+</html>

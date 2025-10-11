@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>IXIERA Portal - Professional Dashboard</title>
+    <title>IXIERA Portal - Dashboard Profesional</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon"/>
 
@@ -64,23 +64,23 @@
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon"><i class="fas fa-th-large"></i></span>
-                <h4 class="text-section">Portal Menu</h4>
+                <h4 class="text-section">Menu Portal</h4>
               </li>
               <li class="nav-item">
-                <a href="products.html"><i class="fas fa-cube"></i><p>New Products</p></a>
+                <a href="products.html"><i class="fas fa-cube"></i><p>Layanan Baru</p></a>
               </li>
               <li class="nav-item">
-                <a href="order-history.html"><i class="fas fa-clock"></i><p>Order History</p></a>
+                <a href="project-hub.html"><i class="fas fa-rocket"></i><p>Project Hub</p></a>
               </li>
               <li class="nav-item">
-                <a href="community.html"><i class="fas fa-comments"></i><p>Community Forum</p></a>
+                <a href="community.html"><i class="fas fa-comments"></i><p>Komunitas</p></a>
               </li>
               <li class="nav-item">
                 <a href="ai-assistant.html"><i class="fas fa-robot"></i><p>AI Assistant</p></a>
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon"><i class="fas fa-user"></i></span>
-                <h4 class="text-section">Account</h4>
+                <h4 class="text-section">Akun</h4>
               </li>
               <li class="nav-item">
                 <a href="submission.html"><i class="fas fa-cog"></i><p>Submission Hub</p></a>
@@ -126,8 +126,8 @@
                       <img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle"/>
                     </div>
                     <span class="profile-username">
-                      <span class="op-7">Hi,</span>
-                      <span class="fw-bold" id="username-display">Client</span>
+                      <span class="op-7">Hai,</span>
+                      <span class="fw-bold" id="username-display">Klien</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -138,15 +138,15 @@
                             <img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"/>
                           </div>
                           <div class="u-text">
-                            <h4 id="username-dropdown">Client Name</h4>
-                            <p class="text-muted" id="user-email-dropdown">client@email.com</p>
-                            <a href="submission.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                            <h4 id="username-dropdown">Nama Klien</h4>
+                            <p class="text-muted" id="user-email-dropdown">klien@email.com</p>
+                            <a href="submission.html" class="btn btn-xs btn-secondary btn-sm">Lihat Profil</a>
                           </div>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="submission.html">Account Setting</a>
+                        <a class="dropdown-item" href="submission.html">Pengaturan Akun</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" id="logoutButtonDropdown">Logout</a>
                       </li>
@@ -161,62 +161,70 @@
         <!-- Main Content -->
         <div class="container">
           <div class="page-inner">
-            <!-- Page Header dengan waktu dan greeting -->
-            <div class="page-header">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
-                <div>
-                  <h3 class="fw-bold mb-2">My Dashboard</h3>
-                  <h6 class="op-7 mb-2" id="time-greeting">Welcome back! Here's the progress on your orders.</h6>
+            <!-- Enhanced Page Header -->
+            <div class="page-header-enhanced fade-in-up">
+              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                <div class="flex-grow-1">
+                  <h3 class="fw-bold mb-2 gradient-text">Dashboard Saya</h3>
+                  <h6 class="op-7 mb-2" id="time-greeting">Selamat datang! Berikut progress project Anda.</h6>
                   <small class="text-muted" id="current-time"></small>
                 </div>
                 <div class="ms-md-auto py-2 py-md-0">
                   <div class="btn-group">
-                    <button class="btn btn-outline-secondary refresh-dashboard">
+                    <button class="btn btn-outline-enhanced refresh-dashboard">
                       <i class="fas fa-sync-alt me-2"></i>Refresh
                     </button>
-                    <button class="btn btn-outline-secondary" id="export-data">
-                      <i class="fas fa-download me-2"></i>Export
+                    <button class="btn btn-dark-enhanced" id="export-data">
+                      <i class="fas fa-file-export me-2"></i>Export
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Quick Stats Row -->
-            <div class="row mb-4">
+            <!-- Enhanced Quick Stats -->
+            <div class="row mb-4 fade-in-up">
               <div class="col-12">
-                <div class="quick-stats-container">
+                <div class="quick-stats-container-enhanced">
                   <div class="d-flex flex-wrap gap-3 justify-content-center">
-                    <div class="quick-stat-item">
-                      <i class="fas fa-clock me-2"></i>
-                      <span>Last Updated: <span id="last-updated-time">Just now</span></span>
+                    <div class="quick-stat-item-enhanced">
+                      <i class="fas fa-clock text-primary"></i>
+                      <span>Update Terakhir: <span id="last-updated-time" class="fw-bold">Baru saja</span></span>
                     </div>
-                    <div class="quick-stat-item">
-                      <i class="fas fa-database me-2"></i>
-                      <span>Total Orders: <span id="total-orders-count">0</span></span>
+                    <div class="quick-stat-item-enhanced">
+                      <i class="fas fa-database text-success"></i>
+                      <span>Total Project: <span id="total-orders-count" class="fw-bold">0</span></span>
+                    </div>
+                    <div class="quick-stat-item-enhanced">
+                      <i class="fas fa-bolt text-warning"></i>
+                      <span>Mode: <span class="text-success fw-bold">Cache Aktif</span></span>
+                    </div>
+                    <div class="quick-stat-item-enhanced">
+                      <i class="fas fa-rocket text-info"></i>
+                      <span>Performance: <span class="text-success fw-bold">Optimal</span></span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Stats Cards -->
-            <div class="row">
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round card-stats-custom">
+            <!-- Enhanced Stats Cards -->
+            <div class="row fade-in-up">
+              <div class="col-sm-6 col-md-3">
+                <div class="card-stats-enhanced">
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                        <div class="icon-big-enhanced">
                           <i class="fas fa-sync-alt"></i>
                         </div>
                       </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="col col-stats ms-3">
                         <div class="numbers">
-                          <p class="card-category">Orders In Progress</p>
-                          <h4 class="card-title" id="stats-in-progress">0</h4>
-                          <div class="progress mini-progress mt-2">
-                            <div class="progress-bar bg-primary" id="progress-in-progress" style="width: 0%"></div>
+                          <p class="card-category">Project Berjalan</p>
+                          <h4 class="card-title fw-bold" id="stats-in-progress">0</h4>
+                          <div class="progress-enhanced mt-2">
+                            <div class="progress-bar-enhanced bg-dark" id="progress-in-progress" style="width: 0%"></div>
                           </div>
                         </div>
                       </div>
@@ -224,21 +232,21 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round card-stats-custom">
+              <div class="col-sm-6 col-md-3">
+                <div class="card-stats-enhanced">
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div class="icon-big text-center icon-success bubble-shadow-small">
+                        <div class="icon-big-enhanced">
                           <i class="fas fa-check-circle"></i>
                         </div>
                       </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="col col-stats ms-3">
                         <div class="numbers">
-                          <p class="card-category">Completed Orders</p>
-                          <h4 class="card-title" id="stats-completed">0</h4>
-                          <div class="progress mini-progress mt-2">
-                            <div class="progress-bar bg-success" id="progress-completed" style="width: 0%"></div>
+                          <p class="card-category">Project Selesai</p>
+                          <h4 class="card-title fw-bold" id="stats-completed">0</h4>
+                          <div class="progress-enhanced mt-2">
+                            <div class="progress-bar-enhanced bg-success" id="progress-completed" style="width: 0%"></div>
                           </div>
                         </div>
                       </div>
@@ -246,20 +254,40 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6 col-md-4">
-                <div class="card card-stats card-round card-stats-custom">
+              <div class="col-sm-6 col-md-3">
+                <div class="card-stats-enhanced">
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col-icon">
-                        <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <div class="icon-big-enhanced">
                           <i class="fas fa-chart-bar"></i>
                         </div>
                       </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="col col-stats ms-3">
                         <div class="numbers">
-                          <p class="card-category">Total Spent</p>
-                          <h4 class="card-title" id="stats-total-spent">$0.00</h4>
-                          <small class="text-muted" id="average-order-value">Avg: $0.00</small>
+                          <p class="card-category">Total Pengeluaran</p>
+                          <h4 class="card-title fw-bold" id="stats-total-spent">Rp 0</h4>
+                          <small class="text-muted" id="average-order-value">Rata-rata: Rp 0</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-3">
+                <div class="card-stats-enhanced">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div class="icon-big-enhanced">
+                          <i class="fas fa-clock"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3">
+                        <div class="numbers">
+                          <p class="card-category">Active Projects</p>
+                          <h4 class="card-title fw-bold" id="stats-active">0</h4>
+                          <small class="text-muted">Dalam pengerjaan</small>
                         </div>
                       </div>
                     </div>
@@ -268,34 +296,45 @@
               </div>
             </div>
 
-            <!-- Order Progress Table -->
-            <div class="row mt-4">
+            <!-- Enhanced Project Table -->
+            <div class="row mt-4 fade-in-up">
               <div class="col-md-12">
-                <div class="card card-round">
-                  <div class="card-header">
+                <div class="enhanced-card">
+                  <div class="card-header bg-dark text-white">
                     <div class="card-head-row">
                       <div class="card-title">
-                        <i class="fas fa-list-alt me-2"></i>Order Progress Tracking
+                        <i class="fas fa-rocket me-2"></i>Pelacakan Progress Project
                       </div>
                       <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 200px;">
-                          <input type="text" class="form-control" placeholder="Search orders..." id="order-search">
-                          <button class="btn btn-outline-secondary" type="button">
-                            <i class="fas fa-search"></i>
-                          </button>
+                        <div class="input-group input-group-sm" style="width: 280px;">
+                          <span class="input-group-text bg-light border-end-0">
+                            <i class="fas fa-search text-muted"></i>
+                          </span>
+                          <input type="text" class="form-control border-start-0" placeholder="Cari project, status, atau nama..." id="order-search">
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover align-middle">
-                        <thead>
+                    <div class="table-responsive scrollbar-enhanced">
+                      <table class="table table-enhanced align-middle">
+                        <thead class="bg-light">
                           <tr>
-                            <th scope="col" class="sortable" data-sort="product">Product <i class="fas fa-sort ms-1"></i></th>
-                            <th scope="col" style="width: 40%;" class="sortable" data-sort="progress">Progress <i class="fas fa-sort ms-1"></i></th>
-                            <th scope="col" class="text-center sortable" data-sort="status">Status <i class="fas fa-sort ms-1"></i></th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col" class="sortable" data-sort="product">
+                              <i class="fas fa-project-diagram me-1"></i>Project
+                              <i class="fas fa-sort ms-1"></i>
+                            </th>
+                            <th scope="col" style="width: 35%;" class="sortable" data-sort="progress">
+                              <i class="fas fa-tasks me-1"></i>Progress & Timeline
+                              <i class="fas fa-sort ms-1"></i>
+                            </th>
+                            <th scope="col" class="text-center sortable" data-sort="status">
+                              <i class="fas fa-info-circle me-1"></i>Status
+                              <i class="fas fa-sort ms-1"></i>
+                            </th>
+                            <th scope="col" class="text-center">
+                              <i class="fas fa-cogs me-1"></i>Aksi
+                            </th>
                           </tr>
                         </thead>
                         <tbody id="orders-tracking-table">
@@ -304,17 +343,18 @@
                     </div>
                     <div id="empty-orders-message" class="text-center p-5" style="display: none;">
                       <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                      <h4>No Active Orders Found</h4>
-                      <p class="text-muted">You can find new products to order from the "New Products" page.</p>
-                      <a href="products.html" class="btn btn-primary mt-2">
-                        <i class="fas fa-cube me-2"></i>Browse Products
+                      <h4 class="text-dark">Belum Ada Project Aktif</h4>
+                      <p class="text-muted">Mulai project baru Anda dengan menjelajahi layanan kami.</p>
+                      <a href="products.html" class="btn btn-dark mt-2">
+                        <i class="fas fa-cube me-2"></i>Jelajahi Layanan
                       </a>
                     </div>
                     
                     <!-- Pagination -->
                     <div class="d-flex justify-content-between align-items-center mt-3">
                       <div class="text-muted">
-                        Showing <span id="showing-count">0</span> of <span id="total-count">0</span> orders
+                        <i class="fas fa-list me-1"></i>
+                        Menampilkan <span id="showing-count" class="fw-bold">0</span> dari <span id="total-count" class="fw-bold">0</span> project
                       </div>
                       <nav>
                         <ul class="pagination pagination-sm mb-0" id="pagination-container">
@@ -328,86 +368,95 @@
           </div>
         </div>
 
-        <!-- Order Row Template (Diperbarui) -->
+        <!-- Order Row Template -->
         <template id="order-row-template">
-          <tr class="order-row">
+          <tr class="order-row border-bottom">
             <td>
-              <div class="d-flex align-items-center">
-                <div class="product-icon me-3">
+              <div class="d-flex align-items-start">
+                <div class="product-icon me-3 bg-dark text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                   <i class="fas fa-cube"></i>
                 </div>
-                <div>
-                  <div class="fw-bold product-name">Nama Produk Digital</div>
-                  <small class="text-muted order-id">Order #12345</small>
-                  <br>
-                  <small class="text-muted order-date">Created: </small>
+                <div class="flex-grow-1">
+                  <div class="fw-bold product-name text-dark mb-1">Nama Project</div>
+                  <small class="text-muted order-id d-block">#12345</small>
+                  <small class="text-muted order-date d-block">Dibuat: </small>
+                  
+                  <div class="product-details mt-2"></div>
+                  
+                  <div class="mt-2">
+                    <span class="badge service-type-badge bg-dark border-0">Website</span>
+                    <div class="integration-badges mt-1 d-inline"></div>
+                  </div>
                 </div>
               </div>
             </td>
             <td>
               <div class="d-flex align-items-center">
                 <div class="w-100 me-3">
-                  <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 10px;">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" style="width: 0%;"></div>
+                  <div class="progress bg-light" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 8px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" style="width: 0%;"></div>
                   </div>
-                  <small class="text-muted status-description mt-1 d-block">Order received</small>
+                  <small class="text-muted status-description mt-1 d-block">Project diterima</small>
+                  
+                  <small class="timeline-info mt-1 d-block" style="font-size: 0.75rem;"></small>
+                  
+                  <div class="action-text mt-1" style="display: none;"></div>
                 </div>
-                <span class="fw-bold progress-text">0%</span>
+                <span class="fw-bold progress-text text-dark">0%</span>
               </div>
             </td>
             <td class="text-center">
-              <span class="badge status-badge bg-warning">In Progress</span>
+              <span class="badge status-badge bg-warning border-0">Dalam Progress</span>
               <br>
-              <small class="text-muted status-time mt-1 d-block">Updated: </small>
+              <small class="text-muted status-time mt-1 d-block">
+                <i class="fas fa-clock me-1"></i>Update: 
+              </small>
+              
+              <small class="text-muted agent-info mt-1 d-block" style="font-size: 0.75rem;"></small>
             </td>
             <td class="text-center">
-              <button class="btn btn-success btn-sm download-btn" style="display: none;" title="Download Product">
-                <i class="fas fa-download me-1"></i> Download
-              </button>
-              <div class="btn-group" role="group">
-                <button class="btn btn-outline-primary btn-sm view-details" title="View Details">
-                  <i class="fas fa-eye"></i>
-                </button>
-                <button class="btn btn-outline-secondary btn-sm contact-support" title="Contact Support">
-                  <i class="fas fa-question-circle"></i>
-                </button>
+              <div class="action-buttons d-flex flex-column gap-1">
               </div>
             </td>
           </tr>
         </template>
 
-        <!-- Loading Spinner -->
-        <div id="loadingSpinner" class="loading-spinner">
-          <div class="spinner-content">
-            <div class="spinner-border" role="status">
+        <!-- Enhanced Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner-enhanced">
+          <div class="spinner-content-enhanced">
+            <div class="spinner-border text-dark mb-3" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <p class="mt-2">Loading your dashboard...</p>
+            <h6 class="text-dark fw-bold mb-2">Memuat Dashboard</h6>
+            <p class="text-muted small">Mengoptimalkan pengalaman Anda...</p>
+            <div class="progress-enhanced mt-3">
+              <div class="progress-bar-enhanced bg-dark" style="width: 45%"></div>
+            </div>
           </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer footer-custom-dark mt-auto py-5">
+        <!-- Enhanced Footer -->
+        <footer class="footer footer-enhanced mt-auto py-5">
           <div class="container text-center text-lg-start">
             <div class="row gy-4">
               <div class="col-lg-4 col-md-12">
                 <h6 class="footer-heading mb-3">
-                  <i class="fas fa-cube me-2"></i>Portal by IXIERA
+                  <i class="fas fa-cube me-2"></i>Portal oleh IXIERA
                 </h6>
-                <p>An integrated platform for all your needs. Explore products, track orders, and join our community.</p>
+                <p class="text-muted">Platform terintegrasi untuk semua kebutuhan digital Anda. Jelajahi layanan, lacak project, dan bergabung dengan komunitas kami.</p>
               </div>
               <div class="col-lg-2 col-md-6">
-                <h6 class="footer-heading mb-3">Quick Links</h6>
+                <h6 class="footer-heading mb-3">Tautan Cepat</h6>
                 <ul class="list-unstyled quick-links">
-                  <li class="mb-2"><a href="index.html">Dashboard</a></li>
-                  <li class="mb-2"><a href="products.html">New Products</a></li>
-                  <li class="mb-2"><a href="order-history.html">Order History</a></li>
-                  <li class="mb-2"><a href="community.html">Community</a></li>
-                  <li class="mb-2"><a href="ai-assistant.html">AI Assistant</a></li>
+                  <li class="mb-2"><a href="index.html" class="text-muted">Dashboard</a></li>
+                  <li class="mb-2"><a href="products.html" class="text-muted">Layanan Baru</a></li>
+                  <li class="mb-2"><a href="project-hub.html" class="text-muted">Project Hub</a></li>
+                  <li class="mb-2"><a href="community.html" class="text-muted">Komunitas</a></li>
+                  <li class="mb-2"><a href="ai-assistant.html" class="text-muted">AI Assistant</a></li>
                 </ul>
               </div>
               <div class="col-lg-3 col-md-6">
-                <h6 class="footer-heading mb-3">Connect With Us</h6>
+                <h6 class="footer-heading mb-3">Terhubung Dengan Kami</h6>
                 <div class="social-icons d-flex justify-content-center justify-content-lg-start">
                   <a href="https://www.instagram.com/ixieraa/" class="social-icon" title="Instagram" target="_blank">
                     <i class="fab fa-instagram"></i>
@@ -424,14 +473,14 @@
                 </div>
               </div>
             </div>
-            <div class="copyright-section pt-4 mt-4">
+            <div class="copyright-section pt-4 mt-4 border-top border-light">
               <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                  <small>Copyright &copy; <span id="copyright-year">2025</span>, Client Portal by IXIERA</small>
+                  <small class="text-muted">Hak Cipta &copy; <span id="copyright-year">2025</span>, Client Portal oleh IXIERA</small>
                 </div>
                 <div class="col-md-6 text-center text-md-end legal-links">
-                  <small><a href="privacy-policy.html" class="me-3">Privacy Policy</a></small>
-                  <small><a href="terms-of-services.html">Terms of Service</a></small>
+                  <small><a href="privacy-policy.html" class="text-muted me-3">Kebijakan Privasi</a></small>
+                  <small><a href="terms-of-services.html" class="text-muted">Syarat Layanan</a></small>
                 </div>
               </div>
             </div>
@@ -439,7 +488,7 @@
         </footer>
 
         <!-- Back to Top Button -->
-        <a href="#" class="btn btn-primary btn-back-to-top" id="btn-back-to-top" style="display: none;">
+        <a href="#" class="btn-back-to-top" id="btn-back-to-top" style="display: none;">
           <i class="fas fa-arrow-up"></i>
         </a>
       </div>
@@ -455,6 +504,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase-client.js"></script>
     <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/widgetbot.js"></script>
+    <script src="assets/js/tawkto.js"></script>
   </body>
 </html>

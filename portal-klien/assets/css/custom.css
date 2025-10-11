@@ -1,14 +1,4 @@
-/*
-================================================================================
-| PROFESSIONAL BLACK & WHITE THEME FOR IXIERA PORTAL                          |
-| Author: Professional UI/UX Developer                                         |
-| Version: 2.0 - Clean & Professional                                         |
-| Description: Elegant black and white theme matching KaiAdmin structure       |
-================================================================================
-*/
-
-/* 1. Global Variables & Base Styles
--------------------------------------------------------------- */
+/* ========== ENHANCED BLACK & WHITE THEME ========== */
 :root {
   --pure-black: #000000;
   --dark-gray: #1a1a1a;
@@ -20,10 +10,17 @@
   --text-secondary: #666666;
   --text-muted: #999999;
   --border-color: #e0e0e0;
+  --accent-blue: #2563eb;
+  --accent-teal: #0d9488;
+  --accent-purple: #7c3aed;
   --shadow-soft: 0 2px 15px rgba(0, 0, 0, 0.08);
   --shadow-medium: 0 5px 25px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 40px rgba(0, 0, 0, 0.15);
+  --gradient-primary: linear-gradient(135deg, #000000 0%, #2d2d2d 100%);
+  --gradient-accent: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
 }
 
+/* ========== GLOBAL ENHANCEMENTS ========== */
 body {
   background-color: var(--off-white) !important;
   font-family: "Public Sans", sans-serif;
@@ -31,8 +28,480 @@ body {
   line-height: 1.6;
 }
 
-/* 2. Typography Enhancement
--------------------------------------------------------------- */
+/* ========== ENHANCED CARDS & LAYOUT ========== */
+.enhanced-card {
+  background: var(--pure-white);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.enhanced-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.enhanced-card:hover {
+  box-shadow: var(--shadow-large);
+  transform: translateY(-4px);
+  border-color: var(--pure-black);
+}
+
+.enhanced-card:hover::before {
+  opacity: 1;
+}
+
+.card-stats-enhanced {
+  background: var(--pure-white);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card-stats-enhanced:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+.card-stats-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background: var(--off-white);
+  border-radius: 50%;
+  transform: translate(30px, -30px);
+  opacity: 0.5;
+}
+
+/* ========== ENHANCED STATS ICONS ========== */
+.icon-big-enhanced {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  background: var(--gradient-primary);
+  color: var(--pure-white);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.card-stats-enhanced:hover .icon-big-enhanced {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: var(--shadow-medium);
+}
+
+/* ========== ENHANCED PROGRESS BARS ========== */
+.progress-enhanced {
+  height: 12px;
+  background: var(--off-white);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.progress-bar-enhanced {
+  border-radius: 10px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255,255,255,0.3) 50%, 
+    transparent 100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ========== ENHANCED BUTTONS ========== */
+.btn-enhanced {
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-enhanced:hover::before {
+  left: 100%;
+}
+
+.btn-dark-enhanced {
+  background: var(--gradient-primary);
+  border-color: var(--pure-black);
+  color: var(--pure-white);
+}
+
+.btn-dark-enhanced:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  background: var(--dark-gray);
+  border-color: var(--dark-gray);
+}
+
+.btn-outline-enhanced {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-outline-enhanced:hover {
+  border-color: var(--pure-black);
+  background: var(--off-white);
+  transform: translateY(-2px);
+}
+
+/* ========== ENHANCED TABLE ========== */
+.table-enhanced {
+  background: var(--pure-white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.table-enhanced thead th {
+  background: var(--gradient-primary);
+  color: var(--pure-white);
+  border: none;
+  padding: 1.25rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table-enhanced tbody td {
+  padding: 1.25rem;
+  border-color: var(--border-color);
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+.table-enhanced tbody tr:hover {
+  background-color: var(--off-white);
+}
+
+/* ========== ENHANCED BADGES ========== */
+.badge-enhanced {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid transparent;
+}
+
+.badge-primary-enhanced {
+  background: var(--gradient-primary);
+  color: var(--pure-white);
+}
+
+.badge-accent {
+  background: var(--gradient-accent);
+  color: var(--pure-white);
+}
+
+/* ========== QUICK STATS ENHANCEMENT ========== */
+.quick-stats-container-enhanced {
+  background: var(--pure-white);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.quick-stat-item-enhanced {
+  background: var(--off-white);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quick-stat-item-enhanced:hover {
+  border-color: var(--pure-black);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
+}
+
+.quick-stat-item-enhanced i {
+  color: var(--accent-blue);
+}
+
+/* ========== ENHANCED LOADING ========== */
+.loading-spinner-enhanced {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.spinner-content-enhanced {
+  background: var(--pure-white);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow-large);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  max-width: 300px;
+}
+
+/* ========== ENHANCED FOOTER ========== */
+.footer-enhanced {
+  background: var(--pure-black);
+  color: var(--pure-white) !important;
+  border-top: 1px solid var(--light-gray);
+}
+
+.footer-enhanced .footer-heading {
+  color: var(--pure-white) !important;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.footer-enhanced .text-muted {
+  color: var(--pure-white) !important;
+  opacity: 0.8;
+}
+
+.footer-enhanced a {
+  color: var(--pure-white) !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.footer-enhanced a:hover {
+  color: var(--pure-white) !important;
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer-enhanced .quick-links a {
+  color: var(--pure-white) !important;
+  opacity: 0.8;
+}
+
+.footer-enhanced .quick-links a:hover {
+  opacity: 1;
+  text-decoration: none;
+  transform: translateX(5px);
+}
+
+.footer-enhanced .social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--medium-gray);
+  color: var(--pure-white) !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-right: 0.75rem;
+  opacity: 0.9;
+}
+
+.footer-enhanced .social-icons a:hover {
+  background: var(--gradient-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  opacity: 1;
+}
+
+.footer-enhanced .copyright-section {
+  border-top-color: var(--light-gray) !important;
+}
+
+.footer-enhanced .copyright-section .text-muted {
+  color: var(--pure-white) !important;
+  opacity: 0.7;
+}
+
+.footer-enhanced .legal-links a {
+  color: var(--pure-white) !important;
+  opacity: 0.7;
+}
+
+.footer-enhanced .legal-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+/* ========== ENHANCED PAGE HEADER ========== */
+.page-header-enhanced {
+  background: var(--pure-white);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+}
+
+.page-header-enhanced h3 {
+  color: var(--pure-black);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.page-header-enhanced h6 {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ========== RESPONSIVE ENHANCEMENTS ========== */
+@media (max-width: 768px) {
+  .enhanced-card {
+    margin-bottom: 1rem;
+  }
+  
+  .card-stats-enhanced {
+    padding: 1rem;
+  }
+  
+  .icon-big-enhanced {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .page-header-enhanced {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .quick-stats-container-enhanced {
+    padding: 1rem;
+  }
+}
+
+/* ========== CUSTOM SCROLLBAR ========== */
+.scrollbar-enhanced::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-enhanced::-webkit-scrollbar-track {
+  background: var(--off-white);
+  border-radius: 3px;
+}
+
+.scrollbar-enhanced::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.scrollbar-enhanced::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ========== GRADIENT TEXT ========== */
+.gradient-text {
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ========== BACK TO TOP BUTTON ========== */
+.btn-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  border: 2px solid var(--pure-white);
+  color: var(--pure-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-medium);
+}
+
+.btn-back-to-top:hover {
+  background: var(--pure-white);
+  color: var(--pure-black);
+  transform: translateY(-3px);
+  border-color: var(--pure-black);
+}
+
+/* ========== TYPOGRAPHY ENHANCEMENT ========== */
 h1, h2, h3, h4, h5, h6 {
   color: var(--pure-black);
   font-weight: 600;
@@ -50,482 +519,22 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
-/* 3. Sidebar Enhancement - Black & White
--------------------------------------------------------------- */
-.sidebar,
-.sidebar[data-background-color="dark"] {
-  background: var(--pure-black) !important;
-  border-right: 1px solid var(--border-color);
-}
-
-.logo-header[data-background-color="dark"] {
-  background: var(--pure-black) !important;
-  border-bottom: 1px solid var(--light-gray);
-}
-
-.sidebar .nav > .nav-item.active > a {
-  background: var(--medium-gray) !important;
-  border-left: 4px solid var(--pure-white);
-}
-
-.sidebar .nav > .nav-item a:hover {
-  background: var(--dark-gray) !important;
-}
-
-.sidebar .nav > .nav-item a {
-  color: var(--off-white);
-  transition: all 0.3s ease;
-}
-
-.sidebar .nav > .nav-item.active a p,
-.sidebar .nav > .nav-item.active a i {
-  color: var(--pure-white) !important;
-  font-weight: 600;
-}
-
-.sidebar .nav-section .text-section {
-  color: var(--off-white);
-  font-weight: 600;
-}
-
-/* 4. Enhanced Cards - Professional Look
--------------------------------------------------------------- */
-.card {
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  box-shadow: var(--shadow-soft);
-  transition: all 0.3s ease;
-  background: var(--pure-white);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-medium);
-  transform: translateY(-2px);
-}
-
-.card-stats-custom {
-  background: linear-gradient(135deg, var(--pure-white) 0%, var(--off-white) 100%);
-  border: 1px solid var(--border-color);
-}
-
-.card-stats-custom .card-body {
-  padding: 1.5rem;
-}
-
-.card-round {
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.card-header {
-  background: var(--pure-white);
-  border-bottom: 1px solid var(--border-color);
-  padding: 1.25rem 1.5rem;
-}
-
-/* 5. Stats Icons Enhancement
--------------------------------------------------------------- */
-.icon-big {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  background: var(--off-white);
-  border: 3px solid var(--border-color);
-  transition: all 0.3s ease;
-}
-
-.card-stats-custom:hover .icon-big {
-  transform: scale(1.1);
-  border-color: var(--pure-black);
-}
-
-.icon-primary { color: #007bff; background: rgba(0, 123, 255, 0.1); }
-.icon-success { color: #28a745; background: rgba(40, 167, 69, 0.1); }
-.icon-info { color: #17a2b8; background: rgba(23, 162, 184, 0.1); }
-
-.bubble-shadow-small {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* 6. Progress Bars - Professional Style
--------------------------------------------------------------- */
-.progress {
-  height: 10px;
-  background-color: var(--off-white);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-}
-
-.progress-bar {
-  border-radius: 10px;
-  transition: width 0.6s ease;
-}
-
-.progress-bar-striped {
-  background-image: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.15) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0.15) 75%,
-    transparent 75%,
-    transparent
-  );
-  background-size: 1rem 1rem;
-}
-
-/* 7. Buttons - Clean Professional Style
--------------------------------------------------------------- */
-.btn {
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.btn-primary {
-  background: var(--pure-black);
-  border-color: var(--pure-black);
-  color: var(--pure-white);
-}
-
-.btn-primary:hover {
-  background: var(--medium-gray);
-  border-color: var(--medium-gray);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-soft);
-}
-
-.btn-secondary {
-  background: var(--off-white);
-  border-color: var(--border-color);
-  color: var(--text-primary);
-}
-
-.btn-secondary:hover {
-  background: var(--pure-white);
-  border-color: var(--pure-black);
-}
-
-.btn-success {
-  background: #28a745;
-  border-color: #28a745;
-}
-
-/* 8. Tables - Professional Enhancement
--------------------------------------------------------------- */
-.table {
-  background: var(--pure-white);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table thead th {
-  background: var(--off-white);
-  border-bottom: 2px solid var(--border-color);
-  color: var(--text-primary);
-  font-weight: 700;
-  padding: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.9rem;
-}
-
-.table tbody td {
-  padding: 1rem;
-  border-color: var(--border-color);
-  vertical-align: middle;
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-/* 9. Badges Enhancement
--------------------------------------------------------------- */
-.badge {
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  border-radius: 20px;
-  font-size: 0.8rem;
-}
-
-.bg-warning {
-  background: linear-gradient(45deg, #ffc107, #ffb300) !important;
-  color: var(--pure-black);
-}
-
-/* 10. Loading Spinner
--------------------------------------------------------------- */
-.loading-spinner {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.9);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-
-.loading-spinner .spinner-border {
-  width: 3rem;
-  height: 3rem;
-  color: var(--pure-black);
-}
-
-/* 11. Footer - Dark Professional
--------------------------------------------------------------- */
-.footer-custom-dark {
-  background: var(--pure-black);
-  color: var(--off-white);
-  border-top: 1px solid var(--light-gray);
-}
-
-.footer-custom-dark .footer-heading {
-  color: var(--pure-white);
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.footer-custom-dark a {
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.footer-custom-dark a:hover {
-  color: var(--pure-white);
-}
-
-.footer-custom-dark .social-icons a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--medium-gray);
-  color: var(--off-white);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  margin-right: 0.5rem;
-}
-
-.footer-custom-dark .social-icons a:hover {
-  background: var(--light-gray);
-  transform: translateY(-2px);
-}
-
-/* 12. Back to Top Button
--------------------------------------------------------------- */
-.btn-back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--pure-black);
-  border: 2px solid var(--pure-white);
-  color: var(--pure-white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  transition: all 0.3s ease;
-}
-
-.btn-back-to-top:hover {
-  background: var(--pure-white);
-  color: var(--pure-black);
-  transform: translateY(-3px);
-}
-
-/* 13. Utility Classes
--------------------------------------------------------------- */
+/* ========== UTILITY CLASSES ========== */
 .text-gradient {
-  background: linear-gradient(45deg, var(--pure-black), var(--text-secondary));
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.refresh-dashboard, .refresh-orders {
-  border: 2px solid var(--border-color);
-  background: var(--pure-white);
-  color: var(--text-primary);
+.bubble-shadow-small {
+  box-shadow: var(--shadow-soft);
 }
 
-.refresh-dashboard:hover, .refresh-orders:hover {
-  border-color: var(--pure-black);
-  background: var(--off-white);
-}
-
-/* 14. Responsive Adjustments
--------------------------------------------------------------- */
-@media (max-width: 768px) {
-  .card-stats-custom .card-body {
-    padding: 1rem;
-  }
-  
-  .icon-big {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-  }
-  
-  .btn-back-to-top {
-    width: 45px;
-    height: 45px;
-    bottom: 15px;
-    right: 15px;
-  }
-}
-
-/* 15. Animation for Progress Bars (Compatible dengan JS Anda)
--------------------------------------------------------------- */
-.progress-bar-animated {
-  animation: progress-bar-stripes 1s linear infinite;
-}
-
-@keyframes progress-bar-stripes {
-  0% { background-position: 1rem 0; }
-  100% { background-position: 0 0; }
-}
-
-/* Product Page Specific Styles */
-.product-card {
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  background: var(--pure-white);
-  overflow: hidden;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
+.bubble-shadow-medium {
   box-shadow: var(--shadow-medium);
-  border-color: var(--pure-black);
 }
 
-.product-image-container {
-  position: relative;
-  overflow: hidden;
-  background: var(--off-white);
-}
-
-.product-image {
-  height: 200px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.product-card:hover .product-image {
-  transform: scale(1.05);
-}
-
-.product-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.product-card:hover .product-overlay {
-  opacity: 1;
-}
-
-.product-name {
-  color: var(--pure-black);
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.product-description {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-.product-price {
-  font-size: 1.2rem;
-  color: var(--pure-black);
-}
-
-.product-footer {
-  border-top: 1px solid var(--border-color);
-  padding-top: 1rem;
-  margin-top: auto;
-}
-
-/* Modal Styles */
-.product-modal-image {
-  border-radius: 8px;
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-}
-
-.product-modal-name {
-  color: var(--pure-black);
-  margin-bottom: 0.5rem;
-}
-
-.product-modal-description {
-  color: var(--text-primary);
-  line-height: 1.6;
-}
-
-/* Quick Stats */
-.quick-stats-container {
-  background: var(--pure-white);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-.quick-stat-item {
-  background: var(--off-white);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-}
-
-/* Loading States */
-#gallery-loader {
-  color: var(--text-secondary);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .product-card {
-    margin-bottom: 1rem;
-  }
-  
-  .product-image {
-    height: 150px;
-  }
-  
-  .modal-dialog {
-    margin: 1rem;
-  }
+.bubble-shadow-large {
+  box-shadow: var(--shadow-large);
 }
