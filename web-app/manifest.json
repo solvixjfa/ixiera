@@ -1,8 +1,8 @@
 {
-  "name": "Ixiera Client Dashboard",
+  "name": "Ixiera",
   "short_name": "Ixiera",
   "description": "Client dashboard untuk memantau project development",
-  "start_url": "/dashboard.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",

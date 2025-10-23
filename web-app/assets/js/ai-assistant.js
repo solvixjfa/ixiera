@@ -1,6 +1,4 @@
-// Ashley AI Assistant - LIGHT VERSION (No Particles)
-import { getSupabase } from './supabase-client.js';
-
+// Ashley AI Assistant - ULTRA FIXED VERSION
 class AshleyAIAssistant {
     constructor() {
         this.CACHE_KEYS = {
@@ -14,7 +12,7 @@ class AshleyAIAssistant {
         this.currentSessionId = null;
         this.chatSessions = [];
         this.userId = null;
-        this.supabase = null;
+        this.abortController = null;
         
         this.init();
     }
@@ -33,12 +31,12 @@ class AshleyAIAssistant {
 
     async initialize() {
         this.initializeElements();
-        await this.initializeSupabase();
         await this.initializeUser();
         this.initializeEventListeners();
         this.initializePromptSystem();
+        this.initializeTheme();
         await this.loadChatSessions();
-        console.log('🎯 Ashley AI Assistant initialized (Light Version)');
+        console.log('🎯 Ashley AI Assistant initialized');
     }
 
     initializeElements() {
@@ -50,15 +48,6 @@ class AshleyAIAssistant {
         this.chatHistoryList = document.getElementById('chat-history-list');
         this.sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
         this.themeToggleBtn = document.getElementById('theme-toggle-btn');
-    }
-
-    async initializeSupabase() {
-        try {
-            this.supabase = getSupabase();
-            console.log('✅ Supabase client initialized');
-        } catch (error) {
-            console.error('Supabase initialization failed:', error);
-        }
     }
 
     async initializeUser() {
@@ -75,7 +64,25 @@ class AshleyAIAssistant {
         }
     }
 
+    initializeTheme() {
+        const savedTheme = this.getCache(this.CACHE_KEYS.THEME) || 'light';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        
+        if (this.themeToggleBtn) {
+            this.updateThemeIcon(savedTheme);
+        }
+    }
+
+    updateThemeIcon(theme) {
+        if (this.themeToggleBtn) {
+            this.themeToggleBtn.innerHTML = theme === 'dark' 
+                ? '<i class="bi bi-sun"></i>' 
+                : '<i class="bi bi-moon"></i>';
+        }
+    }
+
     initializeEventListeners() {
+        // Send message
         if (this.sendBtn) {
             this.sendBtn.addEventListener('click', () => this.handleSendMessage());
         }
@@ -90,10 +97,10 @@ class AshleyAIAssistant {
             
             this.userInput.addEventListener('input', () => {
                 this.autoResizeTextarea();
-                this.fixTextareaBug();
             });
         }
 
+        // Navigation
         if (this.newChatBtn) {
             this.newChatBtn.addEventListener('click', () => this.handleNewChat());
         }
@@ -106,6 +113,7 @@ class AshleyAIAssistant {
             this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
         }
 
+        // Mobile sidebar close
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 768 && this.sidebar && 
                 !this.sidebar.contains(e.target) && 
@@ -123,29 +131,13 @@ class AshleyAIAssistant {
         this.userInput.style.height = 'auto';
         const newHeight = Math.min(this.userInput.scrollHeight, 120);
         this.userInput.style.height = newHeight + 'px';
-        this.userInput.style.overflowY = this.userInput.scrollHeight > 120 ? 'auto' : 'hidden';
-    }
-
-    fixTextareaBug() {
-        if (!this.userInput) return;
-        
-        this.userInput.style.display = 'none';
-        this.userInput.offsetHeight;
-        this.userInput.style.display = 'block';
-        
-        if (!this.isLoading) {
-            this.userInput.focus();
-        }
     }
 
     initializePromptSystem() {
         const prompts = {
             'package-recommendation': "Saya butuh bantuan memilih package yang tepat. Bisnis saya [jenis bisnis], kebutuhan utama [sebutkan 2-3 kebutuhan digital]. Package mana yang Anda rekomendasikan?",
             'showcase-details': "Bisa jelaskan lebih detail tentang showcase e-commerce sneakers? Fitur payment dan dashboard trackingnya bagaimana implementasinya?",
-            'process-timeline': "Bagaimana proses pengerjaan project dari awal sampai launch? Berapa timeline untuk package Business?",
-            'technical-capabilities': "Teknologi dan tools apa yang digunakan di IXIERA? Apa keunggulan technical approach Anda?",
-            'ecommerce-solutions': "Solusi e-commerce seperti apa yang bisa dibuat? Apakah support payment gateway Indonesia?",
-            'automation-features': "Fitur automation apa saja yang termasuk di package? Bisa beri contoh workflow yang bisa diotomasi?"
+            'process-timeline': "Bagaimana proses pengerjaan project dari awal sampai launch? Berapa timeline untuk package Business?"
         };
 
         document.querySelectorAll('.prompt-sidebar-btn').forEach(btn => {
@@ -159,32 +151,27 @@ class AshleyAIAssistant {
             });
         });
 
-        setTimeout(() => {
-            document.querySelectorAll('.quick-action-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    let question = '';
-                    
-                    if (card.classList.contains('package')) {
-                        question = "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?";
-                    } else if (card.classList.contains('showcase')) {
-                        question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
-                    }
-                    
-                    if (question) {
-                        this.autoSendPrompt(question);
-                    }
-                });
+        // Quick actions
+        document.querySelectorAll('.quick-action-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                let question = '';
+                
+                if (card.classList.contains('package')) {
+                    question = "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?";
+                } else if (card.classList.contains('showcase')) {
+                    question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
+                }
+                
+                if (question) {
+                    this.autoSendPrompt(question);
+                }
             });
-        }, 100);
+        });
     }
 
     async handleSendMessage() {
-        if (this.isSending || this.isLoading) {
-            console.log('⚠️ Message already in progress, please wait...');
-            return;
-        }
-        
+        if (this.isSending || this.isLoading) return;
         await this.sendMessage();
     }
 
@@ -200,7 +187,6 @@ class AshleyAIAssistant {
         const welcomeContainer = this.chatHistory?.querySelector('.welcome-container');
         if (welcomeContainer) {
             welcomeContainer.style.opacity = '0';
-            welcomeContainer.style.transform = 'translateY(-10px)';
             setTimeout(() => {
                 welcomeContainer.style.display = 'none';
                 if (this.userInput) {
@@ -227,15 +213,17 @@ class AshleyAIAssistant {
         this.isSending = true;
         this.isLoading = true;
 
+        // Cancel previous request
+        if (this.abortController) {
+            this.abortController.abort();
+        }
+        this.abortController = new AbortController();
+
         let sessionToUse = this.currentSessionId;
 
         try {
             if (!sessionToUse) {
-                const newSession = await this.createNewSession(message);
-                if (!newSession) {
-                    this.addMessageToUI('ai', 'Maaf, gagal memulai percakapan baru.');
-                    return;
-                }
+                const newSession = this.createNewSession(message);
                 this.currentSessionId = newSession.id;
                 sessionToUse = newSession.id;
                 this.chatSessions.unshift(newSession);
@@ -244,15 +232,11 @@ class AshleyAIAssistant {
             }
 
             this.addMessageToUI('user', message);
-            
-            await this.updateSessionTitle(sessionToUse, message);
-            
             this.userInput.value = '';
             this.autoResizeTextarea();
             
             this.toggleLoadingIndicator(true);
 
-            console.log('🔄 Sending to API...');
             const response = await fetch('/api/ask-ashley', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -262,54 +246,33 @@ class AshleyAIAssistant {
                     questionCount: 0,
                     userId: this.userId,
                     sessionId: sessionToUse
-                })
+                }),
+                signal: this.abortController.signal
             });
-
-            console.log('📨 API Response status:', response.status);
 
             if (!response.ok) {
                 throw new Error(`HTTP error: ${response.status}`);
             }
             
             const result = await response.json();
-            
-            if (result.error) {
-                throw new Error(result.error);
-            }
-
             const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || 
                              "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
             this.addMessageToUI('ai', aiResponse);
 
         } catch (error) {
-            console.error("❌ Error sending message:", error);
+            console.error("Error sending message:", error);
             this.addMessageToUI('ai', "Maaf, terjadi kendala teknis. Silakan coba lagi.");
         } finally {
             this.isSending = false;
             this.isLoading = false;
             this.toggleLoadingIndicator(false);
+            this.abortController = null;
             
             if (this.userInput) {
                 this.userInput.disabled = false;
-                this.userInput.focus();
+                setTimeout(() => this.userInput.focus(), 100);
             }
-        }
-    }
-
-    async updateSessionTitle(sessionId, message) {
-        if (!this.supabase) return;
-        
-        const title = message.substring(0, 40) + (message.length > 40 ? '...' : '');
-        const { error } = await this.supabase
-            .from('chat_sessions')
-            .update({ 
-                title: title
-            })
-            .eq('id', sessionId);
-        
-        if (error) {
-            console.error('Error updating session:', error);
         }
     }
 
@@ -330,8 +293,7 @@ class AshleyAIAssistant {
         textElement.className = 'message-text';
         textElement.innerHTML = text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>')
-            .replace(/\*(.*?)\*/g, '<em>$1</em>');
+            .replace(/\n/g, '<br>');
         
         content.appendChild(textElement);
 
@@ -395,9 +357,7 @@ class AshleyAIAssistant {
         const currentTheme = document.documentElement.getAttribute('data-bs-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-bs-theme', newTheme);
-        if (this.themeToggleBtn) {
-            this.themeToggleBtn.innerHTML = newTheme === 'dark' ? '<i class="bi bi-moon-fill"></i>' : '<i class="bi bi-sun-fill"></i>';
-        }
+        this.updateThemeIcon(newTheme);
         this.setCache(this.CACHE_KEYS.THEME, newTheme);
     }
 
@@ -420,8 +380,7 @@ class AshleyAIAssistant {
                     <div class="welcome-avatar">A</div>
                     <h1 class="welcome-title">Halo! Saya Ashley AI</h1>
                     <p class="welcome-subtitle">
-                        Asisten Digital Ixiera siap membantu Anda memilih solusi digital yang tepat. 
-                        tanya apa saja
+                        Asisten Digital Ixiera siap membantu Anda memilih solusi digital yang tepat.
                     </p>
                 </div>
                 
@@ -440,17 +399,27 @@ class AshleyAIAssistant {
 
                 <div class="welcome-note">
                     <p><strong>Panduan:</strong> Jelaskan kebutuhan bisnis Anda secara detail.</p>
-                    <p class="development-note">
-                        <i class="bi bi-info-circle"></i>
-                        <small>Assistant AI dalam pengembangan - konfirmasi dengan tim kami untuk informasi terakurat</small>
-                    </p>
                 </div>
             </div>
         `;
 
-        setTimeout(() => {
-            this.initializePromptSystem();
-        }, 50);
+        // Re-initialize quick actions
+        document.querySelectorAll('.quick-action-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+                let question = '';
+                
+                if (card.classList.contains('package')) {
+                    question = "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?";
+                } else if (card.classList.contains('showcase')) {
+                    question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
+                }
+                
+                if (question) {
+                    this.autoSendPrompt(question);
+                }
+            });
+        });
     }
 
     clearWelcomeScreen() {
@@ -480,6 +449,18 @@ class AshleyAIAssistant {
         if (!this.chatHistoryList) return;
         
         this.chatHistoryList.innerHTML = '';
+        
+        if (this.chatSessions.length === 0) {
+            const emptyState = document.createElement('li');
+            emptyState.className = 'chat-history-item empty-state';
+            emptyState.innerHTML = `
+                <i class="bi bi-chat-left"></i>
+                <span class="chat-title">Belum ada percakapan</span>
+            `;
+            this.chatHistoryList.appendChild(emptyState);
+            return;
+        }
+        
         this.chatSessions.forEach(session => {
             const li = document.createElement('li');
             li.className = `chat-history-item ${session.id === this.currentSessionId ? 'active' : ''}`;
@@ -509,64 +490,23 @@ class AshleyAIAssistant {
     }
 
     async handleDeleteChat(sessionId) {
-        if (this.supabase) {
-            const { error } = await this.supabase.from('chat_sessions').delete().eq('id', sessionId);
-            if (error) return;
-        }
+        if (!confirm('Hapus percakapan ini?')) return;
+        
         this.chatSessions = this.chatSessions.filter(s => s.id !== sessionId);
         this.renderChatSessions();
         if (this.currentSessionId === sessionId) this.handleNewChat();
     }
 
-    async createNewSession(firstMessage) {
-        if (!this.supabase) {
-            return {
-                id: `temp_${Date.now()}`,
-                title: firstMessage.substring(0, 40) + (firstMessage.length > 40 ? '...' : ''),
-                created_at: new Date().toISOString()
-            };
-        }
-
-        const title = firstMessage.substring(0, 40) + (firstMessage.length > 40 ? '...' : '');
-        const { data, error } = await this.supabase
-            .from('chat_sessions')
-            .insert({ 
-                user_id: this.userId, 
-                title: title,
-                created_at: new Date().toISOString()
-            })
-            .select()
-            .single();
-
-        return error ? null : data;
+    createNewSession(firstMessage) {
+        return {
+            id: `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            title: firstMessage.substring(0, 40) + (firstMessage.length > 40 ? '...' : ''),
+            created_at: new Date().toISOString()
+        };
     }
 
     async loadChatSessions() {
-        if (!this.supabase) {
-            this.showWelcomeScreen();
-            return;
-        }
-
-        try {
-            const { data, error } = await this.supabase
-                .from('chat_sessions')
-                .select('*')
-                .eq('user_id', this.userId)
-                .order('created_at', { ascending: false });
-
-            this.chatSessions = error ? [] : (data || []);
-            this.renderChatSessions();
-            
-            if (this.chatSessions.length > 0) {
-                await this.handleSelectChat(this.chatSessions[0].id);
-            } else {
-                this.showWelcomeScreen();
-            }
-
-        } catch (error) {
-            console.error('Error loading sessions:', error);
-            this.showWelcomeScreen();
-        }
+        this.showWelcomeScreen();
     }
 
     setCache(key, data) {
@@ -597,20 +537,3 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Failed to initialize Ashley AI Assistant:', error);
     }
 });
-
-function handleQuickAction(action) {
-    if (!aiAssistant) {
-        aiAssistant = new AshleyAIAssistant();
-    }
-    
-    const questions = {
-        'package': "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?",
-        'showcase': "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?"
-    };
-    
-    if (questions[action]) {
-        aiAssistant.autoSendPrompt(questions[action]);
-    }
-}
-
-export { AshleyAIAssistant };
