@@ -1,4 +1,4 @@
-/* Ashley AI Assistant - SUPER FIXED */
+/* Ashley AI Assistant - BUG FIXED VERSION */
 :root {
   --primary-bg: #ffffff;
   --secondary-bg: #f8f9fa;
@@ -266,13 +266,15 @@ body {
   display: none;
 }
 
-/* Chat History */
+/* FIX CRITICAL: Chat History Container */
 .chat-history {
   flex: 1;
   padding: 24px;
   overflow-y: auto;
   background: transparent;
-  min-height: 0;
+  /* HAPUS height: 0 dan min-height: 0 yang bikin ilang */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Welcome Screen */
@@ -281,6 +283,10 @@ body {
   margin: 0 auto;
   padding: 40px 20px;
   text-align: center;
+  /* TAMBAHIN ini biar tidak ilang */
+  display: block !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .welcome-header {
@@ -459,25 +465,32 @@ body {
   color: var(--primary-bg);
 }
 
-/* Input Area */
+/* FIX CRITICAL: Input Area */
 .chat-input-area {
   padding: 16px 24px;
   background: var(--primary-bg);
   border-top: 1px solid var(--border-color);
   flex-shrink: 0;
+  /* PASTIKAN visible */
+  display: block !important;
+  position: relative;
+  z-index: 10;
 }
 
 .input-container {
   display: flex;
   gap: 12px;
   align-items: flex-end;
+  width: 100%;
 }
 
 .input-wrapper {
   flex: 1;
   position: relative;
+  display: block;
 }
 
+/* FIX CRITICAL: Textarea Styles */
 .chat-input {
   width: 100%;
   background: var(--secondary-bg);
@@ -493,11 +506,18 @@ body {
   line-height: 1.4;
   transition: all 0.2s ease;
   overflow-y: auto;
+  /* PASTIKAN visible */
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative;
+  z-index: 5;
 }
 
 .chat-input:focus {
   outline: none;
   border-color: var(--primary-text);
+  background: var(--primary-bg);
 }
 
 .chat-input::placeholder {
@@ -518,6 +538,9 @@ body {
   transition: all 0.2s ease;
   flex-shrink: 0;
   font-size: 16px;
+  /* PASTIKAN visible */
+  display: flex !important;
+  visibility: visible !important;
 }
 
 .send-btn:hover:not(:disabled) {
@@ -618,6 +641,7 @@ body {
   .chat-input {
     padding: 12px 14px;
     min-height: 44px;
+    font-size: 16px; /* Prevent zoom on iOS */
   }
 
   .send-btn {
@@ -646,4 +670,21 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--secondary-text);
+}
+
+/* FIX: Ensure all critical elements are visible */
+.ai-interface,
+.chat-main,
+.chat-input-area,
+.input-container,
+.input-wrapper,
+.chat-input,
+.send-btn {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex !important;
+}
+
+.chat-input {
+  display: block !important;
 }
