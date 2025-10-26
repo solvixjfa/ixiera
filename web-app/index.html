@@ -28,7 +28,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
-  
+<link href="assets/css/three-hero.css" rel="stylesheet">
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
   <script>
@@ -106,77 +106,94 @@
 </header>
 
   <main class="main">
-
-    <!-- HERO SECTION -->
-    <section id="hero" class="hero section dark-background">
-      <img src="https://ik.imagekit.io/solviXone/ixiera/img/pages/hero-bg.jpg?tr=q-85,f-webp" alt="Bisnis yang lebih mudah dengan sistem digital" data-aos="fade-in">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-4">
-            <h1 data-aos="fade-up">Bisnis Lebih Lancar dengan Sistem Digital yang Tepat</h1>
-            <blockquote data-aos="fade-up" data-aos-delay="100">
-              <p>Kami memahami kebutuhan bisnis karena sudah menjalankannya sendiri. Sekarang kami bantu Anda membangun sistem yang benar-benar berguna.</p>
-            </blockquote>
-            <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="#services" class="btn-get-started">Lihat Layanan Kami</a>
-              <a href="https://wa.me/6285736048626?text=Halo%20Ixiera,%20saya%20ingin%20konsultasi%20tentang%20sistem%20digital%20untuk%20bisnis." class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-whatsapp"></i><span>Konsultasi Gratis</span></a>
-            </div>
-          </div>
+<!-- HERO SECTION -->
+<section id="hero" class="hero section dark-background" style="position: relative; overflow: hidden;">
+  <!-- Three.js Canvas -->
+  <canvas id="three-canvas" class="three-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
+  
+  <div class="container" style="position: relative; z-index: 2;">
+    <div class="row">
+      <div class="col-xl-4">
+        <h1 class="hero-title">
+          <span id="typed-title"></span><span class="typed-cursor">|</span>
+        </h1>
+        <blockquote class="hero-quote">
+          <p id="typed-quote"></p>
+        </blockquote>
+        <div class="d-flex hero-buttons">
+          <a href="#services" class="btn-get-started">Lihat Layanan Kami</a>
+          <a href="https://wa.me/6285736048626?text=Halo%20Ixiera,%20saya%20ingin%20konsultasi%20tentang%20sistem%20digital%20untuk%20bisnis." class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-whatsapp"></i><span>Konsultasi Gratis</span></a>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- WHY US SECTION -->
-    <section id="why-us" class="why-us section">
-        <div class="container">
-          <div class="row g-0">
-            <div class="col-xl-5 img-bg" data-aos="fade-up" data-aos-delay="100">
-              <img src="https://ik.imagekit.io/solviXone/ixiera/img/pages/why-us-bg.webp?tr=w-600,q-85" alt="Diskusi tentang kebutuhan bisnis digital" data-aos="fade-in">
-            </div>
-            <div class="col-xl-7 slides position-relative" data-aos="fade-up" data-aos-delay="200">
-              <div class="swiper init-swiper">
-                <script type="application/json" class="swiper-config">
-                  { "loop": true, "speed": 600, "autoplay": { "delay": 5000 }, "slidesPerView": "auto", "centeredSlides": true, "pagination": { "el": ".swiper-pagination", "type": "bullets", "clickable": true }, "navigation": { "nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev" } }
-                </script>
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <div class="item">
-                      <h3 class="mb-3">Website yang Membuat Pelanggan Nyaman</h3>
-                      <h4 class="mb-3">Mudah digunakan dan menyenangkan</h4>
-                      <p>Kami desain website yang intuitif, sehingga pelanggan senang berbelanja dan kembali lagi.</p>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="item">
-                      <h3 class="mb-3">Sistem yang Bekerja Otomatis</h3>
-                      <h4 class="mb-3">Anda fokus, sistem yang mengurus</h4>
-                      <p>Bayangkan stok update sendiri, laporan terkirim otomatis, pelanggan dapat notifikasi - kerjaan beres tanpa ribet.</p>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="item">
-                      <h3 class="mb-3">Semua Terhubung dengan Baik</h3>
-                      <h4 class="mb-3">Data masuk sekali, semua sistem tahu</h4>
-                      <p>Order dari website? Stok langsung berkurang, tim penjualan langsung dapat info, semuanya berjalan sendiri.</p>
-                    </div>
-                  </div>
-                  <div class="swiper-slide">
-                    <div class="item">
-                      <h3 class="mb-3">Lihat Perkembangan dengan Mudah</h3>
-                      <h4 class="mb-3">Angka penting jelas terlihat</h4>
-                      <p>Tidak perlu bingung membaca data rumit. Kami tampilkan informasi penting dalam bentuk yang mudah dimengerti.</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="swiper-pagination"></div>
-              </div>
-              <div class="swiper-button-prev"></div>
-              <div class="swiper-button-next"></div>
-            </div>
+<!-- WHY US SECTION -->
+<section id="why-us" class="why-us section">
+  <div class="container">
+    <div class="row g-0">
+      <div class="col-xl-5 img-bg" data-aos="fade-up" data-aos-delay="100">
+        <!-- Ganti img dengan animated background -->
+        <div class="animated-tech-bg">
+          <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
           </div>
+          <div class="tech-grid"></div>
         </div>
-      </section>
-  
+      </div>
+      <div class="col-xl-7 slides position-relative" data-aos="fade-up" data-aos-delay="200">
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            { "loop": true, "speed": 600, "autoplay": { "delay": 5000 }, "slidesPerView": "auto", "centeredSlides": true, "pagination": { "el": ".swiper-pagination", "type": "bullets", "clickable": true }, "navigation": { "nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev" } }
+          </script>
+          <div class="swiper-wrapper">
+            
+            <!-- Slide dengan typing effect -->
+            <div class="swiper-slide">
+              <div class="item">
+                <h3 class="mb-3 slide-title">Website yang Membuat Pelanggan Nyaman</h3>
+                <h4 class="mb-3 slide-subtitle">Mudah digunakan dan menyenangkan</h4>
+                <p class="slide-content">Kami desain website yang intuitif, sehingga pelanggan senang berbelanja dan kembali lagi.</p>
+              </div>
+            </div>
+            
+            <div class="swiper-slide">
+              <div class="item">
+                <h3 class="mb-3 slide-title">Sistem yang Bekerja Otomatis</h3>
+                <h4 class="mb-3 slide-subtitle">Anda fokus, sistem yang mengurus</h4>
+                <p class="slide-content">Bayangkan stok update sendiri, laporan terkirim otomatis, pelanggan dapat notifikasi - kerjaan beres tanpa ribet.</p>
+              </div>
+            </div>
+            
+            <div class="swiper-slide">
+              <div class="item">
+                <h3 class="mb-3 slide-title">Semua Terhubung dengan Baik</h3>
+                <h4 class="mb-3 slide-subtitle">Data masuk sekali, semua sistem tahu</h4>
+                <p class="slide-content">Order dari website? Stok langsung berkurang, tim penjualan langsung dapat info, semuanya berjalan sendiri.</p>
+              </div>
+            </div>
+            
+            <div class="swiper-slide">
+              <div class="item">
+                <h3 class="mb-3 slide-title">Lihat Perkembangan dengan Mudah</h3>
+                <h4 class="mb-3 slide-subtitle">Angka penting jelas terlihat</h4>
+                <p class="slide-content">Tidak perlu bingung membaca data rumit. Kami tampilkan informasi penting dalam bentuk yang mudah dimengerti.</p>
+              </div>
+            </div>
+            
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- SERVICES SECTION -->
 <section id="services" class="services section">
   <div class="container section-title" data-aos="fade-up">
@@ -537,11 +554,17 @@
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
 <!-- Main JS File -->
 <script src="assets/js/main.js"></script>
 <script src="assets/js/custom.js"></script>
+
 <script type="module" src="assets/js/newsletter.js"></script>
+
 <!-- Ai-ixiera -->
 <script src="assets/js/ai-ixiera.js"></script>
+
+<script type="module" src="assets/js/three-hero.js"></script>
+<script src="assets/js/typing.js"></script>
 </body>
 </html>
