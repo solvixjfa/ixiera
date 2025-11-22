@@ -36,11 +36,10 @@ const FALLBACK_PACKAGES = `
 const FALLBACK_SHOWCASES = `
 • **E-commerce Fashion**: Platform jualan fashion dengan inventory management, payment gateway, dan dashboard analytics
 
-• **Restaurant Order System**: Sistem pemesanan online untuk restoran dengan notifikasi WhatsApp otomatis
+• **villa / hotel management System**: Sistem booking online untuk villa dan hotel dengan database yg terintegrasi end to end
 
 • **Service Company Profile**: Website company profile profesional dengan integrated contact system dan portfolio showcase
 
-• **Educational Platform**: LMS sederhana untuk kursus online dengan student dashboard dan progress tracking
 `;
 
 // ✅ CLICKABLE CONTACT INFO

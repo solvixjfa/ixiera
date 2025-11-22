@@ -859,10 +859,15 @@ body {
   margin-bottom: 20px;
   max-width: fit-content;
   box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .typing-indicator.visible {
   display: flex;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .typing-dots {
@@ -890,6 +895,20 @@ body {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* Character-by-character typing effect */
+.typing-cursor::after {
+  content: '|';
+  animation: enhancedBlink 1s infinite;
+  margin-left: 2px;
+  color: inherit;
+  font-weight: 400;
+}
+
+@keyframes enhancedBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 /* Mobile Overlay */

@@ -312,7 +312,7 @@ class AshleyAIAssistant {
             this.autoResizeTextarea();
             this.toggleSendButton();
             
-            // Show typing indicator instead of loading dots
+            // Show typing indicator
             this.showTypingIndicator();
 
             const response = await fetch('/api/ask-ashley', {
@@ -337,7 +337,19 @@ class AshleyAIAssistant {
                              "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
             this.hideTypingIndicator();
-            this.addMessageToUI('ai', aiResponse);
+            
+            // Use typing effect for AI response
+            const { textElement } = this.addMessageToUI('ai', '', true);
+            await this.typeMessage(textElement, aiResponse);
+            
+            // Add copy button after typing is complete
+            const messageContent = textElement.parentElement;
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+            copyBtn.title = 'Salin pesan';
+            copyBtn.onclick = () => this.copyToClipboard(aiResponse, copyBtn);
+            messageContent.appendChild(copyBtn);
 
         } catch (error) {
             console.error("Error sending message:", error);
@@ -355,7 +367,8 @@ class AshleyAIAssistant {
         }
     }
 
-    addMessageToUI(sender, text) {
+    // Enhanced message display with typing effect
+    addMessageToUI(sender, text, isStreaming = false) {
         if (!this.chatHistory) return;
         
         const messageElement = document.createElement('div');
@@ -370,32 +383,93 @@ class AshleyAIAssistant {
         
         const textElement = document.createElement('div');
         textElement.className = 'message-text';
-        textElement.innerHTML = text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>');
         
-        content.appendChild(textElement);
+        if (sender === 'user') {
+            // User message - show immediately
+            textElement.innerHTML = this.formatMessage(text);
+            content.appendChild(textElement);
+            
+            messageElement.appendChild(avatar);
+            messageElement.appendChild(content);
+            this.chatHistory.appendChild(messageElement);
+            
+        } else if (isStreaming) {
+            // AI message with typing effect
+            textElement.classList.add('typing-cursor');
+            content.appendChild(textElement);
+            
+            messageElement.appendChild(avatar);
+            messageElement.appendChild(content);
+            this.chatHistory.appendChild(messageElement);
+            
+            return { messageElement, textElement };
+            
+        } else {
+            // Regular AI message
+            textElement.innerHTML = this.formatMessage(text);
+            content.appendChild(textElement);
 
-        if (sender === 'ai') {
-            const copyBtn = document.createElement('button');
-            copyBtn.className = 'copy-btn';
-            copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
-            copyBtn.title = 'Salin pesan';
-            copyBtn.onclick = () => this.copyToClipboard(text, copyBtn);
-            content.appendChild(copyBtn);
+            if (sender === 'ai') {
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'copy-btn';
+                copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+                copyBtn.title = 'Salin pesan';
+                copyBtn.onclick = () => this.copyToClipboard(text, copyBtn);
+                content.appendChild(copyBtn);
+            }
+
+            messageElement.appendChild(avatar);
+            messageElement.appendChild(content);
+            this.chatHistory.appendChild(messageElement);
         }
-
-        messageElement.appendChild(avatar);
-        messageElement.appendChild(content);
-        this.chatHistory.appendChild(messageElement);
+        
         this.scrollToBottom();
+        return { messageElement, textElement };
     }
 
+    // Typing effect for character-by-character display
+    async typeMessage(textElement, text, speed = 20) {
+        return new Promise((resolve) => {
+            let i = 0;
+            textElement.innerHTML = '';
+            
+            const typeChar = () => {
+                if (i < text.length) {
+                    // Add characters one by one
+                    const currentText = text.substring(0, i + 1);
+                    textElement.innerHTML = this.formatMessage(currentText);
+                    i++;
+                    
+                    // Scroll down every few characters
+                    if (i % 3 === 0) this.scrollToBottom();
+                    
+                    setTimeout(typeChar, speed);
+                } else {
+                    // Remove cursor when done
+                    textElement.classList.remove('typing-cursor');
+                    resolve();
+                }
+            };
+            
+            typeChar();
+        });
+    }
+
+    // Format message with markdown-like syntax
+    formatMessage(text) {
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\n/g, '<br>')
+            .replace(/`(.*?)`/g, '<code>$1</code>');
+    }
+
+    // Enhanced typing indicator
     showTypingIndicator() {
         if (this.typingIndicator) {
-            this.typingIndicator.classList.add('visible');
-        } else {
-            this.toggleLoadingIndicator(true);
+            this.typingIndicator.style.display = 'flex';
+            setTimeout(() => {
+                this.typingIndicator.classList.add('visible');
+            }, 10);
         }
         this.scrollToBottom();
     }
@@ -403,8 +477,9 @@ class AshleyAIAssistant {
     hideTypingIndicator() {
         if (this.typingIndicator) {
             this.typingIndicator.classList.remove('visible');
-        } else {
-            this.toggleLoadingIndicator(false);
+            setTimeout(() => {
+                this.typingIndicator.style.display = 'none';
+            }, 300);
         }
     }
 
