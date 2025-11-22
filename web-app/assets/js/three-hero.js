@@ -2,222 +2,549 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.m
 
 class IxieraHero {
   constructor() {
+    console.log('=== IXIERA AGENCY THREE.JS HERO INIT ===');
+    
+    this.isMobile = window.innerWidth < 768;
+    console.log('📱 Mobile detection:', this.isMobile);
+    
+    // Performance check
+    if (!this.checkCompatibility()) {
+      this.activateFallback();
+      return;
+    }
+
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+    this.scene.background = new THREE.Color(0x000000);
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderer = null;
-    this.websiteElements = [];
+    
+    this.techParticles = [];
+    this.aiOrbs = [];
+    this.dataStreams = [];
+    this.connectionNodes = [];
+    
     this.mouseX = 0;
     this.mouseY = 0;
+    this.animationId = null;
+    this.frameCount = 0;
+    
+    this.currentSettings = this.isMobile ? {
+      particleCount: 6,
+      orbCount: 3,
+      nodeCount: 4,
+      resolution: 0.6,
+      enableMouse: false,
+      quality: 'low'
+    } : {
+      particleCount: 12,
+      orbCount: 5,
+      nodeCount: 8,
+      resolution: 0.85,
+      enableMouse: true,
+      quality: 'medium'
+    };
+    
+    console.log('⚙️ Agency Settings:', this.currentSettings);
     
     this.init();
-    this.animate();
     this.setupEventListeners();
+  }
+
+  checkCompatibility() {
+    console.log('🔍 Checking WebGL support...');
+    
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      
+      if (!gl) {
+        console.log('❌ WebGL not supported');
+        return false;
+      }
+      
+      const maxTextures = gl.getParameter(gl.MAX_TEXTURE_IMAGE_UNITS);
+      console.log('✅ WebGL supported - Max textures:', maxTextures);
+      return true;
+      
+    } catch (e) {
+      console.log('❌ WebGL error:', e.message);
+      return false;
+    }
+  }
+
+  activateFallback() {
+    console.log('🔄 Activating fallback...');
+    
+    const canvas = document.getElementById('three-canvas');
+    const fallbackImg = document.getElementById('hero-fallback-bg');
+    
+    if (canvas) canvas.style.display = 'none';
+    if (fallbackImg) fallbackImg.style.display = 'block';
   }
 
   init() {
     const canvas = document.getElementById('three-canvas');
-    if (!canvas) return;
+    console.log('🎯 Initializing agency canvas:', canvas);
+    
+    if (!canvas) {
+      console.log('❌ Canvas not found');
+      this.activateFallback();
+      return;
+    }
 
-    this.renderer = new THREE.WebGLRenderer({ 
-      canvas: canvas,
-      alpha: true,
-      antialias: true
-    });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    try {
+      canvas.style.display = 'block';
+      const fallbackImg = document.getElementById('hero-fallback-bg');
+      if (fallbackImg) fallbackImg.style.display = 'none';
 
-    this.camera.position.z = 40;
+      this.renderer = new THREE.WebGLRenderer({ 
+        canvas: canvas,
+        alpha: true,
+        antialias: !this.isMobile,
+        powerPreference: 'high-performance',
+        precision: this.isMobile ? 'mediump' : 'highp'
+      });
 
-    // Professional lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+      this.renderer.setSize(
+        window.innerWidth * this.currentSettings.resolution, 
+        window.innerHeight * this.currentSettings.resolution
+      );
+      
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.isMobile ? 1 : 1.2));
+      
+      // PERBAIKAN: Ganti outputEncoding dengan outputColorSpace
+      if (this.renderer.outputColorSpace !== undefined) {
+        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+      }
+      
+      this.camera.position.z = this.isMobile ? 20 : 30;
+      this.camera.position.y = this.isMobile ? 2 : 4;
+
+      this.setupEnhancedLighting();
+      this.createTechParticles();
+      this.createAIOrbs();
+      this.createConnectionNetwork();
+      this.createDataStreams();
+      
+      if (!this.isMobile) {
+        this.createFloatingUIElements();
+      }
+
+      window.addEventListener('resize', () => this.onWindowResize());
+      
+      console.log('✅ Agency Three.js fully initialized');
+      this.animate();
+      
+    } catch (error) {
+      console.log('❌ Three.js initialization failed:', error);
+      this.activateFallback();
+    }
+  }
+
+  setupEnhancedLighting() {
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     this.scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0x4fc3f7, 0.8);
-    directionalLight.position.set(30, 30, 50);
-    this.scene.add(directionalLight);
+    const mainLight = new THREE.DirectionalLight(0x4a86e8, 1.2);
+    mainLight.position.set(5, 10, 15);
+    mainLight.castShadow = false;
+    this.scene.add(mainLight);
 
-    // Create website architecture visualization
-    this.createWebsiteArchitecture();
-    this.createDataFlow();
+    const aiLight1 = new THREE.PointLight(0x00ffaa, 0.8, 50);
+    aiLight1.position.set(-10, 5, -8);
+    this.scene.add(aiLight1);
 
-    window.addEventListener('resize', () => this.onWindowResize());
+    const aiLight2 = new THREE.PointLight(0x7e57c2, 0.7, 50);
+    aiLight2.position.set(12, -3, 10);
+    this.scene.add(aiLight2);
+
+    const uiLight = new THREE.PointLight(0xff6b35, 0.6, 40);
+    uiLight.position.set(0, 8, -5);
+    this.scene.add(uiLight);
+
+    const fillLight = new THREE.PointLight(0xffffff, 0.4, 60);
+    fillLight.position.set(0, 0, 20);
+    this.scene.add(fillLight);
   }
 
-  createWebsiteArchitecture() {
-    const architectureGroup = new THREE.Group();
-
-    // Frontend Layer (Website)
-    const frontendGeometry = new THREE.BoxGeometry(12, 8, 1);
-    const frontendMaterial = new THREE.MeshPhongMaterial({
-      color: 0x4fc3f7,
-      transparent: true,
-      opacity: 0.8,
-      wireframe: false
-    });
-    const frontend = new THREE.Mesh(frontendGeometry, frontendMaterial);
-    frontend.position.set(-15, 0, 0);
-    frontend.userData = { type: 'frontend' };
-    architectureGroup.add(frontend);
-
-    // Backend Layer (Server)
-    const backendGeometry = new THREE.CylinderGeometry(4, 4, 6, 8);
-    const backendMaterial = new THREE.MeshPhongMaterial({
-      color: 0x00ff88,
-      transparent: true,
-      opacity: 0.8
-    });
-    const backend = new THREE.Mesh(backendGeometry, backendMaterial);
-    backend.position.set(0, 0, 0);
-    backend.userData = { type: 'backend' };
-    architectureGroup.add(backend);
-
-    // Database Layer
-    const databaseGeometry = new THREE.CylinderGeometry(3, 5, 4, 8);
-    const databaseMaterial = new THREE.MeshPhongMaterial({
-      color: 0xff6b6b,
-      transparent: true,
-      opacity: 0.8
-    });
-    const database = new THREE.Mesh(databaseGeometry, databaseMaterial);
-    database.position.set(15, 0, 0);
-    database.userData = { type: 'database' };
-    architectureGroup.add(database);
-
-    // Add labels (simple planes with text)
-    this.addLabel(frontend, "WEBSITE", architectureGroup);
-    this.addLabel(backend, "SERVER", architectureGroup);
-    this.addLabel(database, "DATABASE", architectureGroup);
-
-    this.scene.add(architectureGroup);
-    this.architectureGroup = architectureGroup;
-  }
-
-  addLabel(mesh, text, group) {
-    // Create canvas for text
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    canvas.width = 256;
-    canvas.height = 64;
+  createTechParticles() {
+    const particleGroup = new THREE.Group();
     
-    context.fillStyle = 'rgba(0, 0, 0, 0)';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    const colors = [0x4FC3F7, 0x00FF88, 0x7E57C2, 0xFF6B6B, 0x00E5FF, 0xFFD740];
     
-    context.font = 'bold 24px Arial';
-    context.fillStyle = '#ffffff';
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.fillText(text, canvas.width / 2, canvas.height / 2);
-
-    const texture = new THREE.CanvasTexture(canvas);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      side: THREE.DoubleSide
-    });
-
-    const labelGeometry = new THREE.PlaneGeometry(8, 2);
-    const label = new THREE.Mesh(labelGeometry, material);
-    
-    // Position label below the element
-    label.position.copy(mesh.position);
-    label.position.y = mesh.geometry.parameters.height / 2 + 6;
-    
-    group.add(label);
-  }
-
-  createDataFlow() {
-    // Create data flow between elements
-    this.dataParticles = [];
-
-    // Frontend -> Backend particles
-    this.createFlowParticles(-15, 0, 0, 0, 0.1);
-    
-    // Backend -> Database particles  
-    this.createFlowParticles(0, 0, 15, 0, 0.1);
-    
-    // Database -> Frontend particles (feedback)
-    this.createFlowParticles(15, 0, -15, 0, 0.15);
-  }
-
-  createFlowParticles(startX, startY, endX, endY, speed) {
-    const particleCount = 8;
-    
-    for (let i = 0; i < particleCount; i++) {
-      const geometry = new THREE.SphereGeometry(0.3, 8, 8);
+    for (let i = 0; i < this.currentSettings.particleCount; i++) {
+      const size = 0.3 + Math.random() * 0.5;
+      const geometry = new THREE.OctahedronGeometry(size, 0);
       const material = new THREE.MeshPhongMaterial({
-        color: 0x4fc3f7,
-        emissive: 0x4fc3f7,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        transparent: true,
+        opacity: 0.9,
+        shininess: 100,
+        emissive: colors[Math.floor(Math.random() * colors.length)],
         emissiveIntensity: 0.3
       });
 
       const particle = new THREE.Mesh(geometry, material);
       
-      // Stagger starting positions
-      const progress = (i / particleCount) * 2 * Math.PI;
+      const radius = 8 + Math.random() * 6;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      
       particle.position.set(
-        startX + Math.cos(progress) * 2,
-        startY + Math.sin(progress) * 2,
-        0
+        radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.sin(phi) * Math.sin(theta) * 0.5,
+        radius * Math.cos(phi)
       );
-
+      
       particle.userData = {
-        startX, startY, endX, endY,
-        progress: progress,
-        speed: speed,
-        radius: 2
+        originalPosition: particle.position.clone(),
+        speed: 0.001 + Math.random() * 0.002,
+        phase: Math.random() * Math.PI * 2,
+        amplitude: 0.3 + Math.random() * 1.0,
+        rotationSpeed: 0.01 + Math.random() * 0.02
       };
+      
+      particleGroup.add(particle);
+      this.techParticles.push(particle);
+    }
+    
+    this.scene.add(particleGroup);
+    this.particleGroup = particleGroup;
+    
+    console.log('💫 Created', this.techParticles.length, 'tech particles');
+  }
 
-      this.scene.add(particle);
-      this.dataParticles.push(particle);
+  createAIOrbs() {
+    const orbGroup = new THREE.Group();
+    
+    const orbPositions = [
+      { x: -6, y: 2, z: -4 },
+      { x: 6, y: -1, z: -4 },
+      { x: 0, y: 4, z: 0 },
+      { x: -4, y: -3, z: 5 },
+      { x: 5, y: 3, z: 3 },
+      { x: -5, y: 0, z: 6 }
+    ].slice(0, this.currentSettings.orbCount);
+    
+    const orbColors = [0x4FC3F7, 0x00FF88, 0x7E57C2, 0xFF6B6B, 0x00E5FF, 0xFFD740];
+    const orbLabels = ['AI', 'Chatbot', 'Management', 'Web App', 'Integration', 'Software'];
+    
+    orbPositions.forEach((pos, i) => {
+      const radius = 1.8 + Math.random() * 0.8;
+      const geometry = new THREE.SphereGeometry(radius, 16, 14);
+      const material = new THREE.MeshPhongMaterial({
+        color: orbColors[i],
+        transparent: true,
+        opacity: 0.8,
+        shininess: 80,
+        wireframe: i % 2 === 0,
+        emissive: orbColors[i],
+        emissiveIntensity: 0.4
+      });
+
+      const orb = new THREE.Mesh(geometry, material);
+      orb.position.set(pos.x, pos.y, pos.z);
+      
+      orb.userData = {
+        label: orbLabels[i],
+        rotationSpeed: 0.003 + Math.random() * 0.008,
+        pulseSpeed: 0.015 + Math.random() * 0.02,
+        originalScale: 1,
+        phase: Math.random() * Math.PI * 2,
+        hoverIntensity: 0
+      };
+      
+      orbGroup.add(orb);
+      this.aiOrbs.push(orb);
+    });
+    
+    this.scene.add(orbGroup);
+    this.orbGroup = orbGroup;
+    
+    console.log('🔮 Created', this.aiOrbs.length, 'AI service orbs');
+  }
+
+  createConnectionNetwork() {
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x4FC3F7,
+      transparent: true,
+      opacity: 0.4,
+      linewidth: 2
+    });
+    
+    this.aiOrbs.forEach((orb, i) => {
+      const nextOrb = this.aiOrbs[(i + 1) % this.aiOrbs.length];
+      const geometry = new THREE.BufferGeometry().setFromPoints([
+        orb.position,
+        nextOrb.position
+      ]);
+      
+      const line = new THREE.Line(geometry, lineMaterial);
+      this.scene.add(line);
+      this.connectionNodes.push(line);
+    });
+    
+    if (this.aiOrbs.length > 3) {
+      for (let i = 0; i < this.aiOrbs.length - 2; i += 2) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+          this.aiOrbs[i].position,
+          this.aiOrbs[i + 2].position
+        ]);
+        
+        const line = new THREE.Line(geometry, lineMaterial);
+        this.scene.add(line);
+        this.connectionNodes.push(line);
+      }
+    }
+    
+    console.log('🔗 Created network with', this.connectionNodes.length, 'connections');
+  }
+
+  createDataStreams() {
+    const streamMaterial = new THREE.LineBasicMaterial({
+      color: 0x00FF88,
+      transparent: true,
+      opacity: 0.5,
+      linewidth: 2
+    });
+
+    for (let i = 0; i < 3; i++) {
+      const points = [];
+      const radius = 10 + i * 2;
+      const segments = 20;
+      
+      for (let j = 0; j <= segments; j++) {
+        const angle = (j / segments) * Math.PI * 2;
+        points.push(new THREE.Vector3(
+          Math.cos(angle) * radius,
+          Math.sin(angle) * 0.5,
+          Math.sin(angle) * radius * 0.3
+        ));
+      }
+      
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const stream = new THREE.Line(geometry, streamMaterial);
+      stream.userData = { speed: 0.002 + i * 0.001, offset: Math.random() * Math.PI * 2 };
+      this.scene.add(stream);
+      this.dataStreams.push(stream);
     }
   }
 
-  animate() {
-    requestAnimationFrame(() => this.animate());
+  createFloatingUIElements() {
+    this.floatingElements = [];
+    
+    const serviceShapes = [
+      () => new THREE.BoxGeometry(1.5, 0.4, 0.2),
+      () => new THREE.CylinderGeometry(0.8, 0.8, 0.15, 6),
+      () => new THREE.TorusGeometry(1.0, 0.15, 10, 20),
+      () => new THREE.OctahedronGeometry(0.9, 0),
+      () => new THREE.ConeGeometry(0.8, 1.5, 4)
+    ];
 
-    // Rotate architecture slowly
-    if (this.architectureGroup) {
-      this.architectureGroup.rotation.y += 0.002;
-    }
+    const elementColors = [0x4FC3F7, 0x00FF88, 0x7E57C2, 0xFF6B6B, 0x00E5FF];
 
-    // Animate data flow particles
-    this.dataParticles.forEach(particle => {
-      const data = particle.userData;
-      data.progress += data.speed;
+    serviceShapes.forEach((createShape, i) => {
+      const geometry = createShape();
+      const material = new THREE.MeshPhongMaterial({
+        color: elementColors[i],
+        transparent: true,
+        opacity: 0.7,
+        wireframe: true,
+        emissive: elementColors[i],
+        emissiveIntensity: 0.3
+      });
+
+      const element = new THREE.Mesh(geometry, material);
       
-      // Circular motion between points
-      const angle = data.progress;
-      const radius = data.radius;
+      const radius = 12 + i * 1.5;
+      const angle = (i / serviceShapes.length) * Math.PI * 2;
+      element.position.set(
+        Math.cos(angle) * radius,
+        Math.sin(angle) * 2 + 6,
+        Math.sin(angle) * radius * 0.5
+      );
       
-      particle.position.x = data.startX + (data.endX - data.startX) * (0.5 + 0.5 * Math.sin(angle));
-      particle.position.y = data.startY + Math.cos(angle) * radius;
+      element.userData = {
+        angle: angle,
+        radius: radius,
+        speed: 0.08 + Math.random() * 0.1,
+        rotationSpeed: 0.008 + Math.random() * 0.015,
+        floatHeight: 0.8 + Math.random() * 1.2,
+        serviceType: ['Website', 'Chatbot', 'AI', 'System', 'Integration'][i]
+      };
       
-      // Pulsing effect
-      const scale = 0.8 + Math.sin(data.progress * 2) * 0.2;
-      particle.scale.set(scale, scale, scale);
+      this.scene.add(element);
+      this.floatingElements.push(element);
     });
+    
+    console.log('✨ Created', this.floatingElements.length, 'floating service elements');
+  }
 
-    // Subtle mouse interaction
-    this.scene.rotation.y += this.mouseX * 0.0001;
-    this.scene.rotation.x += this.mouseY * 0.0001;
+  animate() {
+    try {
+      this.animationId = requestAnimationFrame(() => this.animate());
+      this.frameCount++;
 
-    this.renderer.render(this.scene, this.camera);
+      const shouldAnimate = !this.isMobile || this.frameCount % 2 === 0;
+
+      if (shouldAnimate) {
+        this.techParticles.forEach(particle => {
+          const data = particle.userData;
+          data.phase += data.speed;
+          
+          particle.position.x = data.originalPosition.x + Math.sin(data.phase) * data.amplitude;
+          particle.position.y = data.originalPosition.y + Math.cos(data.phase * 1.5) * data.amplitude * 0.7;
+          particle.position.z = data.originalPosition.z + Math.sin(data.phase * 0.8) * data.amplitude;
+          
+          particle.rotation.x += data.rotationSpeed;
+          particle.rotation.y += data.rotationSpeed * 1.3;
+        });
+
+        this.aiOrbs.forEach(orb => {
+          const data = orb.userData;
+          data.phase += data.pulseSpeed;
+          
+          const scale = data.originalScale + Math.sin(data.phase) * 0.2;
+          orb.scale.setScalar(scale);
+          
+          orb.rotation.x += data.rotationSpeed;
+          orb.rotation.y += data.rotationSpeed * 1.1;
+          
+          if (data.hoverIntensity > 0) {
+            orb.position.y += Math.sin(this.frameCount * 0.1) * 0.02 * data.hoverIntensity;
+            data.hoverIntensity *= 0.95;
+          }
+        });
+
+        this.dataStreams.forEach(stream => {
+          const data = stream.userData;
+          data.offset += data.speed;
+          stream.rotation.y = data.offset;
+        });
+
+        if (this.floatingElements && !this.isMobile) {
+          this.floatingElements.forEach(element => {
+            const data = element.userData;
+            data.angle += data.speed * 0.01;
+            
+            element.position.x = Math.cos(data.angle) * data.radius;
+            element.position.z = Math.sin(data.angle) * data.radius * 0.5;
+            element.position.y = 6 + Math.sin(data.angle * 3) * data.floatHeight;
+            
+            element.rotation.x += data.rotationSpeed;
+            element.rotation.y += data.rotationSpeed * 1.2;
+          });
+        }
+
+        if (this.particleGroup) {
+          this.particleGroup.rotation.y += 0.0003;
+          this.particleGroup.rotation.x += 0.0001;
+        }
+
+        if (this.particleGroup && this.currentSettings.enableMouse) {
+          const targetX = this.mouseX * 0.00002;
+          const targetY = this.mouseY * 0.000025;
+          
+          this.particleGroup.rotation.x += (targetY - this.particleGroup.rotation.x) * 0.05;
+          this.particleGroup.rotation.y += (targetX - this.particleGroup.rotation.y) * 0.05;
+        }
+      }
+
+      this.renderer.render(this.scene, this.camera);
+      
+    } catch (error) {
+      console.log('❌ Animation error:', error);
+      cancelAnimationFrame(this.animationId);
+      this.activateFallback();
+    }
   }
 
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    const newWidth = window.innerWidth * this.currentSettings.resolution;
+    const newHeight = window.innerHeight * this.currentSettings.resolution;
+    this.renderer.setSize(newWidth, newHeight);
   }
 
   setupEventListeners() {
-    document.addEventListener('mousemove', (event) => {
-      this.mouseX = (event.clientX - window.innerWidth / 2) / 100;
-      this.mouseY = (event.clientY - window.innerHeight / 2) / 100;
+    if (this.currentSettings.enableMouse) {
+      let rafId;
+      
+      const onMouseMove = (event) => {
+        if (rafId) return;
+        
+        rafId = requestAnimationFrame(() => {
+          this.mouseX = (event.clientX - window.innerWidth / 2);
+          this.mouseY = (event.clientY - window.innerHeight / 2);
+          rafId = null;
+        });
+      };
+      
+      document.addEventListener('mousemove', onMouseMove, { passive: true });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting && this.animationId) {
+          cancelAnimationFrame(this.animationId);
+          this.animationId = null;
+          console.log('⏸️ Animation paused');
+        } else if (entry.isIntersecting && !this.animationId) {
+          this.animate();
+          console.log('▶️ Animation resumed');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      observer.observe(heroSection);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && this.animationId) {
+        cancelAnimationFrame(this.animationId);
+        this.animationId = null;
+      }
     });
+  }
+
+  destroy() {
+    if (this.animationId) {
+      cancelAnimationFrame(this.animationId);
+    }
+    this.renderer.dispose();
+    console.log('🧹 Agency Three.js cleaned up');
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  new IxieraHero();
+  console.log('🚀 DOM loaded - setting up Ixiera Agency Three.js');
+  
+  let heroInstance = null;
+  
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !heroInstance) {
+      console.log('👀 Hero section in viewport - initializing Agency Three.js');
+      
+      setTimeout(() => {
+        heroInstance = new IxieraHero();
+      }, 300);
+      
+    } else if (!entries[0].isIntersecting && heroInstance) {
+      console.log('👋 Hero section out of view - cleaning up');
+      heroInstance.destroy();
+      heroInstance = null;
+    }
+  }, { 
+    threshold: 0.1,
+    rootMargin: '50px'
+  });
+  
+  const heroSection = document.getElementById('hero');
+  if (heroSection) {
+    observer.observe(heroSection);
+  }
 });

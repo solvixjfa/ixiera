@@ -3,239 +3,800 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Login Klien | IXIERA</title>
+  <title>Login & Registrasi | IXIERA</title>
   
   <!-- Favicons & CSS -->
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png" rel="icon">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
-  
   <style>
+    :root {
+        --primary-color: #000;
+        --secondary-color: #fff;
+        --accent-color: #6366f1;
+        --text-light: #6c757d;
+        --border-color: #e5e5e5;
+        --shadow-light: rgba(0, 0, 0, 0.05);
+        --shadow-medium: rgba(0, 0, 0, 0.08);
+        --success-color: #10b981;
+        --danger-color: #ef4444;
+        --warning-color: #f59e0b;
+    }
+
     body.login-container {
-      min-height: 100vh;
-      background: linear-gradient(180deg, #fff 0%, #f4f4f4 100%);
-      font-family: 'Inter', sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(180deg, #fff 0%, #f4f4f4 100%);
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
     .login-card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      box-shadow: 0 6px 30px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
+        background: #fff;
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        box-shadow: 0 6px 30px var(--shadow-light);
+        transition: all 0.3s ease;
     }
     .login-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 40px var(--shadow-medium);
     }
 
     .btn-login {
-      background: #000;
-      color: #fff;
-      border: none;
-      padding: 12px 0;
-      border-radius: 8px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      transition: background 0.3s, transform 0.2s;
+        background: var(--primary-color);
+        color: var(--secondary-color);
+        border: none;
+        padding: 12px 0;
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        transition: background 0.3s, transform 0.2s;
     }
     .btn-login:hover {
-      background: #222;
-      transform: translateY(-1px);
+        background: #222;
+        transform: translateY(-1px);
+    }
+
+    .btn-register {
+        background: transparent;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+        padding: 12px 0;
+        border-radius: 8px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+    }
+    .btn-register:hover {
+        background: var(--primary-color);
+        color: var(--secondary-color);
+        transform: translateY(-1px);
     }
 
     .brand-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #000;
-      letter-spacing: 1px;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        letter-spacing: 1px;
     }
 
     .tagline {
-      color: #6c757d;
-      font-size: 0.95rem;
-      font-weight: 500;
+        color: var(--text-light);
+        font-size: 0.95rem;
+        font-weight: 500;
     }
 
     .login-desc {
-      font-size: 0.92rem;
-      color: #555;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
+        font-size: 0.92rem;
+        color: #555;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
     }
 
     .login-card .form-control {
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      padding: 10px 12px;
-      transition: 0.2s;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        transition: 0.2s;
     }
     .login-card .form-control:focus {
-      border-color: #000;
-      box-shadow: 0 0 0 0.15rem rgba(0,0,0,0.08);
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.15rem rgba(0,0,0,0.08);
     }
 
     .input-helper {
-      font-size: 0.8rem;
-      color: #6c757d;
-      margin-top: 4px;
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 4px;
     }
-  </style>
+
+    /* ===== ENHANCED DASHBOARD ANIMATION ===== */
+    .dashboard-preview {
+        position: relative;
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .dashboard-screen {
+        width: 100%;
+        height: 180px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+            inset 0 1px 0 rgba(255,255,255,0.1),
+            0 8px 32px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .dashboard-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .preview-label {
+        font-size: 0.75rem;
+        color: rgba(255,255,255,0.8);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .notification-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--danger-color);
+        border-radius: 50%;
+        animation: notificationPulse 2s infinite;
+        position: relative;
+    }
+
+    @keyframes notificationPulse {
+        0% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        }
+        70% {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+        }
+    }
+
+    /* Main Dashboard Content */
+    .dashboard-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 45px 20px 20px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .stat-item {
+        background: rgba(255,255,255,0.08);
+        border-radius: 8px;
+        padding: 10px 8px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.1);
+        animation: statSlideIn 0.8s ease-out backwards;
+    }
+
+    .stat-item:nth-child(1) { animation-delay: 0.1s; }
+    .stat-item:nth-child(2) { animation-delay: 0.2s; }
+    .stat-item:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes statSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        margin-bottom: 2px;
+        animation: countUp 2s ease-out;
+    }
+
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+        color: rgba(255,255,255,0.7);
+        font-weight: 500;
+    }
+
+    /* Animated Chart */
+    .chart-container {
+        height: 40px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 6px;
+        position: relative;
+        overflow: hidden;
+        padding: 0 10px;
+    }
+
+    .chart-bars {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        height: 100%;
+        gap: 4px;
+    }
+
+    .chart-bar {
+        flex: 1;
+        background: linear-gradient(to top, var(--accent-color), #8b5cf6);
+        border-radius: 2px 2px 0 0;
+        min-height: 8px;
+        animation: chartWave 3s ease-in-out infinite;
+        transform-origin: bottom;
+    }
+
+    .chart-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+    .chart-bar:nth-child(2) { height: 60%; animation-delay: 0.2s; }
+    .chart-bar:nth-child(3) { height: 45%; animation-delay: 0.4s; }
+    .chart-bar:nth-child(4) { height: 75%; animation-delay: 0.6s; }
+    .chart-bar:nth-child(5) { height: 35%; animation-delay: 0.8s; }
+    .chart-bar:nth-child(6) { height: 65%; animation-delay: 1s; }
+    .chart-bar:nth-child(7) { height: 50%; animation-delay: 1.2s; }
+
+    @keyframes chartWave {
+        0%, 100% { 
+            transform: scaleY(1);
+            opacity: 0.8;
+        }
+        50% { 
+            transform: scaleY(1.1);
+            opacity: 1;
+        }
+    }
+
+    /* Loading Indicator */
+    .loading-indicator {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 3px;
+    }
+
+    .loading-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.6);
+        animation: loadingBounce 1.4s infinite ease-in-out both;
+    }
+
+    .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+    .loading-dot:nth-child(3) { animation-delay: 0s; }
+
+    @keyframes loadingBounce {
+        0%, 80%, 100% { 
+            transform: scale(0.8);
+            opacity: 0.5;
+        }
+        40% { 
+            transform: scale(1.2);
+            opacity: 1;
+        }
+    }
+
+    /* Floating Elements */
+    .floating-element {
+        position: absolute;
+        background: rgba(255,255,255,0.1);
+        border-radius: 4px;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-element:nth-child(1) {
+        width: 20px;
+        height: 4px;
+        top: 30%;
+        left: 10%;
+        animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+        width: 12px;
+        height: 12px;
+        top: 60%;
+        right: 15%;
+        animation-delay: 2s;
+        border-radius: 50%;
+    }
+
+    .floating-element:nth-child(3) {
+        width: 8px;
+        height: 8px;
+        bottom: 40%;
+        left: 20%;
+        animation-delay: 4s;
+        border-radius: 50%;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 0.3;
+        }
+        50% {
+            transform: translateY(-10px) rotate(180deg);
+            opacity: 0.7;
+        }
+    }
+
+    /* Form Toggle */
+    .form-toggle {
+        display: flex;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 6px;
+        margin-bottom: 1.5rem;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .toggle-btn {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .toggle-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: left 0.5s;
+    }
+
+    .toggle-btn:hover::before {
+        left: 100%;
+    }
+
+    .toggle-btn.active {
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        color: var(--primary-color);
+    }
+
+    /* Enhanced Success Animation */
+    .success-animation {
+        text-align: center;
+        padding: 2rem 0;
+    }
+
+    .checkmark {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: block;
+        stroke-width: 2;
+        stroke: var(--success-color);
+        stroke-miterlimit: 10;
+        margin: 0 auto;
+        box-shadow: inset 0px 0px 0px var(--success-color);
+        animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    }
+
+    .checkmark__circle {
+        stroke-dasharray: 166;
+        stroke-dashoffset: 166;
+        stroke-width: 2;
+        stroke-miterlimit: 10;
+        stroke: var(--success-color);
+        fill: none;
+        animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+    }
+
+    .checkmark__check {
+        transform-origin: 50% 50%;
+        stroke-dasharray: 48;
+        stroke-dashoffset: 48;
+        animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+    }
+
+    @keyframes stroke {
+        100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes scale {
+        0%, 100% { transform: none; }
+        50% { transform: scale3d(1.1, 1.1, 1); }
+    }
+
+    @keyframes fill {
+        100% { box-shadow: inset 0px 0px 0px 30px var(--success-color); }
+    }
+
+    /* Fix untuk header yang overlap */
+    .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+    }
+
+    /* Alert Styles */
+    .alert {
+        border-radius: 8px;
+        border: none;
+        font-size: 0.9rem;
+    }
+
+    .alert-success {
+        background: #d1fae5;
+        color: #065f46;
+    }
+
+    .alert-danger {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+</style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="d8e585f1-cb66-4eda-ac67-240d5f7e0901"></script>
 </head>
 
 <body class="login-container">
-  <div class="container">
-    <div class="row justify-content-center align-items-center min-vh-100">
-      <div class="col-md-6 col-lg-5">
 
-        <!-- Header -->
-        <div class="text-center mb-4">
-          <h1 class="brand-title">IXIERA</h1>
-          <p class="tagline">Client Project Tracker & Dashboard Access</p>
-        </div>
+  <!-- Header -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-        <!-- Friendly page description -->
-        <p class="login-desc">
-          Masuk untuk memantau progres proyek Anda, melihat update terbaru, 
-          dan mengakses dashboard IXIERA secara real-time. Semua progres bisa dipantau di sini, aman dan nyaman.
-        </p>
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename">IXIERA</h1>
+        <span class="logo-badge">Studio</span>
+      </a>
 
-        <!-- Login Card -->
-        <div class="login-card p-4">
-          <form id="login-form">
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="email@kamu.com" required>
-              <div class="input-helper">Gunakan email yang sama saat mendaftar proyek</div>
-            </div>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">
+            <i class="bi bi-house me-1"></i>Home
+          </a></li>
+          
+          <li><a href="about.html">
+            <i class="bi bi-rocket me-1"></i>Our Story
+          </a></li>
+          
+          <li><a href="services.html">
+            <i class="bi bi-stars me-1"></i>What We Do
+          </a></li>
+          
+          <li><a href="portfolio.html">
+            <i class="bi bi-collection me-1"></i>Our Work
+          </a></li>
+              
+          <li><a href="pricing.html">
+            <i class="bi bi-credit-card me-1"></i>Pricing
+          </a></li>
+          
+          <!-- DROPDOWN YANG LEBIH CASUAL -->
+          <li class="dropdown">
+            <a href="#">
+              <i class="bi bi-person me-1"></i>For Clients
+              <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul>
+              <li><a href="team.html">
+                <i class="bi bi-robot me-1"></i>AI Assistant
+              </a></li>
+              <li><a href="login.html" class="active">
+                <i class="bi bi-folder me-1"></i>My Projects
+              </a></li>
+              <li><a href="blog.html">
+                <i class="bi bi-pen me-1"></i>Insights
+              </a></li>
+            </ul>
+          </li>
+          
+          <li><a href="contact.html" class="nav-cta">
+            <i class="bi bi-chat-dots me-1"></i>Start Project
+          </a></li>
+        </ul>
+      </nav>
 
-            <div class="mb-4">
-              <label class="form-label fw-semibold">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Masukkan password" required>
-              <div class="input-helper">Pastikan password yang benar untuk akses dashboard</div>
-            </div>
+      <div class="header-actions">
+        <button type="button" class="btn btn-sm btn-toggle-theme" id="theme-toggle-btn" title="Toggle theme">
+          <i class="bi bi-sun"></i>
+        </button>
+      </div>
 
-            <button type="submit" class="btn btn-login w-100 mb-3">
-              <span class="spinner-border spinner-border-sm me-2 d-none" id="login-spinner"></span>
-              <span id="login-text">Masuk ke Dashboard</span>
-            </button>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </div>
+  </header>
 
-            <div class="text-center">
-              <a href="#" id="forgot-password" class="text-decoration-none text-muted small">
-                Lupa password? Hubungi admin
-              </a>
-            </div>
+  <main>
+    <div class="container" style="padding-top: 100px;">
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6 col-lg-5">
 
-            <div id="login-message" class="mt-3"></div>
-          </form>
-        </div>
+          <!-- Header -->
+          <div class="text-center mb-4" data-aos="fade-up">
+            <h1 class="brand-title">IXIERA</h1>
+            <p class="tagline">Client Project Tracker & Dashboard Access</p>
+          </div>
 
-        <!-- Info -->
-        <div class="text-center mt-4">
-          <p class="text-muted small">
-            Belum punya akun?
-            <a href="contact.html" class="text-dark fw-semibold">Ajukan project baru</a>
+          <!-- Friendly page description -->
+          <p class="login-desc" data-aos="fade-up" data-aos-delay="100">
+            Masuk atau daftar untuk memantau progres proyek Anda, melihat update terbaru, 
+            dan mengakses dashboard IXIERA secara real-time.
           </p>
-        </div>
 
+<!-- Dashboard Preview -->
+<div class="dashboard-preview" data-aos="fade-up" data-aos-delay="200">
+    <div class="dashboard-screen">
+        <div class="dashboard-header">
+            <div class="preview-label">IXIERA DASHBOARD</div>
+            <div class="notification-dot"></div>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Tasks</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-bars">
+                    <div class="chart-bar"></div>
+                    <div class="chart-bar"></div>
+                    <div class="chart-bar"></div>
+                    <div class="chart-bar"></div>
+                    <div class="chart-bar"></div>
+                    <div class="chart-bar"></div>
+                    <div class="chart-bar"></div>
+                </div>
+            </div>
+            
+            <div class="loading-indicator">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+            </div>
+        </div>
+        
+        <!-- Floating background elements -->
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+          <!-- Form Toggle -->
+          <div class="form-toggle" data-aos="fade-up" data-aos-delay="300">
+            <button class="toggle-btn active" id="login-toggle">Masuk</button>
+            <button class="toggle-btn" id="register-toggle">Daftar</button>
+          </div>
+
+          <!-- Login Form -->
+          <div class="login-card p-4" id="login-form-container" data-aos="fade-up" data-aos-delay="400">
+            <form id="login-form">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="login-email" placeholder="email@kamu.com" required>
+                <div class="input-helper">Gunakan email yang terdaftar</div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Password</label>
+                <input type="password" class="form-control" id="login-password" placeholder="Masukkan password" required>
+                <div class="input-helper">Password minimal 6 karakter</div>
+              </div>
+
+              <button type="submit" class="btn btn-login w-100 mb-3">
+                <span class="spinner-border spinner-border-sm me-2 d-none" id="login-spinner"></span>
+                <span id="login-text">Masuk ke Dashboard</span>
+              </button>
+
+              <div class="text-center">
+                <a href="#" id="forgot-password" class="text-decoration-none text-muted small">
+                  Lupa password? Reset di sini
+                </a>
+              </div>
+
+              <div id="login-message" class="mt-3"></div>
+            </form>
+          </div>
+
+          <!-- Register Form -->
+          <div class="login-card p-4 d-none" id="register-form-container" data-aos="fade-up" data-aos-delay="400">
+            <form id="register-form">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Nama Lengkap</label>
+                <input type="text" class="form-control" id="register-name" placeholder="nama" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="register-email" placeholder="email@kamu.com" required>
+                <div class="input-helper">Gunakan email aktif untuk notifikasi</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Password</label>
+                <input type="password" class="form-control" id="register-password" placeholder="Buat password" required>
+                <div class="input-helper">Minimal 6 karakter</div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-semibold">Konfirmasi Password</label>
+                <input type="password" class="form-control" id="register-confirm-password" placeholder="Ulangi password" required>
+              </div>
+
+              <button type="submit" class="btn btn-register w-100 mb-3">
+                <span class="spinner-border spinner-border-sm me-2 d-none" id="register-spinner"></span>
+                <span id="register-text">Daftar Sekarang</span>
+              </button>
+
+              <div id="register-message" class="mt-3"></div>
+            </form>
+          </div>
+
+          <!-- Info -->
+          <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="500">
+            <p class="text-muted small">
+              Butuh bantuan? 
+              <a href="https://wa.me/6285702373412" class="text-dark fw-semibold">Hubungi tim kami</a>
+            </p>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
+  </main>
+  <!-- FOOTER -->
+  <footer id="footer" class="footer light-background">
 
-  <!-- Vendor JS -->
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5 col-md-12 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Ixiera</span>
+            </a>
+            <p>Kami membantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus kami adalah membuat sistem yang bekerja untuk Anda.</p>
+            <div class="social-links d-flex mt-4">
+              <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
+              <a href="https://discord.gg/FqxEMxn9" target="_blank">
+                <i class="bi bi-discord"></i>
+              </a>
+              <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
+              <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
+              <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Menu Cepat</h4>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="services.html">Services</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-6 footer-links">
+            <h4>Layanan Kami</h4>
+            <ul>
+              <li><a href="services.html">Website & Sistem</a></li>
+              <li><a href="services.html">Otomatisasi Bisnis</a></li>
+              <li><a href="services.html">Branding & Desain</a></li>
+              <li><a href="services.html">Marketing Digital</a></li>
+              <li><a href="services.html">Kemitraan Strategis</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+            <h4>Kontak</h4>
+            <p>Jl. Raya Surabaya - Malang No.1<br>
+            Pandaan, Pasuruan, Jawa Timur 67156<br>
+            Indonesia</p>
+            <p class="mt-4">
+              <strong>WhatsApp:</strong>
+              <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
+            </p>
+            <p>
+              <strong>Email:</strong>
+              <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container copyright text-center">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
+    </div>
+
+  </footer>
+  
+
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Login JS -->
-  <script type="module">
-    import { getSupabase } from './assets/js/supabase-client.js';
-
-    class LoginHandler {
-      constructor() {
-          this.supabase = getSupabase();
-          this.init();
-      }
-
-      init() {
-          this.setupFormSubmission();
-          this.setupEventListeners();
-      }
-
-      setupFormSubmission() {
-          document.getElementById('login-form').addEventListener('submit', async (e) => {
-              e.preventDefault();
-              await this.handleLogin();
-          });
-      }
-
-      setupEventListeners() {
-          document.getElementById('forgot-password').addEventListener('click', (e) => {
-              e.preventDefault();
-              const email = document.getElementById('email').value;
-              const message = `Halo Ixiera, saya lupa password untuk email: ${email || '[email saya]'}`;
-              window.open(`https://wa.me/6285702373412?text=${encodeURIComponent(message)}`, '_blank');
-          });
-      }
-
-      async handleLogin() {
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
-          const loginBtn = document.querySelector('#login-form button[type="submit"]');
-          const loginText = document.getElementById('login-text');
-          const spinner = document.getElementById('login-spinner');
-          const messageDiv = document.getElementById('login-message');
-
-          if (!email || !password) {
-              this.showMessage(messageDiv, 'Email dan password harus diisi', 'error');
-              return;
-          }
-
-          loginBtn.disabled = true;
-          loginText.textContent = 'Memproses...';
-          spinner.classList.remove('d-none');
-
-          try {
-              const { data, error } = await this.supabase.auth.signInWithPassword({
-                  email: email,
-                  password: password
-              });
-
-              if (error) throw error;
-
-              this.showMessage(messageDiv, 'Login berhasil! Mengarahkan...', 'success');
-              
-              setTimeout(() => {
-                  window.location.href = 'dashboard.html';
-              }, 1000);
-
-          } catch (error) {
-              console.error('Login error:', error);
-              this.showMessage(messageDiv, 'Email atau password salah', 'error');
-          } finally {
-              loginBtn.disabled = false;
-              loginText.textContent = 'Masuk ke Dashboard';
-              spinner.classList.add('d-none');
-          }
-      }
-
-      showMessage(messageDiv, message, type) {
-          const bgColor = type === 'success' ? 'alert-success' : 'alert-danger';
-          messageDiv.innerHTML = `
-              <div class="alert ${bgColor} alert-dismissible fade show">
-                  ${message}
-                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-              </div>
-          `;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      new LoginHandler();
-    });
-  </script>
-
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/custom.js"></script>
+  <script type="module" src="assets/js/auth.js"></script>
   <script src="assets/js/tawkto.js"></script>
 </body>
 </html>

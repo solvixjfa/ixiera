@@ -1,4 +1,4 @@
-// portfolio.js - PRODUCTION READY WITH DETAILS SUPPORT
+// portfolio.js - CLEAN VERSION
 import { getSupabase } from './supabase-client.js';
 
 class PortfolioManager {
@@ -6,57 +6,29 @@ class PortfolioManager {
         this.supabase = getSupabase();
         this.projects = [];
         this.currentFilter = '*';
-        this.cacheKey = 'ixiera_portfolio_v2';
-        this.cacheDetailsKey = 'ixiera_portfolio_details_v2';
-        this.cacheDuration = 24 * 60 * 60 * 1000; // 24 hours
+        this.currentSearch = '';
+        this.cacheKey = 'ixiera_portfolio_v4';
+        this.cacheDuration = 24 * 60 * 60 * 1000;
         this.init();
     }
 
     async init() {
         await this.loadProjects();
-        this.setupCSSGrid();
         this.renderPortfolio();
         this.setupEventListeners();
-        this.setupCacheCleanup();
-    }
-
-    // SETUP CSS GRID - REPLACE ISOTOPE
-    setupCSSGrid() {
-        const container = document.querySelector('.isotope-container');
-        if (!container) return;
-        
-        container.classList.remove('isotope-container');
-        container.classList.add('portfolio-grid');
-        
-        container.style.display = 'grid';
-        container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(350px, 1fr))';
-        container.style.gap = '2rem';
-        container.style.marginTop = '2rem';
-        
-        const isotopeLayout = document.querySelector('.isotope-layout');
-        if (isotopeLayout) {
-            isotopeLayout.removeAttribute('data-default-filter');
-            isotopeLayout.removeAttribute('data-layout');
-            isotopeLayout.removeAttribute('data-sort');
-        }
     }
 
     async loadProjects() {
-        // Try cache first for better performance
         const cached = this.getFromCache();
         if (cached && cached.length > 0) {
-            console.log('📦 Using cached portfolio data');
             this.projects = cached;
             return;
         }
-
-        // Fallback to API
         await this.loadFromAPI();
     }
 
     async loadFromAPI() {
         try {
-            console.log('🔄 Fetching from Supabase...');
             const { data, error } = await this.supabase
                 .from('showcase_projects')
                 .select('*')
@@ -66,98 +38,122 @@ class PortfolioManager {
             if (error) throw error;
 
             if (data && data.length > 0) {
-                console.log(`✅ Loaded ${data.length} projects from Supabase`);
                 this.projects = data;
                 this.saveToCache(data);
             } else {
-                console.log('⚠️ No projects found, using defaults');
                 this.projects = this.getDefaultProjects();
             }
         } catch (error) {
-            console.error('❌ API Error:', error);
+            console.error('API Error:', error);
             this.projects = this.getDefaultProjects();
         }
     }
 
-    // SMART CACHE MANAGEMENT
-    getFromCache() {
-        try {
-            const cached = localStorage.getItem(this.cacheKey);
-            const timestamp = localStorage.getItem(`${this.cacheKey}_timestamp`);
+    // SIMPLE SEARCH FUNCTIONALITY
+    performSearch(query) {
+        this.currentSearch = query.toLowerCase().trim();
+        this.applyCombinedFilter();
+    }
+
+    applyCombinedFilter() {
+        const items = document.querySelectorAll('.portfolio-item');
+        let visibleCount = 0;
+
+        items.forEach((item, index) => {
+            const category = item.getAttribute('data-category');
+            const title = item.querySelector('.portfolio-title').textContent.toLowerCase();
+            const description = item.querySelector('.portfolio-description').textContent.toLowerCase();
             
-            if (!cached || !timestamp) return null;
-
-            const age = Date.now() - parseInt(timestamp);
-            if (age > this.cacheDuration) {
-                console.log('🕒 Cache expired');
-                return null;
+            // Filter by category
+            const categoryMatch = this.currentFilter === '*' || category === this.currentFilter;
+            
+            // Filter by search
+            const searchMatch = !this.currentSearch || 
+                               title.includes(this.currentSearch) || 
+                               description.includes(this.currentSearch);
+            
+            const shouldShow = categoryMatch && searchMatch;
+            
+            if (shouldShow) {
+                visibleCount++;
+                item.style.display = 'block';
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
+                }, index * 50);
+            } else {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 300);
             }
+        });
 
-            return JSON.parse(cached);
-        } catch (error) {
-            console.error('Cache read error:', error);
-            return null;
+        this.showResultsCount(visibleCount);
+    }
+
+    showResultsCount(count) {
+        let counter = document.getElementById('results-counter');
+        if (!counter) {
+            counter = document.createElement('div');
+            counter.id = 'results-counter';
+            counter.className = 'results-counter';
+            document.querySelector('.portfolio-filters-modern').after(counter);
+        }
+
+        if (this.currentSearch) {
+            counter.innerHTML = `<div class="text-muted mt-2">Menampilkan ${count} project</div>`;
+            counter.style.display = 'block';
+        } else {
+            counter.style.display = 'none';
         }
     }
 
-    saveToCache(data) {
-        try {
-            const compressedData = this.compressData(data);
-            localStorage.setItem(this.cacheKey, JSON.stringify(compressedData));
-            localStorage.setItem(`${this.cacheKey}_timestamp`, Date.now().toString());
-            console.log('💾 Portfolio data cached');
-        } catch (error) {
-            console.error('Cache write error:', error);
+    // EVENT LISTENERS
+    setupEventListeners() {
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-btn-modern');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filter = button.getAttribute('data-filter');
+                this.handleFilter(filter, button);
+            });
+        });
+
+        // Search input
+        const searchInput = document.getElementById('portfolio-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.performSearch(e.target.value);
+            });
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.performSearch(e.target.value);
+                }
+            });
         }
     }
 
-    compressData(data) {
-        // Remove unnecessary fields for portfolio grid view
-        return data.map(project => ({
-            id: project.id,
-            title: project.title,
-            category: project.category,
-            description: this.cleanDescription(project.description),
-            featured_image: project.featured_image,
-            live_url: project.live_url,
-            results: project.results,
-            sort_order: project.sort_order
-        }));
-    }
-
-    cleanDescription(description) {
-        if (!description) return '';
-        // Remove quotes and take first sentence
-        let clean = description.replace(/"/g, '');
-        return clean.split('.')[0] + '.';
-    }
-
-    getDefaultProjects() {
-        return [
-            {
-                id: 'default-1',
-                title: "Workspace Ixiera - Project Management Platform",
-                category: "filter-sistem",
-                description: "Platform manajemen project dengan AI assistant dan real-time collaboration",
-                pain_points: ["Kesulitan track progress", "Komunikasi terpisah", "Waktu habis admin task"],
-                solutions: ["Dashboard real-time", "Integrated chat system", "AI assistant"],
-                results: ["Client satisfaction +70%", "Waktu admin -2 jam/hari", "Project delivery 40% faster"],
-                live_url: "https://ixiera-dashboard.vercel.app",
-                featured_image: "https://ik.imagekit.io/solviXone/ixiera/img/portfolio/app-1.jpg",
-                sort_order: 1,
-                is_active: true
-            }
-        ];
-    }
-
-    renderPortfolio() {
-        const container = document.querySelector('.portfolio-grid') || 
-                         document.querySelector('.isotope-container');
+    handleFilter(filter, clickedButton) {
+        this.currentFilter = filter;
         
-        if (!container) {
-            console.error('Container not found');
-            return;
-        }
+        // Update UI
+        document.querySelectorAll('.filter-btn-modern').forEach(btn => {
+            btn.classList.remove('filter-active');
+        });
+        clickedButton.classList.add('filter-active');
+        
+        this.applyCombinedFilter();
+    }
+
+    // RENDER PORTFOLIO
+    renderPortfolio() {
+        const container = document.querySelector('.portfolio-grid');
+        if (!container) return;
 
         container.innerHTML = '';
 
@@ -166,7 +162,6 @@ class PortfolioManager {
             return;
         }
 
-        // Use document fragment for better performance
         const fragment = document.createDocumentFragment();
         
         this.projects.forEach(project => {
@@ -175,7 +170,7 @@ class PortfolioManager {
         });
 
         container.appendChild(fragment);
-        this.applyFilter(this.currentFilter);
+        this.applyCombinedFilter();
     }
 
     createProjectElement(project) {
@@ -187,9 +182,11 @@ class PortfolioManager {
     createProjectHTML(project) {
         const hasResults = project.results && project.results.length > 0;
         const hasLiveDemo = project.live_url && project.live_url !== '#' && project.live_url !== '';
+        const painPoints = project.pain_points || [];
+        const results = project.results || [];
 
         return `
-        <div class="portfolio-item ${project.category}" data-category="${project.category}">
+        <div class="portfolio-item ${project.category}" data-category="${project.category}" data-id="${project.id}">
             <div class="portfolio-modern-card">
                 <div class="portfolio-image-container">
                     <img src="${project.featured_image}" alt="${project.title}" loading="lazy" 
@@ -206,11 +203,25 @@ class PortfolioManager {
                     <h3 class="portfolio-title">${project.title}</h3>
                     <p class="portfolio-description">${project.description}</p>
                     
+                    ${painPoints.length > 0 ? `
+                    <div class="portfolio-problems">
+                        <strong>Problem yang diatasi:</strong>
+                        <div class="problem-tags">
+                            ${painPoints.slice(0, 2).map(problem => `
+                                <span class="problem-tag">${problem}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+                    
                     ${hasResults ? `
-                    <div class="portfolio-features">
-                        ${project.results.slice(0, 2).map(result => `
-                            <span class="feature-badge">${result}</span>
-                        `).join('')}
+                    <div class="portfolio-results-preview">
+                        <strong>Hasil:</strong>
+                        <div class="result-tags">
+                            ${results.slice(0, 2).map(result => `
+                                <span class="result-tag">${result}</span>
+                            `).join('')}
+                        </div>
                     </div>
                     ` : ''}
                     
@@ -218,18 +229,13 @@ class PortfolioManager {
                         ${hasLiveDemo ? `
                         <a href="${project.live_url}" target="_blank" class="btn-portfolio btn-live-demo">
                             <i class="bi bi-play-circle"></i>
-                            Live Demo
+                            Live Preview
                         </a>
-                        ` : `
-                        <button class="btn-portfolio btn-live-demo" disabled>
-                            <i class="bi bi-play-circle"></i>
-                            Coming Soon
-                        </button>
-                        `}
+                        ` : ''}
                         
                         <a href="portfolio-details.html?id=${project.id}" class="btn-portfolio btn-case-study">
                             <i class="bi bi-arrow-right"></i>
-                            Detail Project
+                            Case Study
                         </a>
                     </div>
                 </div>
@@ -239,65 +245,35 @@ class PortfolioManager {
     }
 
     getCategoryLabel(category) {
-        const labels = {
-            'filter-sistem': 'Sistem Terintegrasi',
-            'filter-branding': 'Branding & Desain', 
-            'filter-marketing': 'Pemasaran Digital'
-        };
-        return labels[category] || 'Project';
+    const labels = {
+        'filter-ecommerce': 'E-commerce',
+        'filter-automation': 'Automation', 
+        'filter-sistem': 'Business Systems'
+    };
+    return labels[category] || 'Project';
+}
+
+    // CACHE MANAGEMENT
+    getFromCache() {
+        try {
+            const cached = localStorage.getItem(this.cacheKey);
+            const timestamp = localStorage.getItem(`${this.cacheKey}_timestamp`);
+            if (!cached || !timestamp) return null;
+            const age = Date.now() - parseInt(timestamp);
+            if (age > this.cacheDuration) return null;
+            return JSON.parse(cached);
+        } catch (error) {
+            return null;
+        }
     }
 
-    setupEventListeners() {
-        const filterButtons = document.querySelectorAll('.filter-btn-modern');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const filter = button.getAttribute('data-filter');
-                this.handleFilter(filter, button);
-            });
-        });
-    }
-
-    handleFilter(filter, clickedButton) {
-        this.currentFilter = filter;
-        
-        // Update UI
-        document.querySelectorAll('.filter-btn-modern').forEach(btn => {
-            btn.classList.remove('filter-active');
-        });
-        clickedButton.classList.add('filter-active');
-        
-        // Apply filter with animation
-        this.applyFilter(filter);
-    }
-
-    applyFilter(filter) {
-        const items = document.querySelectorAll('.portfolio-item');
-        let visibleCount = 0;
-
-        items.forEach((item, index) => {
-            const category = item.getAttribute('data-category');
-            const shouldShow = filter === '*' || category === filter.replace('.', '');
-            
-            if (shouldShow) {
-                visibleCount++;
-                item.style.display = 'block';
-                // Staggered animation
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'scale(1)';
-                }, index * 50);
-            } else {
-                item.style.opacity = '0';
-                item.style.transform = 'scale(0.8)';
-                setTimeout(() => {
-                    item.style.display = 'none';
-                }, 300);
-            }
-        });
-
-        console.log(`🔍 Filter "${filter}" shows ${visibleCount} projects`);
+    saveToCache(data) {
+        try {
+            localStorage.setItem(this.cacheKey, JSON.stringify(data));
+            localStorage.setItem(`${this.cacheKey}_timestamp`, Date.now().toString());
+        } catch (error) {
+            console.error('Cache write error:', error);
+        }
     }
 
     getEmptyState() {
@@ -312,51 +288,12 @@ class PortfolioManager {
         `;
     }
 
-    setupCacheCleanup() {
-        // Cleanup old cache versions on load
-        const oldKeys = ['portfolio_data', 'portfolio_full_data'];
-        oldKeys.forEach(key => {
-            if (localStorage.getItem(key)) {
-                localStorage.removeItem(key);
-                console.log('🧹 Cleaned old cache:', key);
-            }
-        });
+    getDefaultProjects() {
+        return [];
     }
 
-    // DETAILS PAGE SUPPORT - STATIC METHODS
+    // STATIC METHOD FOR DETAILS PAGE
     static async getProjectDetails(projectId) {
-        try {
-            // Try cache first
-            const cached = PortfolioManager.getFromDetailsCache(projectId);
-            if (cached) return cached;
-
-            // Fallback to API
-            return await PortfolioManager.fetchProjectDetails(projectId);
-        } catch (error) {
-            console.error('Error getting project details:', error);
-            return null;
-        }
-    }
-
-    static getFromDetailsCache(projectId) {
-        try {
-            const cached = localStorage.getItem('ixiera_portfolio_details_v2');
-            if (!cached) return null;
-
-            const detailsCache = JSON.parse(cached);
-            const project = detailsCache[projectId];
-            
-            if (project && (Date.now() - project.timestamp < 24 * 60 * 60 * 1000)) {
-                console.log('📖 Project details from cache');
-                return project.data;
-            }
-        } catch (error) {
-            console.error('Details cache error:', error);
-        }
-        return null;
-    }
-
-    static async fetchProjectDetails(projectId) {
         try {
             const supabase = getSupabase();
             const { data, error } = await supabase
@@ -366,76 +303,19 @@ class PortfolioManager {
                 .single();
 
             if (error) throw error;
-
-            if (data) {
-                PortfolioManager.saveToDetailsCache(projectId, data);
-                console.log('✅ Project details fetched from API');
-                return data;
-            }
+            return data;
         } catch (error) {
-            console.error('API fetch error:', error);
-        }
-        return null;
-    }
-
-    static saveToDetailsCache(projectId, data) {
-        try {
-            const existing = localStorage.getItem('ixiera_portfolio_details_v2');
-            const detailsCache = existing ? JSON.parse(existing) : {};
-            
-            // Keep only last 20 projects to prevent storage bloat
-            const keys = Object.keys(detailsCache);
-            if (keys.length >= 20) {
-                delete detailsCache[keys[0]];
-            }
-
-            detailsCache[projectId] = {
-                data: data,
-                timestamp: Date.now()
-            };
-
-            localStorage.setItem('ixiera_portfolio_details_v2', JSON.stringify(detailsCache));
-        } catch (error) {
-            console.error('Details cache save error:', error);
-        }
-    }
-
-    // Utility method to force refresh cache
-    static async refreshCache() {
-        try {
-            localStorage.removeItem('ixiera_portfolio_v2');
-            localStorage.removeItem('ixiera_portfolio_v2_timestamp');
-            console.log('🔄 Cache refreshed manually');
-            return true;
-        } catch (error) {
-            console.error('Cache refresh error:', error);
-            return false;
+            console.error('Error fetching project details:', error);
+            return null;
         }
     }
 }
 
-// Auto-initialize only on portfolio page
+// Auto-initialize
 if (document.querySelector('.portfolio-page')) {
     document.addEventListener('DOMContentLoaded', () => {
-        try {
-            new PortfolioManager();
-        } catch (error) {
-            console.error('Portfolio initialization failed:', error);
-            // Graceful fallback
-            const container = document.querySelector('.portfolio-grid, .isotope-container');
-            if (container) {
-                container.innerHTML = `
-                    <div class="col-12 text-center py-5">
-                        <div class="alert alert-warning">
-                            <i class="bi bi-exclamation-triangle"></i>
-                            <p class="mt-2">Gagal memuat portfolio. Silakan refresh halaman.</p>
-                        </div>
-                    </div>
-                `;
-            }
-        }
+        new PortfolioManager();
     });
 }
 
-// Export for details page usage
 export { PortfolioManager };

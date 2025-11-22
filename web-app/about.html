@@ -23,6 +23,7 @@
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
+   <link href="assets/css/three-hero.css" rel="stylesheet">
   
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
@@ -32,6 +33,7 @@
     gtag('js', new Date());
     gtag('config', 'G-4MK0Q0R584');
   </script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="d8e585f1-cb66-4eda-ac67-240d5f7e0901"></script>
 </head>
 
 <body class="about-page">
@@ -102,18 +104,24 @@
 
   <main class="main">
 
-    <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/about-page-title-bg.webp?tr=q-80,f-webp);">
-      <div class="container">
-        <h1>Cerita di Balik Ixiera</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">About</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
+<!-- Page Title -->
+<div class="page-title dark-background" data-aos="fade" style="position: relative; overflow: hidden;">
+  <!-- Three.js Canvas -->
+  <canvas id="three-about-canvas" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1;"></canvas>
+  
+  <!-- Fallback Background Image -->
+  <div id="about-fallback-bg" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:1; background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/about-page-title-bg.webp?tr=q-80,f-webp); background-size: cover; background-position: center; display: none;"></div>
+  
+  <div class="container" style="position:relative; z-index:2;">
+    <h1>Cerita di Balik Ixiera</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="index.html">Home</a></li>
+        <li class="current">About</li>
+      </ol>
+    </nav>
+  </div>
+</div>
 
     <!-- Story Section -->
     <section id="story" class="about section">
@@ -325,74 +333,72 @@
 
   </main>
 
-  <!-- FOOTER -->
-  <footer id="footer" class="footer light-background">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Ixiera</span>
+<!-- FOOTER -->
+<footer id="footer" class="footer light-background">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Ixiera</span>
+          </a>
+          <p>Kami bantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus pada growth, kami yang urus sistemnya.</p>
+          <div class="social-links d-flex mt-4">
+            <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://discord.gg/FqxEMxn9" target="_blank">
+              <i class="bi bi-discord"></i>
             </a>
-            <p>Kami membantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus kami adalah membuat sistem yang bekerja untuk Anda.</p>
-            <div class="social-links d-flex mt-4">
-              <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://discord.gg/FqxEMxn9" target="_blank">
-                <i class="bi bi-discord"></i>
-              </a>
-              <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
-              <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
-              <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
-            </div>
+            <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
+            <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
           </div>
+        </div>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Menu Cepat</h4>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Menu Cepat</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="/pages/about.html">Cara Kerja</a></li>
+            <li><a href="services.html">Solusi</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Kontak</a></li>
+          </ul>
+        </div>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Layanan Kami</h4>
-            <ul>
-              <li><a href="services.html">Website & Sistem</a></li>
-              <li><a href="services.html">Otomatisasi Bisnis</a></li>
-              <li><a href="services.html">Branding & Desain</a></li>
-              <li><a href="services.html">Marketing Digital</a></li>
-              <li><a href="services.html">Kemitraan Strategis</a></li>
-            </ul>
-          </div>
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Layanan Kami</h4>
+          <ul>
+            <li><a href="services.html">Sistem All-in-One</a></li>
+            <li><a href="services.html">Otomatisasi Bisnis</a></li>
+            <li><a href="services.html">Dashboard Bisnis</a></li>
+            <li><a href="services.html">Integrasi Sistem</a></li>
+            <li><a href="services.html">Support & Maintenance</a></li>
+          </ul>
+        </div>
 
-          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Kontak</h4>
-            <p>Jl. Raya Surabaya - Malang No.1<br>
-            Pandaan, Pasuruan, Jawa Timur 67156<br>
-            Indonesia</p>
-            <p class="mt-4">
-              <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
-            </p>
-            <p>
-              <strong>Email:</strong>
-              <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
-            </p>
-          </div>
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Kontak</h4>
+          <p>Jl. Raya Surabaya - Malang No.1<br>
+          Pandaan, Pasuruan, Jawa Timur 67156<br>
+          Indonesia</p>
+          <p class="mt-4">
+            <strong>WhatsApp:</strong>
+            <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="container copyright text-center">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
-    </div>
+  <div class="container copyright text-center">
+    <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
+  </div>
+</footer>
 
-  </footer>
-  
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -410,7 +416,7 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/custom.js"></script>
   <script type="module" src="assets/js/newsletter.js"></script>
-<!-- Di semua halaman, sebelum </body> -->
+  <script type="module" src="assets/js/3d/about-three.js"></script>
 <script src="assets/js/ai-ixiera.js"></script>
 </body>
 </html>

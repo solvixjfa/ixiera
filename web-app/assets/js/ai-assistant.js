@@ -1,4 +1,4 @@
-// Ashley AI Assistant - ULTRA FIXED VERSION
+// Ashley AI Assistant - ENHANCED VERSION
 class AshleyAIAssistant {
     constructor() {
         this.CACHE_KEYS = {
@@ -36,14 +36,26 @@ class AshleyAIAssistant {
         this.initializePromptSystem();
         this.initializeTheme();
         await this.loadChatSessions();
-        console.log('🎯 Ashley AI Assistant initialized');
+        
+        // FIX: Ensure input area is visible
+        this.ensureInputVisibility();
+        
+        console.log('🎯 Ashley AI Assistant Enhanced initialized');
     }
 
     initializeElements() {
+        // Core elements
         this.sidebar = document.getElementById('sidebar');
         this.chatHistory = document.getElementById('chat-history');
         this.userInput = document.getElementById('user-input');
         this.sendBtn = document.getElementById('send-btn');
+        
+        // New elements for enhanced version
+        this.sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+        this.typingIndicator = document.getElementById('typing-indicator');
+        this.mobileOverlay = document.getElementById('mobile-overlay');
+        
+        // Existing elements
         this.newChatBtn = document.getElementById('new-chat-btn');
         this.chatHistoryList = document.getElementById('chat-history-list');
         this.sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
@@ -97,7 +109,13 @@ class AshleyAIAssistant {
             
             this.userInput.addEventListener('input', () => {
                 this.autoResizeTextarea();
+                this.toggleSendButton();
             });
+
+            // Focus input on load
+            setTimeout(() => {
+                if (this.userInput) this.userInput.focus();
+            }, 500);
         }
 
         // Navigation
@@ -109,17 +127,37 @@ class AshleyAIAssistant {
             this.sidebarToggleBtn.addEventListener('click', () => this.toggleSidebar());
         }
         
+        if (this.sidebarCloseBtn) {
+            this.sidebarCloseBtn.addEventListener('click', () => this.toggleSidebar(false));
+        }
+        
         if (this.themeToggleBtn) {
             this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
         }
 
-        // Mobile sidebar close
+        // Mobile overlay close
+        if (this.mobileOverlay) {
+            this.mobileOverlay.addEventListener('click', () => this.toggleSidebar(false));
+        }
+
+        // Enhanced mobile sidebar close
         document.addEventListener('click', (e) => {
             if (window.innerWidth <= 768 && this.sidebar && 
                 !this.sidebar.contains(e.target) && 
                 this.sidebarToggleBtn && 
                 !this.sidebarToggleBtn.contains(e.target) &&
                 this.sidebar.classList.contains('mobile-visible')) {
+                this.toggleSidebar(false);
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                this.userInput?.focus();
+            }
+            if (e.key === 'Escape') {
                 this.toggleSidebar(false);
             }
         });
@@ -131,6 +169,40 @@ class AshleyAIAssistant {
         this.userInput.style.height = 'auto';
         const newHeight = Math.min(this.userInput.scrollHeight, 120);
         this.userInput.style.height = newHeight + 'px';
+    }
+
+    toggleSendButton() {
+        if (!this.sendBtn || !this.userInput) return;
+        
+        const hasText = this.userInput.value.trim().length > 0;
+        this.sendBtn.disabled = !hasText;
+    }
+
+    ensureInputVisibility() {
+        // Force input area to be visible
+        const inputArea = document.querySelector('.chat-input-area');
+        const chatInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        
+        if (inputArea) {
+            inputArea.style.display = 'block';
+            inputArea.style.visibility = 'visible';
+            inputArea.style.opacity = '1';
+        }
+        
+        if (chatInput) {
+            chatInput.style.display = 'block';
+            chatInput.style.visibility = 'visible';
+            chatInput.style.opacity = '1';
+        }
+        
+        if (sendBtn) {
+            sendBtn.style.display = 'flex';
+            sendBtn.style.visibility = 'visible';
+            sendBtn.style.opacity = '1';
+        }
+        
+        console.log('✅ Input area visibility enforced');
     }
 
     initializePromptSystem() {
@@ -161,6 +233,8 @@ class AshleyAIAssistant {
                     question = "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?";
                 } else if (card.classList.contains('showcase')) {
                     question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
+                } else if (card.classList.contains('process')) {
+                    question = "Bagaimana proses pengerjaan project dari awal sampai launch?";
                 }
                 
                 if (question) {
@@ -192,6 +266,7 @@ class AshleyAIAssistant {
                 if (this.userInput) {
                     this.userInput.value = question;
                     this.autoResizeTextarea();
+                    this.toggleSendButton();
                     setTimeout(() => this.handleSendMessage(), 200);
                 }
             }, 200);
@@ -199,6 +274,7 @@ class AshleyAIAssistant {
             if (this.userInput) {
                 this.userInput.value = question;
                 this.autoResizeTextarea();
+                this.toggleSendButton();
                 this.handleSendMessage();
             }
         }
@@ -234,8 +310,10 @@ class AshleyAIAssistant {
             this.addMessageToUI('user', message);
             this.userInput.value = '';
             this.autoResizeTextarea();
+            this.toggleSendButton();
             
-            this.toggleLoadingIndicator(true);
+            // Show typing indicator instead of loading dots
+            this.showTypingIndicator();
 
             const response = await fetch('/api/ask-ashley', {
                 method: 'POST',
@@ -258,15 +336,16 @@ class AshleyAIAssistant {
             const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || 
                              "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
             
+            this.hideTypingIndicator();
             this.addMessageToUI('ai', aiResponse);
 
         } catch (error) {
             console.error("Error sending message:", error);
+            this.hideTypingIndicator();
             this.addMessageToUI('ai', "Maaf, terjadi kendala teknis. Silakan coba lagi.");
         } finally {
             this.isSending = false;
             this.isLoading = false;
-            this.toggleLoadingIndicator(false);
             this.abortController = null;
             
             if (this.userInput) {
@@ -301,6 +380,7 @@ class AshleyAIAssistant {
             const copyBtn = document.createElement('button');
             copyBtn.className = 'copy-btn';
             copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
+            copyBtn.title = 'Salin pesan';
             copyBtn.onclick = () => this.copyToClipboard(text, copyBtn);
             content.appendChild(copyBtn);
         }
@@ -309,6 +389,23 @@ class AshleyAIAssistant {
         messageElement.appendChild(content);
         this.chatHistory.appendChild(messageElement);
         this.scrollToBottom();
+    }
+
+    showTypingIndicator() {
+        if (this.typingIndicator) {
+            this.typingIndicator.classList.add('visible');
+        } else {
+            this.toggleLoadingIndicator(true);
+        }
+        this.scrollToBottom();
+    }
+
+    hideTypingIndicator() {
+        if (this.typingIndicator) {
+            this.typingIndicator.classList.remove('visible');
+        } else {
+            this.toggleLoadingIndicator(false);
+        }
     }
 
     toggleLoadingIndicator(show) {
@@ -337,7 +434,9 @@ class AshleyAIAssistant {
 
     scrollToBottom() {
         if (this.chatHistory) {
-            this.chatHistory.scrollTop = this.chatHistory.scrollHeight;
+            setTimeout(() => {
+                this.chatHistory.scrollTop = this.chatHistory.scrollHeight;
+            }, 100);
         }
     }
 
@@ -347,8 +446,14 @@ class AshleyAIAssistant {
         if (window.innerWidth <= 768) {
             if (forceClose) {
                 this.sidebar.classList.remove('mobile-visible');
+                if (this.mobileOverlay) {
+                    this.mobileOverlay.classList.remove('active');
+                }
             } else {
                 this.sidebar.classList.toggle('mobile-visible');
+                if (this.mobileOverlay) {
+                    this.mobileOverlay.classList.toggle('active');
+                }
             }
         }
     }
@@ -364,8 +469,15 @@ class AshleyAIAssistant {
     async copyToClipboard(text, button) {
         try {
             await navigator.clipboard.writeText(text);
+            const originalHTML = button.innerHTML;
             button.innerHTML = '<i class="bi bi-check-lg"></i>';
-            setTimeout(() => button.innerHTML = '<i class="bi bi-clipboard"></i>', 2000);
+            button.style.background = 'var(--primary-text)';
+            button.style.color = 'var(--primary-bg)';
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.style.background = '';
+                button.style.color = '';
+            }, 2000);
         } catch (err) {
             console.error('Failed to copy:', err);
         }
@@ -385,41 +497,37 @@ class AshleyAIAssistant {
                 </div>
                 
                 <div class="quick-actions-grid">
-                    <div class="quick-action-card package">
+                    <div class="quick-action-card enhanced-quick-action package">
                         <div class="quick-action-icon"><i class="bi bi-box-seam"></i></div>
-                        <div class="quick-action-title">Rekomendasi Package</div>
-                        <div class="quick-action-desc">Temukan solusi tepat untuk bisnis Anda</div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Rekomendasi Package</div>
+                            <div class="quick-action-desc">Temukan solusi tepat untuk bisnis Anda</div>
+                        </div>
                     </div>
-                    <div class="quick-action-card showcase">
+                    <div class="quick-action-card enhanced-quick-action showcase">
                         <div class="quick-action-icon"><i class="bi bi-laptop"></i></div>
-                        <div class="quick-action-title">Lihat Showcase</div>
-                        <div class="quick-action-desc">Pelajari dari project kami</div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Lihat Showcase</div>
+                            <div class="quick-action-desc">Pelajari dari project kami</div>
+                        </div>
+                    </div>
+                    <div class="quick-action-card enhanced-quick-action process">
+                        <div class="quick-action-icon"><i class="bi bi-clock"></i></div>
+                        <div class="quick-action-content">
+                            <div class="quick-action-title">Proses Kerja</div>
+                            <div class="quick-action-desc">Timeline & tahapan</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="welcome-note">
-                    <p><strong>Panduan:</strong> Jelaskan kebutuhan bisnis Anda secara detail.</p>
+                    <p><strong> Tips:</strong> Jelaskan kebutuhan bisnis Anda secara detail untuk rekomendasi yang lebih akurat.</p>
                 </div>
             </div>
         `;
 
         // Re-initialize quick actions
-        document.querySelectorAll('.quick-action-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                e.preventDefault();
-                let question = '';
-                
-                if (card.classList.contains('package')) {
-                    question = "Saya butuh bantuan memilih package yang tepat untuk bisnis saya. Bisa beri rekomendasi?";
-                } else if (card.classList.contains('showcase')) {
-                    question = "Bisa jelaskan showcase e-commerce sneakers dan fitur-fiturnya?";
-                }
-                
-                if (question) {
-                    this.autoSendPrompt(question);
-                }
-            });
-        });
+        this.initializePromptSystem();
     }
 
     clearWelcomeScreen() {
@@ -433,6 +541,11 @@ class AshleyAIAssistant {
         this.showWelcomeScreen();
         this.renderChatSessions();
         this.toggleSidebar(true);
+        
+        // Focus input after new chat
+        setTimeout(() => {
+            if (this.userInput) this.userInput.focus();
+        }, 300);
     }
 
     async handleSelectChat(sessionId) {

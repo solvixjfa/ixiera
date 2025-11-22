@@ -37,6 +37,7 @@
     gtag('js', new Date());
     gtag('config', 'G-4MK0Q0R584');
   </script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="d8e585f1-cb66-4eda-ac67-240d5f7e0901"></script>
 </head>
 
 <body class="contact-page">
@@ -221,18 +222,26 @@
                   <input type="tel" class="form-control elegant-input" id="phone" name="phone" placeholder="+62 857 0237 3412" pattern="^\+?\d{7,15}$" required>
                 </div>
 
-                <div class="mb-4">
-                  <label for="serviceType" class="form-label elegant-label">Interested In... <span class="text-danger">*</span></label>
-                  <select class="form-select elegant-input" id="serviceType" name="serviceType" required>
-                    <option value="" selected disabled>-- Select Service --</option>
-                    <option value="Websites & Systems">Website & System</option>
-                    <option value="Business Automation">Business Automation</option>
-                    <option value="Branding & Design">Branding & Design</option>
-                    <option value="Growth Marketing">Growth Marketing</option>
-                    <option value="Growth Partnership">Growth Partnership</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
+            <div class="mb-4">
+  <label for="serviceType" class="form-label elegant-label">
+    Pilih jenis project <span class="text-danger">*</span>
+  </label>
+  <select class="form-select elegant-input" id="serviceType" name="serviceType" required>
+    <option value="" selected disabled>-- Pilih Layanan --</option>
+    
+    <option value="Landing Pages">Landing Page (Untuk promosi & konversi cepat)</option>
+    <option value="Business Websites">Website Bisnis (Profil perusahaan / portofolio)</option>
+    <option value="E-commerce Solutions">E-Commerce (Sistem jualan & pembayaran online)</option>
+    <option value="Web Applications">Aplikasi Web (Dashboard / sistem custom)</option>
+
+    <option value="Internal Management Systems">Sistem Manajemen Internal (CRM, HR, Keuangan, Proyek)</option>
+    <option value="Business Automation">Otomatisasi Bisnis (Integrasi Notion, Email, Payment, dll.)</option>
+    <option value="AI Integration">Integrasi AI (Asisten, Chatbot, Workflow Pintar)</option>
+
+    <option value="Growth Partnership">Kemitraan Jangka Panjang (Maintenance & pengembangan rutin)</option>
+    <option value="Other">Lainnya / Kustom</option>
+  </select>
+</div>
 
                 <div class="mb-4">
                   <label for="projectRequirements" class="form-label elegant-label">Project Details <span class="text-danger">*</span></label>
@@ -464,7 +473,7 @@
   init();
   animate();
 </script>
-<!-- Di semua halaman, sebelum </body> -->
+<!-- ai ixiera -->
 <script src="assets/js/ai-ixiera.js"></script>
 </body>
 </html>

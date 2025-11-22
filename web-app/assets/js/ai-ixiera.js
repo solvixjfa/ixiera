@@ -11,99 +11,98 @@ class AshleyAIIntegration {
         this.init();
     }
 
-    createFAQDatabase() {
-        return {
-            'harga': {
-                answer: "Kami punya 3 paket utama yang flexible:\n\nWEB PRESENCE STARTER: Rp 999rb\nPerfect untuk: UMKM, Freelancer, Startup\nTimeline: 3-5 hari\nInclude: Landing page premium, Domain .my.id GRATIS 1 tahun, Hosting GRATIS 1 tahun, WhatsApp integration\n\nDIGITAL GROWTH PACKAGE: Mulai Rp 4,5 juta\nPerfect untuk: Online shop 50+ produk, Agency, Consultant\nTimeline: 10-14 hari\nInclude: Website multi-halaman, Blog CMS, Sistem otomasi formulir, Payment gateway, SEO optimization\n\nBUSINESS SCALING SUITE: Mulai Rp 8,9 juta\nPerfect untuk: Toko online 100+ produk, Startup growth\nTimeline: 3-6 minggu\nInclude: Custom e-commerce, Client portal, Workflow automation, Advanced dashboard, API development",
-                keywords: ['harga', 'price', 'biaya', 'paket', 'package', 'berapa', 'mahal', 'murah', 'tarif', 'rp', 'jutaan', '999', '4.5', '8.9'],
-                followUp: 'pricing'
-            },
-            
-            'starter': {
-                answer: "WEB PRESENCE STARTER - Rp 999rb\n\nIdeal untuk:\n- UMKM yang baru mulai online\n- Freelancer butuh portfolio\n- Startup MVP development\n- Personal brand website\n\nYang Anda dapatkan:\n- Landing page design premium\n- Domain .my.id GRATIS 1 tahun\n- Hosting GRATIS 1 tahun\n- WhatsApp business integration\n- Mobile responsive design\n- Basic SEO setup\n- 3x revisi design\n- Support 1 bulan\n\nTimeline: 3-5 hari",
-                keywords: ['starter', '999', 'umkm', 'freelancer', 'landing page', 'basic', 'murah'],
-                followUp: 'starter'
-            },
+   createFAQDatabase() {
+    return {
+        'harga': {
+            answer: "Kami punya 3 paket utama yang flexible:\n\n🏠 WEB PROFESSIONAL: Rp 1.499rb\nPerfect untuk: UMKM, Freelancer, Bisnis lokal\nTimeline: 7-10 hari\nInclude: Website profesional, Domain .my.id GRATIS 1 tahun, Form WhatsApp, Progress tracking 24/7\n\n🚀 DIGITAL OPERATION SYSTEM: Rp 4.999rb\nPerfect untuk: Online shop 20+ produk, Bisnis jasa, Restoran/Kafe\nTimeline: 14-21 hari\nInclude: Website + Dashboard management, CRM basic, Automasi notifikasi, Analytics real-time\n\n🎯 CUSTOM BUSINESS SUITE: Harga Custom\nPerfect untuk: Bisnis dengan workflow unique, Sistem terintegrasi, Full automation\nTimeline: 2-8 minggu\nInclude: Custom development, AI integration, Workflow automation, Dedicated PM",
+            keywords: ['harga', 'price', 'biaya', 'paket', 'package', 'berapa', 'mahal', 'murah', 'tarif', 'rp', 'jutaan', '1.499', '4.999', 'custom'],
+            followUp: 'pricing'
+        },
+        
+        'starter': {
+            answer: "🏠 WEB PROFESSIONAL - Rp 1.499rb\n\nIdeal untuk:\n- UMKM butuh website pertama\n- Freelancer butuh portfolio\n- Bisnis lokal butuh online presence\n\nYang Anda dapatkan:\n- Website profesional (5-6 section)\n- Progress tracking system 24/7\n- Form kontak langsung ke WhatsApp\n- Domain .my.id GRATIS 1 tahun\n- Hosting GRATIS 1 tahun\n- Design modern & mobile-friendly\n- 2x revisi design\n- Support 14 hari\n\nTimeline: 7-10 hari\nRenewal tahun ke-2: Rp 500rb/tahun",
+            keywords: ['starter', '1.499', 'web professional', 'umkm', 'freelancer', 'basic', 'murah'],
+            followUp: 'starter'
+        },
 
-            'growth': {
-                answer: "DIGITAL GROWTH PACKAGE - Mulai Rp 4,5 juta\n\nIdeal untuk:\n- Online shop dengan 50+ produk\n- Digital agency website\n- Business consultant\n- Growing business\n\nYang Anda dapatkan:\n- Website multi-halaman profesional\n- Blog content management system\n- Sistem otomasi formulir\n- Payment gateway integration\n- Advanced SEO optimization\n- Social media integration\n- Email marketing setup\n- Analytics dashboard\n- 5x revisi design\n- Support 3 bulan\n\nTimeline: 10-14 hari",
-                keywords: ['growth', '4.5', '4,5', 'digital growth', 'agency', 'consultant'],
-                followUp: 'growth'
-            },
+        'growth': {
+            answer: "🚀 DIGITAL OPERATION SYSTEM - Rp 4.999rb\n\nIdeal untuk:\n- Online shop dengan 20-50 produk\n- Bisnis jasa dengan booking system\n- Restoran/Kafe butuh online menu\n- Consultant professional\n\nYang Anda dapatkan:\n- Website multi-halaman profesional\n- Dashboard admin kelola konten & produk\n- Sistem automasi notifikasi\n- CRM basic kelola customer\n- Analytics real-time\n- Integration WhatsApp & Email\n- Database terpusat\n- 3x revisi premium\n- Training 1 jam\n- Support 30 hari\n\nTimeline: 14-21 hari\nRenewal tahun ke-2: Rp 750rb/tahun",
+            keywords: ['growth', '4.999', 'digital operation', 'system', 'dashboard', 'automasi'],
+            followUp: 'growth'
+        },
 
-            'scaling': {
-                answer: "BUSINESS SCALING SUITE - Mulai Rp 8,9 juta\n\nIdeal untuk:\n- Toko online dengan 100+ produk\n- Startup yang scaling\n- Business dengan workflow kompleks\n- Butuh custom automation\n\nYang Anda dapatkan:\n- Custom e-commerce platform\n- Client portal & user management\n- Workflow automation system\n- Advanced business dashboard\n- API development & integration\n- Inventory management system\n- Multi-payment gateway\n- Advanced analytics & reporting\n- Custom feature development\n- Unlimited revisi\n- Support 6 bulan\n\nTimeline: 3-6 minggu",
-                keywords: ['scaling', '8.9', '8,9', 'business suite', 'enterprise', 'custom'],
-                followUp: 'scaling'
-            },
+        'custom': {
+            answer: "🎯 CUSTOM BUSINESS SUITE - Harga Custom\n\nIdeal untuk:\n- Bisnis dengan workflow unique\n- Perusahaan butuh sistem terintegrasi\n- Startup dengan model bisnis innovative\n- Butuh full automation\n\nYang Anda dapatkan:\n- Custom web application development\n- Workflow automation end-to-end\n- AI Assistant / Chatbot integration\n- CRM & sales automation system\n- Multi-user role management\n- Advanced analytics & reporting\n- Payment gateway integration\n- API integration dengan tools existing\n- Dedicated project manager\n- Post-launch maintenance\n\nTimeline: 2-8 minggu (flexible)",
+            keywords: ['custom', 'business suite', 'enterprise', 'tailor-made', 'khusus', 'dedicated'],
+            followUp: 'custom'
+        },
 
-            'proses': {
-                answer: "Proses kerja kami:\n\n1. Discovery Session (1-2 hari)\n- Deep dive kebutuhan business\n- Competitor analysis\n- Project planning\n\n2. Design Phase (3-7 hari)\n- UI/UX design modern\n- Brand alignment\n- Client review\n\n3. Development (7-21 hari)\n- Clean code development\n- Quality assurance\n- Performance optimization\n\n4. Launch & Training (1-2 hari)\n- Smooth deployment\n- Client training\n- Handover documentation\n\nTimeline: 2-4 minggu",
-                keywords: ['proses', 'timeline', 'lama', 'pengerjaan', 'tahap', 'alur'],
-                followUp: 'process'
-            },
+        'ai': {
+            answer: "🤖 AI ASSISTANT PROFESSIONAL - Rp 350rb/bulan\n\nAsisten virtual cerdas untuk bisnis Anda:\n- Jawab pertanyaan customer 24/7\n- Cek stok & harga real-time\n- Terima booking & appointment\n- Handle 1000+ pertanyaan/bulan\n- Training dengan data bisnis Anda\n- Integrasi dengan website\n- Support khusus AI\n\nPilihan:\n- Self Hosted: Rp 2.5jt (sekali bayar)\n- Full Service: Rp 350rb/bulan (kami urus semua)",
+            keywords: ['ai', 'chatbot', 'assistant', 'bot', 'virtual', 'otomatis'],
+            followUp: 'ai'
+        },
 
-            'ecommerce': {
-                answer: "Solusi e-commerce lengkap:\n\nShopping Experience\n- Product catalog\n- Advanced search\n- Shopping cart\n- Checkout process\n\nPayment & Security\n- Multiple payment methods\n- Bank transfer, credit card\n- SSL security\n- PCI compliance\n\nBusiness Intelligence\n- Sales analytics\n- Inventory management\n- Customer insights\n- Automated reporting\n\nGrowth Features\n- SEO optimized\n- Mobile-first design\n- Social media integration",
-                keywords: ['ecommerce', 'toko online', 'payment', 'jual', 'online', 'produk'],
-                followUp: 'ecommerce'
-            },
+        'proses': {
+            answer: "Proses kerja kami:\n\n1. Konsultasi Awal (1-2 hari)\n- Discovery kebutuhan bisnis\n- Technical assessment\n- Project planning\n\n2. Development Phase (7-21 hari)\n- Design & development\n- Progress tracking via dashboard\n- Client review & revisi\n\n3. Launch & Training (1-3 hari)\n- Deployment & testing\n- Client training\n- Documentation handover\n\n4. Ongoing Support\n- Support sesuai package\n- Maintenance & optimization",
+            keywords: ['proses', 'timeline', 'lama', 'pengerjaan', 'tahap', 'alur'],
+            followUp: 'process'
+        },
 
-            'showcase': {
-                answer: "Contoh project e-commerce sneakers:\n\nFitur Utama:\n- Product catalog dengan filter\n- Shopping cart system\n- Payment integration\n- User dashboard\n- Order tracking\n- Admin panel lengkap\n\nHasil: Modern, fast, mobile-friendly",
-                keywords: ['showcase', 'portfolio', 'contoh', 'sneakers', 'project'],
-                followUp: 'showcase'
-            }
-        };
-    }
+        'renewal': {
+            answer: "Biaya Renewal (Tahun ke-2):\n\n🏠 WEB PROFESSIONAL: Rp 500rb/tahun\n- Domain .my.id + Hosting\n- Basic maintenance\n- Security update\n\n🚀 DIGITAL OPERATION: Rp 750rb/tahun\n- Domain + Hosting managed\n- Maintenance & monitoring\n- Basic support\n\n🎯 CUSTOM SUITE: Custom\n- Sesuai complexity sistem\n- Managed service agreement\n- Dedicated support\n\nSemua transparan dari awal!",
+            keywords: ['renewal', 'perpanjangan', 'tahun', 'maintenance', 'biaya', 'hosting'],
+            followUp: 'renewal'
+        }
+    };
+}
 
-    createFollowUpQuestions() {
-        return {
-            'pricing': [
-                "Detail fitur Business Scaling Suite?",
-                "Apa perbedaan Growth vs Scaling?",
-                "Apakah ada cicilan atau DP?",
-                "Konsultasi gratis dengan AI Assistant"
-            ],
-            'starter': [
-                "Bisa upgrade dari Starter ke Growth?",
-                "Domain .my.id bisa diganti .com?",
-                "Include maintenance berapa lama?",
-                "Lihat contoh project Starter"
-            ],
-            'growth': [
-                "Payment gateway apa yang support?",
-                "Bisa integrasi dengan tools lain?",
-                "Include training untuk manage?",
-                "Diskusi custom needs"
-            ],
-            'scaling': [
-                "Bisa develop fitur custom spesifik?",
-                "API integration dengan sistem existing?",
-                "Workflow automation contohnya?",
-                "Konsultasi enterprise solution"
-            ],
-            'process': [
-                "Bagaimana tahap konsultasi awal?",
-                "Bisa request design reference?",
-                "Berapa lama untuk package Starter?",
-                "Diskusi timeline detail"
-            ],
-            'ecommerce': [
-                "Bisa import produk dari Excel?",
-                "Fitur inventory management?",
-                "Analytics & reporting detail?",
-                "Konsultasi e-commerce strategy"
-            ],
-            'showcase': [
-                "Bisa lihat demo website?",
-                "Case study project serupa?",
-                "Bisa custom design berbeda?",
-                "Lihat portfolio lengkap"
-            ]
-        };
-    }
-
+createFollowUpQuestions() {
+    return {
+        'pricing': [
+            "Detail fitur Digital Operation System?",
+            "Apa bedanya Web Professional vs Custom?",
+            "Ada paket AI Assistant?",
+            "Biaya renewal berapa?"
+        ],
+        'starter': [
+            "Bisa upgrade ke package higher?",
+            "Domain bisa pilih .com/.id?",
+            "Include maintenance berapa lama?",
+            "Lihat contoh project Web Professional"
+        ],
+        'growth': [
+            "Automasi include apa saja?",
+            "CRM bisa handle berapa customer?",
+            "Bisa integrasi marketplace?",
+            "Diskusi custom needs"
+        ],
+        'custom': [
+            "Bisa develop fitur custom spesifik?",
+            "AI integration contohnya?",
+            "Dedicated PM tugasnya apa?",
+            "Konsultasi custom solution"
+        ],
+        'ai': [
+            "AI Assistant bisa handle apa?",
+            "Self hosted vs full service?",
+            "Training data bagaimana?",
+            "Demo AI Assistant"
+        ],
+        'process': [
+            "Bisa pantau progress development?",
+            "Revisi berapa kali?",
+            "Support setelah launch?",
+            "Timeline package Custom"
+        ],
+        'renewal': [
+            "Apa yang termasuk di renewal?",
+            "Bisa cancel kapan saja?",
+            "Ada paket maintenance bulanan?",
+            "Biaya tambahan lain?"
+        ]
+    };
+}
     init() {
         this.createWidget();
         this.createWelcomeBubble();
@@ -114,7 +113,7 @@ class AshleyAIIntegration {
             this.showWelcomeBubble();
         }
         
-        console.log('🎯 Ashley AI Widget Ready');
+        console.log('💬 Ashley AI Widget Ready');
     }
 
     hasBubbleBeenShown() {
@@ -134,14 +133,14 @@ class AshleyAIIntegration {
         const widgetHTML = `
             <div class="ai-widget" id="aiWidget">
                 <button class="ai-widget-btn" id="aiWidgetBtn">
-                    <i class="bi bi-robot"></i>
+                    <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: robot → chat-dots-fill -->
                     <span class="ai-pulse"></span>
                 </button>
                 
                 <div class="ai-chat-mini" id="aiChatMini">
                     <div class="ai-chat-header">
                         <div class="d-flex align-items-center">
-                            <i class="bi bi-robot me-2"></i>
+                            <i class="bi bi-chat-dots-fill me-2"></i> <!-- UBAH: robot → chat-dots-fill -->
                             <h6 class="mb-0">Ashley AI Assistant</h6>
                         </div>
                         <div class="ai-header-actions">
@@ -157,28 +156,27 @@ class AshleyAIIntegration {
                     <div class="ai-chat-body" id="aiChatBody">
                         <div class="ai-welcome-msg">
                             <div class="welcome-avatar">
-                                <i class="bi bi-chat-dots"></i>
+                                <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: chat-dots → chat-dots-fill -->
                             </div>
                             <div class="welcome-text">
                                 <strong>Halo! Saya Ashley AI</strong>
                                 <p>Tanya apapun tentang layanan Ixiera</p>
                             </div>
                         </div>
-                        
-                        <div class="ai-quick-questions">
-                            <button class="ai-quick-btn" data-question="Berapa harga package Starter?">
-                                <i class="bi bi-cash-coin me-1"></i>Starter Package
-                            </button>
-                            <button class="ai-quick-btn" data-question="Detail Digital Growth Package?">
-                                <i class="bi bi-graph-up me-1"></i>Growth Package  
-                            </button>
-                            <button class="ai-quick-btn" data-question="Apa saja fitur Business Scaling Suite?">
-                                <i class="bi bi-building me-1"></i>Scaling Suite
-                            </button>
-                            <button class="ai-quick-btn" data-question="Proses pengerjaan berapa lama?">
-                                <i class="bi bi-clock me-1"></i>Process & Timeline
-                            </button>
-                        </div>
+<div class="ai-quick-questions">
+    <button class="ai-quick-btn" data-question="Berapa harga package Web Professional?">
+        <i class="bi bi-cash-coin me-1"></i>Web Professional
+    </button>
+    <button class="ai-quick-btn" data-question="Detail Digital Operation System?">
+        <i class="bi bi-graph-up me-1"></i>Digital Operation  
+    </button>
+    <button class="ai-quick-btn" data-question="Apa saja fitur Custom Business Suite?">
+        <i class="bi bi-building me-1"></i>Custom Suite
+    </button>
+    <button class="ai-quick-btn" data-question="Ada paket AI Assistant?">
+        <i class="bi bi-robot me-1"></i>AI Assistant
+    </button>
+</div>
                     </div>
                     
                     <div class="ai-chat-input">
@@ -201,7 +199,7 @@ class AshleyAIIntegration {
             <div class="ai-welcome-bubble" id="aiWelcomeBubble">
                 <div class="bubble-content">
                     <div class="bubble-header">
-                        <i class="bi bi-robot"></i>
+                        <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: robot → chat-dots-fill -->
                         <span>Ashley AI</span>
                         <button class="bubble-close" id="bubbleClose">
                             <i class="bi bi-x"></i>
@@ -418,7 +416,7 @@ class AshleyAIIntegration {
         const responseHTML = `
             <div class="ai-message bot-message">
                 <div class="message-avatar bot-avatar">
-                    <i class="bi bi-robot"></i>
+                    <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: robot → chat-dots-fill -->
                 </div>
                 <div class="message-content">
                     ${response.replace(/\n/g, '<br>')}
@@ -452,7 +450,7 @@ class AshleyAIIntegration {
                         <strong>Butuh konsultasi lebih detail?</strong>
                         <p>AI Assistant siap membantu dengan pertanyaan complex dan personalized recommendation</p>
                         <a href="team.html" class="cta-button">
-                            <i class="bi bi-robot me-1"></i>
+                            <i class="bi bi-chat-dots-fill me-1"></i> <!-- UBAH: robot → chat-dots-fill -->
                             Buka AI Assistant Full
                         </a>
                     </div>
@@ -480,7 +478,7 @@ class AshleyAIIntegration {
         const redirectHTML = `
             <div class="ai-message bot-message">
                 <div class="message-avatar bot-avatar">
-                    <i class="bi bi-robot"></i>
+                    <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: robot → chat-dots-fill -->
                 </div>
                 <div class="message-content">
                     <p>Pertanyaan Anda membutuhkan analisis lebih detail. AI Assistant full version dapat memberikan jawaban yang lebih comprehensive.</p>
@@ -491,7 +489,7 @@ class AshleyAIIntegration {
                     <strong>Konsultasi Lebih Detail</strong>
                     <p>AI Assistant siap menganalisis kebutuhan spesifik Anda</p>
                     <a href="team.html" class="cta-button primary">
-                        <i class="bi bi-robot me-1"></i>
+                        <i class="bi bi-chat-dots-fill me-1"></i> <!-- UBAH: robot → chat-dots-fill -->
                         Buka AI Assistant Full
                     </a>
                     <small>Atau <button class="text-link" onclick="ashleyAI.continueInWidget()">lanjut di widget ini</button> untuk pertanyaan sederhana</small>
@@ -508,7 +506,7 @@ class AshleyAIIntegration {
         const continueHTML = `
             <div class="ai-message bot-message">
                 <div class="message-avatar bot-avatar">
-                    <i class="bi bi-robot"></i>
+                    <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: robot → chat-dots-fill -->
                 </div>
                 <div class="message-content">
                     <p>Silakan tanyakan pertanyaan spesifik tentang layanan kami.</p>
@@ -526,7 +524,7 @@ class AshleyAIIntegration {
         const loadingHTML = `
             <div class="ai-message bot-message">
                 <div class="message-avatar bot-avatar">
-                    <i class="bi bi-robot"></i>
+                    <i class="bi bi-chat-dots-fill"></i> <!-- UBAH: robot → chat-dots-fill -->
                 </div>
                 <div class="message-content">
                     <div class="ai-typing">

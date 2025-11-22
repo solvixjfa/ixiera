@@ -1,4 +1,4 @@
-// /api/ask-ashley.js - ULTRA ENHANCED VERSION
+// /api/ask-ashley.js - ULTRA ENHANCED VERSION WITH UPDATED PRICING
 import Groq from 'groq-sdk';
 
 // Initialize Groq with enhanced error handling
@@ -14,31 +14,33 @@ try {
   groq = null;
 }
 
-// ✅ ENHANCED FALLBACK DATA WITH CLICKABLE LINKS
+// ✅ ENHANCED FALLBACK DATA WITH CLICKABLE LINKS - UPDATED PRICING
 const FALLBACK_PACKAGES = `
-• **WEB PRESENCE STARTER**: Rp 999rb - 3-5 HARI 
-  _Untuk_: UMKM, Freelancer, Startup
-  _Fitur_: Landing page premium, Domain gratis 1 tahun, Hosting gratis, WhatsApp integration
+• **🏠 WEB PROFESSIONAL**: Rp 1.499rb - 7-10 HARI 
+  _Untuk_: UMKM, Freelancer, Bisnis lokal
+  _Fitur_: Website profesional, Domain .my.id gratis 1 tahun, Form WhatsApp, Progress tracking 24/7
 
-• **DIGITAL GROWTH PACKAGE**: Mulai Rp 4,5 juta - 10-14 Hari
-  _Untuk_: Online shop 50+ produk, Agency, Consultant  
-  _Fitur_: Website multi-halaman, Blog CMS, Payment gateway, SEO optimization
+• **🚀 DIGITAL OPERATION SYSTEM**: Rp 4.999rb - 14-21 Hari
+  _Untuk_: Online shop 20+ produk, Bisnis jasa, Restoran/Kafe  
+  _Fitur_: Website + Dashboard management, CRM basic, Automasi notifikasi, Analytics real-time
 
-• **BUSINESS SCALING SUITE**: Mulai Rp 8.9 Juta - 3-6 Minggu
-  _Untuk_: Toko online 100+ produk, Startup growth
-  _Fitur_: Custom e-commerce, Client portal, Workflow automation, API development
+• **🎯 CUSTOM BUSINESS SUITE**: Harga Custom - 2-8 Minggu
+  _Untuk_: Bisnis dengan workflow unique, Sistem terintegrasi, Full automation
+  _Fitur_: Custom development, AI integration, Workflow automation, Dedicated PM
 
-• **ENTERPRISE SOLUTION**: Custom - 2-4 Bulan
-  _Untuk_: Perusahaan established, Corporate
-  _Fitur_: Custom development, Legacy system integration, Enterprise API
+• **🤖 AI ASSISTANT**: Rp 350rb/bulan atau Rp 2.5jt sekali
+  _Untuk_: Bisnis yang butuh customer service 24/7
+  _Fitur_: AI chatbot, Handle 1000+ pertanyaan/bulan, Cek stok real-time
 `;
 
 const FALLBACK_SHOWCASES = `
-• **E-commerce Sneakers**: Platform jualan sneakers dengan dashboard lengkap, tracking produk, dan chat admin real-time
+• **E-commerce Fashion**: Platform jualan fashion dengan inventory management, payment gateway, dan dashboard analytics
 
-• **Ixiera Agency Website**: Website agency professional dengan integrated system dan client onboarding experience
+• **Restaurant Order System**: Sistem pemesanan online untuk restoran dengan notifikasi WhatsApp otomatis
 
-• **Portfolio Creative Studio**: Website portfolio interaktif dengan gallery project dan contact system yang responsive
+• **Service Company Profile**: Website company profile profesional dengan integrated contact system dan portfolio showcase
+
+• **Educational Platform**: LMS sederhana untuk kursus online dengan student dashboard dan progress tracking
 `;
 
 // ✅ CLICKABLE CONTACT INFO
@@ -121,12 +123,12 @@ function handleGeneralQuestion(message, questionCount = 0) {
     return thanksResponses[Math.floor(Math.random() * thanksResponses.length)];
   }
   
-  // Package & pricing inquiries
-  if (/(paket|harga|price|berapa|tarif|biaya|mahal|murah|investasi|budget)/i.test(lowerMsg)) {
+  // Package & pricing inquiries - UPDATED
+  if (/(paket|harga|price|berapa|tarif|biaya|mahal|murah|investasi|budget|1\.499|4\.999|350|2\.5)/i.test(lowerMsg)) {
     return `📦 **REKOMENDASI PAKET:**\n\n${FALLBACK_PACKAGES}\n\n💡 **Tips:** Untuk rekomendasi yang lebih personalized, ceritakan lebih detail tentang bisnis Anda!\n\n${QUICK_LINKS}`;
   }
   
-  // Portfolio & showcase inquiries
+  // Portfolio & showcase inquiries - UPDATED
   if (/(portfolio|contoh|showcase|project|hasil|kerjaan|karya|demo)/i.test(lowerMsg)) {
     return `🎯 **SHOWCASE PROJECT KAMI:**\n\n${FALLBACK_SHOWCASES}\n\n📁 **Lihat lengkapnya:** <a href="/portfolio.html" style="color: #007bff; text-decoration: none;">Klik di sini untuk melihat portfolio lengkap</a>\n\n${QUICK_LINKS}`;
   }
@@ -136,14 +138,14 @@ function handleGeneralQuestion(message, questionCount = 0) {
     return `📞 **INFORMASI KONTAK:**\n\n${CONTACT_INFO}\n\n${QUICK_LINKS}`;
   }
   
-  // Services inquiry
-  if (/(layanan|service|jasa|fitur|teknologi|buat website|bikin web|develop|program)/i.test(lowerMsg)) {
-    return `🚀 **LAYANAN KAMI:**\n\n• **Website Development** - Dari landing page sampai e-commerce complex\n• **Digital Transformation** - Automation & system integration\n• **UI/UX Design** - Design yang user-friendly dan modern\n• **Maintenance & Support** - Support berkelanjutan\n\n🔍 **Pelajari lebih lanjut:** <a href="/services.html" style="color: #007bff; text-decoration: none;">Klik di sini untuk detail layanan</a>\n\n${QUICK_LINKS}`;
+  // Services inquiry - UPDATED
+  if (/(layanan|service|jasa|fitur|teknologi|buat website|bikin web|develop|program|automasi|dashboard|ai|chatbot)/i.test(lowerMsg)) {
+    return `🚀 **LAYANAN KAMI:**\n\n• **Website & Aplikasi Custom** - Dari company profile sampai sistem kompleks\n• **Otomatisasi Bisnis** - Workflow automation & notification system\n• **CRM & Management System** - Kelola customer & tim secara terpusat\n• **Analytics & Business Intelligence** - Dashboard data real-time\n• **Customer Engagement Platform** - Multi-channel communication\n• **System Integration & API** - Hubungkan semua tools existing\n• **AI Assistant Integration** - Chatbot cerdas untuk bisnis 24/7\n\n🔍 **Pelajari lebih lanjut:** <a href="/services.html" style="color: #007bff; text-decoration: none;">Klik di sini untuk detail layanan</a>\n\n${QUICK_LINKS}`;
   }
   
-  // Process & timeline
+  // Process & timeline - UPDATED
   if (/(proses|timeline|tahapan|langkah|cara kerja|durasi|lama|cepat)/i.test(lowerMsg)) {
-    return `⏱️ **PROSES KERJA:**\n\n1. **Konsultasi** - Diskusi kebutuhan & goals\n2. **Planning** - Rencana project & timeline\n3. **Development** - Pengerjaan oleh tim expert\n4. **Testing** - Quality assurance & revision\n5. **Launch** - Deployment & support\n\n📅 **Timeline:** Mulai dari 3 hari sampai 4 bulan, tergantung complexity project.\n\n${QUICK_LINKS}`;
+    return `⏱️ **PROSES KERJA:**\n\n1. **Konsultasi** - Discovery kebutuhan & business analysis\n2. **Planning** - Technical assessment & project roadmap\n3. **Development** - Progress tracking via dashboard 24/7\n4. **Testing** - Quality assurance & client review\n5. **Launch** - Deployment, training & documentation\n6. **Support** - Ongoing maintenance & optimization\n\n📅 **Timeline:** 7-10 hari (Web Professional) sampai 2-8 minggu (Custom Suite).\n\n${QUICK_LINKS}`;
   }
   
   // About company
@@ -232,9 +234,11 @@ ${showcases}
 - Sertakan QUICK_LINKS di akhir jika relevan
 
 ## CONTOH RESPONSE YANG BAIK:
-"Berdasarkan kebutuhan **toko online** Anda, saya rekomendasikan **DIGITAL GROWTH PACKAGE** (Rp 4,5 juta - 10-14 hari). Package ini sudah termasuk payment gateway dan inventory management. 🛒\n\n📁 **Lihat detail:** <a href="/pricing.html">Klik di sini untuk pricing lengkap</a>"
+"Berdasarkan kebutuhan **toko online** Anda, saya rekomendasikan **DIGITAL OPERATION SYSTEM** (Rp 4.999rb - 14-21 hari). Package ini sudah termasuk dashboard management dan automasi notifikasi. 🛒\n\n📁 **Lihat detail:** <a href="/pricing.html">Klik di sini untuk pricing lengkap</a>"
 
-"Untuk project **company profile** yang Anda sebutkan, **WEB PRESENCE STARTER** cocok dengan budget dan timeline. Kami sudah buat banyak website serupa di portfolio. 🌟\n\n🎯 **Lihat contoh:** <a href="/portfolio.html">Browse portfolio kami di sini</a>"
+"Untuk project **company profile** yang Anda sebutkan, **WEB PROFESSIONAL** cocok dengan budget dan timeline. Kami sudah buat banyak website serupa di portfolio. 🌟\n\n🎯 **Lihat contoh:** <a href="/portfolio.html">Browse portfolio kami di sini</a>"
+
+"Untuk bisnis dengan **workflow unique**, **CUSTOM BUSINESS SUITE** adalah solusi tepat. Kita bisa develop sistem khusus sesuai kebutuhan Anda. 💼\n\n💬 **Konsultasi custom:** <a href="/contact.html">Diskusikan project Anda di sini</a>"
 
 ## STATUS SESSION: Pertanyaan ke-${questionCount + 1} dari 5 pertanyaan gratis.
 `;

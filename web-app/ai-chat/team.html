@@ -2,31 +2,26 @@
 <html lang="id" data-bs-theme="light">
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ashley AI - Asisten Digital Ixiera</title>
-  <meta name="description" content="Ngobrol dengan Ashley AI - Asisten Digital Ixiera. Dapatkan rekomendasi package dan solusi digital yang tepat untuk bisnis Anda.">
+  <meta name="description" content="Ngobrol dengan Ashley AI - Asisten Digital Ixiera">
 
   <!-- Favicons -->
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png" rel="icon">
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
 
   <!-- AI Assistant CSS -->
   <link href="assets/css/ai-assistant.css" rel="stylesheet">
 </head>
 
 <body>
-
-  <!-- AI Interface -->
   <div class="ai-interface">
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -59,25 +54,16 @@
             <i class="bi bi-calendar-check"></i>
             <span>Proses & Timeline</span>
           </button>
-          <button class="prompt-sidebar-btn" data-prompt="technical-capabilities">
-            <i class="bi bi-gear"></i>
-            <span>Kemampuan Teknis</span>
-          </button>
-          <button class="prompt-sidebar-btn" data-prompt="ecommerce-solutions">
-            <i class="bi bi-cart"></i>
-            <span>Solusi E-commerce</span>
-          </button>
-          <button class="prompt-sidebar-btn" data-prompt="automation-features">
-            <i class="bi bi-robot"></i>
-            <span>Fitur Otomasi</span>
-          </button>
         </div>
       </div>
 
       <div class="chat-history-section">
         <h4 class="section-title">Riwayat Percakapan</h4>
         <ul class="chat-history-list" id="chat-history-list">
-          <!-- Dynamic content -->
+          <li class="chat-history-item empty-state">
+            <i class="bi bi-chat-left"></i>
+            <span class="chat-title">Belum ada percakapan</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -91,13 +77,38 @@
         
         <div class="header-actions">
           <button class="theme-toggle-btn" id="theme-toggle-btn">
-            <i class="bi bi-sun-fill"></i>
+            <i class="bi bi-moon"></i>
           </button>
         </div>
       </div>
 
       <div class="chat-history" id="chat-history">
-        <!-- Welcome screen akan diisi oleh JavaScript -->
+        <div class="welcome-container">
+          <div class="welcome-header">
+            <div class="welcome-avatar">A</div>
+            <h1 class="welcome-title">Halo! Saya Ashley AI</h1>
+            <p class="welcome-subtitle">
+              Asisten Digital Ixiera siap membantu Anda memilih solusi digital yang tepat.
+            </p>
+          </div>
+          
+          <div class="quick-actions-grid">
+            <div class="quick-action-card package">
+              <div class="quick-action-icon"><i class="bi bi-box-seam"></i></div>
+              <div class="quick-action-title">Rekomendasi Package</div>
+              <div class="quick-action-desc">Temukan solusi tepat untuk bisnis Anda</div>
+            </div>
+            <div class="quick-action-card showcase">
+              <div class="quick-action-icon"><i class="bi bi-laptop"></i></div>
+              <div class="quick-action-title">Lihat Showcase</div>
+              <div class="quick-action-desc">Pelajari dari project kami</div>
+            </div>
+          </div>
+
+          <div class="welcome-note">
+            <p><strong>Panduan:</strong> Jelaskan kebutuhan bisnis Anda secara detail.</p>
+          </div>
+        </div>
       </div>
 
       <div class="chat-input-area">
@@ -108,7 +119,6 @@
               id="user-input" 
               placeholder="Tanya apapun tentang ixiera..." 
               rows="1"
-              aria-label="Ketik pesan Anda di sini"
             ></textarea>
           </div>
           <button class="send-btn" id="send-btn">
@@ -119,8 +129,7 @@
     </div>
   </div>
 
-  <!-- Scripts -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="assets/js/ai-assistant.js"></script>
+  <script src="assets/js/ai-assistant.js"></script>
 </body>
 </html>

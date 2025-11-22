@@ -24,14 +24,15 @@
   <link href="assets/css/custom.css" rel="stylesheet">
   <link href="assets/css/portfolio.css" rel="stylesheet">
   
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-4MK0Q0R584');
-    </script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4MK0Q0R584"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-4MK0Q0R584');
+  </script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="d8e585f1-cb66-4eda-ac67-240d5f7e0901"></script>
 </head>
 
 <body class="portfolio-page">
@@ -46,47 +47,20 @@
 
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="index.html">
-          <i class="bi bi-house me-1"></i>Home
-        </a></li>
-        
-        <li><a href="about.html">
-          <i class="bi bi-rocket me-1"></i>Our Story
-        </a></li>
-        
-        <li><a href="services.html">
-          <i class="bi bi-stars me-1"></i>What We Do
-        </a></li>
-        
-        <li><a href="portfolio.html" class="active">
-          <i class="bi bi-collection me-1"></i>Our Work
-        </a></li>
-            <li><a href="pricing.html">
-      <i class="bi bi-credit-card me-1"></i>Pricing
-    </a></li>
-        
-        <!-- DROPDOWN YANG LEBIH CASUAL -->
-   <li class="dropdown">
-  <a href="#">
-    <i class="bi bi-person me-1"></i>For Clients
-    <i class="bi bi-chevron-down toggle-dropdown"></i>
-  </a>
-  <ul>
-    <li><a href="team.html">
-      <i class="bi bi-robot me-1"></i>AI Assistant
-    </a></li>
-    <li><a href="login.html">
-      <i class="bi bi-folder me-1"></i>My Projects
-    </a></li>
-        <li><a href="blog.html">
-          <i class="bi bi-pen me-1"></i>Insights
-        </a></li>
-  </ul>
-</li>
-        
-        <li><a href="contact.html" class="nav-cta">
-          <i class="bi bi-chat-dots me-1"></i>Start Project
-        </a></li>
+        <li><a href="index.html"><i class="bi bi-house me-1"></i>Home</a></li>
+        <li><a href="about.html"><i class="bi bi-rocket me-1"></i>Our Story</a></li>
+        <li><a href="services.html"><i class="bi bi-stars me-1"></i>What We Do</a></li>
+        <li><a href="portfolio.html" class="active"><i class="bi bi-collection me-1"></i>Our Work</a></li>
+        <li><a href="pricing.html"><i class="bi bi-credit-card me-1"></i>Pricing</a></li>
+        <li class="dropdown">
+          <a href="#"><i class="bi bi-person me-1"></i>For Clients<i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <ul>
+            <li><a href="team.html"><i class="bi bi-robot me-1"></i>AI Assistant</a></li>
+            <li><a href="login.html"><i class="bi bi-folder me-1"></i>My Projects</a></li>
+            <li><a href="blog.html"><i class="bi bi-pen me-1"></i>Insights</a></li>
+          </ul>
+        </li>
+        <li><a href="contact.html" class="nav-cta"><i class="bi bi-chat-dots me-1"></i>Start Project</a></li>
       </ul>
     </nav>
 
@@ -99,169 +73,170 @@
     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
   </div>
 </header>
-  <main class="main">
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/portfolio-page-title-bg.jpg);">
-      <div class="container">
-        <h1>Solusi Nyata untuk Bisnis Nyata</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Showcase</li>
-          </ol>
-        </nav>
-      </div>
+
+<main class="main">
+  <div class="page-title dark-background" data-aos="fade" style="background-image: url(https://ik.imagekit.io/solviXone/ixiera/img/pages/portfolio-page-title-bg.webp);">
+    <div class="container">
+      <h1>Bukti Nyata Transformasi Digital</h1>
+      <p class="lead text-light opacity-75 mt-3">Lihat bagaimana sistem digital mengubah cara kerja bisnis - dari manual & ribet jadi otomatis & efisien</p>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li class="current">Portfolio</li>
+        </ol>
+      </nav>
     </div>
+  </div>
 
-    <section id="portfolio" class="portfolio section">
-      <div class="container">
-        <!-- HAPUS ISOTOPE LAYOUT, PAKAI STRUCTURE BARU -->
-        <div class="portfolio-container">
-
-          <div class="portfolio-filters-modern" data-aos="fade-up" data-aos-delay="100">
-            <button class="filter-btn-modern filter-active" data-filter="*">All Projects</button>
-            <button class="filter-btn-modern" data-filter="filter-sistem">Integrated Systems</button>
-            <button class="filter-btn-modern" data-filter="filter-branding">Branding & Design</button>
-            <button class="filter-btn-modern" data-filter="filter-marketing">Digital Marketing</button>
+  <section id="portfolio" class="portfolio section">
+    <div class="container">
+      
+      <!-- SIMPLE SEARCH -->
+      <div class="portfolio-search-simple" data-aos="fade-up">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="search-simple">
+              <i class="bi bi-search"></i>
+              <input type="text" id="portfolio-search" placeholder="Cari project...">
+            </div>
           </div>
+        </div>
+      </div>
 
-          <!-- TEMPAT DYNAMIC CONTENT AKAN DIMUAT -->
-          <div class="portfolio-grid" data-aos="fade-up" data-aos-delay="200">
-            <!-- Content akan diisi oleh portfolio.js -->
-            <div class="portfolio-loading">
-              <div class="loading-spinner">
-                <div class="spinner-border text-primary" role="status">
-                  <span class="visually-hidden">Loading portfolio...</span>
-                </div>
-                <p class="mt-3">Memuat showcase terbaik kami...</p>
+<div class="portfolio-filters-modern" data-aos="fade-up" data-aos-delay="100">
+  <button class="filter-btn-modern filter-active" data-filter="*">
+    <span class="filter-text">All Projects</span>
+  </button>
+  <button class="filter-btn-modern" data-filter="filter-ecommerce">
+    <span class="filter-text">E-commerce</span>
+  </button>
+  <button class="filter-btn-modern" data-filter="filter-automation">
+    <span class="filter-text">Automation</span>
+  </button>
+  <button class="filter-btn-modern" data-filter="filter-sistem">
+    <span class="filter-text">Business Systems</span>
+  </button>
+</div>
+      <!-- PORTFOLIO GRID -->
+      <div class="portfolio-container">
+        <div class="portfolio-grid" data-aos="fade-up" data-aos-delay="200">
+          <div class="portfolio-loading">
+            <div class="loading-spinner">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading portfolio...</span>
               </div>
+              <p class="mt-3">Memuat showcase terbaik kami...</p>
             </div>
           </div>
-
         </div>
       </div>
-    </section>
-  </main>
 
-  <!-- NEWSLETTER SECTION -->
-  <section id="newsletter" class="container my-5">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-9">
-        <div class="newsletter-card position-relative p-5 rounded-4 shadow-lg">
-          
-          <div class="text-center mb-4">
-            <i class="bi bi-envelope-heart fs-1 text-primary"></i>
-            <h3 class="fw-bold mt-3 mb-2">Dapatkan Tips Bermanfaat</h3>
-            <p class="newsletter-text mb-0">
-              Ingin tips membuat bisnis online lebih lancar? Daftar di sini, kami kirim langsung ke email Anda.
-            </p>
-          </div>
-          
-          <form id="newsletter-form" novalidate>
-            <div class="input-group shadow-sm mb-3">
-              <span class="input-group-text border-end-0">
-                <i class="bi bi-envelope"></i>
-              </span>
-              <input type="email" id="email" class="form-control border-start-0" 
-                     placeholder="Masukkan email Anda" required>
-            </div>
-            
-            <div class="text-center">
-              <button class="btn btn-gradient px-4 fw-semibold w-100" type="submit">
-                Daftar Sekarang
-              </button>
-            </div>
-            
-            <input type="hidden" name="source" value="website-newsletter">
-            <div id="form-status" class="mt-3 small text-center"></div>
-          </form>
-          
-        </div>
-      </div>
     </div>
   </section>
+</main>
 
-  <!-- FOOTER -->
-  <footer id="footer" class="footer light-background">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-5 col-md-12 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Ixiera</span>
-            </a>
-            <p>Kami membantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus kami adalah membuat sistem yang bekerja untuk Anda.</p>
-            <div class="social-links d-flex mt-4">
-              <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://discord.gg/FqxEMxn9" target="_blank">
-                <i class="bi bi-discord"></i>
-              </a>
-              <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
-              <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
-              <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
-            </div>
+<!-- NEWSLETTER SECTION -->
+<section id="newsletter" class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-9">
+      <div class="newsletter-card position-relative p-5 rounded-4 shadow-lg">
+        <div class="text-center mb-4">
+          <i class="bi bi-envelope-heart fs-1 text-primary"></i>
+          <h3 class="fw-bold mt-3 mb-2">Dapatkan Tips Bermanfaat</h3>
+          <p class="newsletter-text mb-0">Ingin tips membuat bisnis online lebih lancar? Daftar di sini, kami kirim langsung ke email Anda.</p>
+        </div>
+        <form id="newsletter-form" novalidate>
+          <div class="input-group shadow-sm mb-3">
+            <span class="input-group-text border-end-0"><i class="bi bi-envelope"></i></span>
+            <input type="email" id="email" class="form-control border-start-0" placeholder="Masukkan email Anda" required>
           </div>
+          <div class="text-center">
+            <button class="btn btn-gradient px-4 fw-semibold w-100" type="submit">Daftar Sekarang</button>
+          </div>
+          <input type="hidden" name="source" value="website-newsletter">
+          <div id="form-status" class="mt-3 small text-center"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Menu Cepat</h4>
-            <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="blog.html">Blog</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
+<!-- FOOTER -->
+<footer id="footer" class="footer light-background">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Ixiera</span>
+          </a>
+          <p>Kami bantu bisnis berjalan lebih lancar dengan sistem digital yang praktis. Fokus pada growth, kami yang urus sistemnya.</p>
+          <div class="social-links d-flex mt-4">
+            <a href="https://twitter.com/@ixierra" target="_blank"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://discord.gg/FqxEMxn9" target="_blank"><i class="bi bi-discord"></i></a>
+            <a href="https://www.instagram.com/ixieraa" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.threads.net/@ixieraa" target="_blank"><i class="bi bi-threads"></i></a>
+            <a href="https://wa.me/6285702373412" target="_blank"><i class="bi bi-whatsapp"></i></a>
           </div>
-
-          <div class="col-lg-2 col-6 footer-links">
-            <h4>Layanan Kami</h4>
-            <ul>
-              <li><a href="services.html">Website & Sistem</a></li>
-              <li><a href="services.html">Otomatisasi Bisnis</a></li>
-              <li><a href="services.html">Branding & Desain</a></li>
-              <li><a href="services.html">Marketing Digital</a></li>
-              <li><a href="services.html">Kemitraan Strategis</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-            <h4>Kontak</h4>
-            <p>Jl. Raya Surabaya - Malang No.1<br>
-            Pandaan, Pasuruan, Jawa Timur 67156<br>
-            Indonesia</p>
-            <p class="mt-4">
-              <strong>WhatsApp:</strong>
-              <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
-            </p>
-            <p>
-              <strong>Email:</strong>
-              <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
-            </p>
-          </div>
+        </div>
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Menu Cepat</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">Cara Kerja</a></li>
+            <li><a href="services.html">Solusi</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Kontak</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-6 footer-links">
+          <h4>Layanan Kami</h4>
+          <ul>
+            <li><a href="services.html">Sistem All-in-One</a></li>
+            <li><a href="services.html">Otomatisasi Bisnis</a></li>
+            <li><a href="services.html">Dashboard Bisnis</a></li>
+            <li><a href="services.html">Integrasi Sistem</a></li>
+            <li><a href="services.html">Support & Maintenance</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Kontak</h4>
+          <p>Jl. Raya Surabaya - Malang No.1<br>Pandaan, Pasuruan, Jawa Timur 67156<br>Indonesia</p>
+          <p class="mt-4">
+            <strong>WhatsApp:</strong>
+            <a href="https://wa.me/6285702373412" style="text-decoration:none; color:inherit;">+62 857-0237-3412</a>
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
+          </p>
         </div>
       </div>
     </div>
+  </div>
+  <div class="container copyright text-center">
+    <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
+  </div>
+</footer>
 
-    <div class="container copyright text-center">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Ixiera</strong> <span>All Rights Reserved</span></p>
-    </div>
-  </footer>
-  
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<!-- Scroll Top -->
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+<!-- Preloader -->
+<div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/custom.js"></script>
-  <!-- Module JS Files -->
-  <script type="module" src="assets/js/newsletter.js"></script>
-  <script type="module" src="assets/js/portfolio.js"></script>
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/custom.js"></script>
+
+<!-- Module JS Files -->
+<script type="module" src="assets/js/newsletter.js"></script>
+<script type="module" src="assets/js/portfolio.js"></script>
 <script src="assets/js/ai-ixiera.js"></script>
+
 </body>
 </html>
