@@ -16,7 +16,7 @@ try {
 
 // ✅ ENHANCED FALLBACK DATA WITH CLICKABLE LINKS - UPDATED PRICING
 const FALLBACK_PACKAGES = `
-• **🏠 WEB PROFESSIONAL**: Rp 1.499rb - 7-10 HARI 
+• **🏠 WEB PROFESSIONAL**: Rp 1.799rb - 7-10 HARI 
   _Untuk_: UMKM, Freelancer, Bisnis lokal
   _Fitur_: Website profesional, Domain .my.id gratis 1 tahun, Form WhatsApp, Progress tracking 24/7
 
@@ -28,7 +28,7 @@ const FALLBACK_PACKAGES = `
   _Untuk_: Bisnis dengan workflow unique, Sistem terintegrasi, Full automation
   _Fitur_: Custom development, AI integration, Workflow automation, Dedicated PM
 
-• **🤖 AI ASSISTANT**: Rp 350rb/bulan atau Rp 2.5jt sekali
+• **🤖 AI ASSISTANT**: Rp 99rb/bulan atau Rp 2.5jt sekali
   _Untuk_: Bisnis yang butuh customer service 24/7
   _Fitur_: AI chatbot, Handle 1000+ pertanyaan/bulan, Cek stok real-time
 `;
@@ -47,7 +47,7 @@ const CONTACT_INFO = `
 📞 **Hubungi Kami:**
 • **WhatsApp**: <a href="https://wa.me/6285702373412" target="_blank" style="color: #007bff; text-decoration: none;">+62 857-0237-3412</a>
 • **Website**: <a href="https://ixiera.id" target="_blank" style="color: #007bff; text-decoration: none;">ixiera.id</a>
-• **Email**: <a href="mailto:ixierastudio@gmail.com" style="color: #007bff; text-decoration: none;">ixierastudio@gmail.com</a>
+• **Email**: <a href="mailto:contact@ixiera.id" style="color: #007bff; text-decoration: none;">contact@ixiera.id</a>
 • **Start Project**: <a href="/contact.html" style="color: #007bff; text-decoration: none;">Klik di sini</a>
 `;
 
@@ -149,7 +149,7 @@ function handleGeneralQuestion(message, questionCount = 0) {
   
   // About company
   if (/(tentang|about|perusahaan|studio|team|tim|ixiera)/i.test(lowerMsg)) {
-    return `🏢 **TENTANG IXIERA:**\n\nKami adalah studio digital yang specialize dalam pembuatan website dan solusi digital untuk UMKM sampai enterprise.\n\n🎯 **Visi:** Memberikan solusi digital yang accessible dan impactful untuk bisnis Indonesia.\n\n👥 **Team:** Professional dengan pengalaman di berbagai industry.\n\n📖 **Cerita lengkap:** <a href="/about.html" style="color: #007bff; text-decoration: none;">Baca our story di sini</a>\n\n${QUICK_LINKS}`;
+    return `🏢 **TENTANG IXIERA:**\n\nKami adalah studio digital yang specialize dalam pembuatan website dan solusi digital untuk UMKM.\n\n🎯 **Visi:** Memberikan solusi digital yang accessible dan impactful untuk bisnis Indonesia.\n\n👥 **Team:** Professional dengan pengalaman di berbagai industry.\n\n📖 **Cerita lengkap:** <a href="/about.html" style="color: #007bff; text-decoration: none;">Baca our story di sini</a>\n\n${QUICK_LINKS}`;
   }
   
   // Start project
@@ -200,7 +200,7 @@ function createSystemPrompt(packages, showcases, source, questionCount) {
 # ASHLEY AI - IXIERA DIGITAL ASSISTANT v2.1
 
 ## CONTEXT & PERSONA:
-Anda adalah Ashley AI, asisten digital profesional dari IXIERA Studio yang membantu calon klien menemukan solusi digital tepat untuk bisnis mereka.
+Anda adalah Ashley AI, asisten digital profesional dari IXIERA ID yang membantu calon klien menemukan solusi digital tepat untuk bisnis mereka.
 
 ## DATA TERBARU (Source: ${source.toUpperCase()}):
 
@@ -213,7 +213,7 @@ ${showcases}
 ### 🔗 INFORMASI PENTING:
 - WhatsApp: +62 857-0237-3412
 - Website: ixiera.id
-- Email: ixierastudio@gmail.com
+- Email: contact@ixiera.id
 - Pricing: /pricing.html
 - Portfolio: /portfolio.html
 - Contact: /contact.html

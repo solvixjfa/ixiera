@@ -14,14 +14,14 @@ class AshleyAIIntegration {
    createFAQDatabase() {
     return {
         'harga': {
-            answer: "Kami punya 3 paket utama yang flexible:\n\n🏠 WEB PROFESSIONAL: Rp 1.499rb\nPerfect untuk: UMKM, Freelancer, Bisnis lokal\nTimeline: 7-10 hari\nInclude: Website profesional, Domain .my.id GRATIS 1 tahun, Form WhatsApp, Progress tracking 24/7\n\n🚀 DIGITAL OPERATION SYSTEM: Rp 4.999rb\nPerfect untuk: Online shop 20+ produk, Bisnis jasa, Restoran/Kafe\nTimeline: 14-21 hari\nInclude: Website + Dashboard management, CRM basic, Automasi notifikasi, Analytics real-time\n\n🎯 CUSTOM BUSINESS SUITE: Harga Custom\nPerfect untuk: Bisnis dengan workflow unique, Sistem terintegrasi, Full automation\nTimeline: 2-8 minggu\nInclude: Custom development, AI integration, Workflow automation, Dedicated PM",
-            keywords: ['harga', 'price', 'biaya', 'paket', 'package', 'berapa', 'mahal', 'murah', 'tarif', 'rp', 'jutaan', '1.499', '4.999', 'custom'],
+            answer: "Kami punya 3 paket utama yang flexible:\n\n🏠 WEB PROFESSIONAL: Rp 1.799rb\nPerfect untuk: UMKM, Freelancer, Bisnis lokal\nTimeline: 7-10 hari\nInclude: Website profesional, Domain .my.id GRATIS 1 tahun, Form WhatsApp, Progress tracking 24/7\n\n🚀 DIGITAL OPERATION SYSTEM: Rp 4.999rb\nPerfect untuk: Online shop 20+ produk, Bisnis jasa, Restoran/Kafe\nTimeline: 14-21 hari\nInclude: Website + Dashboard management, CRM basic, Automasi notifikasi, Analytics real-time\n\n🎯 CUSTOM BUSINESS SUITE: Harga Custom\nPerfect untuk: Bisnis dengan workflow unique, Sistem terintegrasi, Full automation\nTimeline: 2-8 minggu\nInclude: Custom development, AI integration, Workflow automation, Dedicated PM",
+            keywords: ['harga', 'price', 'biaya', 'paket', 'package', 'berapa', 'mahal', 'murah', 'tarif', 'rp', 'jutaan', '1.799', '4.999', 'custom'],
             followUp: 'pricing'
         },
         
         'starter': {
-            answer: "🏠 WEB PROFESSIONAL - Rp 1.499rb\n\nIdeal untuk:\n- UMKM butuh website pertama\n- Freelancer butuh portfolio\n- Bisnis lokal butuh online presence\n\nYang Anda dapatkan:\n- Website profesional (5-6 section)\n- Progress tracking system 24/7\n- Form kontak langsung ke WhatsApp\n- Domain .my.id GRATIS 1 tahun\n- Hosting GRATIS 1 tahun\n- Design modern & mobile-friendly\n- 2x revisi design\n- Support 14 hari\n\nTimeline: 7-10 hari\nRenewal tahun ke-2: Rp 500rb/tahun",
-            keywords: ['starter', '1.499', 'web professional', 'umkm', 'freelancer', 'basic', 'murah'],
+            answer: "🏠 WEB PROFESSIONAL - Rp 1.799rb\n\nIdeal untuk:\n- UMKM butuh website pertama\n- Freelancer butuh portfolio\n- Bisnis lokal butuh online presence\n\nYang Anda dapatkan:\n- Website profesional (5-6 section)\n- Progress tracking system 24/7\n- Form kontak langsung ke WhatsApp\n- Domain .my.id GRATIS 1 tahun\n- Hosting GRATIS 1 tahun\n- Design modern & mobile-friendly\n- 2x revisi design\n- Support 14 hari\n\nTimeline: 7-10 hari\nRenewal tahun ke-2: Rp 500rb/tahun",
+            keywords: ['starter', '1.799', 'web professional', 'umkm', 'freelancer', 'basic', 'murah'],
             followUp: 'starter'
         },
 
@@ -38,7 +38,7 @@ class AshleyAIIntegration {
         },
 
         'ai': {
-            answer: "🤖 AI ASSISTANT PROFESSIONAL - Rp 350rb/bulan\n\nAsisten virtual cerdas untuk bisnis Anda:\n- Jawab pertanyaan customer 24/7\n- Cek stok & harga real-time\n- Terima booking & appointment\n- Handle 1000+ pertanyaan/bulan\n- Training dengan data bisnis Anda\n- Integrasi dengan website\n- Support khusus AI\n\nPilihan:\n- Self Hosted: Rp 2.5jt (sekali bayar)\n- Full Service: Rp 350rb/bulan (kami urus semua)",
+            answer: "🤖 AI ASSISTANT PROFESSIONAL - Rp 99rb/bulan\n\nAsisten virtual cerdas untuk bisnis Anda:\n- Jawab pertanyaan customer 24/7\n- Cek stok & harga real-time\n- Terima booking & appointment\n- Handle 1000+ pertanyaan/bulan\n- Training dengan data bisnis Anda\n- Integrasi dengan website\n- Support khusus AI\n\nPilihan:\n- Self Hosted: Rp 2.5jt (sekali bayar)\n- Full Service: Rp 99rb/bulan (kami urus semua)",
             keywords: ['ai', 'chatbot', 'assistant', 'bot', 'virtual', 'otomatis'],
             followUp: 'ai'
         },

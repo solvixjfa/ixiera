@@ -273,7 +273,7 @@ class ElegantDashboard {
                             <div class="d-flex flex-column gap-2">
                                 ${project.project_demo_url ? `
                                     <a href="${this.escapeHtml(project.project_demo_url)}" target="_blank" class="btn btn-premium btn-sm">
-                                        <i class="bi bi-eye me-2"></i>Live Demo
+                                        <i class="bi bi-eye me-2"></i>live preview
                                     </a>
                                 ` : `
                                     <button class="btn btn-outline-premium btn-sm" disabled>
@@ -552,7 +552,7 @@ class ElegantDashboard {
 │ 🌊 **Bank Tujuan:** SeaBank
 │ 📞 **Nomor Rekening:** 9018 3198 4710
 │ 👤 **Nama Penerima:** Muhammad Jeffri Saputra
-│ 🏢 **Nama Perusahaan:** IXIERA DIGITAL AGENCY
+│ 🏢 **Nama PENYEDIA JASA:** IXIERA DIGITAL AGENCY
 └─────────────────────────────
 
 💳 **CARA TRANSFER DARI BANK LAIN:**
@@ -1120,4 +1120,37 @@ document.addEventListener('DOMContentLoaded', () => {
 // Handle module loading errors
 window.addEventListener('error', (e) => {
     console.error('💥 Global error:', e.error);
+});
+// === MOBILE NAVIGATION TOGGLE ===
+// Taruh di PALING BAWAH file dashboard.js
+
+function setupMobileNavigation() {
+    const mobileToggle = document.getElementById('mobileMenuToggle');
+    const mainNavigation = document.querySelector('.navbar-nav.ms-auto');
+    
+    if (mobileToggle && mainNavigation) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mainNavigation.classList.toggle('show');
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mainNavigation.contains(e.target) && !mobileToggle.contains(e.target)) {
+                mainNavigation.classList.remove('show');
+            }
+        });
+        
+        // Close mobile menu when clicking nav links
+        mainNavigation.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNavigation.classList.remove('show');
+            });
+        });
+    }
+}
+
+// Auto setup
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(setupMobileNavigation, 500);
 });

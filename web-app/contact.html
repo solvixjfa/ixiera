@@ -156,8 +156,8 @@
               <i class="bi bi-envelope display-5 mb-3 elegant-danger"></i>
               <h5 class="fw-bold">Email</h5>
               <p class="mb-0">
-                <a href="mailto:ixierastudio@gmail.com" class="text-decoration-none elegant-link">
-                  ixierastudio@gmail.com
+                <a href="mailto:contact@ixiera.id" class="text-decoration-none elegant-link">
+                  contact@ixiera.id
                 </a>
               </p>
             </div>
@@ -196,88 +196,87 @@
       </div>
     </section>
 
-    <!-- Contact Form -->
-    <div class="container my-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="card elegant-card">
-            <div class="card-header elegant-header">
-              <h4 class="card-title">Start Your Project</h4>
-              <p class="card-category">Let's discuss how we can bring your ideas to life</p>
-            </div>
-            <div class="card-body">
-              <form id="order-form" novalidate>
-                <div class="mb-4">
-                  <label for="fullName" class="form-label elegant-label">Full Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control elegant-input" id="fullName" name="fullName" placeholder="Your full name" required>
+  <!-- Contact Form -->
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card elegant-card">
+          <div class="card-header elegant-header">
+            <h4 class="card-title">Mulai Project</h4>
+            <p class="card-category">Mari diskusikan bagaimana kami dapat mewujudkan ide digital Anda</p>
+          </div>
+          <div class="card-body">
+            <form id="order-form" novalidate>
+              <div class="mb-4">
+                <label for="fullName" class="form-label elegant-label">Nama <span class="text-danger">*</span></label>
+                <input type="text" class="form-control elegant-input" id="fullName" name="fullName" placeholder="Masukkan nama lengkap Anda" required>
+              </div>
+
+              <div class="mb-4">
+                <label for="email" class="form-label elegant-label">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control elegant-input" id="email" name="email" placeholder="email@anda.com" required>
+              </div>
+
+              <div class="mb-4">
+                <label for="phone" class="form-label elegant-label">Nomor Telepon / WhatsApp <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control elegant-input" id="phone" name="phone" placeholder="+62 857 1234 5678" pattern="^\+?\d{7,15}$" required>
+              </div>
+
+              <div class="mb-4">
+                <label for="serviceType" class="form-label elegant-label">
+                  Jenis Layanan yang Dibutuhkan <span class="text-danger">*</span>
+                </label>
+                <select class="form-select elegant-input" id="serviceType" name="serviceType" required>
+                  <option value="" selected disabled>-- Pilih jenis layanan --</option>
+                  
+                  <option value="Landing Pages">Landing Page (Website promosi & konversi tinggi)</option>
+                  <option value="Business Websites">Website Perusahaan (Profil bisnis & portofolio)</option>
+                  <option value="E-commerce Solutions">E-Commerce (Tok online & sistem pembayaran)</option>
+                  <option value="Web Applications">Aplikasi Web Kustom (Dashboard & sistem khusus)</option>
+
+                  <option value="Internal Management Systems">Sistem Manajemen Internal (CRM, HR, Keuangan)</option>
+                  <option value="Business Automation">Otomatisasi Bisnis (Integrasi sistem & workflow)</option>
+                  <option value="AI Integration">Integrasi AI (Asisten virtual & chatbot pintar)</option>
+
+                  <option value="Growth Partnership">Kemitraan Jangka Panjang (Maintenance & pengembangan)</option>
+                  <option value="Other">Lainnya (Kebutuhan khusus)</option>
+                </select>
+              </div>
+
+              <div class="mb-4">
+                <label for="projectRequirements" class="form-label elegant-label">Detail Project <span class="text-danger">*</span></label>
+                <textarea class="form-control elegant-input" id="projectRequirements" name="projectRequirements" rows="5" placeholder="Ceritakan tentang tujuan project, tantangan yang dihadapi, dan visi yang ingin dicapai..." required></textarea>
+              </div>
+
+              <div class="mb-4">
+                <label for="budget" class="form-label elegant-label">Perkiraan Budget (Opsional)</label>
+                <div class="input-group">
+                  <select class="form-select elegant-input" id="currency" name="currency" style="max-width: 120px;">
+                    <option value="IDR" selected>IDR</option>
+                    <option value="USD">USD</option>
+                  </select>
+                  <input type="number" class="form-control elegant-input" id="budget" name="budget" placeholder="Contoh: 5000000" min="0">
                 </div>
+              </div>
 
-                <div class="mb-4">
-                  <label for="email" class="form-label elegant-label">Email <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control elegant-input" id="email" name="email" placeholder="your.email@company.com" required>
-                </div>
+              <div class="mb-4">
+                <label for="deadline" class="form-label elegant-label">Target Timeline (Opsional)</label>
+                <input type="date" class="form-control elegant-input" id="deadline" name="deadline">
+              </div>
 
-                <div class="mb-4">
-                  <label for="phone" class="form-label elegant-label">Phone / WhatsApp <span class="text-danger">*</span></label>
-                  <input type="tel" class="form-control elegant-input" id="phone" name="phone" placeholder="+62 857 0237 3412" pattern="^\+?\d{7,15}$" required>
-                </div>
+              <button type="submit" class="btn elegant-premium w-100 py-3" id="submit-button">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" style="display: none;"></span>
+                <span class="button-text">Kirim</span>
+              </button>
 
-            <div class="mb-4">
-  <label for="serviceType" class="form-label elegant-label">
-    Pilih jenis project <span class="text-danger">*</span>
-  </label>
-  <select class="form-select elegant-input" id="serviceType" name="serviceType" required>
-    <option value="" selected disabled>-- Pilih Layanan --</option>
-    
-    <option value="Landing Pages">Landing Page (Untuk promosi & konversi cepat)</option>
-    <option value="Business Websites">Website Bisnis (Profil perusahaan / portofolio)</option>
-    <option value="E-commerce Solutions">E-Commerce (Sistem jualan & pembayaran online)</option>
-    <option value="Web Applications">Aplikasi Web (Dashboard / sistem custom)</option>
-
-    <option value="Internal Management Systems">Sistem Manajemen Internal (CRM, HR, Keuangan, Proyek)</option>
-    <option value="Business Automation">Otomatisasi Bisnis (Integrasi Notion, Email, Payment, dll.)</option>
-    <option value="AI Integration">Integrasi AI (Asisten, Chatbot, Workflow Pintar)</option>
-
-    <option value="Growth Partnership">Kemitraan Jangka Panjang (Maintenance & pengembangan rutin)</option>
-    <option value="Other">Lainnya / Kustom</option>
-  </select>
-</div>
-
-                <div class="mb-4">
-                  <label for="projectRequirements" class="form-label elegant-label">Project Details <span class="text-danger">*</span></label>
-                  <textarea class="form-control elegant-input" id="projectRequirements" name="projectRequirements" rows="5" placeholder="Tell us about your project goals, challenges, and vision..." required></textarea>
-                </div>
-
-                <div class="mb-4">
-                  <label for="budget" class="form-label elegant-label">Estimated Budget (Optional)</label>
-                  <div class="input-group">
-                    <select class="form-select elegant-input" id="currency" name="currency" style="max-width: 120px;">
-                      <option value="IDR" selected>IDR</option>
-                      <option value="USD">USD</option>
-                    </select>
-                    <input type="number" class="form-control elegant-input" id="budget" name="budget" placeholder="e.g., 5000000" min="0">
-                  </div>
-                </div>
-
-                <div class="mb-4">
-                  <label for="deadline" class="form-label elegant-label">Estimated Deadline (Optional)</label>
-                  <input type="date" class="form-control elegant-input" id="deadline" name="deadline">
-                </div>
-
-                <button type="submit" class="btn elegant-premium w-100 py-3" id="submit-button">
-                  <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" style="display: none;"></span>
-                  <span class="button-text">Send Project Request</span>
-                </button>
-
-                <div id="form-message" class="mt-4"></div>
-              </form>
-            </div>
+              <div id="form-message" class="mt-4"></div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </main>
-
+  </div>
+</main>
   <!-- Newsletter Section -->
   <section id="newsletter" class="container my-5">
     <div class="row justify-content-center">
@@ -369,7 +368,7 @@
             </p>
             <p>
               <strong>Email:</strong>
-              <a href="mailto:ixierastudio@gmail.com" style="text-decoration:none; color:inherit;">ixierastudio@gmail.com</a>
+              <a href="mailto:contact@ixiera.id" style="text-decoration:none; color:inherit;">contact@ixiera.id</a>
             </p>
           </div>
         </div>

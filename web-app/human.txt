@@ -1,0 +1,9 @@
+/* TEAM */
+Founder: Jeffry
+Brand: IXIERA ID
+Role: Solution Architect
+
+/* SITE */
+Site: https://ixiera.id
+Built with: Vercel
+Contact: hello@ixiera.id

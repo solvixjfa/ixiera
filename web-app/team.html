@@ -4,8 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ashley AI - Asisten Digital Ixiera</title>
-  <meta name="description" content="Ngobrol dengan Ashley AI - Asisten Digital Ixiera">
-
+  
   <!-- Favicons -->
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/favicon.png" rel="icon">
   <link href="https://ik.imagekit.io/solviXone/ixiera/img/pages/apple-touch-icon.png" rel="apple-touch-icon">
@@ -19,177 +18,163 @@
 
   <!-- AI Assistant CSS -->
   <link href="assets/css/ai-assistant.css" rel="stylesheet">
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="d8e585f1-cb66-4eda-ac67-240d5f7e0901"></script>
 </head>
 
 <body>
-  <div class="ai-interface">
-    <!-- Enhanced Sidebar -->
+  <div class="ai-assistant">
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <button class="sidebar-close-btn" id="sidebar-close-btn">
+        <button class="close-sidebar" id="close-sidebar">
           <i class="bi bi-x-lg"></i>
         </button>
-        <div class="logo-avatar">A</div>
-        <div class="brand-text">
+        <div class="logo">A</div>
+        <div class="brand">
           <h3>Ashley AI</h3>
           <p>Ixiera Digital Assistant</p>
         </div>
       </div>
 
       <div class="sidebar-content">
-        <button class="new-chat-btn enhanced-btn" id="new-chat-btn">
+        <button class="btn-new-chat" id="new-chat">
           <i class="bi bi-plus-lg"></i>
           <span>Percakapan Baru</span>
         </button>
 
-        <!-- Enhanced Quick Access -->
-        <div class="prompt-sidebar-section">
-          <h4 class="section-title">Tanya Tentang</h4>
-          <div class="prompt-sidebar-list">
-            <button class="prompt-sidebar-btn enhanced-prompt-btn" data-prompt="package-recommendation">
-              <div class="prompt-icon-wrapper">
-                <i class="bi bi-box-seam"></i>
-              </div>
-              <div class="prompt-content">
-                <span class="prompt-title">Rekomendasi Package</span>
-                <span class="prompt-desc">Solusi tepat untuk bisnis</span>
-              </div>
+        <!-- Quick Actions -->
+        <div class="quick-section">
+          <h4>Tanya Tentang</h4>
+          <div class="quick-buttons">
+            <button class="quick-btn" data-type="package">
+              <i class="bi bi-box-seam"></i>
+              <span>Rekomendasi Package</span>
             </button>
-            <button class="prompt-sidebar-btn enhanced-prompt-btn" data-prompt="showcase-details">
-              <div class="prompt-icon-wrapper">
-                <i class="bi bi-laptop"></i>
-              </div>
-              <div class="prompt-content">
-                <span class="prompt-title">Detail Showcase</span>
-                <span class="prompt-desc">Lihat project contoh</span>
-              </div>
+            <button class="quick-btn" data-type="showcase">
+              <i class="bi bi-laptop"></i>
+              <span>Detail Showcase</span>
             </button>
-            <button class="prompt-sidebar-btn enhanced-prompt-btn" data-prompt="process-timeline">
-              <div class="prompt-icon-wrapper">
-                <i class="bi bi-calendar-check"></i>
-              </div>
-              <div class="prompt-content">
-                <span class="prompt-title">Proses & Timeline</span>
-                <span class="prompt-desc">Alur pengerjaan</span>
-              </div>
+            <button class="quick-btn" data-type="process">
+              <i class="bi bi-clock"></i>
+              <span>Proses & Timeline</span>
             </button>
           </div>
         </div>
 
-        <div class="chat-history-section">
+        <!-- History -->
+        <div class="history-section">
           <div class="section-header">
-            <h4 class="section-title">Riwayat Percakapan</h4>
-            <button class="clear-history-btn" id="clear-history-btn" title="Hapus semua">
+            <h4>Riwayat Percakapan</h4>
+            <button class="btn-clear" id="clear-history">
               <i class="bi bi-trash"></i>
             </button>
           </div>
-          <ul class="chat-history-list" id="chat-history-list">
-            <li class="chat-history-item empty-state">
+          <div class="history-list" id="history-list">
+            <div class="empty-history">
               <i class="bi bi-chat-left"></i>
-              <span class="chat-title">Belum ada percakapan</span>
-            </li>
-          </ul>
+              <span>Belum ada percakapan</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Enhanced Main Chat Area -->
-    <div class="chat-main">
+    <!-- Main Chat -->
+    <div class="main-chat">
       <div class="chat-header">
         <div class="header-left">
-          <button class="sidebar-toggle-btn enhanced-icon-btn" id="sidebar-toggle-btn">
+          <button class="btn-menu" id="menu-toggle">
             <i class="bi bi-list"></i>
           </button>
           <div class="chat-info">
             <h1>Ashley AI</h1>
-            <span class="status online">
+            <div class="status">
               <i class="bi bi-circle-fill"></i>
-              Online
-            </span>
+              <span>Online</span>
+            </div>
           </div>
         </div>
-        
+
         <div class="header-actions">
-          <button class="theme-toggle-btn enhanced-icon-btn" id="theme-toggle-btn">
+          <button class="btn-theme" id="theme-toggle">
             <i class="bi bi-moon"></i>
           </button>
         </div>
       </div>
 
-      <div class="chat-history" id="chat-history">
-        <div class="welcome-container">
-          <div class="welcome-header">
+      <div class="messages-container" id="messages-container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcome-screen">
+          <div class="welcome-content">
             <div class="welcome-avatar">A</div>
-            <h1 class="welcome-title">Halo! Saya Ashley AI</h1>
-            <p class="welcome-subtitle">
-              Asisten Digital Ixiera siap membantu Anda memilih solusi digital yang tepat.
-            </p>
-          </div>
-          
-          <div class="quick-actions-grid">
-            <div class="quick-action-card enhanced-quick-action package">
-              <div class="quick-action-icon"><i class="bi bi-box-seam"></i></div>
-              <div class="quick-action-content">
-                <div class="quick-action-title">Rekomendasi Package</div>
-                <div class="quick-action-desc">Temukan solusi tepat untuk bisnis Anda</div>
+            <h1>Halo! Saya Ashley AI</h1>
+            <p>Asisten Digital Ixiera siap membantu Anda memilih solusi digital yang tepat.</p>
+            
+            <div class="action-grid">
+              <div class="action-item" data-type="package">
+                <div class="action-icon">
+                  <i class="bi bi-box-seam"></i>
+                </div>
+                <div class="action-text">
+                  <h3>Rekomendasi Package</h3>
+                  <p>Temukan solusi tepat untuk bisnis Anda</p>
+                </div>
+              </div>
+              
+              <div class="action-item" data-type="showcase">
+                <div class="action-icon">
+                  <i class="bi bi-laptop"></i>
+                </div>
+                <div class="action-text">
+                  <h3>Lihat Showcase</h3>
+                  <p>Pelajari dari project kami</p>
+                </div>
+              </div>
+              
+              <div class="action-item" data-type="process">
+                <div class="action-icon">
+                  <i class="bi bi-clock"></i>
+                </div>
+                <div class="action-text">
+                  <h3>Proses Kerja</h3>
+                  <p>Timeline & tahapan</p>
+                </div>
               </div>
             </div>
-            <div class="quick-action-card enhanced-quick-action showcase">
-              <div class="quick-action-icon"><i class="bi bi-laptop"></i></div>
-              <div class="quick-action-content">
-                <div class="quick-action-title">Lihat Showcase</div>
-                <div class="quick-action-desc">Pelajari dari project kami</div>
-              </div>
+            
+            <div class="welcome-tip">
+              <p><strong>Tips:</strong> Jelaskan kebutuhan anda secara detail untuk rekomendasi yang lebih akurat.</p>
             </div>
-            <div class="quick-action-card enhanced-quick-action process">
-              <div class="quick-action-icon"><i class="bi bi-clock"></i></div>
-              <div class="quick-action-content">
-                <div class="quick-action-title">Proses Kerja</div>
-                <div class="quick-action-desc">Timeline & tahapan</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="welcome-note">
-            <p><strong> Tips:</strong> Jelaskan kebutuhan bisnis Anda secara detail untuk rekomendasi yang lebih akurat.</p>
           </div>
         </div>
       </div>
 
-      <!-- Enhanced Chat Input Area -->
-      <div class="chat-input-area enhanced-input-area">
-        <div class="input-container">
-          <div class="input-wrapper">
-            <div class="input-border">
-              <textarea 
-                class="chat-input enhanced-input" 
-                id="user-input" 
-                placeholder="Tanya apapun tentang ixiera..." 
-                rows="1"
-              ></textarea>
-              <div class="input-actions">
-                <button class="input-action-btn" id="stop-btn" style="display: none;">
-                  <i class="bi bi-stop-circle"></i>
-                </button>
-                <button class="input-action-btn" id="attach-btn">
-                  <i class="bi bi-paperclip"></i>
-                </button>
-              </div>
+      <!-- Input Area -->
+      <div class="input-area">
+        <div class="input-wrapper">
+          <div class="input-box">
+            <textarea 
+              id="user-input" 
+              placeholder="Tanya apapun tentang ixiera..." 
+              rows="1"
+            ></textarea>
+            <div class="input-buttons">
+              <button class="btn-attach" id="attach-btn">
+                <i class="bi bi-paperclip"></i>
+              </button>
             </div>
           </div>
-          <button class="send-btn enhanced-send-btn" id="send-btn">
+          <button class="btn-send" id="send-btn" disabled>
             <i class="bi bi-send-fill"></i>
           </button>
         </div>
-        <div class="input-footer">
-          <span class="input-hint">Ashley AI bisa membuat kesalahan. Periksa informasi penting.</span>
+        <div class="input-note">
+          <span>Ashley AI bisa membuat kesalahan. Periksa informasi penting.</span>
         </div>
       </div>
     </div>
 
     <!-- Mobile Overlay -->
-    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="overlay" id="overlay"></div>
 
     <!-- Typing Indicator -->
     <div class="typing-indicator" id="typing-indicator">

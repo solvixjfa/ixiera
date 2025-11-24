@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block folder yang nggak perlu diindex
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
+Disallow: /assets/temp/
+
+Sitemap: https://ixiera.id/sitemap.xml
