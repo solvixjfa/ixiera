@@ -2,8 +2,8 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { GoogleGenAI } from 'https://esm.sh/@google/genai'
 
-// [PERBAIKAN] Definisikan corsHeaders langsung di sini
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -17,111 +17,204 @@ serve(async (req) => {
   }
 
   try {
-    // ... sisa kode Anda tetap sama persis ...
-    const { history, currentMessage } = await req.json()
+    const { currentMessage, history, userId } = await req.json()
     const geminiApiKey = Deno.env.get('GEMINI_API_KEY')
 
     if (!geminiApiKey) {
       throw new Error('GEMINI_API_KEY is not set in environment variables.')
     }
 
-    const authHeader = req.headers.get('Authorization')!
+    // Initialize Gemini AI
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey });
+
     const supabaseAdmin = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
-    const { data: { user } } = await supabaseAdmin.auth.getUser(authHeader.replace('Bearer ', ''))
-    if (!user) {
-      return new Response(JSON.stringify({ error: 'Authentication failed' }), {
+    
+    // ✅ SIMPLE USER ID VALIDATION (NO JWT)
+    if (!userId || typeof userId !== 'string') {
+      return new Response(JSON.stringify({ 
+        error: 'User ID is required',
+        candidates: [{
+          content: {
+            parts: [{ text: "User ID tidak valid. Silakan login kembali." }]
+          }
+        }]
+      }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 401,
+        status: 400,
       })
     }
 
+    // ✅ CHECK MONTHLY USAGE DI CHAT_SESSIONS
     const currentMonth = new Date().toISOString().slice(0, 7);
-    const { data: usage, error: usageError } = await supabaseAdmin
-      .from('monthly_usage')
-      .upsert({ user_id: user.id, month: currentMonth }, { onConflict: 'user_id, month' })
+    
+    // Cari atau buat session untuk bulan ini
+    const { data: chatSession, error: sessionError } = await supabaseAdmin
+      .from('chat_sessions')
+      .upsert({ 
+        user_id: userId, 
+        month: currentMonth,
+        title: currentMessage.substring(0, 40) + (currentMessage.length > 40 ? '...' : ''),
+        last_message: currentMessage,
+        updated_at: new Date().toISOString()
+      }, { 
+        onConflict: 'user_id, month'
+      })
       .select()
       .single();
-    if (usageError) throw usageError;
-    if (usage.question_count >= MONTHLY_LIMIT) {
-      return new Response(JSON.stringify({
-        candidates: [{ content: { parts: [{ text: "You have reached your monthly question limit." }] } }]
-      }), { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      
+    if (sessionError) {
+      console.error("Session error:", sessionError);
+      // Fallback: continue without usage tracking
     }
 
-    let clientDataContext = "Klien ini belum memiliki pesanan aktif.";
+    // Check monthly limit (jika session ada)
+    if (chatSession && chatSession.question_count >= MONTHLY_LIMIT) {
+      return new Response(JSON.stringify({
+        candidates: [{ 
+          content: { 
+            parts: [{ 
+              text: `🎯 **Batas Bulanan Telah Habis**\n\nAnda telah menggunakan ${MONTHLY_LIMIT} pertanyaan bulan ini. Fitur akan tersedia kembali bulan depan.` 
+            }] 
+          } 
+        }],
+        usage: {
+          question_count: chatSession.question_count,
+          monthly_limit: MONTHLY_LIMIT,
+          status: 'limit_reached'
+        }
+      }), { 
+        status: 200, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      });
+    }
+
+    // ✅ AMBIL DATA PRICING PACKAGES
+    let pricingDataContext = "Data package belum tersedia.";
 
     try {
-      const { data: clientLeads, error: leadsError } = await supabaseAdmin
-        .from('leads_solvixone')
-        .select(`status, notes, created_at, products ( name )`)
-        .eq('client_id', user.id);
+      const { data: pricingPackages, error: pricingError } = await supabaseAdmin
+        .from('pricing_packages')
+        .select(`
+          name, price_display, timeline, revision_count, 
+          support_duration, target_audience, most_popular,
+          badge_text, tagline, is_discounted, base_price, discounted_price
+        `)
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
 
-      if (leadsError) throw leadsError;
+      if (!pricingError && pricingPackages && pricingPackages.length > 0) {
+        const formattedPackages = pricingPackages.map(pkg => {
+          const priceInfo = pkg.is_discounted && pkg.discounted_price 
+            ? `💰 ${pkg.discounted_price} (Diskon dari ${pkg.base_price})`
+            : `💰 ${pkg.price_display || pkg.base_price}`;
+            
+          const popularBadge = pkg.most_popular ? ` 🏆 ${pkg.badge_text || 'POPULAR'}` : '';
+          
+          return `
+📦 **${pkg.name}**${popularBadge}
+${pkg.tagline || ''}
+${priceInfo}
+⏱️ ${pkg.timeline} | 🔧 ${pkg.revision_count} revisi
+🎯 ${pkg.target_audience || 'Semua bisnis'}
+          `.trim();
+        }).join('\n\n');
 
-      if (clientLeads && clientLeads.length > 0) {
-        const formattedLeads = clientLeads.map(lead => 
-          `- Pesanan untuk "${lead.products?.name || 'Layanan Tidak Ditemukan'}" (Status: ${lead.status}). Dibuat pada: ${new Date(lead.created_at).toLocaleDateString('id-ID')}. Catatan: ${lead.notes || 'Tidak ada'}`
-        ).join('\n');
-        
-        clientDataContext = `Berikut adalah data pesanan aktif milik klien:\n${formattedLeads}`;
+        pricingDataContext = `## 📊 PAKET LAYANAN IXIERA\n\n${formattedPackages}`;
       }
     } catch (dbError) {
-      console.error("Database context fetch error:", dbError);
-      clientDataContext = "Gagal mengambil data pesanan klien saat ini.";
+      console.error("Error fetching pricing packages:", dbError);
     }
 
+    // ✅ SYSTEM INSTRUCTION
     const systemInstruction = {
       parts: [{
-        text: `Persona: Anda adalah Asisten Digital IXIERA, seorang Digital Venture Architect yang efisien dan solutif.
-Konteks: IXIERA membangun sistem digital untuk bisnis. 
---- DATA KLIEN SAAT INI ---
-${clientDataContext}
---- AKHIR DATA KLIEN ---
-Aturan Utama:
-1. Gunakan DATA KLIEN di atas untuk menjawab pertanyaan spesifik tentang pesanan mereka.
-2. Jika tidak ada data atau pertanyaan tidak terkait pesanan, jawab secara umum sebagai ahli strategi digital.
-3. JAWABAN SINGKAT & PADAT: Maksimal 3-4 kalimat.
-4. BAHASA: Selalu balas dalam bahasa yang sama dengan pertanyaan terakhir pengguna.
-5. FOKUS MENU-AWARE: Jawab sesuai konteks menu di portal, jangan arahkan ke dashboard lain.`
+        text: `Anda adalah Ashley AI - Asisten Digital IXIERA.
+
+${pricingDataContext}
+
+ATURAN:
+1. REKOMENDASI spesifik berdasarkan data paket di atas
+2. JAWAB dalam bahasa yang sama dengan pertanyaan user
+3. RESPONS singkat & padat (maks 4-5 kalimat)
+4. FOKUS pada informasi yang ada di data`
       }]
     };
 
-    const geminiPayload = {
-      systemInstruction: { parts: systemInstruction.parts },
-      contents: [...history, { role: 'user', parts: [{ text: currentMessage }] }],
-      generationConfig: { maxOutputTokens: 250, temperature: 0.7, topP: 1 },
-    };
+    // ✅ CALL GEMINI API
+    const contents = [
+      ...(history || []), 
+      { 
+        role: 'user', 
+        parts: [{ text: currentMessage }] 
+      }
+    ];
 
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${geminiApiKey}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(geminiPayload) }
-    );
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.0-flash-exp',
+      contents: contents,
+      systemInstruction: systemInstruction,
+      generationConfig: {
+        maxOutputTokens: 500,
+        temperature: 0.7,
+      }
+    });
 
-    if (!geminiResponse.ok) {
-      const errorBody = await geminiResponse.json();
-      throw new Error(`Gemini API Error: ${errorBody.error.message}`);
+    const aiResponse = response.text() || "Maaf, tidak ada response dari AI.";
+
+    // ✅ UPDATE CHAT_SESSION JIKA ADA
+    if (chatSession) {
+      await supabaseAdmin
+        .from('chat_sessions')
+        .update({ 
+          question_count: (chatSession.question_count || 0) + 1,
+          last_message: currentMessage,
+          ai_response: aiResponse,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', chatSession.id);
     }
 
-    const geminiData = await geminiResponse.json();
+    // ✅ FORMAT RESPONSE
+    const currentCount = chatSession ? chatSession.question_count + 1 : 1;
+    const formattedResponse = {
+      candidates: [{
+        content: {
+          parts: [{ text: aiResponse }]
+        }
+      }],
+      usage: {
+        question_count: currentCount,
+        monthly_limit: MONTHLY_LIMIT,
+        remaining_questions: MONTHLY_LIMIT - currentCount,
+        status: 'success'
+      }
+    };
 
-    await supabaseAdmin
-      .from('monthly_usage')
-      .update({ question_count: usage.question_count + 1 })
-      .eq('id', usage.id);
-
-    return new Response(JSON.stringify(geminiData), {
+    return new Response(JSON.stringify(formattedResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     })
+
   } catch (error) {
-    console.error(error)
-    return new Response(JSON.stringify({ error: error.message }), {
+    console.error('AI Assistant Error:', error)
+    
+    const errorResponse = {
+      candidates: [{
+        content: {
+          parts: [{ 
+            text: "Maaf, terjadi gangguan sistem. Silakan coba lagi dalam beberapa saat." 
+          }]
+        }
+      }],
+      error: error.message
+    };
+
+    return new Response(JSON.stringify(errorResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 500,
     })
   }
 })
-
