@@ -1,4 +1,4 @@
-// Ashley AI Assistant - CLEAN NO TYPING VERSION
+// Ashley AI Assistant - HYBRID VERSION (Gemini + Groq Fallback)
 class AshleyAIAssistant {
     constructor() {
         this.CACHE_KEYS = {
@@ -7,12 +7,19 @@ class AshleyAIAssistant {
             THEME: 'ashley_theme'
         };
 
+        // ✅ API ENDPOINTS HYBRID
+        this.API_ENDPOINTS = {
+            PRIMARY: 'https://xtarsaurwclktwhhryas.supabase.co/functions/v1/ai-assistant', // Gemini Edge Function
+            FALLBACK: '/api/ask-ashley' // Groq Backup
+        };
+
         this.isLoading = false;
         this.isSending = false;
         this.currentSessionId = null;
         this.chatSessions = [];
         this.userId = null;
         this.abortController = null;
+        this.usePrimaryAPI = true; // Default pakai Gemini
 
         this.init();
     }
@@ -37,8 +44,38 @@ class AshleyAIAssistant {
         this.initializeQuickActions();
         await this.loadChatSessions();
 
-        console.log('🎯 Ashley AI Assistant initialized');
+        console.log('🎯 Ashley AI Assistant Hybrid Initialized');
+        console.log('🔧 Primary API:', this.API_ENDPOINTS.PRIMARY);
+        console.log('🔄 Fallback API:', this.API_ENDPOINTS.FALLBACK);
     }
+// Tambahkan sambutan otomatis di initialize()
+async initialize() {
+    this.initializeElements();
+    await this.initializeUser();
+    this.initializeEventListeners();
+    this.initializeTheme();
+    this.initializeQuickActions();
+    await this.loadChatSessions();
+
+    // ✅ TAMBAHKAN SAMBUTAN OTOMATIS
+    this.showInitialGreeting();
+
+    console.log('🎯 Ashley AI Assistant Hybrid Initialized');
+}
+
+showInitialGreeting() {
+    if (!this.currentSessionId && this.messagesContainer) {
+        if (this.welcomeScreen) {
+            this.welcomeScreen.style.display = 'none';
+        }
+        
+        // Tambahkan sambutan AI
+        this.addMessageToUI('ai', 
+            "Halo! Saya Ashley AI dari Ixiera. Ada yang bisa saya bantu?"
+        );
+    }
+}
+        
 
     initializeElements() {
         // Core elements
@@ -46,7 +83,7 @@ class AshleyAIAssistant {
         this.messagesContainer = document.getElementById('messages-container');
         this.userInput = document.getElementById('user-input');
         this.sendBtn = document.getElementById('send-btn');
-        this.typingIndicator = document.getElementById('typing-indicator');
+        this.loadingIndicator = document.getElementById('loading-indicator');
         this.overlay = document.getElementById('overlay');
         this.welcomeScreen = document.getElementById('welcome-screen');
 
@@ -251,39 +288,52 @@ class AshleyAIAssistant {
             this.toggleSendButton();
 
             // Show loading indicator
-            this.showTypingIndicator();
+            this.showLoadingIndicator();
 
-            // API CALL - TIDAK DIUBAH
-            const response = await fetch('/api/ask-ashley', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    history: [],
-                    currentMessage: message,
-                    questionCount: 0,
-                    userId: this.userId,
-                    sessionId: sessionToUse
-                }),
-                signal: this.abortController.signal
-            });
+            // ✅ HYBRID API CALL - Try Primary first, then Fallback
+            let aiResponse;
+            let apiSource = 'unknown';
 
-            if (!response.ok) {
-                throw new Error(`HTTP error: ${response.status}`);
+            try {
+                if (this.usePrimaryAPI) {
+                    console.log('🚀 Trying Primary API (Gemini)...');
+                    aiResponse = await this.callPrimaryAPI(message, sessionToUse);
+                    apiSource = 'gemini';
+                } else {
+                    console.log('🔄 Using Fallback API (Groq)...');
+                    aiResponse = await this.callFallbackAPI(message, sessionToUse);
+                    apiSource = 'groq';
+                }
+            } catch (primaryError) {
+                console.warn('❌ Primary API failed, switching to fallback:', primaryError);
+                
+                // Switch to fallback for this session
+                this.usePrimaryAPI = false;
+                
+                try {
+                    aiResponse = await this.callFallbackAPI(message, sessionToUse);
+                    apiSource = 'groq_fallback';
+                } catch (fallbackError) {
+                    console.error('❌ All APIs failed:', fallbackError);
+                    throw new Error('All AI services are currently unavailable');
+                }
             }
 
-            const result = await response.json();
-            const aiResponse = result.candidates?.[0]?.content?.parts?.[0]?.text || 
-                             "Maaf, saya sedang mengalami kendala. Silakan coba lagi nanti.";
+            this.hideLoadingIndicator();
 
-            this.hideTypingIndicator();
+            // Add API source indicator (optional, for debugging)
+            const responseWithSource = apiSource === 'gemini' 
+                ? aiResponse 
+                : `${aiResponse}\n\n<small style="opacity: 0.6;">🔧 Powered by Backup AI</small>`;
 
-            // Tampilkan response langsung (TANPA TYPING EFFECT)
-            this.addMessageToUI('ai', aiResponse);
+            this.addMessageToUI('ai', responseWithSource);
+
+            console.log(`✅ Response from: ${apiSource}`);
 
         } catch (error) {
             console.error("Error sending message:", error);
-            this.hideTypingIndicator();
-            this.addMessageToUI('ai', "Maaf, terjadi kendala teknis. Silakan coba lagi.");
+            this.hideLoadingIndicator();
+            this.addMessageToUI('ai', "Maaf, semua sistem AI sedang mengalami gangguan. Silakan coba lagi dalam beberapa saat.");
         } finally {
             this.isSending = false;
             this.isLoading = false;
@@ -296,6 +346,63 @@ class AshleyAIAssistant {
         }
     }
 
+    // ✅ PRIMARY API CALL (Gemini Edge Function)
+    async callPrimaryAPI(message, sessionId) {
+        const response = await fetch(this.API_ENDPOINTS.PRIMARY, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                currentMessage: message,
+                userId: this.userId,
+                history: [],
+                sessionId: sessionId
+            }),
+            signal: this.abortController.signal
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Primary API: ${response.status} - ${errorText}`);
+        }
+        
+        const result = await response.json();
+        
+        // Handle different response formats
+        if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+            return result.candidates[0].content.parts[0].text;
+        } else if (result.error) {
+            throw new Error(`Gemini Error: ${result.error}`);
+        } else {
+            return "Maaf, tidak ada response dari AI.";
+        }
+    }
+
+    // ✅ FALLBACK API CALL (Groq Backup)
+    async callFallbackAPI(message, sessionId) {
+        const response = await fetch(this.API_ENDPOINTS.FALLBACK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                history: [],
+                currentMessage: message,
+                questionCount: 0,
+                userId: this.userId,
+                sessionId: sessionId
+            }),
+            signal: this.abortController.signal
+        });
+
+        if (!response.ok) {
+            throw new Error(`Fallback API: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        return result.candidates?.[0]?.content?.parts?.[0]?.text || 
+               "Maaf, sistem backup juga mengalami gangguan.";
+    }
+
     // Simple message display - NO TYPING EFFECT
     addMessageToUI(sender, text) {
         if (!this.messagesContainer) return;
@@ -305,7 +412,12 @@ class AshleyAIAssistant {
 
         const avatar = document.createElement('div');
         avatar.className = 'message-avatar';
-        avatar.textContent = sender === 'user' ? 'U' : 'A';
+        
+        if (sender === 'user') {
+            avatar.innerHTML = '<i class="bi bi-person-fill"></i>';
+        } else {
+            avatar.innerHTML = '<i class="bi bi-robot"></i>';
+        }
 
         const content = document.createElement('div');
         content.className = 'message-content';
@@ -339,20 +451,27 @@ class AshleyAIAssistant {
         return text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\n/g, '<br>')
-            .replace(/`(.*?)`/g, '<code>$1</code>');
+            .replace(/`(.*?)`/g, '<code>$1</code>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>');
     }
 
-    // Loading indicator
-    showTypingIndicator() {
-        if (this.typingIndicator) {
-            this.typingIndicator.style.display = 'flex';
+    // Loading indicator - SIMPLE SPINNER (NO TYPING)
+    showLoadingIndicator() {
+        if (this.loadingIndicator) {
+            this.loadingIndicator.style.display = 'flex';
+            this.loadingIndicator.classList.add('visible');
         }
         this.scrollToBottom();
     }
 
-    hideTypingIndicator() {
-        if (this.typingIndicator) {
-            this.typingIndicator.style.display = 'none';
+    hideLoadingIndicator() {
+        if (this.loadingIndicator) {
+            this.loadingIndicator.classList.remove('visible');
+            setTimeout(() => {
+                if (this.loadingIndicator) {
+                    this.loadingIndicator.style.display = 'none';
+                }
+            }, 300);
         }
     }
 
@@ -429,6 +548,7 @@ class AshleyAIAssistant {
 
     handleNewChat() {
         this.currentSessionId = null;
+        this.usePrimaryAPI = true; // Reset ke primary API untuk chat baru
         this.showWelcomeScreen();
         this.renderChatSessions();
         this.toggleSidebar(true);
@@ -511,6 +631,7 @@ class AshleyAIAssistant {
 
         this.chatSessions = [];
         this.currentSessionId = null;
+        this.usePrimaryAPI = true; // Reset ke primary API
         this.renderChatSessions();
         this.showWelcomeScreen();
     }
