@@ -151,45 +151,63 @@ ${priceInfo}
       pricingDataContext = "Sistem database sedang mengalami gangguan. Silakan coba lagi nanti.";
     }
 
-    // ✅ TAMBAHKAN INFORMASI KONTAK
+    // ✅ TAMBAHKAN INFORMASI KONTAK & QUICK LINKS (HYBRID APPROACH)
     const contactInfo = `
 📞 **KONTAK IXIERA:**
 • WhatsApp: +62 857-0237-3412
 • Website: ixiera.id  
 • Email: contact@ixiera.id
+
+🔗 **Akses Cepat:**
+• Lihat Pricing Lengkap: ixiera.id/pricing.html
+• Lihat Portfolio: ixiera.id/portfolio.html  
+• Mulai Project: ixiera.id/contact.html
 `;
 
-    // ✅ SYSTEM INSTRUCTION - IMPROVED DENGAN RULES KETAT
+    // ✅ SYSTEM INSTRUCTION - HYBRID VERSION (GEMINI + GROQ BEST PRACTICES)
     const systemInstruction = {
       parts: [{
-        text: `Anda adalah Ashley AI - Asisten Digital IXIERA.
+        text: `ANDA ADALAH ASHLEY AI - ASISTEN DIGITAL IXIERA.
+HANYA BERFOKUS PADA PAKET LAYANAN IXIERA YANG ADA DI DATA DI BAWAH.
+
+## 📊 PAKET LAYANAN IXIERA:
 
 ${pricingDataContext}
 
 ${contactInfo}
 
-🚫 **ATURAN KETAT:**
-1. REKOMENDASI hanya 1-2 paket yang PALING RELEVAN dengan kebutuhan user
-2. PRIORITAS paket dengan badge 🏆 (POPULAR/PALING DIMINATI)
-3. Untuk CUSTOM BUSINESS SUITE: "Harga custom - konsultasi gratis untuk diskusi kebutuhan"
-4. Untuk AI ASSISTANT: "Subscription bulanan Rp 99rb/bulan - asisten virtual 24/7"
-5. JANGAN rekomendasikan semua paket sekaligus
-6. JANGAN buat-buat harga atau informasi yang tidak ada di data
-7. SELALU sertakan informasi kontak di akhir respons
-8. JAWAB dalam bahasa yang sama dengan pertanyaan user
-9. RESPONS SINGKAT & PADAT (maks 4-5 kalimat)
-10. Batas harian: ${DAILY_LIMIT} pertanyaan per user
+## 🚫 ATURAN MUTLAK:
+1. HANYA REKOMENDASIKAN PAKET IXIERA - JANGAN software lain (HubSpot, Shopify, CRM lain, dll)
+2. REKOMENDASI 1-2 paket PALING RELEVAN dengan kebutuhan user
+3. PRIORITAS paket dengan badge 🏆 (POPULAR/PALING DIMINATI)
+4. SELALU sertakan informasi kontak di akhir respons
+5. JANGAN buat-buat harga atau informasi yang tidak ada di data
+6. JAWAB dalam bahasa yang sama dengan pertanyaan user
+7. RESPONS SINGKAT & PADAT (maks 4-5 kalimat)
 
-✅ **CONTOH RESPONS BAIK:**
-"Berdasarkan kebutuhan Anda, saya rekomendasikan [1-2 paket spesifik]. [Penjelasan singkat]. Untuk konsultasi lebih lanjut, hubungi WhatsApp: +62 857-0237-3412"
+## 💡 CONTOH RESPONS BAIK:
+"Untuk bisnis UMKM butuh website promosi, saya rekomendasikan 🏆 LANDING PAGE PROFESSIONAL (Rp 1.799rb). Cocok untuk konversi tinggi dengan form WhatsApp. Untuk konsultasi: WhatsApp +62 857-0237-3412"
 
-❌ **CONTOH RESPONS SALAH:**
-"Kami punya banyak paket: A, B, C, D, E... (terlalu panjang)"
-"Harga paket X adalah Y" (padahal tidak ada di data)`
+"Untuk toko online butuh sistem lengkap, 🏆 DIGITAL OPERATION SYSTEM (Rp 4.999rb) lebih tepat. Include CRM, automasi, dan dashboard management. Hubungi kami untuk detail lebih lanjut!"
+
+"Untuk kebutuhan custom yang kompleks, CUSTOM BUSINESS SUITE solusinya. Harga menyesuaikan kebutuhan - konsultasi gratis! WhatsApp: +62 857-0237-3412"
+
+## ❌ CONTOH RESPONS SALAH:
+"Silakan coba HubSpot/Shopify untuk CRM/e-commerce" <- SALAH!
+"Kami punya package A, B, C, D, E..." <- TERLALU PANJANG
+"Harga package X adalah Y" <- JIKA TIDAK ADA DI DATA
+
+## 📝 FORMAT PREFERENSI:
+- Gunakan emoji yang relevan (🏆, 📦, ⏱️, 🔧, 🎯)
+- Bold untuk penekanan penting
+- Struktur jelas: Rekomendasi → Penjelasan → CTA
+- Akhiri dengan call-to-action ke WhatsApp
+
+Batas harian: ${DAILY_LIMIT} pertanyaan per user.`
       }]
     };
 
-    // ✅ CALL GEMINI API DENGAN CONFIG LEBIH KETAT
+    // ✅ CALL GEMINI API DENGAN CONFIG OPTIMAL
     const contents = [
       ...(history || []), 
       { 
@@ -203,15 +221,26 @@ ${contactInfo}
       contents: contents,
       systemInstruction: systemInstruction,
       generationConfig: {
-        maxOutputTokens: 400,    // ↓ KURANGI TOKENS
-        temperature: 0.3,        // ↓ KURANGI KREATIVITAS
-        topK: 40,                // ↑ BATASI PILIHAN KATA
+        maxOutputTokens: 350,    // ↓ LEBIH SINGKAT & FOKUS
+        temperature: 0.2,        // ↓ LEBIH PATUH KE INSTRUCTION
+        topK: 25,                // ↑ BATASI PILIHAN KATA
         topP: 0.8,               // ↑ KONSISTENSI LEBIH TINGGI
       }
     });
 
     // ✅ FIX: Pakai structure yang benar dengan safety check
-    const aiResponse = response?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tidak ada response dari AI.";
+    let aiResponse = response?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tidak ada response dari AI.";
+
+    // ✅ SAFETY CHECK: JIKA AI MASIH NGACO
+    const forbiddenKeywords = ['hubspot', 'shopify', 'zoho', 'salesforce', 'wordpress', 'wix', 'crm', 'e-commerce platform'];
+    const isBadResponse = forbiddenKeywords.some(keyword => 
+      aiResponse.toLowerCase().includes(keyword)
+    );
+
+    if (isBadResponse) {
+      console.warn("🚨 AI memberikan rekomendasi salah, using fallback");
+      aiResponse = `Maaf, untuk rekomendasi paket IXIERA yang lebih akurat, silakan hubungi langsung WhatsApp kami: +62 857-0237-3412\n\nKami specialize di:\n• Website & aplikasi custom\n• Sistem operasional bisnis\n• Automasi workflow\n• AI Assistant integration`;
+    }
 
     // ✅ UPDATE CHAT_SESSION JIKA ADA
     if (chatSession) {
@@ -242,7 +271,7 @@ ${contactInfo}
       }
     };
 
-    console.log("✅ AI Response generated:", aiResponse.substring(0, 100) + "...");
+    console.log("✅ AI Response generated:", aiResponse.substring(0, 150) + "...");
     return new Response(JSON.stringify(formattedResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
