@@ -9,7 +9,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const MONTHLY_LIMIT = 50;
+// ✅ UBAH KE DAILY LIMIT 5 PERTANYAAN/HARI
+const DAILY_LIMIT = 5;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -47,20 +48,20 @@ serve(async (req) => {
       })
     }
 
-    // ✅ CHECK MONTHLY USAGE DI CHAT_SESSIONS
-    const currentMonth = new Date().toISOString().slice(0, 7);
+    // ✅ CHECK DAILY USAGE DI CHAT_SESSIONS
+    const currentDate = new Date().toISOString().slice(0, 10); // 2025-11-26
     
-    // Cari atau buat session untuk bulan ini
+    // Cari atau buat session untuk HARI INI
     const { data: chatSession, error: sessionError } = await supabaseAdmin
       .from('chat_sessions')
       .upsert({ 
         user_id: userId, 
-        month: currentMonth,
+        month: currentDate, // ✅ PAKAI TANGGAL, BUKAN BULAN
         title: currentMessage.substring(0, 40) + (currentMessage.length > 40 ? '...' : ''),
         last_message: currentMessage,
         updated_at: new Date().toISOString()
       }, { 
-        onConflict: 'user_id, month'
+        onConflict: 'user_id, month' // ✅ SEKARANG CONFLICT PER HARI
       })
       .select()
       .single();
@@ -70,19 +71,19 @@ serve(async (req) => {
       // Fallback: continue without usage tracking
     }
 
-    // Check monthly limit (jika session ada)
-    if (chatSession && chatSession.question_count >= MONTHLY_LIMIT) {
+    // Check daily limit (jika session ada)
+    if (chatSession && chatSession.question_count >= DAILY_LIMIT) {
       return new Response(JSON.stringify({
         candidates: [{ 
           content: { 
             parts: [{ 
-              text: `🎯 **Batas Bulanan Telah Habis**\n\nAnda telah menggunakan ${MONTHLY_LIMIT} pertanyaan bulan ini. Fitur akan tersedia kembali bulan depan.` 
+              text: `🎯 **Batas Harian Telah Habis**\n\nAnda telah menggunakan ${DAILY_LIMIT} pertanyaan hari ini. Fitur akan tersedia kembali besok.` 
             }] 
           } 
         }],
         usage: {
           question_count: chatSession.question_count,
-          monthly_limit: MONTHLY_LIMIT,
+          daily_limit: DAILY_LIMIT, // ✅ GANTI KE DAILY
           status: 'limit_reached'
         }
       }), { 
@@ -91,10 +92,12 @@ serve(async (req) => {
       });
     }
 
-    // ✅ AMBIL DATA PRICING PACKAGES
+    // ✅ AMBIL DATA PRICING PACKAGES - FIXED VERSION
     let pricingDataContext = "Data package belum tersedia.";
 
     try {
+      console.log("🔍 Fetching pricing packages from database...");
+      
       const { data: pricingPackages, error: pricingError } = await supabaseAdmin
         .from('pricing_packages')
         .select(`
@@ -105,12 +108,27 @@ serve(async (req) => {
         .eq('is_active', true)
         .order('sort_order', { ascending: true });
 
+      console.log("📦 Pricing packages result:", {
+        data: pricingPackages,
+        error: pricingError,
+        count: pricingPackages?.length
+      });
+
       if (!pricingError && pricingPackages && pricingPackages.length > 0) {
+        console.log("✅ Successfully fetched", pricingPackages.length, "packages");
+        
         const formattedPackages = pricingPackages.map(pkg => {
-          const priceInfo = pkg.is_discounted && pkg.discounted_price 
-            ? `💰 ${pkg.discounted_price} (Diskon dari ${pkg.base_price})`
-            : `💰 ${pkg.price_display || pkg.base_price}`;
-            
+          // ✅ FIX: Handle zero prices (Custom packages)
+          let priceInfo;
+          if (pkg.base_price === 0 || pkg.price_display === 'Custom') {
+            priceInfo = `💰 ${pkg.price_display || 'Konsultasi Gratis'}`;
+          } else if (pkg.is_discounted && pkg.discounted_price) {
+            priceInfo = `💰 ${pkg.discounted_price} (Diskon dari ${pkg.base_price})`;
+          } else {
+            priceInfo = `💰 ${pkg.price_display || pkg.base_price}`;
+          }
+          
+          // ✅ FIX: Handle most_popular correctly
           const popularBadge = pkg.most_popular ? ` 🏆 ${pkg.badge_text || 'POPULAR'}` : '';
           
           return `
@@ -123,47 +141,66 @@ ${priceInfo}
         }).join('\n\n');
 
         pricingDataContext = `## 📊 PAKET LAYANAN IXIERA\n\n${formattedPackages}`;
+        console.log("📝 Formatted pricing context length:", pricingDataContext.length);
+      } else {
+        console.warn("❌ No pricing packages found or error:", pricingError);
+        pricingDataContext = "Data package sedang tidak tersedia. Silakan tanyakan tentang paket layanan kami secara umum.";
       }
     } catch (dbError) {
-      console.error("Error fetching pricing packages:", dbError);
+      console.error("🚨 Error fetching pricing packages:", dbError);
+      pricingDataContext = "Sistem database sedang mengalami gangguan. Silakan coba lagi nanti.";
     }
 
-    // ✅ SYSTEM INSTRUCTION
+    // ✅ TAMBAHKAN INFORMASI KONTAK
+    const contactInfo = `
+📞 **KONTAK IXIERA:**
+• WhatsApp: +62 857-0237-3412
+• Website: ixiera.id  
+• Email: contact@ixiera.id
+`;
+
+    // ✅ SYSTEM INSTRUCTION - IMPROVED DENGAN KONTAK
     const systemInstruction = {
       parts: [{
         text: `Anda adalah Ashley AI - Asisten Digital IXIERA.
 
 ${pricingDataContext}
 
-ATURAN:
-1. REKOMENDASI spesifik berdasarkan data paket di atas
-2. JAWAB dalam bahasa yang sama dengan pertanyaan user
-3. RESPONS singkat & padat (maks 4-5 kalimat)
-4. FOKUS pada informasi yang ada di data`
+${contactInfo}
+
+ATURAN PENTING:
+1. REKOMENDASI paket spesifik berdasarkan kebutuhan user dan data di atas
+2. Untuk harga CUSTOM (Rp 0), jelaskan bahwa harga menyesuaikan kebutuhan
+3. Untuk AI ASSISTANT (Rp 99rb/bulan), tekankan ini adalah subscription bulanan
+4. JIKA user tanya kontak/kantor, GUNAKAN informasi kontak di atas
+5. JAWAB dalam bahasa yang sama dengan pertanyaan user
+6. RESPONS jelas & padat
+7. Batas harian: ${DAILY_LIMIT} pertanyaan per user`
       }]
     };
 
-  // ✅ CALL GEMINI API
-const contents = [
-  ...(history || []), 
-  { 
-    role: 'user', 
-    parts: [{ text: currentMessage }] 
-  }
-];
+    // ✅ CALL GEMINI API
+    const contents = [
+      ...(history || []), 
+      { 
+        role: 'user', 
+        parts: [{ text: currentMessage }] 
+      }
+    ];
 
-const response = await ai.models.generateContent({
-  model: 'gemini-2.5-flash',
-  contents: contents,
-  systemInstruction: systemInstruction,
-  generationConfig: {
-    maxOutputTokens: 700,
-    temperature: 0.7,
-  }
-});
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: contents,
+      systemInstruction: systemInstruction,
+      generationConfig: {
+        maxOutputTokens: 500,
+        temperature: 0.7,
+      }
+    });
 
-// aiResponse safety):
-const aiResponse = response?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tidak ada response dari AI.";
+    // ✅ FIX: Pakai structure yang benar dengan safety check
+    const aiResponse = response?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tidak ada response dari AI.";
+
     // ✅ UPDATE CHAT_SESSION JIKA ADA
     if (chatSession) {
       await supabaseAdmin
@@ -187,12 +224,13 @@ const aiResponse = response?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf
       }],
       usage: {
         question_count: currentCount,
-        monthly_limit: MONTHLY_LIMIT,
-        remaining_questions: MONTHLY_LIMIT - currentCount,
+        daily_limit: DAILY_LIMIT, // ✅ GANTI KE DAILY
+        remaining_questions: DAILY_LIMIT - currentCount,
         status: 'success'
       }
     };
 
+    console.log("✅ AI Response generated successfully");
     return new Response(JSON.stringify(formattedResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
