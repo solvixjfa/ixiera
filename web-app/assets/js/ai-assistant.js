@@ -324,7 +324,7 @@ showInitialGreeting() {
             // Add API source indicator (optional, for debugging)
             const responseWithSource = apiSource === 'gemini' 
                 ? aiResponse 
-                : `${aiResponse}\n\n<small style="opacity: 0.6;">🔧 Powered by Backup AI</small>`;
+                : `${aiResponse}\n\n<small style="opacity: 0.6;">🔧 powered by Ashley Backup  AI</small>`;
 
             this.addMessageToUI('ai', responseWithSource);
 
@@ -455,25 +455,27 @@ showInitialGreeting() {
             .replace(/\*(.*?)\*/g, '<em>$1</em>');
     }
 
-    // Loading indicator - SIMPLE SPINNER (NO TYPING)
-    showLoadingIndicator() {
-        if (this.loadingIndicator) {
-            this.loadingIndicator.style.display = 'flex';
-            this.loadingIndicator.classList.add('visible');
-        }
+// Loading indicator - SIMPLE PULSING DOTS
+showLoadingIndicator() {
+    if (this.loadingIndicator) {
+        this.loadingIndicator.style.display = 'flex';
+        this.loadingIndicator.classList.add('visible');
+        
+        // Scroll ke bawah biar loading kelihatan
         this.scrollToBottom();
     }
+}
 
-    hideLoadingIndicator() {
-        if (this.loadingIndicator) {
-            this.loadingIndicator.classList.remove('visible');
-            setTimeout(() => {
-                if (this.loadingIndicator) {
-                    this.loadingIndicator.style.display = 'none';
-                }
-            }, 300);
-        }
+hideLoadingIndicator() {
+    if (this.loadingIndicator) {
+        this.loadingIndicator.classList.remove('visible');
+        setTimeout(() => {
+            if (this.loadingIndicator) {
+                this.loadingIndicator.style.display = 'none';
+            }
+        }, 300);
     }
+}
 
     scrollToBottom() {
         if (this.messagesContainer) {

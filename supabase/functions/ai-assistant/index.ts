@@ -143,27 +143,27 @@ ATURAN:
       }]
     };
 
-    // ✅ CALL GEMINI API
-    const contents = [
-      ...(history || []), 
-      { 
-        role: 'user', 
-        parts: [{ text: currentMessage }] 
-      }
-    ];
+  // ✅ CALL GEMINI API
+const contents = [
+  ...(history || []), 
+  { 
+    role: 'user', 
+    parts: [{ text: currentMessage }] 
+  }
+];
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: contents,
-      systemInstruction: systemInstruction,
-      generationConfig: {
-        maxOutputTokens: 700,
-        temperature: 0.7,
-      }
-    });
+const response = await ai.models.generateContent({
+  model: 'gemini-2.5-flash',
+  contents: contents,
+  systemInstruction: systemInstruction,
+  generationConfig: {
+    maxOutputTokens: 700,
+    temperature: 0.7,
+  }
+});
 
-    const aiResponse = response.text() || "Maaf, tidak ada response dari AI.";
-
+// aiResponse safety):
+const aiResponse = response?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tidak ada response dari AI.";
     // ✅ UPDATE CHAT_SESSION JIKA ADA
     if (chatSession) {
       await supabaseAdmin
