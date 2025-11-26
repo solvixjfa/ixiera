@@ -48,20 +48,20 @@ serve(async (req) => {
       })
     }
 
-    // ✅ CHECK DAILY USAGE DI CHAT_SESSIONS
-    const currentDate = new Date().toISOString().slice(0, 10); // 2025-11-26
+    // ✅ CHECK DAILY USAGE DI CHAT_SESSIONS - FIXED FORMAT
+    const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, ''); // "20251126" (8 karakter)
     
     // Cari atau buat session untuk HARI INI
     const { data: chatSession, error: sessionError } = await supabaseAdmin
       .from('chat_sessions')
       .upsert({ 
         user_id: userId, 
-        month: currentDate, // ✅ PAKAI TANGGAL, BUKAN BULAN
+        month: currentDate, // ✅ SEKARANG 8 KARAKTER - AMAN!
         title: currentMessage.substring(0, 40) + (currentMessage.length > 40 ? '...' : ''),
         last_message: currentMessage,
         updated_at: new Date().toISOString()
       }, { 
-        onConflict: 'user_id, month' // ✅ SEKARANG CONFLICT PER HARI
+        onConflict: 'user_id, month'
       })
       .select()
       .single();
@@ -83,7 +83,7 @@ serve(async (req) => {
         }],
         usage: {
           question_count: chatSession.question_count,
-          daily_limit: DAILY_LIMIT, // ✅ GANTI KE DAILY
+          daily_limit: DAILY_LIMIT,
           status: 'limit_reached'
         }
       }), { 
@@ -159,7 +159,7 @@ ${priceInfo}
 • Email: contact@ixiera.id
 `;
 
-    // ✅ SYSTEM INSTRUCTION - IMPROVED DENGAN KONTAK
+    // ✅ SYSTEM INSTRUCTION - IMPROVED DENGAN RULES KETAT
     const systemInstruction = {
       parts: [{
         text: `Anda adalah Ashley AI - Asisten Digital IXIERA.
@@ -168,18 +168,28 @@ ${pricingDataContext}
 
 ${contactInfo}
 
-ATURAN PENTING:
-1. REKOMENDASI paket spesifik berdasarkan kebutuhan user dan data di atas
-2. Untuk harga CUSTOM (Rp 0), jelaskan bahwa harga menyesuaikan kebutuhan
-3. Untuk AI ASSISTANT (Rp 99rb/bulan), tekankan ini adalah subscription bulanan
-4. JIKA user tanya kontak/kantor, GUNAKAN informasi kontak di atas
-5. JAWAB dalam bahasa yang sama dengan pertanyaan user
-6. RESPONS jelas & padat
-7. Batas harian: ${DAILY_LIMIT} pertanyaan per user`
+🚫 **ATURAN KETAT:**
+1. REKOMENDASI hanya 1-2 paket yang PALING RELEVAN dengan kebutuhan user
+2. PRIORITAS paket dengan badge 🏆 (POPULAR/PALING DIMINATI)
+3. Untuk CUSTOM BUSINESS SUITE: "Harga custom - konsultasi gratis untuk diskusi kebutuhan"
+4. Untuk AI ASSISTANT: "Subscription bulanan Rp 99rb/bulan - asisten virtual 24/7"
+5. JANGAN rekomendasikan semua paket sekaligus
+6. JANGAN buat-buat harga atau informasi yang tidak ada di data
+7. SELALU sertakan informasi kontak di akhir respons
+8. JAWAB dalam bahasa yang sama dengan pertanyaan user
+9. RESPONS SINGKAT & PADAT (maks 4-5 kalimat)
+10. Batas harian: ${DAILY_LIMIT} pertanyaan per user
+
+✅ **CONTOH RESPONS BAIK:**
+"Berdasarkan kebutuhan Anda, saya rekomendasikan [1-2 paket spesifik]. [Penjelasan singkat]. Untuk konsultasi lebih lanjut, hubungi WhatsApp: +62 857-0237-3412"
+
+❌ **CONTOH RESPONS SALAH:**
+"Kami punya banyak paket: A, B, C, D, E... (terlalu panjang)"
+"Harga paket X adalah Y" (padahal tidak ada di data)`
       }]
     };
 
-    // ✅ CALL GEMINI API
+    // ✅ CALL GEMINI API DENGAN CONFIG LEBIH KETAT
     const contents = [
       ...(history || []), 
       { 
@@ -193,8 +203,10 @@ ATURAN PENTING:
       contents: contents,
       systemInstruction: systemInstruction,
       generationConfig: {
-        maxOutputTokens: 500,
-        temperature: 0.7,
+        maxOutputTokens: 400,    // ↓ KURANGI TOKENS
+        temperature: 0.3,        // ↓ KURANGI KREATIVITAS
+        topK: 40,                // ↑ BATASI PILIHAN KATA
+        topP: 0.8,               // ↑ KONSISTENSI LEBIH TINGGI
       }
     });
 
@@ -224,13 +236,13 @@ ATURAN PENTING:
       }],
       usage: {
         question_count: currentCount,
-        daily_limit: DAILY_LIMIT, // ✅ GANTI KE DAILY
+        daily_limit: DAILY_LIMIT,
         remaining_questions: DAILY_LIMIT - currentCount,
         status: 'success'
       }
     };
 
-    console.log("✅ AI Response generated successfully");
+    console.log("✅ AI Response generated:", aiResponse.substring(0, 100) + "...");
     return new Response(JSON.stringify(formattedResponse), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
