@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads Pipeline Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/pipeline-spa.css">
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./js/pipeline/pipeline-config.js" defer></script>
+    <script src="./js/pipeline/pipeline-app.js" defer></script>
+    <script src="./js/pipeline/script-library.js" defer></script>
+     <script src="./js/pipeline/analytics.js" defer></script>
+    
+    
+    <style>
+        .loading-screen { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: #000000;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .spinner-large {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .page { display: none; }
+        .page.active { display: block; }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="spinner-large"></div>
+            <h4 class="mt-3 fw-bold">LEADS PIPELINE</h4>
+            <p class="text-light">Loading dashboard...</p>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container" style="display: none;">
+        <!-- Mobile Header -->
+        <nav class="mobile-header navbar d-lg-none fixed-top">
+            <div class="container-fluid">
+                <button class="menu-toggle" id="mobileMenuToggle">
+                    <i class="bi bi-list fs-5"></i>
+                </button>
+                
+                <div class="mobile-logo">
+                    <div class="logo-icon"><i class="bi bi-fire fs-4"></i></div>
+                    <div class="logo-text fw-bold">PIPELINE</div>
+                </div>
+                
+                <button class="theme-toggle-mobile" id="mobileThemeToggle">
+                    <i class="bi bi-sun-fill d-none" id="sunIcon"></i>
+                    <i class="bi bi-moon-fill" id="moonIcon"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper">
+                    <div class="logo-icon"><i class="bi bi-fire fs-4"></i></div>
+                    <div class="logo-text">
+                        <span class="logo-title fw-bold">LEADS PIPELINE</span>
+                        <span class="logo-subtitle">CRM SYSTEM</span>
+                    </div>
+                </div>
+                <button class="sidebar-close" id="sidebarClose"><i class="bi bi-x-lg"></i></button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <!-- Dashboard -->
+                <div class="nav-section">
+                    <h4 class="nav-section-title">DASHBOARD</h4>
+                    <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                        <i class="bi bi-house-door"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </div>
+
+                <!-- Pipeline Views -->
+                <div class="nav-section">
+                    <h4 class="nav-section-title">PIPELINE</h4>
+                    <a href="#pipeline-hot" class="nav-link" data-page="hot">
+                        <i class="bi bi-fire text-danger"></i>
+                        <span class="fw-bold">Hot Leads</span>
+                        <span class="nav-badge" id="hotCount">0</span>
+                    </a>
+                    <a href="#pipeline-warm" class="nav-link" data-page="warm">
+                        <i class="bi bi-sun text-warning"></i>
+                        <span class="fw-bold">Warm Leads</span>
+                        <span class="nav-badge" id="warmCount">0</span>
+                    </a>
+                    <a href="#pipeline-cold" class="nav-link" data-page="cold">
+                        <i class="bi bi-snow text-info"></i>
+                        <span class="fw-bold">Cold Leads</span>
+                        <span class="nav-badge" id="coldCount">0</span>
+                    </a>
+                </div>
+
+                <!-- Actions -->
+                <div class="nav-section">
+                    <h4 class="nav-section-title">ACTIONS</h4>
+                    <a href="#add-lead" class="nav-link" data-page="add">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span class="fw-bold">Add New Lead</span>
+                    </a>
+                    <a href="#follow-ups" class="nav-link" data-page="followups">
+                        <i class="bi bi-calendar-check-fill"></i>
+                        <span class="fw-bold">Today's Follow-ups</span>
+                        <span class="nav-badge" id="followUpCount">0</span>
+                    </a>
+                    <a href="#scripts" class="nav-link" data-page="scripts">
+                        <i class="bi bi-clipboard-data-fill"></i>
+                        <span class="fw-bold">Script Library</span>
+                    </a>
+                </div>
+
+                <!-- Data Management -->
+                <div class="nav-section">
+                    <h4 class="nav-section-title">DATA</h4>
+                    <a href="#all-leads" class="nav-link" data-page="all">
+                        <i class="bi bi-people-fill"></i>
+                        <span class="fw-bold">All Leads</span>
+                        <span class="nav-badge" id="totalLeadsCount">0</span>
+                    </a>
+                    <a href="#analytics" class="nav-link" data-page="analytics">
+                        <i class="bi bi-bar-chart-line-fill"></i>
+                        <span class="fw-bold">Analytics</span>
+                    </a>
+                    <a href="#export" class="nav-link" data-page="export">
+                        <i class="bi bi-download"></i>
+                        <span class="fw-bold">Export Data</span>
+                    </a>
+                </div>
+
+                <!-- Settings -->
+                <div class="nav-section">
+                    <h4 class="nav-section-title">SYSTEM</h4>
+                    <a href="#settings" class="nav-link" data-page="settings">
+                        <i class="bi bi-gear-fill"></i>
+                        <span class="fw-bold">Settings</span>
+                    </a>
+                    <button id="logoutBtn" class="nav-link logout-btn">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span class="fw-bold">Logout</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="user-profile">
+                <div class="user-avatar"><i class="bi bi-person-circle"></i></div>
+                <div class="user-info">
+                    <span class="user-name fw-bold">Admin User</span>
+                    <span class="user-role">Pipeline Manager</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <header class="top-nav">
+                <div class="nav-left">
+                    <h1 class="page-title fw-bold" id="pageTitle">Dashboard</h1>
+                    <p class="page-subtitle" id="pageSubtitle">Leads pipeline overview</p>
+                </div>
+                
+                <div class="nav-right">
+                    <!-- Search -->
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text" id="globalSearch" placeholder="Search leads...">
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="bi bi-sun-fill sun-icon"></i>
+                        <i class="bi bi-moon-fill moon-icon"></i>
+                    </button>
+                    
+                    <!-- Notifications -->
+                    <div class="notifications">
+                        <button class="notification-btn" id="notificationBtn">
+                            <i class="bi bi-bell-fill"></i>
+                            <span class="notification-dot" id="notificationDot"></span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content Area -->
+            <div class="page-content" id="pageContent">
+                <!-- Dashboard Page -->
+                <div id="page-dashboard" class="page active">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon total-leads"><i class="bi bi-people-fill fs-3"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-value fw-black" id="statTotalLeads">0</h3>
+                                <p class="stat-label fw-bold">Total Leads</p>
+                            </div>
+                            <div class="stat-trend up fw-bold">↑ 0%</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon hot-leads"><i class="bi bi-fire text-danger fs-3"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-value fw-black" id="statHotLeads">0</h3>
+                                <p class="stat-label fw-bold">Hot Leads</p>
+                            </div>
+                            <div class="stat-trend up fw-bold">↑ 0%</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon follow-ups"><i class="bi bi-alarm-fill text-warning fs-3"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-value fw-black" id="statFollowUps">0</h3>
+                                <p class="stat-label fw-bold">Today's Follow-ups</p>
+                            </div>
+                            <div class="stat-trend warning fw-bold">⚠️ Action</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon conversion"><i class="bi bi-bullseye text-success fs-3"></i></div>
+                            <div class="stat-content">
+                                <h3 class="stat-value fw-black" id="statConversion">0%</h3>
+                                <p class="stat-label fw-bold">Conversion Rate</p>
+                            </div>
+                            <div class="stat-trend up fw-bold">↑ 0%</div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions-grid">
+                        <button class="quick-action" onclick="Pipeline.showPage('add')">
+                            <div class="action-icon"><i class="bi bi-person-plus-fill fs-4"></i></div>
+                            <div class="action-content">
+                                <h4 class="fw-bold">Add New Lead</h4>
+                                <p>Manual entry with full details</p>
+                            </div>
+                        </button>
+
+                        <button class="quick-action" onclick="Pipeline.showPage('followups')">
+                            <div class="action-icon"><i class="bi bi-chat-dots-fill fs-4"></i></div>
+                            <div class="action-content">
+                                <h4 class="fw-bold">Follow-up Now</h4>
+                                <p>Contact leads requiring attention</p>
+                            </div>
+                        </button>
+
+                        <button class="quick-action" onclick="Pipeline.showPage('hot')">
+                            <div class="action-icon"><i class="bi bi-fire text-danger fs-4"></i></div>
+                            <div class="action-content">
+                                <h4 class="fw-bold">Hot Leads</h4>
+                                <p>Immediate action required</p>
+                            </div>
+                        </button>
+
+                        <button class="quick-action" onclick="Pipeline.showPage('scripts')">
+                            <div class="action-icon"><i class="bi bi-clipboard-data-fill fs-4"></i></div>
+                            <div class="action-content">
+                                <h4 class="fw-bold">Script Library</h4>
+                                <p>Copy-paste communication scripts</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Recent Leads Table -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h3 class="fw-bold">Recent Leads</h3>
+                            <button class="btn-text" onclick="Pipeline.showPage('all')">
+                                View All <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="fw-bold">Name</th>
+                                        <th class="fw-bold">Contact</th>
+                                        <th class="fw-bold">Temperature</th>
+                                        <th class="fw-bold">Status</th>
+                                        <th class="fw-bold">Last Contact</th>
+                                        <th class="fw-bold">Next Follow-up</th>
+                                        <th class="fw-bold">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentLeadsTable">
+                                    <tr><td colspan="7" style="text-align: center;">Loading data...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Lead Page -->
+                <div id="page-add" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-person-plus-fill me-2"></i>Add New Lead</h2>
+                            <p>Manual entry for new leads</p>
+                        </div>
+                        
+                        <form id="addLeadForm" class="lead-form">
+                            <div class="form-section">
+                                <h4 class="fw-bold">Basic Information</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="leadName" class="fw-bold">Full Name *</label>
+                                        <input type="text" id="leadName" required placeholder="John Doe">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="leadEmail" class="fw-bold">Email *</label>
+                                        <input type="email" id="leadEmail" required placeholder="john@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="leadWhatsApp" class="fw-bold">WhatsApp *</label>
+                                        <input type="tel" id="leadWhatsApp" required placeholder="+628123456789">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="leadCompany" class="fw-bold">Company</label>
+                                        <input type="text" id="leadCompany" placeholder="PT. Contoh">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h4 class="fw-bold">Lead Details</h4>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="leadSource" class="fw-bold">Source *</label>
+                                        <select id="leadSource" required>
+                                            <option value="">Select Source</option>
+                                            <option value="instagram">Instagram</option>
+                                            <option value="facebook">Facebook</option>
+                                            <option value="referral">Referral</option>
+                                            <option value="manual">Manual</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="leadTemperature" class="fw-bold">Temperature</label>
+                                        <select id="leadTemperature">
+                                            <option value="hot"><i class="bi bi-fire text-danger"></i> Hot</option>
+                                            <option value="warm" selected><i class="bi bi-sun text-warning"></i> Warm</option>
+                                            <option value="cold"><i class="bi bi-snow text-info"></i> Cold</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="leadStatus" class="fw-bold">Status</label>
+                                        <select id="leadStatus">
+                                            <option value="new">New</option>
+                                            <option value="contacted">Contacted</option>
+                                            <option value="qualified">Qualified</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary fw-bold">
+                                    <i class="bi bi-save me-2"></i>Save Lead
+                                </button>
+                                <button type="button" class="btn-outline fw-bold" onclick="Pipeline.showPage('dashboard')">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Hot Leads Page -->
+                <div id="page-hot" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-fire text-danger me-2"></i>Hot Leads</h2>
+                            <button class="btn-primary fw-bold" onclick="Pipeline.exportData('hot')">
+                                <i class="bi bi-download me-2"></i>Export
+                            </button>
+                        </div>
+                        <div class="pipeline-view">
+                            <div class="leads-grid" id="hotLeadsGrid">
+                                <p style="text-align: center;">Loading hot leads...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warm Leads Page -->
+                <div id="page-warm" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-sun text-warning me-2"></i>Warm Leads</h2>
+                            <button class="btn-primary fw-bold" onclick="Pipeline.exportData('warm')">
+                                <i class="bi bi-download me-2"></i>Export
+                            </button>
+                        </div>
+                        <div class="pipeline-view">
+                            <div class="leads-grid" id="warmLeadsGrid">
+                                <p style="text-align: center;">Loading warm leads...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cold Leads Page -->
+                <div id="page-cold" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-snow text-info me-2"></i>Cold Leads</h2>
+                            <button class="btn-primary fw-bold" onclick="Pipeline.exportData('cold')">
+                                <i class="bi bi-download me-2"></i>Export
+                            </button>
+                        </div>
+                        <div class="pipeline-view">
+                            <div class="leads-grid" id="coldLeadsGrid">
+                                <p style="text-align: center;">Loading cold leads...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Leads Page -->
+                <div id="page-all" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold">All Leads</h2>
+                            <div class="header-actions">
+                                <input type="text" id="searchAllLeads" placeholder="Search leads..." class="search-input">
+                                <button class="btn-primary fw-bold" onclick="Pipeline.exportData('all')">
+                                    <i class="bi bi-download me-2"></i>Export CSV
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="fw-bold">Name</th>
+                                        <th class="fw-bold">Email</th>
+                                        <th class="fw-bold">Phone</th>
+                                        <th class="fw-bold">Temperature</th>
+                                        <th class="fw-bold">Status</th>
+                                        <th class="fw-bold">Last Contact</th>
+                                        <th class="fw-bold">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allLeadsTable">
+                                    <tr><td colspan="7" style="text-align: center;">Loading all leads...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script Library Page -->
+                <div id="page-scripts" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-clipboard-data-fill me-2"></i>Script Library</h2>
+                            <button class="btn-primary fw-bold" onclick="scriptLibrary.tampilkanModalTambahScript()">
+                                <i class="bi bi-plus-lg me-2"></i> Tambah Script
+                            </button>
+                        </div>
+                        <div class="script-categories">
+                            <div class="category-tabs">
+                                <button class="category-tab active fw-bold" data-category="all">All Scripts</button>
+                                <button class="category-tab fw-bold" data-category="opening">Opening</button>
+                                <button class="category-tab fw-bold" data-category="closing">Closing</button>
+                                <button class="category-tab fw-bold" data-category="objection">Objection Handling</button>
+                                <button class="category-tab fw-bold" data-category="followup">Follow-up</button>
+                            </div>
+                        </div>
+                        <div class="scripts-container" id="scriptsContainer">
+                            <div class="scripts-grid" id="scriptsGrid">
+                                <div class="text-center py-5">
+                                    <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="mt-2 text-muted">Loading scripts...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Follow-ups Page -->
+                <div id="page-followups" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-calendar-check-fill me-2"></i>Today's Follow-ups</h2>
+                            <div class="header-actions">
+                                <button class="btn-primary fw-bold" onclick="Pipeline.loadFollowups()">
+                                    <i class="bi bi-arrow-clockwise me-2"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="followups-container">
+                            <div class="followups-list" id="followupsList">
+                                <div class="text-center py-5">
+                                    <div class="spinner-border spinner-border-sm text-secondary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p class="mt-2 text-muted">Loading follow-ups...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div id="page-analytics" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-bar-chart-line-fill me-2"></i>Analytics Dashboard</h2>
+                            <div class="time-filter">
+                                <select id="analyticsTimeFilter" class="form-select" style="width: auto;">
+                                    <option value="7days">Last 7 Days</option>
+                                    <option value="30days" selected>Last 30 Days</option>
+                                    <option value="90days">Last 90 Days</option>
+                                    <option value="year">This Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="analytics-content">
+                            <!-- Stats Overview -->
+                            <div class="analytics-stats">
+                                <div class="analytics-stat">
+                                    <div class="analytics-stat-value fw-black" id="totalLeadsStat">0</div>
+                                    <div class="analytics-stat-label fw-bold">Total Leads</div>
+                                    <div class="analytics-stat-trend fw-bold" id="totalLeadsTrend">+0%</div>
+                                </div>
+                                <div class="analytics-stat">
+                                    <div class="analytics-stat-value fw-black" id="conversionRateStat">0%</div>
+                                    <div class="analytics-stat-label fw-bold">Conversion Rate</div>
+                                    <div class="analytics-stat-trend fw-bold" id="conversionTrend">+0%</div>
+                                </div>
+                                <div class="analytics-stat">
+                                    <div class="analytics-stat-value fw-black" id="responseRateStat">0%</div>
+                                    <div class="analytics-stat-label fw-bold">Response Rate</div>
+                                    <div class="analytics-stat-trend fw-bold" id="responseTrend">+0%</div>
+                                </div>
+                                <div class="analytics-stat">
+                                    <div class="analytics-stat-value fw-black" id="avgResponseTimeStat">0h</div>
+                                    <div class="analytics-stat-label fw-bold">Avg Response Time</div>
+                                    <div class="analytics-stat-trend fw-bold" id="responseTimeTrend">-0%</div>
+                                </div>
+                            </div>
+
+                            <!-- Charts Container -->
+                            <div class="charts-container">
+                                <div class="chart-card">
+                                    <h4 class="fw-bold">Leads by Temperature</h4>
+                                    <div class="chart-placeholder" id="temperatureChart">
+                                        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                                            <div class="spinner-border text-secondary"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-card">
+                                    <h4 class="fw-bold">Leads by Source</h4>
+                                    <div class="chart-placeholder" id="sourceChart">
+                                        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                                            <div class="spinner-border text-secondary"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-card full-width">
+                                    <h4 class="fw-bold">Leads Over Time</h4>
+                                    <div class="chart-placeholder" id="timelineChart">
+                                        <div class="d-flex justify-content-center align-items-center" style="height: 250px;">
+                                            <div class="spinner-border text-secondary"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Data Page -->
+                <div id="page-export" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-download me-2"></i>Export Data</h2>
+                            <p>Export your leads data in various formats</p>
+                        </div>
+                        <div class="export-content">
+                            <div class="export-options">
+                                <div class="export-option">
+                                    <div class="export-icon">
+                                        <i class="bi bi-file-earmark-excel fs-2"></i>
+                                    </div>
+                                    <div class="export-info">
+                                        <h4 class="fw-bold">Excel Format (.xlsx)</h4>
+                                        <p>Best for data analysis and reporting</p>
+                                    </div>
+                                    <button class="btn-primary fw-bold" onclick="Pipeline.exportToExcel()">
+                                        <i class="bi bi-download me-2"></i> Export
+                                    </button>
+                                </div>
+                                
+                                <div class="export-option">
+                                    <div class="export-icon">
+                                        <i class="bi bi-filetype-csv fs-2"></i>
+                                    </div>
+                                    <div class="export-info">
+                                        <h4 class="fw-bold">CSV Format (.csv)</h4>
+                                        <p>Universal format for all applications</p>
+                                    </div>
+                                    <button class="btn-primary fw-bold" onclick="Pipeline.exportToCSV()">
+                                        <i class="bi bi-download me-2"></i> Export
+                                    </button>
+                                </div>
+                                
+                                <div class="export-option">
+                                    <div class="export-icon">
+                                        <i class="bi bi-filetype-json fs-2"></i>
+                                    </div>
+                                    <div class="export-info">
+                                        <h4 class="fw-bold">JSON Format (.json)</h4>
+                                        <p>For developers and API integrations</p>
+                                    </div>
+                                    <button class="btn-primary fw-bold" onclick="Pipeline.exportToJSON()">
+                                        <i class="bi bi-download me-2"></i> Export
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="export-filters">
+                                <h4 class="fw-bold">Filter Data</h4>
+                                <div class="filter-options">
+                                    <div class="filter-group">
+                                        <label class="fw-bold">Date Range</label>
+                                        <div class="date-range">
+                                            <input type="date" id="exportStartDate" class="form-control">
+                                            <span>to</span>
+                                            <input type="date" id="exportEndDate" class="form-control">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="filter-group">
+                                        <label class="fw-bold">Temperature</label>
+                                        <select id="exportTemperature" class="form-select" multiple>
+                                            <option value="hot">Hot</option>
+                                            <option value="warm">Warm</option>
+                                            <option value="cold">Cold</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="filter-group">
+                                        <label class="fw-bold">Status</label>
+                                        <select id="exportStatus" class="form-select" multiple>
+                                            <option value="new">New</option>
+                                            <option value="contacted">Contacted</option>
+                                            <option value="qualified">Qualified</option>
+                                            <option value="converted">Converted</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="page-settings" class="page">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2 class="fw-bold"><i class="bi bi-gear-fill me-2"></i>Settings</h2>
+                            <p>Manage your pipeline settings</p>
+                        </div>
+                        <div class="settings-content">
+                            <div class="settings-section">
+                                <h4 class="fw-bold">General Settings</h4>
+                                <div class="settings-form">
+                                    <div class="form-group">
+                                        <label for="companyName" class="fw-bold">Company Name</label>
+                                        <input type="text" id="companyName" class="form-control" placeholder="Your Company Name">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="defaultTimezone" class="fw-bold">Default Timezone</label>
+                                        <select id="defaultTimezone" class="form-select">
+                                            <option value="Asia/Jakarta">Asia/Jakarta (WIB)</option>
+                                            <option value="Asia/Makassar">Asia/Makassar (WITA)</option>
+                                            <option value="Asia/Jayapura">Asia/Jayapura (WIT)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="defaultTemperature" class="fw-bold">Default Lead Temperature</label>
+                                        <select id="defaultTemperature" class="form-select">
+                                            <option value="warm">Warm</option>
+                                            <option value="hot">Hot</option>
+                                            <option value="cold">Cold</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-section">
+                                <h4 class="fw-bold">Notification Settings</h4>
+                                <div class="settings-form">
+                                    <div class="form-check">
+                                        <input type="checkbox" id="emailNotifications" class="form-check-input" checked>
+                                        <label for="emailNotifications" class="form-check-label fw-bold">Email Notifications</label>
+                                    </div>
+                                    
+                                    <div class="form-check">
+                                        <input type="checkbox" id="followupReminders" class="form-check-input" checked>
+                                        <label for="followupReminders" class="form-check-label fw-bold">Follow-up Reminders</label>
+                                    </div>
+                                    
+                                    <div class="form-check">
+                                        <input type="checkbox" id="leadAssignment" class="form-check-input">
+                                        <label for="leadAssignment" class="form-check-label fw-bold">Lead Assignment Notifications</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-section">
+                                <h4 class="fw-bold">Data Management</h4>
+                                <div class="settings-actions">
+                                    <button class="btn-outline fw-bold" onclick="Pipeline.backupData()">
+                                        <i class="bi bi-cloud-arrow-up me-2"></i> Backup Data
+                                    </button>
+                                    <button class="btn-outline fw-bold" onclick="Pipeline.restoreData()">
+                                        <i class="bi bi-cloud-arrow-down me-2"></i> Restore Data
+                                    </button>
+                                    <button class="btn-danger fw-bold" onclick="Pipeline.clearAllData()">
+                                        <i class="bi bi-trash me-2"></i> Clear All Data
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <span class="toast-message fw-bold" id="toastMessage">Operation successful!</span>
+        </div>
+        <button class="toast-close" onclick="Pipeline.hideToast()"><i class="bi bi-x"></i></button>
+    </div>
+
+    <!-- Script Modal -->
+    <div id="scriptModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="scriptModalLabel">Add/Edit Script</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="scriptForm">
+                        <div class="form-group mb-3">
+                            <label for="scriptTitle" class="fw-bold">Script Title *</label>
+                            <input type="text" id="scriptTitle" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="scriptCategory" class="fw-bold">Category *</label>
+                            <select id="scriptCategory" class="form-select" required>
+                                <option value="">Select Category</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                                <option value="objection">Objection Handling</option>
+                                <option value="followup">Follow-up</option>
+                                <option value="general">General</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="scriptContent" class="fw-bold">Script Content *</label>
+                            <textarea id="scriptContent" class="form-control" rows="8" required></textarea>
+                            <small class="text-muted">Use [Name] for lead's name, [Company] for company name</small>
+                        </div>
+                        
+                        <div class="form-group mb-3">
+                            <label for="scriptTags" class="fw-bold">Tags (comma separated)</label>
+                            <input type="text" id="scriptTags" class="form-control" placeholder="whatsapp, email, follow-up">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary fw-bold" id="saveScriptBtn">Save Script</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
