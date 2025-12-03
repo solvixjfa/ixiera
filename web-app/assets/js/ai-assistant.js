@@ -83,7 +83,7 @@ showInitialGreeting() {
         this.messagesContainer = document.getElementById('messages-container');
         this.userInput = document.getElementById('user-input');
         this.sendBtn = document.getElementById('send-btn');
-        this.loadingIndicator = document.getElementById('loading-indicator');
+        this.loadingIndicator = document.getElementById('typing-indicator');
         this.overlay = document.getElementById('overlay');
         this.welcomeScreen = document.getElementById('welcome-screen');
 
