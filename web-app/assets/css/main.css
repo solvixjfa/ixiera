@@ -338,70 +338,72 @@ h6 {
 
 
 
-/* ===== MOBILE STYLES ===== */
+/* ===== MOBILE NAVIGASI ENHANCED ===== */
 @media (max-width: 1199px) {
-  /* Mobile Toggle Button - SAMA PERSIS */
+  /* Mobile Toggle Button - IMPROVED */
   .mobile-nav-toggle {
     color: var(--nav-color);
-    font-size: 18px;
+    font-size: 20px;
     line-height: 0;
-    margin-right: 8px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(255, 255, 255, 0.08);
-    width: 40px;
-    height: 40px;
+    background: transparent;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 50%;
     z-index: 9999;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
   }
 
   .mobile-nav-toggle:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: scale(1.08);
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    color: #56b8e6;
+    background: rgba(86, 184, 230, 0.1);
+    transform: rotate(90deg);
+    border-color: rgba(86, 184, 230, 0.3);
   }
 
-  /* === PERUBAHAN: SLIDE DARI KIRI === */
+  /* === NAVIGASI SLIDE DARI KANAN - ENHANCED === */
   .navmenu {
     position: fixed;
     top: 0;
-    left: -100%; /* GANTI: right jadi left */
-    width: 100%;
+    right: -100%;
+    width: 85%;
+    max-width: 320px;
     height: 100vh;
-    background: rgba(10, 10, 12, 0.95);
-    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 12, 0.98);
+    backdrop-filter: blur(30px);
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    align-items: flex-end;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 9998;
-    padding: 60px 20px 40px;
+    padding: 80px 30px 40px;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
   }
 
   .mobile-nav-active .navmenu {
-    left: 0; /* GANTI: right jadi left */
+    right: 0;
   }
 
-  /* Mobile Menu List - SAMA PERSIS */
+  /* Mobile Menu List - ENHANCED untuk sistem kamu */
   .navmenu ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    text-align: center;
+    text-align: right;
     width: 100%;
-    max-width: 320px;
   }
 
   .navmenu li {
-    margin: 8px 0;
+    margin: 12px 0;
     opacity: 0;
-    transform: translateX(-20px); /* GANTI: Y jadi X, positif jadi negatif */
+    transform: translateX(40px);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -410,164 +412,272 @@ h6 {
     transform: translateX(0);
   }
 
-  /* Stagger Animation Delays - SAMA PERSIS */
-  .mobile-nav-active .navmenu li:nth-child(1) { transition-delay: 0.1s; }
-  .mobile-nav-active .navmenu li:nth-child(2) { transition-delay: 0.15s; }
-  .mobile-nav-active .navmenu li:nth-child(3) { transition-delay: 0.2s; }
-  .mobile-nav-active .navmenu li:nth-child(4) { transition-delay: 0.25s; }
-  .mobile-nav-active .navmenu li:nth-child(5) { transition-delay: 0.3s; }
-  .mobile-nav-active .navmenu li:nth-child(6) { transition-delay: 0.35s; }
+  /* Stagger Animation - Enhanced timing */
+  .mobile-nav-active .navmenu li:nth-child(1) { transition-delay: 0.08s; }
+  .mobile-nav-active .navmenu li:nth-child(2) { transition-delay: 0.12s; }
+  .mobile-nav-active .navmenu li:nth-child(3) { transition-delay: 0.16s; }
+  .mobile-nav-active .navmenu li:nth-child(4) { transition-delay: 0.20s; }
+  .mobile-nav-active .navmenu li:nth-child(5) { transition-delay: 0.24s; }
+  .mobile-nav-active .navmenu li:nth-child(6) { transition-delay: 0.28s; }
+  .mobile-nav-active .navmenu li:nth-child(7) { transition-delay: 0.32s; }
 
-  /* Mobile Links - SAMA PERSIS */
+  /* Mobile Links - ENHANCED untuk icon system kamu */
   .navmenu a,
   .navmenu a:focus {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    font-weight: 500;
-    display: block;
-    padding: 12px 16px;
-    transition: all 0.3s ease;
-    border-radius: 8px;
+    font-size: 1.15rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Sesuai text-align right */
+    padding: 14px 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    pointer-events: auto; /* FIX: Pastikan bisa diklik */
+    cursor: pointer;
   }
 
-  /* Hover Effect - SAMA PERSIS */
-  .navmenu a::before {
+  /* Icon styling sesuai HTML kamu (.me-1 class) */
+  .navmenu a i {
+    margin-left: 12px;
+    margin-right: 0; /* Karena text-align right */
+    opacity: 0.8;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .navmenu a i.bi-chevron-down {
+    font-size: 0.9rem;
+    margin-left: 8px;
+  }
+
+  /* Elegant Underline Hover Effect - IMPROVED */
+  .navmenu a::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba(255, 255, 255, 0.1), 
-      transparent
-    );
-    transition: left 0.6s ease;
+    bottom: 8px;
+    right: 20px;
+    left: 20px; /* Biar underline balanced */
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #56b8e6, transparent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .navmenu a:hover::before {
-    left: 100%;
+  .navmenu a:hover::after,
+  .navmenu .active::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 
-  /* Mobile Link States - SAMA PERSIS */
+  /* Active State - ENHANCED */
   .navmenu a:hover,
   .navmenu .active,
   .navmenu .active:focus {
     color: #56b8e6;
-    background: rgba(86, 184, 230, 0.1);
-    border-color: rgba(86, 184, 230, 0.3);
-    transform: translateX(6px);
-    box-shadow: 0 4px 12px rgba(86, 184, 230, 0.2);
+    background: transparent;
+    transform: translateX(-8px);
   }
 
-  /* Mobile Dropdown - SAMA PERSIS */
+  .navmenu a:hover i,
+  .navmenu .active i {
+    color: #56b8e6;
+    opacity: 1;
+    transform: translateX(-3px);
+  }
+
+  /* Mobile Dropdown - ENHANCED untuk sistem kamu */
   .navmenu .dropdown ul {
     position: static;
     display: none;
-    background: rgba(255, 255, 255, 0.05);
-    margin: 6px 0 0 0;
-    padding: 8px 0;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.03);
+    margin: 8px 0 0 0;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 20px;
+    backdrop-filter: none;
   }
 
   .navmenu .dropdown.active ul {
     display: block;
-    animation: slideDown 0.3s ease;
+    animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .navmenu .dropdown ul a {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
     padding: 10px 20px;
-    font-weight: 400;
-    background: transparent;
-    border: none;
-    margin: 2px 8px;
-    border-radius: 6px;
+    font-weight: 300;
+    margin: 0;
+    border-radius: 0;
+    justify-content: flex-end;
   }
 
   .navmenu .dropdown ul a:hover {
     color: #56b8e6;
-    background: rgba(86, 184, 230, 0.1);
-    transform: translateX(4px);
-    box-shadow: none;
+    background: transparent;
+    transform: translateX(-4px);
   }
 
-  /* Mobile Active States - SAMA PERSIS */
+  /* Dropdown indicator - ENHANCED untuk .toggle-dropdown */
+  .navmenu .dropdown > a::before {
+    content: '›';
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .navmenu .dropdown.active > a::before {
+    transform: translateY(-50%) rotate(-90deg);
+    color: #56b8e6;
+  }
+
+  /* CTA Button khusus di mobile - ENHANCED */
+  .navmenu .nav-cta {
+    margin-top: 30px;
+    padding: 14px 30px;
+    background: linear-gradient(135deg, #56b8e6 0%, #3498db 100%);
+    color: white;
+    border-radius: 50px;
+    font-weight: 500;
+    border: none;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(86, 184, 230, 0.2);
+  }
+
+  .navmenu .nav-cta:hover {
+    transform: translateX(-8px) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(86, 184, 230, 0.3);
+    background: linear-gradient(135deg, #3498db 0%, #56b8e6 100%);
+  }
+
+  .navmenu .nav-cta i {
+    color: white;
+    margin-left: 8px;
+    margin-right: 0;
+  }
+
+  .navmenu .nav-cta::after {
+    display: none;
+  }
+
+  /* Mobile Active States - FIXED untuk bisa diklik */
   .mobile-nav-active {
     overflow: hidden;
   }
 
   .mobile-nav-active .mobile-nav-toggle {
-    color: #fff;
+    color: #56b8e6;
     position: fixed;
-    font-size: 20px;
-    top: 16px;
-    right: 16px;
-    margin-right: 0;
-    z-index: 9999;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    top: 20px;
+    right: 20px;
+    background: rgba(10, 10, 12, 0.9);
+    border: 1px solid rgba(86, 184, 230, 0.3);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   }
 
   .mobile-nav-active .mobile-nav-toggle:hover {
-    background: rgba(255, 255, 255, 0.18);
-    transform: scale(1.05);
+    transform: rotate(180deg);
+    background: rgba(86, 184, 230, 0.15);
+  }
+
+  .mobile-nav-active .mobile-nav-toggle i {
+    transform: rotate(45deg);
+  }
+
+  /* Overlay untuk background blur - IMPROVED */
+  .navmenu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 9997;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-nav-active .navmenu-overlay {
+    display: block;
+    opacity: 1;
+  }
+
+  /* REMOVE yang bikin gak bisa diklik */
+  .navmenu::before {
+    display: none;
   }
 }
 
-/* ===== ENHANCED ANIMATIONS - SAMA PERSIS ===== */
-@keyframes slideDown {
+/* ===== DESKTOP ENHANCEMENT ===== */
+@media (min-width: 1200px) {
+  .mobile-nav-toggle {
+    display: none;
+  }
+  
+  /* Desktop nav tetap pakai style yang ada */
+}
+
+/* ===== ENHANCED ANIMATIONS ===== */
+@keyframes fadeInRight {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateX(30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-/* Smooth transitions for all interactive elements - SAMA PERSIS */
-.navmenu a,
-.mobile-nav-toggle,
-.navmenu .dropdown ul {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Focus states for accessibility - SAMA PERSIS */
+/* Focus styles untuk accessibility */
 .navmenu a:focus-visible,
 .mobile-nav-toggle:focus-visible {
   outline: 2px solid #56b8e6;
-  outline-offset: 2px;
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
-/* Loading state for better UX - SAMA PERSIS */
-.navmenu.loading {
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-.navmenu.loading::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border: 2px solid transparent;
-  border-top: 2px solid #56b8e6;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+/* CLICK FIX - Tambah ini */
+.navmenu a {
+  pointer-events: auto !important;
+  cursor: pointer !important;
 }
 /*--------------------------------------------------------------
 # Global Footer - Rich Black Premium Bold
